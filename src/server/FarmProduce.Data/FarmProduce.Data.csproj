@@ -11,8 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Seeders\" />
-    <Folder Include="Mappings\" />
     <Folder Include="Contexts\" />
   </ItemGroup>
 

@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Settings\" />
-    <Folder Include="Entities\" />
-    <Folder Include="DTO\" />
-    <Folder Include="Constants\" />
     <Folder Include="Collections\" />
   </ItemGroup>
 
