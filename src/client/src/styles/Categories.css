@@ -1,0 +1,31 @@
+.category_title{
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  text-align: center;
+  background-color: red;
+  color: white;
+  padding: 10px;
+
+}
+
+.category_link{
+  text-decoration: none;
+  color: black;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+}
+
+.category_link :hover{
+  color: red;
+}
+
+.icon{
+  margin-right: 1rem;
+}
+
+.category_item{
+  background-color: white;
+  margin: 6px 0px;
+  padding: 10px;
+}

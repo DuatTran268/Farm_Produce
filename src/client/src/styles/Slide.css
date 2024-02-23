@@ -1,0 +1,12 @@
+.banner{
+  &-img{
+    max-width: 100%;
+  }
+}
+
+.image_slide{
+  width: 100%;
+  overflow: hidden;
+  object-fit: cover;
+  cursor: grab;
+}

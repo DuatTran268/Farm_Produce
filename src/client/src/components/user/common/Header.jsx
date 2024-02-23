@@ -2,11 +2,9 @@ import React from "react";
 import logo from "../../../assets/logo.png";
 import { Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import SearchBox from "../search/SearchBox";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBook, faCartShopping } from "@fortawesome/free-solid-svg-icons";
-import "../../styles/Style.css";
-import Cart from "../cart/Cart";
+import SearchBox from "../SearchBox";
+import "../../../styles/Style.css";
+import Cart from "../Cart";
 
 const Header = () => {
   return (
