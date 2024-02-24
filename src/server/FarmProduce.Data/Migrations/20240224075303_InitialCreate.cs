@@ -50,6 +50,7 @@ namespace FarmProduce.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    UrlIcon = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     UrlSlug = table.Column<int>(type: "int", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
@@ -65,7 +66,7 @@ namespace FarmProduce.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     UrlSlug = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    DateOrder = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 2, 24, 12, 17, 43, 341, DateTimeKind.Local).AddTicks(2768)),
+                    DateOrder = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 2, 24, 14, 53, 2, 371, DateTimeKind.Local).AddTicks(7616)),
                     Note = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     PaymentOptionId = table.Column<int>(type: "int", nullable: false),
                     BuyerId = table.Column<int>(type: "int", nullable: false)

@@ -21,6 +21,10 @@ namespace FarmProduce.Data.Mappings
             builder.Property(c => c.UrlSlug)
                 .IsRequired()
                 .HasMaxLength(50);
+            builder.Property(c => c.UrlIcon)
+            
+                .HasMaxLength(100);
+
         }
     }
 }

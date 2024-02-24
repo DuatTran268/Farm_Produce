@@ -101,6 +101,10 @@ namespace FarmProduce.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("UrlIcon")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
                     b.Property<int>("UrlSlug")
                         .HasMaxLength(50)
                         .HasColumnType("int");
@@ -193,7 +197,7 @@ namespace FarmProduce.Data.Migrations
                     b.Property<DateTime>("DateOrder")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 2, 24, 12, 17, 43, 341, DateTimeKind.Local).AddTicks(2768));
+                        .HasDefaultValue(new DateTime(2024, 2, 24, 14, 53, 2, 371, DateTimeKind.Local).AddTicks(7616));
 
                     b.Property<string>("Name")
                         .IsRequired()
