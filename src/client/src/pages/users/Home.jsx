@@ -4,6 +4,7 @@ import "../../styles/Home.css";
 import Categoris from "../../components/user/categories/Categoris";
 import SlideBanner from "../../components/user/slide/SlideBanner";
 import NewProduct from "../../components/user/product/NewProduct";
+import FruitProduct from "../../components/user/product/FruitProduct";
 
 const Home = () => {
   return (
@@ -27,6 +28,9 @@ const Home = () => {
         {/* new product */}
         <div className="new_product">
           <NewProduct/>
+        </div>
+        <div className="fruit_product">
+          <FruitProduct/>
         </div>
       </div>
     </div>

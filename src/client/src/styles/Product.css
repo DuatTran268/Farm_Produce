@@ -1,0 +1,55 @@
+.product_banner{
+  width: 20%;
+}
+
+.product_list{
+  width: 80%;
+}
+
+.product_body_flex{
+  display: flex;
+}
+
+.product_list{
+  display: flex;
+  flex-wrap: wrap;
+}
+.card {
+  padding: 1rem;
+
+}
+.product_item{
+  padding: 0 0.6rem;
+
+}
+.product_image{
+  overflow: hidden;
+  object-fit: cover;
+}
+
+.product_img{
+  width: 100%;
+  object-fit: cover;
+  background: #fff;
+  transition: all 0.5s ease-in-out;
+}
+.product_image :hover{
+  transform: scale(1.2);
+
+}
+
+.product_content{
+  padding: 0.6rem;
+}
+.product_title{
+  text-align: center;
+  font-size: 1.2rem;
+  text-align: center;
+  font-weight: 500;
+  
+}
+.product_bottom{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
