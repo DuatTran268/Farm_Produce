@@ -1,8 +1,9 @@
 import React from "react";
 import Header from "../../components/user/common/Header";
-import Categoris from "../../components/user/Categoris";
 import "../../styles/Home.css";
-import Slide from "../../components/user/Slide";
+import Categoris from "../../components/user/categories/Categoris";
+import SlideBanner from "../../components/user/slide/SlideBanner";
+import NewProduct from "../../components/user/product/NewProduct";
 
 const Home = () => {
   return (
@@ -13,14 +14,19 @@ const Home = () => {
       <div className="container ">
         <div className="d-flex pt-3 category_slide justify-content-between">
           <div className="category col-3">
-            <Categoris />
+            <Categoris/>
           </div>
           {/* slide advertising */}
           <div className="slider col-8">
             <div className="banner">
-              <Slide />
+              <SlideBanner />
             </div>
           </div>
+        </div>
+
+        {/* new product */}
+        <div className="new_product">
+          <NewProduct/>
         </div>
       </div>
     </div>

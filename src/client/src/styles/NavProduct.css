@@ -1,0 +1,41 @@
+.new_product{
+  margin-top: 1rem;
+}
+
+.product_header,
+.product_header_title{
+  display: flex;
+  justify-content: space-between;
+  background-color: #ccc;
+  align-items: center;
+
+}
+
+.product_header_title{
+  background-color: #6bd16b;
+  padding: 0.8rem;
+  border-radius: 0 35px 35px 0;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 1.2rem;
+  color: white;
+
+}
+
+.product_header_icon{
+  padding-right: 1rem;
+}
+
+.view_more :hover{
+  background-color: red;
+  color: white;
+}
+
+.view_more_link{
+  margin-right: 1rem;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  background-color: #6bd16b;
+  color: white;
+  border-radius: 10px;
+}

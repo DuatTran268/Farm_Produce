@@ -1,12 +1,12 @@
 import React from "react";
 import Slider from "react-slick";
-import banner1 from "../../assets/banner1.png";
-import banner2 from "../../assets/banner2.jpg";
-import "../../styles/Slider.css";
+import banner1 from "../../../assets/banner1.png";
+import banner2 from "../../../assets/banner2.jpg";
+import "../../../styles/Slider.css"
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const Slide = () => {
+const SlideBanner = () => {
   const settings = {
     dots: false,
     infinite: true,
@@ -33,4 +33,4 @@ const Slide = () => {
   );
 };
 
-export default Slide;
+export default SlideBanner;

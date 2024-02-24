@@ -2,9 +2,9 @@ import React from "react";
 import logo from "../../../assets/logo.png";
 import { Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import SearchBox from "../SearchBox";
 import "../../../styles/Style.css";
-import Cart from "../Cart";
+import Cart from "../cart/Cart";
+import SearchBox from "../search/SearchBox";
 
 const Header = () => {
   return (
