@@ -1,0 +1,6 @@
+@FarmProduct.WebApi_HostAddress = http://localhost:5277
+
+GET {{FarmProduct.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

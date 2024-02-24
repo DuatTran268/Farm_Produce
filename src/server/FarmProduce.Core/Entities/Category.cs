@@ -10,5 +10,9 @@ namespace FarmProduce.Core.Entities
 	public class Category : IEntity
 	{
 		public int Id { get; set; }
+		public string Name { get; set; }
+		public string UrlIcon { get; set; }
+		public int UrlSlug {  get; set; }
+		public IList<Products> Products { get; set; }
 	}
 }
