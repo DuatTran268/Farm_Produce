@@ -12,7 +12,7 @@ namespace FarmProduce.Core.Entities
 		public int Id { get; set; }
 		public string Name { get; set; }
 		public string UrlSlug { get; set; }	
-
-
+		public Order Order { get; set; }
+		public int OrderId { get; set; }	
 	}
 }

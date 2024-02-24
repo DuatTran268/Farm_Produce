@@ -15,6 +15,8 @@ namespace FarmProduce.Core.Entities
 		public string Content { get; set; }
 		public DateTime Created { get; set; } = DateTime.Now;
 		public bool Status { get; set; }
+		public Products Product { get; set; }
+		public int ProductId { get; set; }
 
 	}
 }

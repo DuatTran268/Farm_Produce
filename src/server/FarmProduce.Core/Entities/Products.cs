@@ -13,7 +13,7 @@ namespace FarmProduce.Core.Entities
 		public string Name { get; set; }
 		public string UrlSlug { get; set; }
 		public string Image {  get; set; }
-		public decimal Price { get; set; }	
+		public decimal Price { get; set; } = 0;
 		public string ShortDescription {  get; set; }
 		public decimal PriceDiscount { get; set; }
 		public DateTime DateCreate { get; set; }
@@ -24,8 +24,8 @@ namespace FarmProduce.Core.Entities
 		public IList <CollectionImage> CollectionImages { get; set; }
 		public Category Category { get; set; }
 		public int CategoryId { get; set; }
-		
-
+		public Order Order { get; set; }
+		public int OrderId { get; set; }
 
 	}
 }
