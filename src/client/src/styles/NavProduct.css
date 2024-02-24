@@ -39,3 +39,8 @@
   color: white;
   border-radius: 10px;
 }
+
+.product_body{
+  margin-top: 0.5rem;
+  background-color: white;
+}
