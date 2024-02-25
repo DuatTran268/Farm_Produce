@@ -17,16 +17,26 @@ namespace FarmProduce.Data.Contexts
         public DbSet<Category> Categories { get; set; }
         public DbSet<CollectionImage> CollectionImages { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Order> Orders { get; set; }
         public DbSet<OrderStatus> OrderStatuses { get; set; }
         public DbSet<PaymentOption> PaymentOptions { get; set; }
         public DbSet<Products> Products { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Server=XUANHUNG\\SQLEXPRESS;Database=FarmProduct;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
-        }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+		public FarmDbContext(DbContextOptions<FarmDbContext> options) : base(options) { }
+
+		public FarmDbContext()
+		{
+		}
+
+		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            //optionsBuilder.UseSqlServer("Server=XUANHUNG\\SQLEXPRESS;Database=FarmProduct;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
+			optionsBuilder.UseSqlServer("Server=DESKTOP-NLUPE1I\\MSSQLSERVER01;Database=FarmProduct;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
+
+		}
+
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(CategoryMap).Assembly);
             modelBuilder.Entity<Products>().Property(p=> p.Price).HasPrecision(18,2);

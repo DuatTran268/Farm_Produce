@@ -24,15 +24,15 @@ namespace FarmProduce.Data.Mappings
             builder.Property(o => o.DateOrder)
               .HasDefaultValue(DateTime.Now)
               .HasColumnType("datetime");
-              
             builder.Property(o => o.Note)
-               .IsRequired()
-               .HasMaxLength(200);
+               .HasMaxLength(1000);
+
             builder.HasMany(o => o.PaymentOptions)
                 .WithOne(p => p.Order)
                 .HasForeignKey(p => p.OrderId)
                 .HasConstraintName("FK_Order_PaymentOptions")
                 .OnDelete(DeleteBehavior.Cascade);
+
             builder.HasMany(o => o.Products)
               .WithOne(p => p.Order)
               .HasForeignKey(p => p.OrderId)
@@ -44,6 +44,7 @@ namespace FarmProduce.Data.Mappings
               .HasForeignKey(o => o.BuyerId)
               .HasConstraintName("FK_Buyer_Orders")
               .OnDelete(DeleteBehavior.Cascade);
+
             builder.HasMany(o => o.OrderStatuses)
             .WithOne(p => p.Order)
             .HasForeignKey(p => p.OrderId)

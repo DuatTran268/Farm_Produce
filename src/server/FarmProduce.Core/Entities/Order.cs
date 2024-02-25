@@ -12,7 +12,7 @@ namespace FarmProduce.Core.Entities
 		public int Id { get; set; }
 		public string Name { get; set; }
 		public string UrlSlug { get; set; }
-		public DateTime DateOrder {  get; set; }
+		public DateTime DateOrder {  get; set; } = DateTime.Now;
 		public string Note { get; set; }
 		public int PaymentOptionId {  get; set; }
 		public IList<PaymentOption> PaymentOptions { get; set; }

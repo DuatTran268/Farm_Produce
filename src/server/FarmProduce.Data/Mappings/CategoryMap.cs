@@ -17,13 +17,12 @@ namespace FarmProduce.Data.Mappings
             builder.HasKey(c => c.Id);
             builder.Property(c => c.Name)
                 .IsRequired()
-                .HasMaxLength(50);
+                .HasMaxLength(100);
             builder.Property(c => c.UrlSlug)
                 .IsRequired()
-                .HasMaxLength(50);
+                .HasMaxLength(200);
             builder.Property(c => c.UrlIcon)
-            
-                .HasMaxLength(100);
+                .HasMaxLength(200);
 
         }
     }

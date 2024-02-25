@@ -27,7 +27,8 @@ namespace FarmProduce.Data.Mappings
             builder.Property(c => c.Status)
                 .HasDefaultValue(false);
             builder.Property(c => c.Created)
-                .HasColumnType("datetime");
+			    .HasDefaultValue(DateTime.Now)
+			    .HasColumnType("datetime");
            
 
         }

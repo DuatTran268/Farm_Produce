@@ -19,7 +19,8 @@ namespace FarmProduce.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FullName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Password = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                    Email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    UrlSlug = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -35,7 +36,7 @@ namespace FarmProduce.Data.Migrations
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     UrlSlug = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false)
                 },
                 constraints: table =>
@@ -49,9 +50,9 @@ namespace FarmProduce.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    UrlIcon = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    UrlSlug = table.Column<int>(type: "int", maxLength: 50, nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    UrlIcon = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    UrlSlug = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -66,8 +67,8 @@ namespace FarmProduce.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     UrlSlug = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    DateOrder = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 2, 24, 14, 53, 2, 371, DateTimeKind.Local).AddTicks(7616)),
-                    Note = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    DateOrder = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 2, 25, 16, 22, 3, 772, DateTimeKind.Local).AddTicks(656)),
+                    Note = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
                     PaymentOptionId = table.Column<int>(type: "int", nullable: false),
                     BuyerId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -135,11 +136,11 @@ namespace FarmProduce.Data.Migrations
                     Image = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     ShortDescription = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(2500)", maxLength: 2500, nullable: false),
                     PriceDiscount = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    DateCreate = table.Column<DateTime>(type: "datetime", nullable: false),
-                    DateUpdate = table.Column<DateTime>(type: "datetime", nullable: false),
+                    DateCreate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 2, 25, 16, 22, 3, 773, DateTimeKind.Local).AddTicks(901)),
+                    DateUpdate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 2, 25, 16, 22, 3, 773, DateTimeKind.Local).AddTicks(1596)),
                     Status = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
-                    StatusDescription = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     OrderId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -166,8 +167,8 @@ namespace FarmProduce.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    UrlSlug = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(350)", maxLength: 350, nullable: false),
+                    UrlSlug = table.Column<string>(type: "nvarchar(350)", maxLength: 350, nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -190,7 +191,7 @@ namespace FarmProduce.Data.Migrations
                     UserName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     UrlSlug = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Content = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    Created = table.Column<DateTime>(type: "datetime", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 2, 25, 16, 22, 3, 771, DateTimeKind.Local).AddTicks(8464)),
                     Status = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     ProductId = table.Column<int>(type: "int", nullable: false)
                 },

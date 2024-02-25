@@ -15,11 +15,11 @@ namespace FarmProduce.Core.Entities
 		public string Image {  get; set; }
 		public decimal Price { get; set; } = 0;
 		public string ShortDescription {  get; set; }
+		public string Description { get; set; }
 		public decimal PriceDiscount { get; set; }
-		public DateTime DateCreate { get; set; }
-		public DateTime DateUpdate { get; set; }
+		public DateTime DateCreate { get; set; } = DateTime.Now; // lay ngay hom nay de tao san pham
+		public DateTime DateUpdate { get; set; } = DateTime.Now;
 		public bool Status { get; set; }
-		public string StatusDescription { get; set; }
 		public IList<Comment>Comments { get; set; }
 		public IList <CollectionImage> CollectionImages { get; set; }
 		public Category Category { get; set; }

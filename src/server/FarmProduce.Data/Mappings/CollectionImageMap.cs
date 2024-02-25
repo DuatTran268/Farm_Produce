@@ -17,10 +17,10 @@ namespace FarmProduce.Data.Mappings
             builder.HasKey(ci => ci.Id);
             builder.Property(ci => ci.Name)
                 .IsRequired()
-                .HasMaxLength(50);
+                .HasMaxLength(350);
             builder.Property(ci => ci.UrlSlug)
                 .IsRequired()
-                .HasMaxLength(50);
+                .HasMaxLength(350);
         }
     }
 }

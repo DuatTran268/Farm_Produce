@@ -26,7 +26,7 @@ namespace FarmProduce.Data.Mappings
                 .HasMaxLength(100);
             builder.Property(x => x.Address)
                 .IsRequired()
-                .HasMaxLength(200);
+                .HasMaxLength(500);
             builder.Property(x => x.Phone)
                 .IsRequired()
                 .HasMaxLength(15);

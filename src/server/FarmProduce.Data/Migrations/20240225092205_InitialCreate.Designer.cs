@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FarmProduce.Data.Migrations
 {
     [DbContext(typeof(FarmDbContext))]
-    [Migration("20240224075303_InitialCreate")]
+    [Migration("20240225092205_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -48,6 +48,11 @@ namespace FarmProduce.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("UrlSlug")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Admin", (string)null);
@@ -63,8 +68,8 @@ namespace FarmProduce.Data.Migrations
 
                     b.Property<string>("Address")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -101,16 +106,17 @@ namespace FarmProduce.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("UrlIcon")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("UrlSlug")
-                        .HasMaxLength(50)
-                        .HasColumnType("int");
+                    b.Property<string>("UrlIcon")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("UrlSlug")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");
 
@@ -127,16 +133,16 @@ namespace FarmProduce.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<string>("UrlSlug")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.HasKey("Id");
 
@@ -159,7 +165,9 @@ namespace FarmProduce.Data.Migrations
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("datetime");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValue(new DateTime(2024, 2, 25, 16, 22, 3, 771, DateTimeKind.Local).AddTicks(8464));
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
@@ -200,7 +208,7 @@ namespace FarmProduce.Data.Migrations
                     b.Property<DateTime>("DateOrder")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 2, 24, 14, 53, 2, 371, DateTimeKind.Local).AddTicks(7616));
+                        .HasDefaultValue(new DateTime(2024, 2, 25, 16, 22, 3, 772, DateTimeKind.Local).AddTicks(656));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -208,9 +216,8 @@ namespace FarmProduce.Data.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Note")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<int>("PaymentOptionId")
                         .HasColumnType("int");
@@ -295,10 +302,19 @@ namespace FarmProduce.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateCreate")
-                        .HasColumnType("datetime");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValue(new DateTime(2024, 2, 25, 16, 22, 3, 773, DateTimeKind.Local).AddTicks(901));
 
                     b.Property<DateTime>("DateUpdate")
-                        .HasColumnType("datetime");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValue(new DateTime(2024, 2, 25, 16, 22, 3, 773, DateTimeKind.Local).AddTicks(1596));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(2500)
+                        .HasColumnType("nvarchar(2500)");
 
                     b.Property<string>("Image")
                         .IsRequired()
@@ -330,11 +346,6 @@ namespace FarmProduce.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
-
-                    b.Property<string>("StatusDescription")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UrlSlug")
                         .IsRequired()

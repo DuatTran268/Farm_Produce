@@ -12,7 +12,7 @@ namespace FarmProduce.Core.Entities
 		public int Id { get; set; }
 		public string Name { get; set; }
 		public string UrlIcon { get; set; }
-		public int UrlSlug {  get; set; }
+		public string UrlSlug {  get; set; }
 		public IList<Products> Products { get; set; }
 	}
 }
