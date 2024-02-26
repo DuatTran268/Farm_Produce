@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace FarmProduce.Core.Entities
 {
-    public class OrderStatus:IEntity
+    public class Image: IEntity
     {
         public int Id { get; set; }
-        
-        public string StatusCode { get; set; }
-        public DateTime StatusDate { get; set; }
-        public string Description { get; set; } 
-        public int OrderId { get; set; }
+        public string Name { get; set; }
+        public string UrlImage { get; set; }
+        public string Caption { get; set; }
+        public int ProductId { get; set; }
+
     }
 }

@@ -12,7 +12,7 @@ namespace FarmProduce.Data.Contexts
     public class FarmDbContext: DbContext
     {
         public DbSet<Admin> Admins { get; set; }    
-        public DbSet<Buyer> Buyers { get; set; }
+        public DbSet<Customer> Buyers { get; set; }
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<CollectionImage> CollectionImages { get; set; }
@@ -31,12 +31,12 @@ namespace FarmProduce.Data.Contexts
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseSqlServer("Server=XUANHUNG\\SQLEXPRESS;Database=FarmProduct;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
-			optionsBuilder.UseSqlServer("Server=DESKTOP-NLUPE1I\\MSSQLSERVER01;Database=FarmProduct;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
+            optionsBuilder.UseSqlServer("Server=XUANHUNG\\SQLEXPRESS;Database=FarmProduct;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
+			//optionsBuilder.UseSqlServer("Server=DESKTOP-NLUPE1I\\MSSQLSERVER01;Database=FarmProduct;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
 
 		}
-
-		protected override void OnModelCreating(ModelBuilder modelBuilder)
+       
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(CategoryMap).Assembly);
             modelBuilder.Entity<Products>().Property(p=> p.Price).HasPrecision(18,2);
