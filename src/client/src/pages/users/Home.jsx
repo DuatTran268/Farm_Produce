@@ -5,6 +5,7 @@ import Categoris from "../../components/user/categories/Categoris";
 import SlideBanner from "../../components/user/slide/SlideBanner";
 import NewProduct from "../../components/user/product/NewProduct";
 import FruitProduct from "../../components/user/product/FruitProduct";
+import Footer from "../../components/user/common/Footer";
 
 const Home = () => {
   return (
@@ -33,6 +34,8 @@ const Home = () => {
           <FruitProduct/>
         </div>
       </div>
+
+      <Footer/>
     </div>
   );
 };

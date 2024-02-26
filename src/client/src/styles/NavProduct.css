@@ -1,7 +1,6 @@
 
 
-.product_header,
-.product_header_title{
+.product_header{
   display: flex;
   justify-content: space-between;
   background-color: #ccc;
@@ -11,6 +10,8 @@
 }
 
 .product_header_title{
+  display: flex;
+  justify-content: space-between;
   background-color: #6bd16b;
   padding: 0.8rem;
   border-radius: 0 35px 35px 0;
