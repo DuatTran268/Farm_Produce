@@ -63,6 +63,11 @@ namespace FarmProduce.Data.Mappings
 				.HasConstraintName("FK_CollectionImages_Products")
 				.OnDelete(DeleteBehavior.Cascade);
 
+			builder.HasMany(o => o.Orders)
+				.WithMany(p => p.Products)
+				.UsingEntity(po => po.ToTable("ProductOrders"));
+
+
 
 
 		}

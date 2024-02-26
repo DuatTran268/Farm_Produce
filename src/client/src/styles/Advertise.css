@@ -1,0 +1,23 @@
+.advertise{
+  margin-top: 20px;
+
+}
+
+.adver_item_wrapper {
+  background-color: #c7f68a;
+}
+
+.adver_item_wrapper{
+  display: flex;
+  align-items: center;
+  padding: 20px;
+}
+.adver_icon{
+  padding-right:10px;
+}
+.adver_title{
+  text-transform: uppercase;
+  font-size: 1.1rem;
+  font-weight: 500;
+
+}
