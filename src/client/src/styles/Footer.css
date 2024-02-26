@@ -1,31 +1,23 @@
-.footer{
+.footer {
   margin-top: 1rem;
+  background: url('../assets/bgfooter.jpg') no-repeat center/ cover;
   position: relative;
-  background-color: #6bd16b;
-}
-.footer_content{
-  height: 0;
 }
 
-.bg_footer{
-  width: 100%;
+.footer_wrapper {
+  display: flex;
 }
 
-.footer_wrappers{
-  position: absolute;
-  top: 0;
-  left: 100px;
-}
-
-.footer_title, .footer_image{
+.footer_title,
+.footer_image {
   text-align: center;
 }
 
-.footer_iframe{
+.footer_iframe {
   text-align: center;
 }
 
-.footer_bottom{
+.footer_bottom {
   position: absolute;
   bottom: 0;
   left: 50%;
@@ -33,6 +25,7 @@
   padding: 1rem;
   color: white;
 }
-.text_copyright{
+
+.text_copyright {
   color: red;
 }

@@ -19,8 +19,6 @@
 
 }
 .product_item{
-  padding: 0 0.6rem;
-
 }
 .product_image{
   overflow: hidden;
@@ -29,6 +27,7 @@
 
 .product_img{
   width: 100%;
+  text-align: center;
   object-fit: cover;
   background: #fff;
   transition: all 0.5s ease-in-out;

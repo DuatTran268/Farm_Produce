@@ -1,3 +1,5 @@
+
+
 .product_note{
   text-align: center;
   font-size: 1.6rem;
@@ -5,21 +7,12 @@
   font-weight: 500;
   padding: 1rem 0;
 }
-.new_product_list{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 1rem;
-}
 
-.new_product_item{
+.product_item{
   display: flex;
-  width: 48%;
-  justify-content: space-between;
-  text-decoration: none;
-  /* align-items: center; */
+  height: auto;
+  padding: 10px;
 }
-
 
 
 .new_product_image{
@@ -47,7 +40,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-
+margin-left: 1.4rem;
 }
 .new_product_name{
   overflow: hidden;
