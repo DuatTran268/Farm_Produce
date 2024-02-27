@@ -66,12 +66,70 @@ namespace FarmProduce.Data.Seeders
 
         private IList<PaymentMethod> AddPaymentMethods()
         {
-            throw new NotImplementedException();
+            var paymentMethods = new List<PaymentMethod>() {
+
+                new(){
+                    Name="QR Pay",
+                    Description="QR",
+                    
+                },
+                 new(){
+                    Name="Thanh toán trực tiếp",
+                    Description="Thanh toán trực tiếp khi nhận hàng",
+                    
+
+                }
+            };
+            foreach (var paymentMethod in paymentMethods)
+            {
+                if(!_dbContext.PaymentMethods.Any(p=> p.Name==paymentMethod.Name))
+                {
+                    _dbContext.Add(paymentMethod);
+                }
+                
+            }
+            _dbContext.SaveChanges();
+            return paymentMethods;
         }
 
         private IList<OrderStatus> AddOrderStatuses()
         {
-            throw new NotImplementedException();
+            var orderStatuses = new List<OrderStatus>() {
+                new(){
+                   StatusCode="Chờ xác nhận",
+                   Description="",
+                   StatusDate=new DateTime(2024,2, 27),
+                   
+                },
+                 new(){
+                   StatusCode="Đã xác nhận",
+                   Description="",
+                   StatusDate=new DateTime(2024,2, 27),
+
+                },
+                  new(){
+                   StatusCode="Đang giao",
+                   Description="",
+                   StatusDate=new DateTime(2024,2, 27),
+
+                },
+                   new(){
+                   StatusCode="Đã giao",
+                   Description="",
+                   StatusDate=new DateTime(2024,2, 27),
+
+                }
+               
+            };
+            foreach (var orderStatus in orderStatuses)
+            {
+                if(!_dbContext.OrderStatuses.Any(o=> o.StatusCode== orderStatus.StatusCode))
+                {
+                    _dbContext.Add(orderStatus);
+                }
+            }
+            _dbContext.SaveChanges();
+            return orderStatuses;
         }
 
       
