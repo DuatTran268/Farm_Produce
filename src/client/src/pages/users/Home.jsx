@@ -7,6 +7,7 @@ import NewProduct from "../../components/user/product/NewProduct";
 import FruitProduct from "../../components/user/product/FruitProduct";
 import Footer from "../../components/user/common/Footer";
 import Advertise from "../../components/user/advertise/Advertise";
+import AdvertiseBanner from "../../components/user/advertise/AdvertiseBanner";
 
 const Home = () => {
   return (
@@ -36,6 +37,9 @@ const Home = () => {
         </div>
         <div className="advertise">
           <Advertise/>
+        </div>
+        <div className="advertise">
+          <AdvertiseBanner/>
         </div>
       </div>
 

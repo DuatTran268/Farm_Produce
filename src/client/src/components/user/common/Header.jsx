@@ -8,7 +8,7 @@ import SearchBox from "../search/SearchBox";
 
 const Header = () => {
   return (
-    <header className="bg-success sticky-top">
+    <header className="header_top sticky-top">
       <nav className="container navbar navbar-expand-lg navbar-dark">
         <div className="container">
           <Link to={"/"} className="text-danger text-decoration-none">

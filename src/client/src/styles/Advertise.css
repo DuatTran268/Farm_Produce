@@ -1,4 +1,4 @@
-.advertise{
+.advertise {
   margin-top: 20px;
 
 }
@@ -7,17 +7,58 @@
   background-color: #c7f68a;
 }
 
-.adver_item_wrapper{
+.adver_item_wrapper {
   display: flex;
   align-items: center;
   padding: 20px;
 }
-.adver_icon{
-  padding-right:10px;
+
+.adver_icon {
+  padding-right: 10px;
 }
-.adver_title{
+
+.adver_title {
   text-transform: uppercase;
   font-size: 1.1rem;
   font-weight: 500;
 
+}
+
+
+/* advertise banner */
+.advertise_wrapper{
+  background-color: white;
+}
+.ad_banner{
+  text-align: center;
+}
+.ad_column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding: 5rem 1rem;
+}
+
+.ad_title {
+  display: flex;
+  align-items: center;
+  color: #00a551;
+}
+
+.ad_text {
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.ad_icon_left{
+  margin-left: 1rem;
+}
+.ad_icon_right{
+  margin-right: 1rem;
+}
+
+.ad_banner{
+  padding: 10px 0;
 }
