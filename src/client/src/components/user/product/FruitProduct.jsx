@@ -38,24 +38,27 @@ const FruitProduct = () => {
                   className="product_item col-11 col-md-6 col-lg-3 "
                   key={index}
                 >
-                  <div className="card p-0 overflow-hidden shadow">
-                    <div className="product_image">
-                      <img src={product.image} className="product_img"/>
-                    </div>
-                    <div className="product_content">
-                      <p className="product_title">{product.name}</p>
-                      <div className="product_bottom">
-
-                      <div className="product_price">
-                        <div className="product_price_origin">{product.price}</div>
-                        <div className="product_price_discount">{product.price}</div>
-
+                  <Link to={'/detail/'} className="product_link">
+                    <div className="card p-0 overflow-hidden shadow">
+                      <div className="product_image">
+                        <img src={product.image} className="product_img" />
                       </div>
-
-                        <Button className="btn-success">Mua ngay</Button>
+                      <div className="product_content">
+                        <p className="product_title">{product.name}</p>
+                        <div className="product_bottom">
+                          <div className="product_price">
+                            <div className="product_price_origin">
+                              {product.price}
+                            </div>
+                            <div className="product_price_discount">
+                              {product.price}
+                            </div>
+                          </div>
+                          <Link className="btn btn-success" to={'/cart'}>Mua ngay</Link>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 </div>
               );
             })}

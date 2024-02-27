@@ -2,7 +2,7 @@ import React from "react";
 import Header from "../../components/user/common/Header";
 import Footer from "../../components/user/common/Footer";
 
-const Cart = () => {
+const Order = () => {
   return (
     <section>
       <Header />
@@ -14,4 +14,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default Order;

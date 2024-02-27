@@ -18,7 +18,7 @@ const Home = () => {
       <div className="container ">
         <div className="d-flex pt-3 category_slide justify-content-between">
           <div className="category col-3">
-            <Categoris/>
+            <Categoris />
           </div>
           {/* slide advertising */}
           <div className="slider col-8">
@@ -30,20 +30,20 @@ const Home = () => {
 
         {/* new product */}
         <div className="new_product">
-          <NewProduct/>
+          <NewProduct />
         </div>
         <div className="fruit_product">
-          <FruitProduct/>
+          <FruitProduct />
         </div>
         <div className="advertise">
-          <Advertise/>
+          <Advertise />
         </div>
         <div className="advertise">
-          <AdvertiseBanner/>
+          <AdvertiseBanner />
         </div>
       </div>
 
-      <Footer/>
+      <Footer />
     </div>
   );
 };

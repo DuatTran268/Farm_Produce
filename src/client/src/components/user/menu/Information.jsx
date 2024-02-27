@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../../../styles/Menu.css";
 
-const Policys = () => {
+const Information = () => {
   return (
     <>
       <ul className="list_menu">
@@ -12,7 +12,7 @@ const Policys = () => {
           </Link>
         </li>
         <li className="menu_item">
-          <Link className="menu_link" to={"/rules"}>
+          <Link className="menu_link" to={"/condition"}>
             Điều khoản và điều kiện
           </Link>
         </li>
@@ -31,4 +31,4 @@ const Policys = () => {
   );
 };
 
-export default Policys;
+export default Information;

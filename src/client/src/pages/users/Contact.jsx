@@ -1,11 +1,10 @@
 import React from "react";
-import Header from "../../components/user/common/Header";
 import Footer from "../../components/user/common/Footer";
 
-const Cart = () => {
+const Contact = () => {
   return (
     <section>
-      <Header />
+      <Headers />
       <div className="container">
         <h1>cart page</h1>
       </div>
@@ -14,4 +13,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default Contact;

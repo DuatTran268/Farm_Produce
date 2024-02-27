@@ -18,7 +18,9 @@
   padding: 1rem;
 
 }
-.product_item{
+
+.product_link{
+  text-decoration: none;
 }
 .product_image{
   overflow: hidden;

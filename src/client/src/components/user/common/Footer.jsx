@@ -4,7 +4,7 @@ import bgFooter from "../../../assets/bgfooter.jpg";
 import "../../../styles/Footer.css";
 import logo from "../../../assets/logo.png";
 import MainMenu from "../menu/MainMenus";
-import Policys from "../menu/Policys";
+import Policys from "../menu/Information";
 import "../../../styles/Footer.css";
 import { Link } from "react-router-dom";
 const Footer = () => {

@@ -53,7 +53,7 @@ const NewProduct = () => {
                     className="new_product_wrapper"
                     key={index}
                   >
-                  <div className="product_item">
+                  <Link className="product_item" to={'/detail/'}>
                     <div className="new_product_image">
                       <img
                         className="new_product_img"
@@ -82,7 +82,7 @@ const NewProduct = () => {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                   </div>
                 );
               })}
