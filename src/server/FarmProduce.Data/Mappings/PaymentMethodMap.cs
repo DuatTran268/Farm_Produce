@@ -9,18 +9,19 @@ using System.Threading.Tasks;
 
 namespace FarmProduce.Data.Mappings
 {
-    public class PaymentOptionMap : IEntityTypeConfiguration<PaymentOption>
+    public class PaymentMethodMap : IEntityTypeConfiguration<PaymentMethod>
     {
-        public void Configure(EntityTypeBuilder<PaymentOption> builder)
+        public void Configure(EntityTypeBuilder<PaymentMethod> builder)
         {
-            builder.ToTable("PaymentOption");
+            builder.ToTable("PaymentMethods");
             builder.HasKey(x => x.Id);
-            builder.Property(x=> x.Name)
+            builder.Property(x => x.Name)
                 .IsRequired()
-                .HasMaxLength(100);
-            builder.Property(x => x.UrlSlug)
-                .IsRequired()
-                .HasMaxLength(100);
+                .HasMaxLength(50);
+            builder.Property(x => x.Description)
+               .IsRequired()
+               .HasMaxLength(100);
+
 
         }
     }

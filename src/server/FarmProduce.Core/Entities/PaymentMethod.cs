@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace FarmProduce.Core.Entities
 {
-    public class Category : IEntity
-        
+    public class PaymentMethod:IEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string UrlSlug { get; set; }
-        public IList<Product> Products { get; set; }
+        public string Description { get; set; } 
+        public int OrderId { get; set; }
+        public Order Order { get; set; }
 
     }
 }

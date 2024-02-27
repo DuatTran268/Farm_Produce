@@ -9,59 +9,52 @@ using System.Threading.Tasks;
 
 namespace FarmProduce.Data.Mappings
 {
-	public class ProductMap : IEntityTypeConfiguration<Products>
-	{
-		public void Configure(EntityTypeBuilder<Products> builder)
-		{
-			builder.ToTable("Product");
-			builder.HasKey(p => p.Id);
-			builder.Property(p => p.Name)
-				.IsRequired()
-				.HasMaxLength(200);
-			builder.Property(p => p.UrlSlug)
-			  .IsRequired()
-			  .HasMaxLength(200);
-			builder.Property(p => p.Image)
-			  .IsRequired()
-			  .HasMaxLength(200);
-			builder.Property(p => p.Price)
-			  .IsRequired();
-
-			builder.Property(p => p.ShortDescription)
-			  .IsRequired()
-			  .HasMaxLength(500);
-
-			builder.Property(p => p.Description)
-			  .IsRequired()
-			  .HasMaxLength(2500);
-
-			builder.Property(p => p.PriceDiscount);
-
-			builder.Property(p => p.DateCreate)
-				.HasDefaultValue(DateTime.Now)
-				.HasColumnType("datetime");
-
-			builder.Property(p => p.DateUpdate)
-				.HasDefaultValue(DateTime.Now)
-				.HasColumnType("datetime");
-
-			builder.Property(p => p.Status)
-				.HasDefaultValue(false);
-			builder.HasOne(p => p.Category)
-				.WithMany(c => c.Products)
-				.HasForeignKey(p => p.CategoryId)
-				.HasConstraintName("FK_Products_Categoies")
-				.OnDelete(DeleteBehavior.Cascade);
-			builder.HasMany(p => p.Comments)
-				.WithOne(c => c.Product)
-				.HasForeignKey(c => c.ProductId)
-				.HasConstraintName("FK_Comments_Products")
-				.OnDelete(DeleteBehavior.Cascade);
-			builder.HasMany(p => p.CollectionImages)
-				.WithOne(c => c.Product)
-				.HasForeignKey(c => c.ProductId)
-				.HasConstraintName("FK_CollectionImages_Products")
-				.OnDelete(DeleteBehavior.Cascade);
+    public class ProductMap : IEntityTypeConfiguration<Product>
+    {
+        public void Configure(EntityTypeBuilder<Product> builder)
+        {
+            builder.ToTable("Products");
+            builder.HasKey(x => x.Id);
+            builder.Property(x => x.Name)
+                .IsRequired()
+                .HasMaxLength(50);
+            builder.Property(x => x.UrlSlug)
+                .IsRequired()
+                .HasMaxLength(50);
+            builder.Property(x => x.QuanlityAvailable)
+                .IsRequired()
+               .HasDefaultValue(0);
+            builder.Property(x => x.Unit)
+                .IsRequired()
+                .HasMaxLength(50);
+            builder.Property(x => x.Price)
+                .IsRequired()
+                .HasPrecision(2,18);
+            builder.Property(x => x.Description)
+                .IsRequired()
+                .HasMaxLength(100);
+            builder.Property(x => x.Status)
+                .IsRequired()
+                .HasDefaultValue(false);
+            builder.Property(x => x.DateCreate)
+                .IsRequired()
+                .HasColumnType("datetime")
+                .HasDefaultValue(DateTime.Now);
+            builder.Property(x => x.DateUpdate)
+          
+               .HasColumnType("datetime")
+               .HasDefaultValue(DateTime.Now);
+            builder.HasMany(p => p.Carts)
+                .WithMany(c => c.Products)
+                .UsingEntity(pc => pc.ToTable("CartDetails"));
+            builder.HasMany(p => p.Images)
+                .WithOne(i => i.Product)
+                .HasForeignKey(i => i.ProductId)
+                .HasConstraintName("FK_Images_Product");
+            builder.HasMany(p => p.Comments)
+                .WithOne(i => i.Product)
+                .HasForeignKey(i => i.ProductId)
+                .HasConstraintName("FK_Comments_Product");
 
 			builder.HasMany(o => o.Orders)
 				.WithMany(p => p.Products)
@@ -69,7 +62,6 @@ namespace FarmProduce.Data.Mappings
 
 
 
-
-		}
-	}
+        }
+    }
 }

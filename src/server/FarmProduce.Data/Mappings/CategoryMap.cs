@@ -13,16 +13,15 @@ namespace FarmProduce.Data.Mappings
     {
         public void Configure(EntityTypeBuilder<Category> builder)
         {
-            builder.ToTable("Category");
+            builder.ToTable("Categories");
             builder.HasKey(c => c.Id);
             builder.Property(c => c.Name)
                 .IsRequired()
-                .HasMaxLength(100);
+                .HasMaxLength(50);
+            
             builder.Property(c => c.UrlSlug)
                 .IsRequired()
-                .HasMaxLength(200);
-            builder.Property(c => c.UrlIcon)
-                .HasMaxLength(200);
+                .HasMaxLength(50);
 
         }
     }

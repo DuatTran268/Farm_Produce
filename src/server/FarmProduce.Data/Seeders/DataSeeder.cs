@@ -23,41 +23,286 @@ namespace FarmProduce.Data.Seeders
 				return;
 
 			var admins = AddAdmins();
-			var buyers = AddBuyers();
-			var orders = AddOrders(buyers);
-			var orderStatus = AddOrdersStatus(orders);
-			var paymentOptions = AddPaymentOptions(orders);
-			var categories = AddCategories();
-			var products = AddProducts(categories, orders);
-			var comments = AddComments(products);
-			var collectionImages = AddCollectionImages(products);
+            var caterories = AddCategories();
+			var comments = AddComments();
+			var images = AddImages();
+			
+			var discounts = AddDiscounts();
+			
+			var orderStatuses = AddOrderStatuses();
+			var paymentMethods = AddPaymentMethods();
+          
 
-		}
+			var products = AddProducts(discounts, images, comments,caterories);
+            var orders = AddOrders(paymentMethods, orderStatuses, products);
+            var customers = AddCustomers(comments, orders);
+
+            var carts = AddCarts(products);
+           
 
 
-		private IList<Admin> AddAdmins()
+        }
+
+        private List<Cart> AddCarts(IList<Product> products)
+        {
+            throw new NotImplementedException();
+        }
+
+        private IList<Order> AddOrders(IList<PaymentMethod> paymentMethods,  IList<OrderStatus> orderStatuses, IList<Product> products)
+        {
+            throw new NotImplementedException();
+        }
+
+        private IList<Product> AddProducts(IList<Discount> discounts, IList<Image> images, IList<Comment> comments,  IList<Category> caterories)
+        {
+            throw new NotImplementedException();
+        }
+
+  
+        private IList<Customer> AddCustomers(IList<Comment> comments, IList<Order> orders)
+        {
+            throw new NotImplementedException();
+        }
+
+        private IList<PaymentMethod> AddPaymentMethods()
+        {
+            var paymentMethods = new List<PaymentMethod>() {
+
+                new(){
+                    Name="QR Pay",
+                    Description="QR",
+                    
+                },
+                 new(){
+                    Name="Thanh toán trực tiếp",
+                    Description="Thanh toán trực tiếp khi nhận hàng",
+                    
+
+                }
+            };
+            foreach (var paymentMethod in paymentMethods)
+            {
+                if(!_dbContext.PaymentMethods.Any(p=> p.Name==paymentMethod.Name))
+                {
+                    _dbContext.Add(paymentMethod);
+                }
+                
+            }
+            _dbContext.SaveChanges();
+            return paymentMethods;
+        }
+
+        private IList<OrderStatus> AddOrderStatuses()
+        {
+            var orderStatuses = new List<OrderStatus>() {
+                new(){
+                   StatusCode="Chờ xác nhận",
+                   Description="",
+                   StatusDate=new DateTime(2024,2, 27),
+                   
+                },
+                 new(){
+                   StatusCode="Đã xác nhận",
+                   Description="",
+                   StatusDate=new DateTime(2024,2, 27),
+
+                },
+                  new(){
+                   StatusCode="Đang giao",
+                   Description="",
+                   StatusDate=new DateTime(2024,2, 27),
+
+                },
+                   new(){
+                   StatusCode="Đã giao",
+                   Description="",
+                   StatusDate=new DateTime(2024,2, 27),
+
+                }
+               
+            };
+            foreach (var orderStatus in orderStatuses)
+            {
+                if(!_dbContext.OrderStatuses.Any(o=> o.StatusCode== orderStatus.StatusCode))
+                {
+                    _dbContext.Add(orderStatus);
+                }
+            }
+            _dbContext.SaveChanges();
+            return orderStatuses;
+        }
+
+      
+
+
+
+
+
+
+
+        private IList<Image> AddImages()
+        {
+            var images = new List<Image>() {
+                new(){
+                    Name="Hinh1",
+                    UrlImage="",
+                    Caption="caption",
+                    
+                },
+                 new(){
+                    Name="Hinh2",
+                    UrlImage="",
+                    Caption="caption",
+
+                },
+                  new(){
+                    Name="Hinh3",
+                    UrlImage="",
+                    Caption="caption",
+
+                },
+            };
+            foreach (var image in images)
+            {
+                if(!_dbContext.Images.Any(i=> i.Name== image.Name))
+                {
+                   _dbContext.Add(image);
+                }
+            }
+            _dbContext.SaveChanges();
+            return images;
+        }
+
+        private IList<Discount> AddDiscounts()
+        {
+            var discounts = new List<Discount>() {
+
+            new(){
+                    DiscountPrice=50,
+                    StartDate= DateTime.Now,
+                    EndDate=(DateTime.Now).AddDays(7),
+                    Status="Ongoing",
+                },
+             new(){
+                    DiscountPrice=20,
+                    StartDate= DateTime.Now,
+                    EndDate=(DateTime.Now).AddDays(10),
+                    Status="Ongoing",
+                }
+            };
+            foreach (var discount in discounts)
+            {
+                if(!_dbContext.Discounts.Any(d=> d.Id== discount.Id))
+                {
+                    _dbContext.Add(discount);
+                }
+               
+            }
+            _dbContext.SaveChanges();
+            return discounts;
+        }
+
+        private IList<Category> AddCategories()
+        {
+            var categories = new List<Category>() {
+
+                new()
+                {
+                
+                Name = "Rau",
+                UrlSlug= "rau",
+                
+                },
+                 new()
+                {
+
+                Name = "Củ",
+                UrlSlug= "cu",
+
+                },
+                  new()
+                {
+
+                Name = "Quả",
+                UrlSlug= "qua",
+
+                },
+                   new()
+                {
+
+                Name = "Gia vị",
+                UrlSlug= "gia-vi",
+
+                }
+            };
+            foreach (var cate in categories)
+            {
+                if(!_dbContext.Categories.Any(c=> c.UrlSlug== cate.UrlSlug))
+                {
+                    _dbContext.Add(cate);
+                }
+            }
+            _dbContext.SaveChanges();
+            return categories;
+        }
+
+        private IList<Comment> AddComments()
+        {
+            var comments = new List<Comment>()
+            {
+                new(){
+                    Name="comment1",
+                    CommentText="Hay qua",
+                    Created= DateTime.Now,
+                    Status=false,
+                    Rating=5
+                    
+                },
+                 new(){
+                    Name="comment2",
+                    CommentText="Hay ghr",
+                    Created= DateTime.Now,
+                    Status=false,
+                    Rating=5
+
+                },
+            };
+            foreach (var comment in comments)
+            {
+             if(!_dbContext.Images.Any(c=> c.Name== comment.Name))
+                {
+                    _dbContext.Add(comment);
+                }   
+            }
+            _dbContext.SaveChanges();
+           return comments;
+        }
+
+
+
+        private IList<Admin> AddAdmins()
 		{
 			var admins = new List<Admin>()
 			{
 				new()
 				{
-					FullName = "Trần Nhật Duật",
+					Name = "Trần Nhật Duật",
 					Password = "123456",
 					Email = "duattran36@gmail.com",
-					UrlSlug = "tran-nhat-duat",
+					Role = "admin",
 				},
 				new()
 				{
-					FullName = "Nguyễn Xuân Hưng",
+					Name = "Nguyễn Xuân Hưng",
 					Password = "234567",
 					Email = "xuanhung42@gmail.com",
-					UrlSlug = "nguyen-xuan-hung",
+					Role = "admin",
 
 				},
 			};
 			foreach (var admin in admins)
 			{
-				if (!_dbContext.Admins.Any(a => a.UrlSlug == admin.UrlSlug))
+				if (!_dbContext.Admins.Any(a => a.Name == admin.Name))
 				{
 					_dbContext.Admins.Add(admin);
 				}
@@ -67,324 +312,8 @@ namespace FarmProduce.Data.Seeders
 			return admins;
 
 		}
+	
 
-		private IList<Buyer> AddBuyers()
-		{
-			var buyers = new List<Buyer>()
-			{
-				new()
-				{
-					Name = "Trần Duật",
-					UrlSlug = "tran-duat",
-					Email = "tranduat123@gmail.com",
-					Address = "108 Lò Lu, Trường Thạnh, Quận 9, TPHCM",
-					Phone = "0922223333",
-
-				},
-				new()
-				{
-					Name = "Tiến Nguyễn",
-					UrlSlug = "tien-nguyen",
-					Email = "tiennguyen123@gmail.com",
-					Address = "10 Đống Đa, Phường 2, Thành phố Đà Lạt",
-					Phone = "0922224444",
-
-				},
-				new()
-				{
-					Name = "Xuân Hưng",
-					UrlSlug = "xuan-hung",
-					Email = "xuanhung234@gmail.com",
-					Address = "9 Trại Mát, Phường 11, Thành phố Đà Lạt",
-					Phone = "0922225555",
-
-				},
-			};
-			foreach (var buyer in buyers)
-			{
-				if (_dbContext.Buyers.Any(b => b.Id == buyer.Id))
-				{
-					_dbContext.Buyers.Add(buyer);
-				}
-			}
-			_dbContext.SaveChanges();
-			return buyers;
-
-		}
-
-		private IList<Category> AddCategories()
-		{
-			var categories = new List<Category>()
-			{
-				new()
-				{
-					Name = "Tất cả sản phẩm",
-					UrlSlug = "tat-ca-san-pham",
-					UrlIcon = "",
-
-				},
-				new()
-				{
-					Name = "Rau, củ , quả",
-					UrlSlug = "rau-cu-qua",
-					UrlIcon = "",
-
-				},
-				new()
-				{
-					Name = "Trái cây tươi",
-					UrlSlug = "trai-cay-say-deo",
-					UrlIcon = "",
-
-				},
-				new()
-				{
-					Name = "Hoa tươi - cây giống",
-					UrlSlug = "hoa-tuoi-cay-giong",
-					UrlIcon = "",
-
-				},
-			};
-			foreach (var category in categories)
-			{
-				if (_dbContext.Categories.Any(c => c.Id == category.Id))
-				{
-					_dbContext.Categories.Add(category);
-				}
-
-			}
-			_dbContext.SaveChanges();
-			return categories;
-		}
-
-		private IList<CollectionImage> AddCollectionImages(IList<Products> products)
-		{
-			var collectionImages = new List<CollectionImage>()
-			{
-				new()
-				{
-					Name = "Rau Bắp cải",
-					UrlSlug = "rau-bap-cai",
-					Product = products[0],
-				},
-				new()
-				{
-					Name = "Hoa Chậu Đà Lạt",
-					UrlSlug = "hoa-chau-da-lat",
-					Product = products[1],
-				}
-			};
-			foreach (var collectionImage in collectionImages)
-			{
-				if (_dbContext.CollectionImages.Any(i => i.UrlSlug == collectionImage.UrlSlug))
-				{
-					_dbContext.CollectionImages.Add(collectionImage);
-				}
-			}
-			_dbContext.SaveChanges();
-			return collectionImages;
-		}
-
-
-		private IList<Comment> AddComments(IList<Products> products)
-		{
-			var comments = new List<Comment>()
-			{
-				new()
-				{
-					UserName = "Trần Duật",
-					UrlSlug = "tran-duat",
-					Content = "Rau củ quả ngon",
-					Created = new DateTime(2024,02,25),
-					Status = true,
-					Product = products[0],
-				},
-				new()
-				{
-					UserName = "Xuân Hưng",
-					UrlSlug = "xuan-hung",
-					Content = "Hoa rất tươi",
-					Created = new DateTime(2024,02,26),
-					Status = true,
-					Product = products[1],
-				},
-			};
-			foreach (var comment in comments)
-			{
-				if (_dbContext.Comments.Any(cm => cm.UrlSlug == comment.UrlSlug))
-				{
-					_dbContext.Comments.Add(comment);
-				}
-			}
-			_dbContext.SaveChanges();
-			return comments;
-
-		}
-
-
-		private IList<Order> AddOrders(IList<Buyer> buyers)
-		{
-			var orders = new List<Order>()
-			{
-				new()
-				{
-					Name = "Đơn hàng rau",
-					UrlSlug = "don-hang-rau",
-					DateOrder = new DateTime(2024,02,26),
-					Note = "Giao nhanh nha em",
-					Buyer = buyers[0],
-
-				},
-				new()
-				{
-					Name = "Đơn hàng hoa",
-					UrlSlug = "don-hang-hoa",
-					DateOrder = new DateTime(2024,02,26),
-					Note = "Giao nhanh cho anh nha em",
-					Buyer = buyers[1],
-				},
-			};
-			foreach (var order in orders)
-			{
-				if (!_dbContext.Orders.Any(od => od.Id == order.Id))
-				{
-					_dbContext.Orders.Add(order);
-				}
-			}
-			_dbContext.SaveChanges();
-			return orders;
-		}
-
-
-		private IList<OrderStatus> AddOrdersStatus(IList<Order> orders)
-		{
-			var orderStatus = new List<OrderStatus>()
-			{
-				new()
-				{
-					Name = "Đặt hàng",
-					UrlSlug = "dat-hang",
-					Order = orders[0]
-				},
-				new()
-				{
-					Name = "Xác nhận",
-					UrlSlug = "xac-nhan",
-					Order = orders[0]
-				},
-				new()
-				{
-					Name = "Đang vận chuyển",
-					UrlSlug = "dang-van-chuyen",
-					Order = orders[0]
-				},
-				new()
-				{
-					Name = "Giao thành công",
-					UrlSlug = "giao-thanh-cong",
-					Order = orders[0]
-				},
-				new()
-				{
-					Name = "Hoàn trả",
-					UrlSlug = "hoan-tra",
-					Order = orders[0]
-
-				},
-				new()
-				{
-					Name = "Đã hoàn thành",
-					UrlSlug = "da-hoan-thanh",
-					Order = orders[0]
-
-				}
-			};
-			foreach (var orderStatuses in orderStatus)
-			{
-				if (_dbContext.OrderStatuses.Any(od => od.UrlSlug == orderStatuses.UrlSlug))
-				{
-					_dbContext.OrderStatuses.Add(orderStatuses);
-
-				}
-			}
-			_dbContext.SaveChanges();
-			return orderStatus;
-		}
-
-		private IList<PaymentOption> AddPaymentOptions(IList<Order> orders)
-		{
-			var paymentOptions = new List<PaymentOption>()
-			{
-				new()
-				{
-					Name = "Chuyển khoản",
-					UrlSlug = "chuyen-khoan",
-					Order = orders[0]
-				},
-				new()
-				{
-					Name = "Trả tiền mặt khi nhận hàng",
-					UrlSlug = "tra-tien-mat-khi-nhan-hang",
-					Order = orders[0]
-				},
-			};
-			foreach (var paymentOption in paymentOptions)
-			{
-				if (_dbContext.PaymentOptions.Any(pm => pm.UrlSlug == pm.UrlSlug))
-				{
-					_dbContext.PaymentOptions.Add(paymentOption);
-				}
-			}
-			_dbContext.SaveChanges();
-			return paymentOptions;
-		}
-
-		private IList<Products> AddProducts(IList<Category> categories, IList<Order> orders)
-		{
-			var products = new List<Products>()
-			{
-				new ()
-				{
-					Name = "Rau cải bắp",
-					UrlSlug = "rau-cai-bap",
-					Price = 20000,
-					PriceDiscount = 18000,
-					Image = "",
-					ShortDescription = "Rau cải bắp xanh sạch từ Đà Lạt",
-					Description = "Rau cải bắp xanh sạch tươi ngon được trồng từ vùng đất Đà Lạt",
-					DateCreate = new DateTime(2024,02,25),
-					DateUpdate = new DateTime(2024, 02, 26),
-					Status = true,
-					Category = categories[1],
-					Order = orders[0],
-
-				},
-				new ()
-				{
-					Name = "Chậu hoa Lan Đà Lạt",
-					UrlSlug = "chau-hoa-lan-da-lat",
-					Price = 300000,
-					PriceDiscount = 280000,
-					Image = "",
-					ShortDescription = "Chậu hoa Lan Đà Lạt",
-					Description = "Chậu hoa Lan đẹp được trồng từ nhà kính ở Đà Lạt",
-					DateCreate = new DateTime(2024,02,25),
-					DateUpdate = new DateTime(2024, 02, 26),
-					Status = true,
-					Category = categories[1],
-					Order = orders[0],
-
-				},
-			};
-			foreach (var product in products)
-			{
-				if (_dbContext.Products.Any(pd => pd.Id == product.Id && pd.UrlSlug == product.UrlSlug))
-				{
-					_dbContext.Products.Add(product);
-				}
-			}
-			_dbContext.SaveChanges();
-			return products;
-		}
 	}
-}
+	}
+
