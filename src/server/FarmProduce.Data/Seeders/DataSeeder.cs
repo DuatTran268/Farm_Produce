@@ -28,15 +28,18 @@ namespace FarmProduce.Data.Seeders
 			var images = AddImages();
 			
 			var discounts = AddDiscounts();
-			var orderdetails = AddOrderDetails();
+			
 			var orderStatuses = AddOrderStatuses();
 			var paymentMethods = AddPaymentMethods();
-            var orders = AddOrders(paymentMethods, orderdetails, orderStatuses);
-
-            var customers = AddCustomers(comments,orders);
-			var products = AddProducts(discounts, images, comments, orderdetails,caterories);
-            var carts = AddCarts(products);
           
+
+			var products = AddProducts(discounts, images, comments,caterories);
+            var orders = AddOrders(paymentMethods, orderStatuses, products);
+            var customers = AddCustomers(comments, orders);
+
+            var carts = AddCarts(products);
+           
+
 
         }
 
@@ -45,12 +48,12 @@ namespace FarmProduce.Data.Seeders
             throw new NotImplementedException();
         }
 
-        private IList<Order> AddOrders(IList<PaymentMethod> paymentMethods, IList<OrderDetail> orderdetails, object orderStatuses)
+        private IList<Order> AddOrders(IList<PaymentMethod> paymentMethods,  IList<OrderStatus> orderStatuses, IList<Product> products)
         {
             throw new NotImplementedException();
         }
 
-        private IList<Product> AddProducts(IList<Discount> discounts, IList<Image> images, object comments, object orderdetails, object caterories)
+        private IList<Product> AddProducts(IList<Discount> discounts, IList<Image> images, IList<Comment> comments,  IList<Category> caterories)
         {
             throw new NotImplementedException();
         }
@@ -71,38 +74,153 @@ namespace FarmProduce.Data.Seeders
             throw new NotImplementedException();
         }
 
-        private IList<OrderDetail> AddOrderDetails()
-        {
-            throw new NotImplementedException();
-        }
+      
 
-       
 
-       
 
-       
+
+
+
 
         private IList<Image> AddImages()
         {
-            throw new NotImplementedException();
+            var images = new List<Image>() {
+                new(){
+                    Name="Hinh1",
+                    UrlImage="",
+                    Caption="caption",
+                    
+                },
+                 new(){
+                    Name="Hinh2",
+                    UrlImage="",
+                    Caption="caption",
+
+                },
+                  new(){
+                    Name="Hinh3",
+                    UrlImage="",
+                    Caption="caption",
+
+                },
+            };
+            foreach (var image in images)
+            {
+                if(!_dbContext.Images.Any(i=> i.Name== image.Name))
+                {
+                   _dbContext.Add(image);
+                }
+            }
+            _dbContext.SaveChanges();
+            return images;
         }
 
         private IList<Discount> AddDiscounts()
         {
-            throw new NotImplementedException();
+            var discounts = new List<Discount>() {
+
+            new(){
+                    DiscountPrice=50,
+                    StartDate= DateTime.Now,
+                    EndDate=(DateTime.Now).AddDays(7),
+                    Status="Ongoing",
+                },
+             new(){
+                    DiscountPrice=20,
+                    StartDate= DateTime.Now,
+                    EndDate=(DateTime.Now).AddDays(10),
+                    Status="Ongoing",
+                }
+            };
+            foreach (var discount in discounts)
+            {
+                if(!_dbContext.Discounts.Any(d=> d.Id== discount.Id))
+                {
+                    _dbContext.Add(discount);
+                }
+               
+            }
+            _dbContext.SaveChanges();
+            return discounts;
         }
 
         private IList<Category> AddCategories()
         {
-            throw new NotImplementedException();
+            var categories = new List<Category>() {
+
+                new()
+                {
+                
+                Name = "Rau",
+                UrlSlug= "rau",
+                
+                },
+                 new()
+                {
+
+                Name = "Củ",
+                UrlSlug= "cu",
+
+                },
+                  new()
+                {
+
+                Name = "Quả",
+                UrlSlug= "qua",
+
+                },
+                   new()
+                {
+
+                Name = "Gia vị",
+                UrlSlug= "gia-vi",
+
+                }
+            };
+            foreach (var cate in categories)
+            {
+                if(!_dbContext.Categories.Any(c=> c.UrlSlug== cate.UrlSlug))
+                {
+                    _dbContext.Add(cate);
+                }
+            }
+            _dbContext.SaveChanges();
+            return categories;
         }
 
         private IList<Comment> AddComments()
         {
-            throw new NotImplementedException();
+            var comments = new List<Comment>()
+            {
+                new(){
+                    Name="comment1",
+                    CommentText="Hay qua",
+                    Created= DateTime.Now,
+                    Status=false,
+                    Rating=5
+                    
+                },
+                 new(){
+                    Name="comment2",
+                    CommentText="Hay ghr",
+                    Created= DateTime.Now,
+                    Status=false,
+                    Rating=5
+
+                },
+            };
+            foreach (var comment in comments)
+            {
+             if(!_dbContext.Images.Any(c=> c.Name== comment.Name))
+                {
+                    _dbContext.Add(comment);
+                }   
+            }
+            _dbContext.SaveChanges();
+           return comments;
         }
 
-       
+
 
         private IList<Admin> AddAdmins()
 		{

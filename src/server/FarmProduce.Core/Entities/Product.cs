@@ -27,7 +27,7 @@ namespace FarmProduce.Core.Entities
 		public IList<Image> Images { get; set; }
 		public IList<Comment> Comments { get; set; }
 		public IList<Cart> Carts { get; set; }
-		public IList<OrderDetail> OrderDetails { get; set; }
+		public IList<Order> Orders { get; set; }
 
 	}
 }

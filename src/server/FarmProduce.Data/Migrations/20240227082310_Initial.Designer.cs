@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FarmProduce.Data.Migrations
 {
     [DbContext(typeof(FarmDbContext))]
-    [Migration("20240227040454_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240227082310_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -131,7 +131,7 @@ namespace FarmProduce.Data.Migrations
                     b.Property<DateTime>("Created")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 2, 27, 11, 4, 54, 124, DateTimeKind.Local).AddTicks(1726));
+                        .HasDefaultValue(new DateTime(2024, 2, 27, 15, 23, 10, 284, DateTimeKind.Local).AddTicks(6354));
 
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
@@ -217,7 +217,7 @@ namespace FarmProduce.Data.Migrations
                     b.Property<DateTime>("StartDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 2, 27, 11, 4, 54, 125, DateTimeKind.Local).AddTicks(1711));
+                        .HasDefaultValue(new DateTime(2024, 2, 27, 15, 23, 10, 285, DateTimeKind.Local).AddTicks(5056));
 
                     b.Property<string>("Status")
                         .ValueGeneratedOnAdd()
@@ -278,7 +278,7 @@ namespace FarmProduce.Data.Migrations
                     b.Property<DateTime>("DateOrder")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 2, 27, 11, 4, 54, 126, DateTimeKind.Local).AddTicks(4006));
+                        .HasDefaultValue(new DateTime(2024, 2, 27, 15, 23, 10, 286, DateTimeKind.Local).AddTicks(1241));
 
                     b.Property<int>("OrderStatusId")
                         .HasColumnType("int");
@@ -293,38 +293,6 @@ namespace FarmProduce.Data.Migrations
                     b.HasIndex("CustomerId");
 
                     b.ToTable("Orders", (string)null);
-                });
-
-            modelBuilder.Entity("FarmProduce.Core.Entities.OrderDetail", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
-
-                    b.Property<int>("UnitPrice")
-                        .HasMaxLength(20)
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("OrderDetails", (string)null);
                 });
 
             modelBuilder.Entity("FarmProduce.Core.Entities.OrderStatus", b =>
@@ -400,12 +368,12 @@ namespace FarmProduce.Data.Migrations
                     b.Property<DateTime>("DateCreate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 2, 27, 11, 4, 54, 127, DateTimeKind.Local).AddTicks(7978));
+                        .HasDefaultValue(new DateTime(2024, 2, 27, 15, 23, 10, 287, DateTimeKind.Local).AddTicks(7404));
 
                     b.Property<DateTime>("DateUpdate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 2, 27, 11, 4, 54, 127, DateTimeKind.Local).AddTicks(8416));
+                        .HasDefaultValue(new DateTime(2024, 2, 27, 15, 23, 10, 287, DateTimeKind.Local).AddTicks(7991));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -446,6 +414,21 @@ namespace FarmProduce.Data.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Products", (string)null);
+                });
+
+            modelBuilder.Entity("OrderProduct", b =>
+                {
+                    b.Property<int>("OrdersId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrdersId", "ProductsId");
+
+                    b.HasIndex("ProductsId");
+
+                    b.ToTable("OrderDetail", (string)null);
                 });
 
             modelBuilder.Entity("CartProduct", b =>
@@ -519,27 +502,6 @@ namespace FarmProduce.Data.Migrations
                     b.Navigation("Customer");
                 });
 
-            modelBuilder.Entity("FarmProduce.Core.Entities.OrderDetail", b =>
-                {
-                    b.HasOne("FarmProduce.Core.Entities.Order", "Order")
-                        .WithMany("OrderDetails")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_OrderDetails_Order");
-
-                    b.HasOne("FarmProduce.Core.Entities.Product", "Product")
-                        .WithMany("OrderDetails")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_OrderDetails_Product");
-
-                    b.Navigation("Order");
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("FarmProduce.Core.Entities.OrderStatus", b =>
                 {
                     b.HasOne("FarmProduce.Core.Entities.Order", "Order")
@@ -575,6 +537,21 @@ namespace FarmProduce.Data.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("OrderProduct", b =>
+                {
+                    b.HasOne("FarmProduce.Core.Entities.Order", null)
+                        .WithMany()
+                        .HasForeignKey("OrdersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FarmProduce.Core.Entities.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("FarmProduce.Core.Entities.Category", b =>
                 {
                     b.Navigation("Products");
@@ -589,8 +566,6 @@ namespace FarmProduce.Data.Migrations
 
             modelBuilder.Entity("FarmProduce.Core.Entities.Order", b =>
                 {
-                    b.Navigation("OrderDetails");
-
                     b.Navigation("OrderStatuses");
 
                     b.Navigation("PaymentMethods");
@@ -603,8 +578,6 @@ namespace FarmProduce.Data.Migrations
                     b.Navigation("Discounts");
 
                     b.Navigation("Images");
-
-                    b.Navigation("OrderDetails");
                 });
 #pragma warning restore 612, 618
         }
