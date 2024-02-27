@@ -14,6 +14,7 @@ namespace FarmProduce.Core.Entities
         public string UrlImage { get; set; }
         public string Caption { get; set; }
         public int ProductId { get; set; }
+        public Product Product { get; set; }
 
     }
 }

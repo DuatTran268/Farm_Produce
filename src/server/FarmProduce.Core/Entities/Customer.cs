@@ -15,6 +15,8 @@ namespace FarmProduce.Core.Entities
 		public string Email { get; set; }
 		public string Address { get; set; }
 		public string Phone { get; set; }
+		public IList<Comment> Comments { get; set; }
+		public IList<Order> Orders { get; set; }
 		
 	}
 }

@@ -13,6 +13,7 @@ namespace FarmProduce.Core.Entities
         public int Id { get; set; }
         public int Quantity { get; set; }
         public DateTime AddedDate {  get; set; }
-        public int ProductId { get; set; }
+       
+        public IList<Product> Products { get; set; }
     }
 }

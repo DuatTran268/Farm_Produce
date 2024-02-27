@@ -7,13 +7,18 @@ using System.Threading.Tasks;
 
 namespace FarmProduce.Core.Entities
 {
-    public class Orders:IEntity
+    public class Order:IEntity
     {
         public int Id { get; set; }
         public DateTime DateOrder{ get; set; }
         public int TotalPrice { get; set; }
         public int OrderStatusId { get; set; }
         public int CustomerId { get; set; }
-        public int PaymentMethodId { get; set; }
+
+        public  IList<PaymentMethod> PaymentMethods { get; set; }
+        public Customer Customer { get; set; }
+        public IList<OrderStatus> OrderStatuses { get; set; }
+        public IList<OrderDetail> OrderDetails { get; set; }
+
     }
 }

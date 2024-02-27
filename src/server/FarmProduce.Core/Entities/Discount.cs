@@ -15,5 +15,6 @@ namespace FarmProduce.Core.Entities
         public DateTime EndDate { get; set; }
         public string Status { get; set; }
         public int ProductId { get; set; }
+        public Product Products { get; set; }
     }
 }
