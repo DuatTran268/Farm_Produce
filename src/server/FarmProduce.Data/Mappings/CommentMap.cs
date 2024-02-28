@@ -13,23 +13,29 @@ namespace FarmProduce.Data.Mappings
     {
         public void Configure(EntityTypeBuilder<Comment> builder)
         {
-            builder.ToTable("Comment");
-            builder.HasKey(c => c.Id);
-            builder.Property(c => c.UserName)
+            builder.ToTable("Comments");
+            builder.HasKey(x => x.Id);
+            builder.Property(x => x.Name)
                 .IsRequired()
                 .HasMaxLength(50);
-            builder.Property(c => c.UrlSlug)
+            builder.Property(x => x.Rating)
                .IsRequired()
-               .HasMaxLength(50);
-            builder.Property(c => c.Content)
+               .HasDefaultValue(5);
+            builder.Property(x => x.Created)
+             .HasDefaultValue(DateTime.Now)
+             .HasColumnType("datetime");
+
+            builder.Property(x => x.CommentText)
                .IsRequired()
-               .HasMaxLength(500);
-            builder.Property(c => c.Status)
-                .HasDefaultValue(false);
-            builder.Property(c => c.Created)
-			    .HasDefaultValue(DateTime.Now)
-			    .HasColumnType("datetime");
-           
+               .HasMaxLength(200);
+            builder.Property(x => x.Status)
+               .IsRequired()
+              .HasDefaultValue(false);
+
+
+
+
+
 
         }
     }

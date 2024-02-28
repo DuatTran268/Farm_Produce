@@ -7,16 +7,18 @@ using System.Threading.Tasks;
 
 namespace FarmProduce.Core.Entities
 {
-	public class Comment : IEntity
-	{
-		public int Id { get; set; }
-		public string UserName { get; set; }
-		public string UrlSlug { get; set; }
-		public string Content { get; set; }
-		public DateTime Created { get; set; } = DateTime.Now;
-		public bool Status { get; set; }
-		public Products Product { get; set; }
-		public int ProductId { get; set; }
+    public class Comment:IEntity
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int Rating { get; set; }
+        public DateTime Created { get; set; } = DateTime.Now;
+        public string CommentText { get; set; }
+        public bool Status { get; set; }
+        public int CustomerId { get; set; }
+        public Customer Customer { get; set; }
+        public int ProductId { get; set; }
+        public Product Product { get; set; }
 
-	}
+    }
 }
