@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FarmProduce.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -99,8 +99,8 @@ namespace FarmProduce.Data.Migrations
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    DateCreate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 2, 29, 14, 46, 37, 493, DateTimeKind.Local).AddTicks(3298)),
-                    DateUpdate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 2, 29, 14, 46, 37, 493, DateTimeKind.Local).AddTicks(3859)),
+                    DateCreate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 2, 29, 22, 2, 55, 146, DateTimeKind.Local).AddTicks(208)),
+                    DateUpdate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 2, 29, 22, 2, 55, 146, DateTimeKind.Local).AddTicks(572)),
                     Status = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
@@ -120,7 +120,7 @@ namespace FarmProduce.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DateOrder = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 2, 29, 14, 46, 37, 491, DateTimeKind.Local).AddTicks(9435)),
+                    DateOrder = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 2, 29, 22, 2, 55, 145, DateTimeKind.Local).AddTicks(685)),
                     TotalPrice = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
                     OrderStatusId = table.Column<int>(type: "int", nullable: false),
                     CustomerId = table.Column<int>(type: "int", nullable: false)
@@ -168,7 +168,7 @@ namespace FarmProduce.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Rating = table.Column<int>(type: "int", nullable: false, defaultValue: 5),
-                    Created = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 2, 29, 14, 46, 37, 489, DateTimeKind.Local).AddTicks(9943)),
+                    Created = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 2, 29, 22, 2, 55, 143, DateTimeKind.Local).AddTicks(8564)),
                     CommentText = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     CustomerId = table.Column<int>(type: "int", nullable: false),
@@ -198,7 +198,7 @@ namespace FarmProduce.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DiscountPrice = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    StartDate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 2, 29, 14, 46, 37, 491, DateTimeKind.Local).AddTicks(3539)),
+                    StartDate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 2, 29, 22, 2, 55, 144, DateTimeKind.Local).AddTicks(6633)),
                     EndDate = table.Column<DateTime>(type: "datetime", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: true, defaultValue: "False"),
                     ProductId = table.Column<int>(type: "int", nullable: false)
@@ -231,30 +231,6 @@ namespace FarmProduce.Data.Migrations
                     table.ForeignKey(
                         name: "FK_Images_Product",
                         column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "OrderDetail",
-                columns: table => new
-                {
-                    OrdersId = table.Column<int>(type: "int", nullable: false),
-                    ProductsId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OrderDetail", x => new { x.OrdersId, x.ProductsId });
-                    table.ForeignKey(
-                        name: "FK_OrderDetail_Orders_OrdersId",
-                        column: x => x.OrdersId,
-                        principalTable: "Orders",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_OrderDetail_Products_ProductsId",
-                        column: x => x.ProductsId,
                         principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -303,6 +279,30 @@ namespace FarmProduce.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "ProductOrders",
+                columns: table => new
+                {
+                    OrdersId = table.Column<int>(type: "int", nullable: false),
+                    ProductsId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductOrders", x => new { x.OrdersId, x.ProductsId });
+                    table.ForeignKey(
+                        name: "FK_ProductOrders_Orders_OrdersId",
+                        column: x => x.OrdersId,
+                        principalTable: "Orders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProductOrders_Products_ProductsId",
+                        column: x => x.ProductsId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_CartDetails_ProductsId",
                 table: "CartDetails",
@@ -329,11 +329,6 @@ namespace FarmProduce.Data.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderDetail_ProductsId",
-                table: "OrderDetail",
-                column: "ProductsId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Orders_CustomerId",
                 table: "Orders",
                 column: "CustomerId");
@@ -347,6 +342,11 @@ namespace FarmProduce.Data.Migrations
                 name: "IX_PaymentMethods_OrderId",
                 table: "PaymentMethods",
                 column: "OrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductOrders_ProductsId",
+                table: "ProductOrders",
+                column: "ProductsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryId",
@@ -376,28 +376,28 @@ namespace FarmProduce.Data.Migrations
                 name: "Images");
 
             migrationBuilder.DropTable(
-                name: "OrderDetail");
-
-            migrationBuilder.DropTable(
                 name: "OrderStatuses");
 
             migrationBuilder.DropTable(
                 name: "PaymentMethods");
 
             migrationBuilder.DropTable(
-                name: "Carts");
+                name: "ProductOrders");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "Carts");
 
             migrationBuilder.DropTable(
                 name: "Orders");
 
             migrationBuilder.DropTable(
-                name: "Categories");
+                name: "Products");
 
             migrationBuilder.DropTable(
                 name: "Customers");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
         }
     }
 }

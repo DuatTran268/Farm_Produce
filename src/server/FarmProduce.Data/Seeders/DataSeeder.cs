@@ -206,26 +206,26 @@ namespace FarmProduce.Data.Seeders
                    StatusCode="Chờ xác nhận",
                    Description="",
                    StatusDate=new DateTime(2024,2, 27),
-                   Order= orders[1],
+                   Order= orders[0],
                    
                 },
                  new(){
                    StatusCode="Đã xác nhận",
                    Description="",
                    StatusDate=new DateTime(2024,2, 27),
-                   Order= orders[1],
+                   Order= orders[0],
                 },
                   new(){
                    StatusCode="Đang giao",
                    Description="",
                    StatusDate=new DateTime(2024,2, 27),
-                   Order= orders[1],
+                   Order= orders[0],
                 },
                    new(){
                    StatusCode="Đã giao",
                    Description="",
                    StatusDate=new DateTime(2024,2, 27),
-                   Order= orders[1],
+                   Order= orders[0],
                 }
                
             };
