@@ -1,6 +1,7 @@
 ﻿using FarmProduce.Core.Entities;
 using FarmProduce.Data.Contexts;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,59 +25,164 @@ namespace FarmProduce.Data.Seeders
 
 			var admins = AddAdmins();
             var caterories = AddCategories();
-			var comments = AddComments();
-			var images = AddImages();
 			
-			var discounts = AddDiscounts();
 			
-			var orderStatuses = AddOrderStatuses();
-			var paymentMethods = AddPaymentMethods();
+			
+		
+			
+			
+		
+
+            var customUI = AddCustomUI();
+
           
-
-			var products = AddProducts(discounts, images, comments,caterories);
-            var orders = AddOrders(paymentMethods, orderStatuses, products);
-            var customers = AddCustomers(comments, orders);
-
-            var carts = AddCarts(products);
+            var customers = AddCustomers();
+            var orders = AddOrders(customers);
+            var products = AddProducts(caterories, orders);
+            var comments = AddComments(customers,products);
            
+            var images = AddImages(products);
+            var carts = AddCarts(products);
+            var discounts = AddDiscounts(products);
+            var orderStatuses = AddOrderStatuses(orders);
+            var paymentMethods = AddPaymentMethods(orders);
 
 
+        }
+
+        private List<CustomUI> AddCustomUI()
+        {
+           var customUIs = new List<CustomUI>() {
+            new(){ 
+                Title= "Test",
+                Color = "red",
+                Image="",
+
+            },
+             new(){
+                Title= "GreenTest",
+                Color = "green",
+                Image="",
+
+            }
+           };
+            _dbContext.AddRange(customUIs);
+            _dbContext.SaveChanges();
+            return customUIs;
         }
 
         private List<Cart> AddCarts(IList<Product> products)
         {
-            throw new NotImplementedException();
+           var carts = new List<Cart>() {
+               new()
+               {
+                  Quantity = 1,
+                  AddedDate = new DateTime(2023,12,12),
+                  Products = new List<Product>()
+                  {
+                      products[0]
+                  }
+               }
+           };
+            _dbContext.AddRange(carts);
+            _dbContext.SaveChanges();
+            return carts;
         }
 
-        private IList<Order> AddOrders(IList<PaymentMethod> paymentMethods,  IList<OrderStatus> orderStatuses, IList<Product> products)
+        private IList<Order> AddOrders(IList<Customer> customers)
         {
-            throw new NotImplementedException();
-        }
+            var orders = new List<Order>() {
 
-        private IList<Product> AddProducts(IList<Discount> discounts, IList<Image> images, IList<Comment> comments,  IList<Category> caterories)
+            new(){
+                DateOrder=new DateTime(2023, 12, 28),
+                TotalPrice= 0,
+                Customer=customers[0]
+              
+               
+            }
+
+            };
+            _dbContext.AddRange(orders);
+            _dbContext.SaveChanges();
+            return orders;
+        }
+       
+        private IList<Product> AddProducts(   IList<Category> caterories, IList<Order> orders)
         {
-            throw new NotImplementedException();
+            var products = new List<Product>() {
+
+                new(){
+                    Name="Rau muống",
+                    UrlSlug="rau-muong",
+                   QuanlityAvailable=6,
+                   Unit="kg",
+                   Price=2000,
+                   Description="rau sach",
+                   DateCreate= new DateTime(2023,12,12),
+                   DateUpdate=DateTime.Now,
+                   Category= caterories[0],
+                  
+                  
+                  CategoryId= 1,
+                 
+                  Orders= new List<Order>()
+                  {
+                      orders[0]
+                  }
+
+                   
+
+                },
+            };
+            foreach (var product in products)
+            {
+                if (!_dbContext.Products.Any(p => p.UrlSlug == product.UrlSlug))
+                {
+                    _dbContext.Add(product);
+                }
+            }
+            _dbContext.AddRange(products);
+            _dbContext.SaveChanges();
+            return products;
         }
 
-  
-        private IList<Customer> AddCustomers(IList<Comment> comments, IList<Order> orders)
+
+        private IList<Customer> AddCustomers()
         {
-            throw new NotImplementedException();
+            var customers = new List<Customer>(){
+
+                new(){
+                Name="Hung",
+                Email="hung@gmail.com",
+                Phone="0979797979",
+                Address="Đà Lạt",
+              }
+            };
+            foreach (var customer in customers)
+            {
+                if(_dbContext.Customers.Any(c=>c.Email== customer.Email))
+                {
+                    _dbContext.Add(customer);
+                }
+            }
+           _dbContext.SaveChanges();
+            return customers;
         }
 
-        private IList<PaymentMethod> AddPaymentMethods()
+        private IList<PaymentMethod> AddPaymentMethods(IList<Order> orders)
         {
             var paymentMethods = new List<PaymentMethod>() {
 
                 new(){
                     Name="QR Pay",
                     Description="QR",
-                    
+                    Order= orders[0]
                 },
                  new(){
                     Name="Thanh toán trực tiếp",
                     Description="Thanh toán trực tiếp khi nhận hàng",
-                    
+                    Order= orders[0]
+
 
                 }
             };
@@ -88,36 +194,38 @@ namespace FarmProduce.Data.Seeders
                 }
                 
             }
+            _dbContext.AddRange(paymentMethods);
             _dbContext.SaveChanges();
             return paymentMethods;
         }
 
-        private IList<OrderStatus> AddOrderStatuses()
+        private IList<OrderStatus> AddOrderStatuses(IList<Order> orders) 
         {
             var orderStatuses = new List<OrderStatus>() {
                 new(){
                    StatusCode="Chờ xác nhận",
                    Description="",
                    StatusDate=new DateTime(2024,2, 27),
+                   Order= orders[1],
                    
                 },
                  new(){
                    StatusCode="Đã xác nhận",
                    Description="",
                    StatusDate=new DateTime(2024,2, 27),
-
+                   Order= orders[1],
                 },
                   new(){
                    StatusCode="Đang giao",
                    Description="",
                    StatusDate=new DateTime(2024,2, 27),
-
+                   Order= orders[1],
                 },
                    new(){
                    StatusCode="Đã giao",
                    Description="",
                    StatusDate=new DateTime(2024,2, 27),
-
+                   Order= orders[1],
                 }
                
             };
@@ -128,6 +236,7 @@ namespace FarmProduce.Data.Seeders
                     _dbContext.Add(orderStatus);
                 }
             }
+            _dbContext.AddRange(orderStatuses);
             _dbContext.SaveChanges();
             return orderStatuses;
         }
@@ -140,26 +249,27 @@ namespace FarmProduce.Data.Seeders
 
 
 
-        private IList<Image> AddImages()
+        private IList<Image> AddImages(IList<Product> products)
         {
             var images = new List<Image>() {
                 new(){
                     Name="Hinh1",
                     UrlImage="",
                     Caption="caption",
+                    Product= products[0]
                     
                 },
                  new(){
                     Name="Hinh2",
                     UrlImage="",
                     Caption="caption",
-
+                     Product= products[0]
                 },
                   new(){
                     Name="Hinh3",
                     UrlImage="",
                     Caption="caption",
-
+                     Product= products[0]
                 },
             };
             foreach (var image in images)
@@ -169,11 +279,12 @@ namespace FarmProduce.Data.Seeders
                    _dbContext.Add(image);
                 }
             }
+            _dbContext.AddRange(images);
             _dbContext.SaveChanges();
             return images;
         }
 
-        private IList<Discount> AddDiscounts()
+        private IList<Discount> AddDiscounts(IList<Product> products)
         {
             var discounts = new List<Discount>() {
 
@@ -182,12 +293,14 @@ namespace FarmProduce.Data.Seeders
                     StartDate= DateTime.Now,
                     EndDate=(DateTime.Now).AddDays(7),
                     Status="Ongoing",
+                    Products= products[0]
                 },
              new(){
                     DiscountPrice=20,
                     StartDate= DateTime.Now,
                     EndDate=(DateTime.Now).AddDays(10),
                     Status="Ongoing",
+                    Products=products[0]
                 }
             };
             foreach (var discount in discounts)
@@ -198,6 +311,7 @@ namespace FarmProduce.Data.Seeders
                 }
                
             }
+            _dbContext.AddRange(discounts);
             _dbContext.SaveChanges();
             return discounts;
         }
@@ -242,11 +356,12 @@ namespace FarmProduce.Data.Seeders
                     _dbContext.Add(cate);
                 }
             }
+            _dbContext.AddRange(categories);
             _dbContext.SaveChanges();
             return categories;
         }
 
-        private IList<Comment> AddComments()
+        private IList<Comment> AddComments( IList<Customer> customers,IList<Product> products )
         {
             var comments = new List<Comment>()
             {
@@ -255,7 +370,10 @@ namespace FarmProduce.Data.Seeders
                     CommentText="Hay qua",
                     Created= DateTime.Now,
                     Status=false,
-                    Rating=5
+                    Rating=5,
+                    Customer =  customers[0],
+                    Product= products[0]
+                    
                     
                 },
                  new(){
@@ -263,7 +381,9 @@ namespace FarmProduce.Data.Seeders
                     CommentText="Hay ghr",
                     Created= DateTime.Now,
                     Status=false,
-                    Rating=5
+                    Rating=5,
+                    Customer =  customers[0],
+                          Product= products[0]
 
                 },
             };
@@ -274,6 +394,7 @@ namespace FarmProduce.Data.Seeders
                     _dbContext.Add(comment);
                 }   
             }
+      
             _dbContext.SaveChanges();
            return comments;
         }
@@ -307,6 +428,7 @@ namespace FarmProduce.Data.Seeders
 					_dbContext.Admins.Add(admin);
 				}
 			}
+          
 			_dbContext.SaveChanges();
 
 			return admins;
