@@ -22,7 +22,7 @@ namespace FarmProduce.Data.Contexts
         public DbSet<Cart> Carts { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Image> Images { get; set; }
-       
+       public DbSet<CustomUI> CustomUIs { get; set; }
         public DbSet<PaymentMethod> PaymentMethods { get; set; }
 
 

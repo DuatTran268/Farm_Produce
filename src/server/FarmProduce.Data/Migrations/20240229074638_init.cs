@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FarmProduce.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -72,6 +72,21 @@ namespace FarmProduce.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CustomUI",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Color = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CustomUI", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
                 {
@@ -84,8 +99,8 @@ namespace FarmProduce.Data.Migrations
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    DateCreate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 2, 27, 15, 23, 10, 287, DateTimeKind.Local).AddTicks(7404)),
-                    DateUpdate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 2, 27, 15, 23, 10, 287, DateTimeKind.Local).AddTicks(7991)),
+                    DateCreate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 2, 29, 14, 46, 37, 493, DateTimeKind.Local).AddTicks(3298)),
+                    DateUpdate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 2, 29, 14, 46, 37, 493, DateTimeKind.Local).AddTicks(3859)),
                     Status = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
@@ -105,7 +120,7 @@ namespace FarmProduce.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DateOrder = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 2, 27, 15, 23, 10, 286, DateTimeKind.Local).AddTicks(1241)),
+                    DateOrder = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 2, 29, 14, 46, 37, 491, DateTimeKind.Local).AddTicks(9435)),
                     TotalPrice = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
                     OrderStatusId = table.Column<int>(type: "int", nullable: false),
                     CustomerId = table.Column<int>(type: "int", nullable: false)
@@ -153,7 +168,7 @@ namespace FarmProduce.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Rating = table.Column<int>(type: "int", nullable: false, defaultValue: 5),
-                    Created = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 2, 27, 15, 23, 10, 284, DateTimeKind.Local).AddTicks(6354)),
+                    Created = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 2, 29, 14, 46, 37, 489, DateTimeKind.Local).AddTicks(9943)),
                     CommentText = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     CustomerId = table.Column<int>(type: "int", nullable: false),
@@ -183,7 +198,7 @@ namespace FarmProduce.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DiscountPrice = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    StartDate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 2, 27, 15, 23, 10, 285, DateTimeKind.Local).AddTicks(5056)),
+                    StartDate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 2, 29, 14, 46, 37, 491, DateTimeKind.Local).AddTicks(3539)),
                     EndDate = table.Column<DateTime>(type: "datetime", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: true, defaultValue: "False"),
                     ProductId = table.Column<int>(type: "int", nullable: false)
@@ -350,6 +365,9 @@ namespace FarmProduce.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Comments");
+
+            migrationBuilder.DropTable(
+                name: "CustomUI");
 
             migrationBuilder.DropTable(
                 name: "Discounts");
