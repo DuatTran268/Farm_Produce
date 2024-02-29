@@ -61,8 +61,28 @@ namespace FarmProduce.Data.Seeders
   
         private IList<Customer> AddCustomers(IList<Comment> comments, IList<Order> orders)
         {
-            throw new NotImplementedException();
-        }
+            var addCustomer = new List<Customer>()
+            {
+                new()
+                {
+                    Name = "Duật Trần",
+                    Email = "duattn2@fpt.com",
+                    Address = "Quận 9, Thành phố Hồ Chí Minh",
+                    Phone = "0922223333",
+                }
+
+            };
+			foreach (var addCustomers in addCustomer)
+			{
+				if (!_dbContext.Customers.Any(p => p.Name == addCustomers.Name))
+				{
+					_dbContext.Add(addCustomers);
+				}
+
+			}
+			_dbContext.SaveChanges();
+			return addCustomer;
+		}
 
         private IList<PaymentMethod> AddPaymentMethods()
         {
@@ -255,7 +275,8 @@ namespace FarmProduce.Data.Seeders
                     CommentText="Hay qua",
                     Created= DateTime.Now,
                     Status=false,
-                    Rating=5
+                    Rating=5,
+                    
                     
                 },
                  new(){
@@ -263,9 +284,10 @@ namespace FarmProduce.Data.Seeders
                     CommentText="Hay ghr",
                     Created= DateTime.Now,
                     Status=false,
-                    Rating=5
+                    Rating=5,
 
-                },
+
+				},
             };
             foreach (var comment in comments)
             {
@@ -274,7 +296,7 @@ namespace FarmProduce.Data.Seeders
                     _dbContext.Add(comment);
                 }   
             }
-            _dbContext.SaveChanges();
+			_dbContext.SaveChanges();
            return comments;
         }
 

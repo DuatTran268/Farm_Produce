@@ -128,7 +128,7 @@ namespace FarmProduce.Data.Migrations
                     b.Property<DateTime>("Created")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 2, 27, 15, 23, 10, 284, DateTimeKind.Local).AddTicks(6354));
+                        .HasDefaultValue(new DateTime(2024, 2, 29, 0, 46, 34, 652, DateTimeKind.Local).AddTicks(5596));
 
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
@@ -158,6 +158,41 @@ namespace FarmProduce.Data.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("Comments", (string)null);
+                });
+
+            modelBuilder.Entity("FarmProduce.Core.Entities.CustomUI", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Color")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("UrlImage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UrlSlug")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CustomUIs", (string)null);
                 });
 
             modelBuilder.Entity("FarmProduce.Core.Entities.Customer", b =>
@@ -214,7 +249,7 @@ namespace FarmProduce.Data.Migrations
                     b.Property<DateTime>("StartDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 2, 27, 15, 23, 10, 285, DateTimeKind.Local).AddTicks(5056));
+                        .HasDefaultValue(new DateTime(2024, 2, 29, 0, 46, 34, 653, DateTimeKind.Local).AddTicks(3211));
 
                     b.Property<string>("Status")
                         .ValueGeneratedOnAdd()
@@ -275,7 +310,7 @@ namespace FarmProduce.Data.Migrations
                     b.Property<DateTime>("DateOrder")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 2, 27, 15, 23, 10, 286, DateTimeKind.Local).AddTicks(1241));
+                        .HasDefaultValue(new DateTime(2024, 2, 29, 0, 46, 34, 653, DateTimeKind.Local).AddTicks(7292));
 
                     b.Property<int>("OrderStatusId")
                         .HasColumnType("int");
@@ -365,12 +400,12 @@ namespace FarmProduce.Data.Migrations
                     b.Property<DateTime>("DateCreate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 2, 27, 15, 23, 10, 287, DateTimeKind.Local).AddTicks(7404));
+                        .HasDefaultValue(new DateTime(2024, 2, 29, 0, 46, 34, 655, DateTimeKind.Local).AddTicks(2190));
 
                     b.Property<DateTime>("DateUpdate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 2, 27, 15, 23, 10, 287, DateTimeKind.Local).AddTicks(7991));
+                        .HasDefaultValue(new DateTime(2024, 2, 29, 0, 46, 34, 655, DateTimeKind.Local).AddTicks(2886));
 
                     b.Property<string>("Description")
                         .IsRequired()

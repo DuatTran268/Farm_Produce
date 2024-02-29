@@ -15,6 +15,7 @@ namespace FarmProduce.Data.Contexts
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Discount> Discounts { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<CustomUI> CustomUIs { get; set; }
        
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Order> Orders { get; set; }
@@ -35,10 +36,10 @@ namespace FarmProduce.Data.Contexts
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=XUANHUNG\\SQLEXPRESS;Database=FarmProducts;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
-			//optionsBuilder.UseSqlServer("Server=DESKTOP-NLUPE1I\\MSSQLSERVER01;Database=FarmProduct;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
+            //optionsBuilder.UseSqlServer("Server=XUANHUNG\\SQLEXPRESS;Database=FarmProducts;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
+            optionsBuilder.UseSqlServer("Server=DESKTOP-NLUPE1I\\MSSQLSERVER01;Database=FarmProduct;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
 
-		}
+        }
        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
