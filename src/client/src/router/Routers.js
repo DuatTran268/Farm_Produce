@@ -6,6 +6,7 @@ import Cart from "../pages/users/Cart";
 import Policy from "../pages/users/Policy";
 import Condition from "../pages/users/Condition";
 import ProductDetail from "../pages/users/ProductDetail";
+import Checkout from "../pages/users/Checkout";
 
 const Routers = () => {
   return (
@@ -15,7 +16,9 @@ const Routers = () => {
         <Route path="/home" element={<Home />} />
         <Route path="/cart" element={<Cart/>} />
         <Route path="/detail/" element={<ProductDetail/>} />
+        <Route path="/checkout" element={<Checkout/>} />
 
+        
 
         <Route path="/policys" element={<Policy/>} />
         <Route path="/condition" element={<Condition/>} />
