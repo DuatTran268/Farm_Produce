@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Blogs\" />
+    <Folder Include="Manage\Category\" />
   </ItemGroup>
 
 </Project>
