@@ -14,7 +14,7 @@ const Categoris = () => {
           {DCategory.map((category, index) => {
             return (
               <div className="category_item" key={index}>
-                <Link to={""} className="category_link">
+                <Link to={"/product/viewmore"} className="category_link">
                   <Image src={icon} alt="icon" className="icon" width={30} />
                   <div className="category_name">{category.name}</div>
                 </Link>

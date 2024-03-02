@@ -9,6 +9,7 @@ import ProductDetail from "../pages/users/ProductDetail";
 import Checkout from "../pages/users/Checkout";
 import Contact from "../pages/users/Contact";
 import OrderDetail from "../pages/users/OrderDetail";
+import MoreAllProduct from "../pages/users/MoreAllProduct";
 
 const Routers = () => {
   return (
@@ -20,9 +21,7 @@ const Routers = () => {
         <Route path="/detail/" element={<ProductDetail/>} />
         <Route path="/checkout" element={<Checkout/>} />
         <Route path="/checkout/orderinfor" element={<OrderDetail/>} />
-
-        
-
+        <Route path="/product/viewmore" element={<MoreAllProduct/>} />
         
 
         <Route path="/policys" element={<Policy/>} />

@@ -34,7 +34,7 @@ const NewProduct = () => {
           <span className="product_header_name">Sản phẩm mới</span>
         </div>
         <div className="view_more">
-          <Link to={"/aa"} className="view_more_link">
+          <Link to={"/product/viewmore"} className="view_more_link">
             Xem thêm ...
           </Link>
         </div>
