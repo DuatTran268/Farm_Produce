@@ -1,7 +1,7 @@
 ﻿using FarmProduce.Data.Contexts;
 using FarmProduce.Data.Seeders;
 using FarmProduce.Services.Manage.Admins;
-using ManageProject.Services.Timing;
+using FarmProduce.Services.Timing;
 using Microsoft.EntityFrameworkCore;
 
 namespace FarmProduct.WebApi.Extensions

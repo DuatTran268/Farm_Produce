@@ -1,4 +1,4 @@
-﻿namespace ManageProject.Services.Timing;
+﻿namespace FarmProduce.Services.Timing;
 
 public interface ITimeProvider
 {
