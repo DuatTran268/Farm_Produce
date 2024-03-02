@@ -3,8 +3,8 @@ import logo from "../../../assets/logo.png";
 import { Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "../../../styles/Style.css";
-import Cart from "../cart/Cart";
 import SearchBox from "../search/SearchBox";
+import CartIcon from "../cart/CartIcon";
 
 const Header = () => {
   return (
@@ -34,7 +34,7 @@ const Header = () => {
             </div>
           </div>
           <div className="header_cart">
-              <Cart/>
+              <CartIcon/>
           </div>
         </div>
       </nav>

@@ -4,7 +4,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../../../styles/Style.css"
 
-const Cart = () => {
+const CartIcon = () => {
   return (
     <div className="cart">
       <Link to={"/cart"}>
@@ -14,4 +14,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default CartIcon;

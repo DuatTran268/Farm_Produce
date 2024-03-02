@@ -38,7 +38,7 @@ const ProductDetails = () => {
               <span>Số lượng</span>
               <input type="number" min="1" max="100" />
             </div>
-            <Link className="btn btn-success product_detail_addcart">
+            <Link className="btn btn-success product_detail_addcart" to={'/cart'}>
               Thêm vào giỏ hàng
             </Link>
           </div>
