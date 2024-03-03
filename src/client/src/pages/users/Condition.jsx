@@ -1,16 +1,11 @@
 import React from "react";
-import Header from "../../components/user/common/Header";
-import Footer from "../../components/user/common/Footer";
+import LayoutClient from "../../components/user/common/LayoutClient";
 
 const Condition = () => {
   return (
-    <section>
-      <Header />
-      <div className="container">
-        <h1>Trang điều kiện và điều khoản</h1>
-      </div>
-      <Footer />
-    </section>
+    <LayoutClient>
+      <h1>Trang điều kiện và điều khoản</h1>
+    </LayoutClient>
   );
 };
 

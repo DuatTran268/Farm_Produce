@@ -1,18 +1,12 @@
 import React from "react";
 import OrderInfor from "../../components/user/order/OrderInfor";
-import Header from "../../components/user/common/Header";
-import Footer from "../../components/user/common/Footer";
-
+import LayoutClient from "../../components/user/common/LayoutClient";
 
 const OrderDetail = () => {
   return (
-    <section>
-      <Header/>
-      <div className="container">
-        <OrderInfor/>
-      </div>
-      <Footer/>
-    </section>
-  )
-}
+    <LayoutClient>
+      <OrderInfor />
+    </LayoutClient>
+  );
+};
 export default OrderDetail;

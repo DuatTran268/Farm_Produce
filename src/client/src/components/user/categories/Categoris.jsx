@@ -1,7 +1,7 @@
 import React from "react";
 import DCategory from "../../../data/DCategory";
 import { Link } from "react-router-dom";
-import "../../../styles/Categories.css"
+import "../../../styles/user/Categories.css"
 import { Image } from "react-bootstrap";
 import icon from "../../../assets/logo.png";
 

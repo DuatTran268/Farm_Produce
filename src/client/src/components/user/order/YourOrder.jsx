@@ -1,7 +1,7 @@
 import React from "react";
-import "../../../styles/Checkout.css";
+import "../../../styles/user/Checkout.css";
 import { Table } from "react-bootstrap";
-import "../../../styles/Order.css"
+import "../../../styles/user/Order.css"
 
 const YourOrder = () => {
   return (

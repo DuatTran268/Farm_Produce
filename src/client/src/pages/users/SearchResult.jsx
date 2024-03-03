@@ -1,16 +1,11 @@
 import React from "react";
-import Header from "../../components/user/common/Header";
-import Footer from "../../components/user/common/Footer";
+import LayoutClient from "../../components/user/common/LayoutClient";
 
 const SearchResult = () => {
   return (
-    <section>
-      <Header />
-      <div className="container">
-        <h1>cart page</h1>
-      </div>
-      <Footer />
-    </section>
+    <LayoutClient>
+      <h1>Page Search Result</h1>
+    </LayoutClient>
   );
 };
 
