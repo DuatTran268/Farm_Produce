@@ -1,6 +1,7 @@
 ﻿using FarmProduce.Data.Contexts;
 using FarmProduce.Data.Seeders;
 using FarmProduce.Services.Manage.Admins;
+using FarmProduce.Services.Manage.Categories;
 using FarmProduce.Services.Timing;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,6 +19,7 @@ namespace FarmProduct.WebApi.Extensions
             
             // admin
 			builder.Services.AddScoped<IAdminRepo, AdminRepo>();
+            builder.Services.AddScoped<ICategoriesRepo, CategoriesRepo>();
 
 			return builder;
         }

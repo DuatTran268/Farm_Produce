@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Manage\Category\" />
+    <Folder Include="Manage\Products\" />
   </ItemGroup>
 
 </Project>

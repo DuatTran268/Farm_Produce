@@ -3,6 +3,8 @@ using FarmProduce.Services.Manage.Admins;
 using FarmProduct.WebApi.Models;
 using FarmProduct.WebApi.Models.Admin;
 using Mapster;
+using MapsterMapper;
+using System.Net;
 
 namespace FarmProduct.WebApi.Endpoints
 {
@@ -20,6 +22,10 @@ namespace FarmProduct.WebApi.Endpoints
 				.WithName("GetAllDepartment")
 				.Produces<ApiResponse<PaginationResult<AdminDto>>>();
 
+			routeGroupBuilder.MapGet("/{id:int}", GetInforAdminById)
+				.WithName("GetInforAdminById")
+				.Produces<ApiResponse<AdminDto>>();
+
 			return app;
 		}
 		private static async Task<IResult> GetAllAdmin(
@@ -31,6 +37,12 @@ namespace FarmProduct.WebApi.Endpoints
 			return Results.Ok(ApiResponse.Success(admin));
 		}
 
-
+		public static async Task<IResult> GetInforAdminById(int id, IAdminRepo adminRepo, IMapper mapper)
+		{
+			var admin = await adminRepo.GetAdminById(id);
+			return admin == null 
+				? Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound, $"Không tìm thấy admin có id {id}"))
+				: Results.Ok(ApiResponse.Success(mapper.Map<AdminDto>(admin)));
+		}
 	}
 }

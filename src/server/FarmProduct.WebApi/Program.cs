@@ -16,6 +16,7 @@ var app = builder.Build();
 {
 	app.SetupRequestPipeline();
 	app.AdminEndpoint();
+	app.CategoriesEndpoint();
 
 
 	using (var scope = app.Services.CreateScope())

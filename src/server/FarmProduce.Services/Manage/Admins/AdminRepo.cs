@@ -25,6 +25,11 @@ namespace FarmProduce.Services.Manage.Admins
 			IQueryable<Admin> admins = _context.Set<Admin>().OrderBy(a => a.Name);
 			return await mapper(admins).ToListAsync(cancellationToken);
 		}
-		
+
+		public async Task<Admin> GetAdminById(int id, CancellationToken cancellationToken = default)
+		{
+			return await _context.Set<Admin>().FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
+		}
+
 	}
 }
