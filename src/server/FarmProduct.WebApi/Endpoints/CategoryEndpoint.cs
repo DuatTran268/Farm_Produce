@@ -28,6 +28,10 @@ namespace FarmProduct.WebApi.Endpoints
 				.WithName("GetCategoryBySlug")
 				.Produces<ApiResponse<CategoriesDetail>>();
 
+			routeGroupBuilder.MapGet("topView/{limit:int}", GetLimitProduct)
+			   .WithName("GetLimitProduct")
+			   .Produces<ApiResponse<IList<CategoriesDetail>>>();
+
 			return app;
 		}
 
@@ -46,10 +50,20 @@ namespace FarmProduct.WebApi.Endpoints
 		private static async Task<IResult> GetCategoryBySlug([FromRoute] string slug, ICategoriesRepo categoriesRepo, IMapper mapper)
 		{
 			var category = await categoriesRepo.GetDetailCategoryBySlug(slug);
-			return category == null 
+			return category == null
 				? Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound, $"Not find slug = {slug}"))
 				: Results.Ok(ApiResponse.Success(mapper.Map<CategoriesDetail>(category)));
 		}
+
+
+		// get limit number category
+		private static async Task<IResult> GetLimitProduct(int limit, ICategoriesRepo categoriesRepo, ILogger<IResult> logger)
+		{
+			var cateId = await categoriesRepo.GetNLimitCategory(limit, cate => cate.ProjectToType<CategoriesDetail>());
+			return Results.Ok(ApiResponse.Success(cateId));
+		}
+
+
 
 	}
 }

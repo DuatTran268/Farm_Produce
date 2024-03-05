@@ -38,5 +38,14 @@ namespace FarmProduce.Services.Manage.Categories
 			}
 			return await categoryQuery.FirstOrDefaultAsync(cancellationToken);
 		}
+
+		public async Task<IList<T>> GetNLimitCategory<T>(int n, Func<IQueryable<Category>, IQueryable<T>> mapper, CancellationToken cancellationToken = default)
+		{
+			var cateLimit = _context.Set<Category>()
+				.Include(p => p.Products)
+				.OrderByDescending(p => p.Name)
+				.Take(n);
+			return await mapper(cateLimit).ToListAsync(cancellationToken);
+		}
 	}
 }
