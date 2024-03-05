@@ -5,6 +5,9 @@ using FarmProduct.WebApi.Models;
 using FarmProduct.WebApi.Models.Admin;
 using FarmProduct.WebApi.Models.Categories;
 using Mapster;
+using MapsterMapper;
+using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace FarmProduct.WebApi.Endpoints
 {
@@ -20,7 +23,10 @@ namespace FarmProduct.WebApi.Endpoints
 				.WithName("GetAllCategory")
 				.Produces<ApiResponse<PaginationResult<CategoriesDto>>>();
 
-
+			// get by slug
+			routeGroupBuilder.MapGet("/slugCategory/{slug:regex(^[a-z0-9_-]+$)}", GetCategoryBySlug)
+				.WithName("GetCategoryBySlug")
+				.Produces<ApiResponse<CategoriesDetail>>();
 
 			return app;
 		}
@@ -34,5 +40,16 @@ namespace FarmProduct.WebApi.Endpoints
 				categories => categories.ProjectToType<CategoriesDto>());
 			return Results.Ok(ApiResponse.Success(categories));
 		}
+
+
+		// get by slug category
+		private static async Task<IResult> GetCategoryBySlug([FromRoute] string slug, ICategoriesRepo categoriesRepo, IMapper mapper)
+		{
+			var category = await categoriesRepo.GetDetailCategoryBySlug(slug);
+			return category == null 
+				? Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound, $"Not find slug = {slug}"))
+				: Results.Ok(ApiResponse.Success(mapper.Map<CategoriesDetail>(category)));
+		}
+
 	}
 }

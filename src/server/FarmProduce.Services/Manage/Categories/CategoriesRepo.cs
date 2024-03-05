@@ -26,5 +26,17 @@ namespace FarmProduce.Services.Manage.Categories
 			IQueryable<Category> categories = _context.Set<Category>().OrderBy(a => a.Name);
 			return await mapper(categories).ToListAsync(cancellationToken);
 		}
+
+		public async Task<Category> GetDetailCategoryBySlug(string slug, CancellationToken cancellationToken = default)
+		{
+			IQueryable<Category> categoryQuery = _context.Set<Category>().Include(p => p.Products);
+			{
+				if (!string.IsNullOrEmpty(slug))
+				{
+					categoryQuery = categoryQuery.Where(ct => ct.UrlSlug == slug);
+				}
+			}
+			return await categoryQuery.FirstOrDefaultAsync(cancellationToken);
+		}
 	}
 }

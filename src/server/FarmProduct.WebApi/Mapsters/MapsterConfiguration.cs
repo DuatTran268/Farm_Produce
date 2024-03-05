@@ -10,11 +10,16 @@ namespace FarmProduct.WebApi.Mapsters
 	{
 		public void Register(TypeAdapterConfig config)
 		{
+			// admin
 			config.NewConfig<Admin, AdminDto>();
+			
+			// category
 			config.NewConfig<Category, CategoriesDto>();
+			config.NewConfig<Category, CategoriesDetail>();
+			//config.NewConfig<Category, CategoriesEditModel>();
 
 
-
+			// 
 
 		}
 	}
