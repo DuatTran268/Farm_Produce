@@ -128,7 +128,7 @@ namespace FarmProduce.Data.Migrations
                     b.Property<DateTime>("Created")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 2, 29, 22, 2, 55, 143, DateTimeKind.Local).AddTicks(8564));
+                        .HasDefaultValue(new DateTime(2024, 3, 7, 13, 19, 10, 129, DateTimeKind.Local).AddTicks(3066));
 
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
@@ -242,7 +242,7 @@ namespace FarmProduce.Data.Migrations
                     b.Property<DateTime>("StartDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 2, 29, 22, 2, 55, 144, DateTimeKind.Local).AddTicks(6633));
+                        .HasDefaultValue(new DateTime(2024, 3, 7, 13, 19, 10, 130, DateTimeKind.Local).AddTicks(2901));
 
                     b.Property<string>("Status")
                         .ValueGeneratedOnAdd()
@@ -303,7 +303,7 @@ namespace FarmProduce.Data.Migrations
                     b.Property<DateTime>("DateOrder")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 2, 29, 22, 2, 55, 145, DateTimeKind.Local).AddTicks(685));
+                        .HasDefaultValue(new DateTime(2024, 3, 7, 13, 19, 10, 130, DateTimeKind.Local).AddTicks(8692));
 
                     b.Property<int>("OrderStatusId")
                         .HasColumnType("int");
@@ -393,12 +393,12 @@ namespace FarmProduce.Data.Migrations
                     b.Property<DateTime>("DateCreate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 2, 29, 22, 2, 55, 146, DateTimeKind.Local).AddTicks(208));
+                        .HasDefaultValue(new DateTime(2024, 3, 7, 13, 19, 10, 132, DateTimeKind.Local).AddTicks(1446));
 
                     b.Property<DateTime>("DateUpdate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 2, 29, 22, 2, 55, 146, DateTimeKind.Local).AddTicks(572));
+                        .HasDefaultValue(new DateTime(2024, 3, 7, 13, 19, 10, 132, DateTimeKind.Local).AddTicks(2174));
 
                     b.Property<string>("Description")
                         .IsRequired()

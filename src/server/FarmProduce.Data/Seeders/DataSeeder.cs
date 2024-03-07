@@ -122,18 +122,45 @@ namespace FarmProduce.Data.Seeders
                    DateUpdate=DateTime.Now,
                    Category= caterories[0],
                   
-                  
-                  CategoryId= 1,
-                 
                   Orders= new List<Order>()
                   {
                       orders[0]
                   }
-
-                   
-
                 },
-            };
+				new(){
+					Name="Rau cải bắp",
+					UrlSlug="rau-cai-bap",
+				   QuanlityAvailable=3,
+				   Unit="kg",
+				   Price=2000,
+				   Description="Rau cải bắp sạch",
+				   DateCreate= new DateTime(2023,08,12),
+				   DateUpdate=DateTime.Now,
+				   Category= caterories[0],
+
+				  Orders= new List<Order>()
+				  {
+					  orders[0]
+				  }
+				},
+
+				new(){
+					Name="Củ cải",
+					UrlSlug="cu-cai",
+				   QuanlityAvailable=8,
+				   Unit="kg",
+				   Price=4000,
+				   Description="Củ cải",
+				   DateCreate= new DateTime(2023,03,12),
+				   DateUpdate=DateTime.Now,
+				   Category= caterories[1],
+
+				  Orders= new List<Order>()
+				  {
+					  orders[0]
+				  }
+				},
+			};
             foreach (var product in products)
             {
                 if (!_dbContext.Products.Any(p => p.UrlSlug == product.UrlSlug))

@@ -11,8 +11,4 @@
     <ProjectReference Include="..\FarmProduce.Data\FarmProduce.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Manage\Products\" />
-  </ItemGroup>
-
 </Project>

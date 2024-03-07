@@ -2,6 +2,7 @@
 using FarmProduce.Core.Entities;
 using FarmProduct.WebApi.Models.Admin;
 using FarmProduct.WebApi.Models.Categories;
+using FarmProduct.WebApi.Models.Products;
 using Mapster;
 
 namespace FarmProduct.WebApi.Mapsters
@@ -16,7 +17,13 @@ namespace FarmProduct.WebApi.Mapsters
 			// category
 			config.NewConfig<Category, CategoriesDto>();
 			config.NewConfig<Category, CategoriesDetail>();
-			//config.NewConfig<Category, CategoriesEditModel>();
+			config.NewConfig<Category, CategoriesEditModel>();
+
+
+
+			// product
+			config.NewConfig<Product, ProductsDto>();
+			config.NewConfig<Product, ProductDetails>();
 
 
 			// 
