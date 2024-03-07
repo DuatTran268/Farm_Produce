@@ -5,6 +5,9 @@ import dautay from "../../../assets/mutdau.jpg";
 import { Image } from "react-bootstrap";
 
 const ProductDetails = () => {
+
+
+  
   return (
     <section>
       <div className="product_detail">

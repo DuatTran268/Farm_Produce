@@ -1,6 +1,6 @@
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../../../styles/user/NavProduct.css";
 import DProduct from "../../../data/DProduct";
@@ -8,8 +8,24 @@ import "../../../styles/user/NewProduct.css";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { getProductNewestLimit } from "../../../api/Product";
 
 const NewProduct = () => {
+
+
+  const [getProduct, setProduct] = useState([]);
+
+  useEffect(() => {
+    getProductNewestLimit().then((data) => {
+      if (data){
+        setProduct(data);
+      }
+      else{
+        setProduct([]);
+      }
+    });
+  }, [])
+
   const settings = {
     dots: false,
     infinite: true,
@@ -47,17 +63,17 @@ const NewProduct = () => {
 
          
         <Slider {...settings}>
-              {DProduct.map((product, index) => {
+              {getProduct.map((product, index) => {
                 return (
                   <div
                     className="new_product_wrapper"
                     key={index}
                   >
-                  <Link className="product_item" to={'/detail/'}>
+                  <Link className="product_item" to={`/detail/${product.urlSlug}`}>
                     <div className="new_product_image">
                       <img
                         className="new_product_img"
-                        src={product.image}
+                        src="https://nongsandalat.vn/wp-content/uploads/2021/10/mut-dau-tay-1-370x290.jpg"
                         alt={product.name}
                       ></img>
                     </div>
@@ -70,7 +86,7 @@ const NewProduct = () => {
                         {product.description}
                       </div>
                       <div className="new_product_buy">
-                        <div className="new_product_price">{product.price}</div>
+                        <div className="new_product_price">{product.price} VND</div>
                         <div className="new_product_add">
                           <Link className="new_product_addcart" to={"/cart"}>
                             Mua ngay
