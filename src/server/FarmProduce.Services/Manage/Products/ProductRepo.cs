@@ -31,11 +31,12 @@ namespace FarmProduce.Services.Manage.Products
 
 		public async Task<Product> GetDetailProductBySlug(string slug, CancellationToken cancellationToken = default)
 		{
-			IQueryable<Product> productQuery = _context.Set<Product>();
-				//.Include(p => p.Images);
-			//.Include(p => p.Comments);
-			//.Include(p => p.Discounts);
-			//.Include(p => p.Carts);
+			IQueryable<Product> productQuery = _context.Set<Product>()
+				.Include(p => p.Discounts)
+				.Include(p => p.Images)
+				.Include(p => p.Comments)
+				.Include(p => p.Carts)
+				.Include(p => p.Orders);
 			{
 				if (!string.IsNullOrEmpty(slug))
 				{

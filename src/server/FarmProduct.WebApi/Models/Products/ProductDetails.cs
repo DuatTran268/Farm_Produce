@@ -1,4 +1,8 @@
 ﻿using FarmProduce.Core.Entities;
+using FarmProduct.WebApi.Models.Carts;
+using FarmProduct.WebApi.Models.Comments;
+using FarmProduct.WebApi.Models.Discounts;
+using FarmProduct.WebApi.Models.Images;
 
 namespace FarmProduct.WebApi.Models.Products
 {
@@ -14,9 +18,9 @@ namespace FarmProduct.WebApi.Models.Products
 		public DateTime DateCreate { get; set; } = DateTime.Now; // lay ngay hom nay de tao san pham
 		public DateTime DateUpdate { get; set; } = DateTime.Now;
 		public bool Status { get; set; }
-		public IList<Discount> Discounts { get; set; }
-		public IList<Image> Images { get; set; }
-		public IList<Comment> Comments { get; set; }
-		public IList<Cart> Carts { get; set; }
+		public IList<DiscountDto> Discounts { get; set; }
+		public IList<ImageDto> Images { get; set; }
+		public IList<CommentDto> Comments { get; set; }
+		public IList<CartDto> Carts { get; set; }
 	}
 }
