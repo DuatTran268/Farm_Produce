@@ -1,5 +1,8 @@
-﻿using FarmProduce.Core.Entities;
+﻿using FarmProduce.Core.Contracts;
+using FarmProduce.Core.DTO;
+using FarmProduce.Core.Entities;
 using FarmProduce.Data.Contexts;
+using FarmProduce.Services.Extentions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using System;
@@ -28,7 +31,6 @@ namespace FarmProduce.Services.Manage.Products
 			return await mapper(products).ToListAsync(cancellationToken);
 
 		}
-
 		public async Task<Product> GetDetailProductBySlug(string slug, CancellationToken cancellationToken = default)
 		{
 			IQueryable<Product> productQuery = _context.Set<Product>()
@@ -59,6 +61,26 @@ namespace FarmProduce.Services.Manage.Products
 				.OrderByDescending(p => p.Id)
 				.Take(n);
 			return await mapper(productLimit).ToListAsync(cancellationToken);
+		}
+
+
+
+		public async Task<IPagedList<T>> GetCommentWithPaged<T>(CommentQuery query, IPagingParams pagingParams, Func<IQueryable<Comment>, IQueryable<T>> mapper, CancellationToken cancellationToken = default)
+		{
+			IQueryable<Comment> cmtFindQuery = FilterComment(query);
+			IQueryable<T> queryResult = mapper(cmtFindQuery);
+			return await queryResult.ToPagedListAsync(pagingParams ,cancellationToken);
+
+		}
+
+		private IQueryable<Comment> FilterComment(CommentQuery query)
+		{
+			IQueryable<Comment> cmtQuery = _context.Set<Comment>();
+			if (!string.IsNullOrWhiteSpace(query.UrlSlug))
+			{
+				cmtQuery = cmtQuery.Where(p => p.Product.UrlSlug.Contains(query.UrlSlug));
+			}
+			return cmtQuery;
 		}
 	}
 }

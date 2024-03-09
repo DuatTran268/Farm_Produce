@@ -1,7 +1,9 @@
 ﻿using FarmProduce.Core.Collections;
+using FarmProduce.Core.DTO;
 using FarmProduce.Services.Manage.Products;
 using FarmProduct.WebApi.Models;
 using FarmProduct.WebApi.Models.Categories;
+using FarmProduct.WebApi.Models.Comments;
 using FarmProduct.WebApi.Models.Products;
 using Mapster;
 using MapsterMapper;
@@ -32,6 +34,11 @@ namespace FarmProduct.WebApi.Endpoints
 			   .WithName("GetLimitProductNewest")
 			   .Produces<ApiResponse<IList<ProductDetails>>>();
 
+
+			// using slug of user to get posts by user upload
+			routeGroupBuilder.MapGet("/cmt/slugProduct/{slug:regex(^[a-z0-9_-]+$)}", GetCommentBySlugProduct)
+		   .WithName("GetCommentBySlugProduct")
+			.Produces<ApiResponse<PaginationResult<CommentDto>>>();
 			return app;
 
 		}
@@ -59,6 +66,27 @@ namespace FarmProduct.WebApi.Endpoints
 			var productId = await productRepo.GetLitmitProductNewest(limit, pd => pd.ProjectToType<ProductDetails>());
 			return Results.Ok(ApiResponse.Success(productId));
 		}
+
+
+		// using slug of product to get all comment
+		private static async Task<IResult> GetCommentBySlugProduct ([FromRoute] string slug,
+		  [AsParameters] PagingModel pagingModel, IProductRepo productRepo)
+		{
+			var cmtQuery = new CommentQuery()
+			{
+				UrlSlug = slug
+			};
+			var cmtList = await productRepo.GetCommentWithPaged(
+				cmtQuery,
+				pagingModel,
+				comment => comment.ProjectToType<CommentDto>());
+			var paginationResult = new PaginationResult<CommentDto>(cmtList);
+			return cmtList == null
+				? Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound, $"Ko tồn tại slug '{slug}'"))
+		
+				: Results.Ok(ApiResponse.Success(paginationResult));
+		}
+
 
 	}
 }

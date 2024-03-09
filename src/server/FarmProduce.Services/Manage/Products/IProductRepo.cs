@@ -1,4 +1,6 @@
-﻿using FarmProduce.Core.Entities;
+﻿using FarmProduce.Core.Contracts;
+using FarmProduce.Core.DTO;
+using FarmProduce.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +18,12 @@ namespace FarmProduce.Services.Manage.Products
 
 		Task<IList<T>> GetLitmitProductNewest<T>(int n, Func<IQueryable<Product>, IQueryable<T>> mapper, CancellationToken cancellationToken = default);
 
-
+		// get comment have paged
+		Task<IPagedList<T>> GetCommentWithPaged<T>(CommentQuery query,
+		  IPagingParams pagingParams,
+		  Func<IQueryable<Comment>,
+		  IQueryable<T>> mapper,
+		  CancellationToken cancellationToken = default);
 
 	}
 }
