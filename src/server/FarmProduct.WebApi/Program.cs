@@ -18,6 +18,7 @@ var app = builder.Build();
 	app.AdminEndpoint();
 	app.CategoriesEndpoint();
 	app.ProductsEndpoint();
+	app.CommentsEndpoint();
 
 
 

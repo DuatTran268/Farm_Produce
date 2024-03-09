@@ -17,6 +17,7 @@ const ProductDetails = () => {
     getDetailProductByUrlSlug(slug).then((data) => {
       if (data){
         setProductDetail(data);
+        console.log(data );
 
       }
       else{
@@ -35,6 +36,7 @@ const ProductDetails = () => {
           <div className="product_detail_content col-7">
             <div className="product_detail_title">{productDetail.name}</div>
             <div className="product_detail_price">{productDetail.price}</div>
+            
             <div className="product_detail_desc">
               {productDetail.description}
             </div>
@@ -56,6 +58,7 @@ const ProductDetails = () => {
                 Thêm vào giỏ hàng
               </Link>
             </div>
+            
           </div>
         </div>
       </section>
