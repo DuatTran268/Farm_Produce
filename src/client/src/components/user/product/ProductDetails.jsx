@@ -4,6 +4,7 @@ import "../../../styles/user/ProductDetail.css";
 import dautay from "../../../assets/mutdau.jpg";
 import { Image } from "react-bootstrap";
 import { getDetailProductByUrlSlug } from "../../../api/Product";
+import ProductComment from "./ProductComment";
 
 const ProductDetails = () => {
   const params = useParams();
@@ -61,6 +62,10 @@ const ProductDetails = () => {
             
           </div>
         </div>
+        <div className="product_comment">
+          <ProductComment/>
+        </div>
+
       </section>
     );
 
