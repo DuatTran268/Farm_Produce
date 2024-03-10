@@ -1,20 +1,17 @@
 import React from "react";
-import Header from "../../components/user/common/Header";
-import Footer from "../../components/user/common/Footer";
-import FruitProduct from "../../components/user/product/FruitProduct";
 import ProductList from "../../components/user/product/ProductList";
+import LayoutClient from "../../components/user/common/LayoutClient";
 
 
 
 const MoreAllProduct = () => {
   return (
-    <>
-      <Header/>
-      <section className="container">
-        <ProductList/>
-      </section>
-      <Footer/>
-    </>
+    <LayoutClient>
+      <div className="more_title">
+        Tất cả các sản phẩm
+      </div>
+      <ProductList/>
+    </LayoutClient>
   )
 }
 export default MoreAllProduct;

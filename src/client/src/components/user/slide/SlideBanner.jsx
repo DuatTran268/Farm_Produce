@@ -2,7 +2,7 @@ import React from "react";
 import Slider from "react-slick";
 import banner1 from "../../../assets/banner1.png";
 import banner2 from "../../../assets/banner2.jpg";
-import "../../../styles/Slider.css"
+import "../../../styles/user/Slider.css"
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 

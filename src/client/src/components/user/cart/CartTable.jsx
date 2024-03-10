@@ -1,5 +1,5 @@
 import React from "react";
-import "../../../styles/Cart.css";
+import "../../../styles/user/Cart.css";
 import { Table } from "react-bootstrap";
 
 const CartTable = () => {

@@ -1,6 +1,7 @@
 ﻿
 using FarmProduce.Core.Entities;
 using FarmProduct.WebApi.Models.Admin;
+using FarmProduct.WebApi.Models.Categories;
 using Mapster;
 
 namespace FarmProduct.WebApi.Mapsters
@@ -10,6 +11,9 @@ namespace FarmProduct.WebApi.Mapsters
 		public void Register(TypeAdapterConfig config)
 		{
 			config.NewConfig<Admin, AdminDto>();
+			config.NewConfig<Category, CategoriesDto>();
+
+
 
 
 		}

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../../../styles/ProductDetail.css";
+import "../../../styles/user/ProductDetail.css";
 import dautay from "../../../assets/mutdau.jpg";
 import { Image } from "react-bootstrap";
 

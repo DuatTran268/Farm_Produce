@@ -1,11 +1,9 @@
 import React from "react";
 import { Image } from "react-bootstrap";
-import bgFooter from "../../../assets/bgfooter.jpg";
-import "../../../styles/Footer.css";
 import logo from "../../../assets/logo.png";
 import MainMenu from "../menu/MainMenus";
 import Policys from "../menu/Information";
-import "../../../styles/Footer.css";
+import "../../../styles/user/Footer.css";
 import { Link } from "react-router-dom";
 const Footer = () => {
   return (
@@ -34,6 +32,7 @@ const Footer = () => {
               src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fdalavi.vn&tabs&width=270&height=250&small_header=false&adapt_container_width=false&hide_cover=false&show_facepile=false&appId"
               width="270"
               height="250"
+              title="map"
               allowfullscreen="true"
             ></iframe>
           </div>

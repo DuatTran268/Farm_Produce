@@ -4,7 +4,7 @@ import deliver from "../../../assets/deliver.png";
 import price from "../../../assets/price.png";
 import support from "../../../assets/support.png";
 import { Image } from "react-bootstrap";
-import "../../../styles/Advertise.css";
+import "../../../styles/user/Advertise.css";
 
 const Advertise = () => {
   return (

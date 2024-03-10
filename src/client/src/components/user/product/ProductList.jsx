@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Image } from "react-bootstrap";
 import BannerProductList from "../../../assets/banner_product_list.png";
-import "../../../styles/Product.css";
+import "../../../styles/user/Product.css";
 import DProduct from "../../../data/DProduct";
 
 const ProductList = () => {
@@ -12,7 +12,7 @@ const ProductList = () => {
       <div className="product_body">
         <div className="product_body_flex">
           <div className="product_banner">
-            <Image src={BannerProductList} alt={"productbanner"} />
+            <Image src={BannerProductList} alt="productbanner"/>
           </div>
           <div className="product_list">
             {DProduct.map((product, index) => {

@@ -1,0 +1,26 @@
+.login{
+  background-color: white !important;
+}
+
+.login_title{
+  text-align: center;
+  font-size: 2rem;
+  margin-top: 2rem;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: green;
+}
+
+.login_row{
+  display: flex;
+  transform: translateY(10%);
+
+}
+
+.login_col{
+  text-align: center;
+}
+.form-container{
+  width: 50%;
+  transform: translateY(100%);
+}

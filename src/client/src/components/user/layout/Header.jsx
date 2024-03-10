@@ -2,7 +2,7 @@ import React from "react";
 import logo from "../../../assets/logo.png";
 import { Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import "../../../styles/Style.css";
+import "../../../styles/user/Style.css";
 import SearchBox from "../search/SearchBox";
 import CartIcon from "../cart/CartIcon";
 
