@@ -16,6 +16,7 @@ import AdOrder from "../pages/admin/order/AdOrder";
 import AdCategory from "../pages/admin/categories/AdCategories";
 import AdProduct from "../pages/admin/product/AdProduct";
 import Login from "../pages/login/Login";
+import ProductInCategory from "../pages/users/ProductInCategory";
 
 const Routers = () => {
   return (
@@ -24,7 +25,7 @@ const Routers = () => {
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/cart" element={<Cart/>} />
-        <Route path="/category/:slug" element={<MoreAllProduct/>} />
+        <Route path="/category/:slug" element={<ProductInCategory/>} />
         
         <Route path="/detail/:slug" element={<ProductDetail/>} />
         <Route path="/checkout" element={<Checkout/>} />

@@ -37,8 +37,8 @@ namespace FarmProduct.WebApi.Endpoints
 
 			// using slug of user to get posts by user upload
 			routeGroupBuilder.MapGet("/cmt/slugProduct/{slug:regex(^[a-z0-9_-]+$)}", GetCommentBySlugProduct)
-		   .WithName("GetCommentBySlugProduct")
-			.Produces<ApiResponse<PaginationResult<CommentDto>>>();
+				.WithName("GetCommentBySlugProduct")
+				.Produces<ApiResponse<PaginationResult<CommentDto>>>();
 			return app;
 
 		}

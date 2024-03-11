@@ -1,9 +1,13 @@
 ﻿using FarmProduce.Core.Collections;
+using FarmProduce.Core.DTO;
 using FarmProduce.Services.Manage.Admins;
 using FarmProduce.Services.Manage.Categories;
+using FarmProduce.Services.Manage.Products;
 using FarmProduct.WebApi.Models;
 using FarmProduct.WebApi.Models.Admin;
 using FarmProduct.WebApi.Models.Categories;
+using FarmProduct.WebApi.Models.Comments;
+using FarmProduct.WebApi.Models.Products;
 using Mapster;
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -36,7 +40,12 @@ namespace FarmProduct.WebApi.Endpoints
 			   .WithName("GetLimitCategoryNewest")
 			   .Produces<ApiResponse<IList<CategoriesDetail>>>();
 
+			// get list products by slug of category
 
+
+			routeGroupBuilder.MapGet("/product/slugCategory/{slug:regex(^[a-z0-9_-]+$)}", GetListProductBySlugCategory)
+				.WithName("GetListProductBySlugCategory")
+				.Produces<ApiResponse<PaginationResult<ProductsDto>>>();
 
 
 
@@ -77,7 +86,23 @@ namespace FarmProduct.WebApi.Endpoints
 			return Results.Ok(ApiResponse.Success(cateId));
 		}
 
+		private static async Task<IResult> GetListProductBySlugCategory([FromRoute] string slug, [AsParameters] PagingModel pagingModel, ICategoriesRepo categoriesRepo)
+		{
+			var productQuery = new ProductQuery()
+			{
+				UrlSlug = slug
+			};
+			var productList = await categoriesRepo.GetListProductsWithSlugOfCategory(
+				productQuery, 
+				pagingModel, 
+				product => product.ProjectToType<ProductsDto>());
+			var paginationResult = new PaginationResult<ProductsDto>(productList);
+			return productList == null
+				? Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound, $"Not find slug = '{slug}'"))
+				: Results.Ok(ApiResponse.Success(paginationResult));
 
+		}
+		
 
 	}
 }
