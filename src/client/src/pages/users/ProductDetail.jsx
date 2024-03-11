@@ -2,6 +2,10 @@ import React from "react";
 import ProductDetails from "../../components/user/product/ProductDetails";
 import Categoris from "../../components/user/categories/Categoris";
 import LayoutClient from "../../components/user/common/LayoutClient";
+import ProductComment from "../../components/user/commnent/ProductComment";
+import "../../styles/user/ProductDetail.css"
+import CommentBox from "../../components/user/commnent/CommentBox";
+
 const ProductDetail = () => {
   return (
     <LayoutClient>
@@ -12,6 +16,17 @@ const ProductDetail = () => {
         {/* slide advertising */}
         <div className="slider col-8">
           <ProductDetails />
+        </div>
+      </div>
+      <div className="product_comment ">
+        <div className=" product_comment_container row">
+          <div className="product_col col-6">
+            <ProductComment />
+          </div>
+          <div className="product_col col-6">
+            <CommentBox/>
+          </div>
+
         </div>
       </div>
     </LayoutClient>
