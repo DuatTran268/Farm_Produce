@@ -20,6 +20,7 @@ var app = builder.Build();
 	app.ProductsEndpoint();
 	app.CommentsEndpoint();
 	app.DiscountsEndpoints();
+	app.OrderStatusesEndpoint();
 
 
 

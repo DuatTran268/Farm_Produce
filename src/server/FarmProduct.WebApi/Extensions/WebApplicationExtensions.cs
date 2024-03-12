@@ -4,6 +4,7 @@ using FarmProduce.Services.Manage.Admins;
 using FarmProduce.Services.Manage.Categories;
 using FarmProduce.Services.Manage.Comments;
 using FarmProduce.Services.Manage.Discounts;
+using FarmProduce.Services.Manage.OrderStatuses;
 using FarmProduce.Services.Manage.Products;
 using FarmProduce.Services.Timing;
 using Microsoft.EntityFrameworkCore;
@@ -40,6 +41,10 @@ namespace FarmProduct.WebApi.Extensions
 
             // discount
             builder.Services.AddScoped<IDiscountRepo, DiscountRepo>();
+
+
+            // order
+            builder.Services.AddScoped<IOrderStatusRepo, OrderStatusRepo>();
 
 
 			return builder;

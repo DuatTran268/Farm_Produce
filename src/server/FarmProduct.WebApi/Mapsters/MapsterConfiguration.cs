@@ -3,6 +3,7 @@ using FarmProduce.Core.Entities;
 using FarmProduct.WebApi.Models.Admin;
 using FarmProduct.WebApi.Models.Categories;
 using FarmProduct.WebApi.Models.Discounts;
+using FarmProduct.WebApi.Models.OrderStatuses;
 using FarmProduct.WebApi.Models.Products;
 using Mapster;
 
@@ -27,6 +28,11 @@ namespace FarmProduct.WebApi.Mapsters
 
 			// discount
 			config.NewConfig<Discount, DiscountDto>();
+
+
+
+			// order status
+			config.NewConfig<OrderStatus, OrderStatusDto>();
 
 
 
