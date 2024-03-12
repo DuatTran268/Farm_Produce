@@ -18,10 +18,6 @@ namespace FarmProduct.WebApi.Mapsters
 			config.NewConfig<Category, CategoriesDto>();
 			config.NewConfig<Category, CategoriesDetail>();
 			config.NewConfig<Category, CategoriesEditModel>();
-
-
-
-			// product
 			config.NewConfig<Product, ProductsDto>();
 			config.NewConfig<Product, ProductDetails>();
 

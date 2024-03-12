@@ -35,12 +35,11 @@ namespace FarmProduce.Data.Seeders
 
             var customUI = AddCustomUI();
 
-          
+            var units = AddUnits();
             var customers = AddCustomers();
             var orders = AddOrders(customers);
-            var products = AddProducts(caterories, orders);
+            var products = AddProducts(caterories, orders,units);
             var comments = AddComments(customers,products);
-           
             var images = AddImages(products);
             var carts = AddCarts(products);
             var discounts = AddDiscounts(products);
@@ -48,6 +47,33 @@ namespace FarmProduce.Data.Seeders
             var paymentMethods = AddPaymentMethods(orders);
 
 
+        }
+
+        private List<Unit> AddUnits()
+        {
+            var units = new List<Unit>() {
+                new()
+                {
+                    Name ="kg",
+                    UrlSlug="kg",
+                },
+                new()
+                {
+                    Name ="cái",
+                    UrlSlug="cai",
+                }
+            };
+            foreach (var unit in units)
+            {
+                if (!_dbContext.Units.Any(x => x.UrlSlug == unit.UrlSlug))
+                {
+                    _dbContext.Add(unit);
+                }
+            }
+            _dbContext.AddRange(units);
+            _dbContext.SaveChanges();
+            return units;
+           
         }
 
         private List<CustomUI> AddCustomUI()
@@ -107,7 +133,7 @@ namespace FarmProduce.Data.Seeders
             return orders;
         }
        
-        private IList<Product> AddProducts(   IList<Category> caterories, IList<Order> orders)
+        private IList<Product> AddProducts(   IList<Category> caterories, IList<Order> orders, IList<Unit> units)
         {
             var products = new List<Product>() {
 
@@ -115,13 +141,12 @@ namespace FarmProduce.Data.Seeders
                     Name="Rau muống",
                     UrlSlug="rau-muong",
                    QuanlityAvailable=6,
-                   Unit="kg",
                    Price=2000,
                    Description="rau sach",
                    DateCreate= new DateTime(2023,12,12),
+                   Unit=units[0],
                    DateUpdate=DateTime.Now,
                    Category= caterories[0],
-                  
                   Orders= new List<Order>()
                   {
                       orders[0]
@@ -131,31 +156,29 @@ namespace FarmProduce.Data.Seeders
 					Name="Rau cải bắp",
 					UrlSlug="rau-cai-bap",
 				   QuanlityAvailable=3,
-				   Unit="kg",
 				   Price=2000,
 				   Description="Rau cải bắp sạch",
 				   DateCreate= new DateTime(2023,08,12),
 				   DateUpdate=DateTime.Now,
-				   Category= caterories[0],
+                   Unit=units[0],
+                   Category= caterories[0],
 
 				  Orders= new List<Order>()
 				  {
 					  orders[0]
 				  }
 				},
-
-				new(){
+    				new(){
 					Name="Củ cải",
 					UrlSlug="cu-cai",
 				   QuanlityAvailable=8,
-				   Unit="kg",
 				   Price=4000,
 				   Description="Củ cải",
 				   DateCreate= new DateTime(2023,03,12),
 				   DateUpdate=DateTime.Now,
 				   Category= caterories[1],
-
-				  Orders= new List<Order>()
+                   Unit=units[0],
+                  Orders= new List<Order>()
 				  {
 					  orders[0]
 				  }
@@ -219,13 +242,11 @@ namespace FarmProduce.Data.Seeders
                 {
                     _dbContext.Add(paymentMethod);
                 }
-                
             }
             _dbContext.AddRange(paymentMethods);
             _dbContext.SaveChanges();
             return paymentMethods;
         }
-
         private IList<OrderStatus> AddOrderStatuses(IList<Order> orders) 
         {
             var orderStatuses = new List<OrderStatus>() {
