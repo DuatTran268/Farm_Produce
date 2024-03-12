@@ -19,6 +19,7 @@ var app = builder.Build();
 	app.CategoriesEndpoint();
 	app.ProductsEndpoint();
 	app.CommentsEndpoint();
+	app.DiscountsEndpoints();
 
 
 

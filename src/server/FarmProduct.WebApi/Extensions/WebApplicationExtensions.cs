@@ -3,6 +3,7 @@ using FarmProduce.Data.Seeders;
 using FarmProduce.Services.Manage.Admins;
 using FarmProduce.Services.Manage.Categories;
 using FarmProduce.Services.Manage.Comments;
+using FarmProduce.Services.Manage.Discounts;
 using FarmProduce.Services.Manage.Products;
 using FarmProduce.Services.Timing;
 using Microsoft.EntityFrameworkCore;
@@ -35,6 +36,10 @@ namespace FarmProduct.WebApi.Extensions
 
             // comment
             builder.Services.AddScoped<ICommentRepo, CommentRepo>();
+
+
+            // discount
+            builder.Services.AddScoped<IDiscountRepo, DiscountRepo>();
 
 
 			return builder;
