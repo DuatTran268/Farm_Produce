@@ -24,9 +24,6 @@ namespace FarmProduce.Data.Mappings
             builder.Property(x => x.QuanlityAvailable)
                 .IsRequired()
                .HasDefaultValue(0);
-            builder.Property(x => x.Unit)
-                .IsRequired()
-                .HasMaxLength(50);
             builder.Property(x => x.Price)
                 .IsRequired()
                 .HasPrecision(2,18);
@@ -41,7 +38,6 @@ namespace FarmProduce.Data.Mappings
                 .HasColumnType("datetime")
                 .HasDefaultValue(DateTime.Now);
             builder.Property(x => x.DateUpdate)
-          
                .HasColumnType("datetime")
                .HasDefaultValue(DateTime.Now);
             builder.HasMany(p => p.Carts)
@@ -55,13 +51,13 @@ namespace FarmProduce.Data.Mappings
                 .WithOne(i => i.Product)
                 .HasForeignKey(i => i.ProductId)
                 .HasConstraintName("FK_Comments_Product");
-
 			builder.HasMany(o => o.Orders)
 				.WithMany(p => p.Products)
 				.UsingEntity(po => po.ToTable("ProductOrders"));
-
-
-
+            builder.HasOne(p => p.Unit)
+                .WithMany(u => u.Products)
+                .HasForeignKey(p => p.UnitId)
+                .HasConstraintName("FK_Units_Product");
         }
     }
 }

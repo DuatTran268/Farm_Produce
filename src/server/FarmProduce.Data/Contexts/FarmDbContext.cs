@@ -15,7 +15,7 @@ namespace FarmProduce.Data.Contexts
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Discount> Discounts { get; set; }
         public DbSet<Category> Categories { get; set; }
-       
+        public DbSet<Unit> Units { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderStatus> OrderStatuses { get; set; }
@@ -37,7 +37,6 @@ namespace FarmProduce.Data.Contexts
         {
             optionsBuilder.UseSqlServer("Server=XUANHUNG;Database=FarmProducts;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
             //optionsBuilder.UseSqlServer("Server=DESKTOP-NLUPE1I\\MSSQLSERVER01;Database=FarmProduct;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
-
         }
        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
