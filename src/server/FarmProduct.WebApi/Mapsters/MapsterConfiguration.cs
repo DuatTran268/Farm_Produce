@@ -4,6 +4,7 @@ using FarmProduct.WebApi.Models.Admin;
 using FarmProduct.WebApi.Models.Categories;
 using FarmProduct.WebApi.Models.Discounts;
 using FarmProduct.WebApi.Models.OrderStatuses;
+using FarmProduct.WebApi.Models.PaymentsMethod;
 using FarmProduct.WebApi.Models.Products;
 using Mapster;
 
@@ -35,7 +36,8 @@ namespace FarmProduct.WebApi.Mapsters
 			config.NewConfig<OrderStatus, OrderStatusDto>();
 
 
-
+			// payment medthos
+			config.NewConfig<PaymentMethod, PaymentsMethodDto>();
 
 			// 
 

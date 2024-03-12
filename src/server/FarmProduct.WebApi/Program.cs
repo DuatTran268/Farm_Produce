@@ -21,6 +21,7 @@ var app = builder.Build();
 	app.CommentsEndpoint();
 	app.DiscountsEndpoints();
 	app.OrderStatusesEndpoint();
+	app.PaymentsMethodEndpoint();
 
 
 

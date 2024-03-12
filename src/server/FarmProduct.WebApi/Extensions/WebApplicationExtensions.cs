@@ -5,6 +5,7 @@ using FarmProduce.Services.Manage.Categories;
 using FarmProduce.Services.Manage.Comments;
 using FarmProduce.Services.Manage.Discounts;
 using FarmProduce.Services.Manage.OrderStatuses;
+using FarmProduce.Services.Manage.PaymentMethods;
 using FarmProduce.Services.Manage.Products;
 using FarmProduce.Services.Timing;
 using Microsoft.EntityFrameworkCore;
@@ -45,6 +46,10 @@ namespace FarmProduct.WebApi.Extensions
 
             // order
             builder.Services.AddScoped<IOrderStatusRepo, OrderStatusRepo>();
+
+
+            // payment 
+            builder.Services.AddScoped<IPaymentMethodRepo, PaymentMethodRepo>();
 
 
 			return builder;
