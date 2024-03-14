@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../../../styles/user/NavProduct.css";
-import DProduct from "../../../data/DProduct";
 import "../../../styles/user/NewProduct.css";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
