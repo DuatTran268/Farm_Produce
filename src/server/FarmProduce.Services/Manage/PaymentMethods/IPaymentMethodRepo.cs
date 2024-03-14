@@ -11,5 +11,7 @@ namespace FarmProduce.Services.Manage.PaymentMethods
 	{
 		Task<IList<T>> GetAllPaymentMethod<T>(Func<IQueryable<PaymentMethod>, IQueryable<T>> mapper, CancellationToken cancellationToken = default);
 
+		Task<PaymentMethod> GetPaymentMethodById(int id, CancellationToken cancellationToken = default);
+	
 	}
 }

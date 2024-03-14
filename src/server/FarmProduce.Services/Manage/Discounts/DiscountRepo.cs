@@ -26,5 +26,11 @@ namespace FarmProduce.Services.Manage.Discounts
 			IQueryable<Discount> discounts = _context.Set<Discount>();
 			return await mapper(discounts).ToListAsync(cancellationToken);
 		}
+
+		public async Task<Discount> GetDiscountByID(int id, CancellationToken cancellationToken = default)
+		{
+			return await _context.Set<Discount>().FirstOrDefaultAsync(d => d.Id == id, cancellationToken); ;
+
+		}
 	}
 }

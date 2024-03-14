@@ -26,5 +26,10 @@ namespace FarmProduce.Services.Manage.OrderStatuses
 			IQueryable<OrderStatus> orderStatuses = _context.Set<OrderStatus>();
 			return await mapper(orderStatuses).ToListAsync(cancellationToken);
 		}
+
+		public async Task<OrderStatus> GetOrderStatusByID(int id, CancellationToken cancellationToken = default)
+		{
+			return await _context.Set<OrderStatus>().FirstOrDefaultAsync( o => o.Id == id,cancellationToken);
+		}
 	}
 }

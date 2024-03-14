@@ -10,5 +10,8 @@ namespace FarmProduce.Services.Manage.Discounts
 	public interface IDiscountRepo
 	{
 		Task<IList<T>> GetAllDiscount<T>(Func<IQueryable<Discount>, IQueryable<T>> mapper, CancellationToken cancellationToken = default);
+	
+		Task<Discount> GetDiscountByID(int id, CancellationToken cancellationToken = default);
+
 	}
 }

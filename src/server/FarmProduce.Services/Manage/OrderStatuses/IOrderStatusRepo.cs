@@ -11,5 +11,7 @@ namespace FarmProduce.Services.Manage.OrderStatuses
 	{
 		Task<IList<T>> GetAllOrderStatus<T>(Func<IQueryable<OrderStatus>, IQueryable<T>> mapper, CancellationToken cancellationToken = default);
 
+		Task<OrderStatus> GetOrderStatusByID(int id, CancellationToken cancellationToken = default);
+
 	}
 }

@@ -27,5 +27,10 @@ namespace FarmProduce.Services.Manage.PaymentMethods
 			IQueryable<PaymentMethod> paymentStatus = _context.Set<PaymentMethod>();
 			return await mapper(paymentStatus).ToListAsync(cancellationToken);
 		}
+
+		public async Task<PaymentMethod> GetPaymentMethodById(int id, CancellationToken cancellationToken = default)
+		{
+			return await _context.Set<PaymentMethod>().FirstOrDefaultAsync(pm => pm.Id == id, cancellationToken);
+		}
 	}
 }
