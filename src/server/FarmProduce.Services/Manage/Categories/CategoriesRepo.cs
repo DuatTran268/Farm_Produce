@@ -30,6 +30,11 @@ namespace FarmProduce.Services.Manage.Categories
 			return await mapper(categories).ToListAsync(cancellationToken);
 		}
 
+		public async Task<Category> GetCategoryById(int id, CancellationToken cancellationToken = default)
+		{
+			return await _context.Set<Category>().FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
+		}
+
 		public async Task<Category> GetDetailCategoryBySlug(string slug, CancellationToken cancellationToken = default)
 		{
 			IQueryable<Category> categoryQuery = _context.Set<Category>().Include(p => p.Products);

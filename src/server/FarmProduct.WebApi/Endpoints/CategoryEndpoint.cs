@@ -27,6 +27,13 @@ namespace FarmProduct.WebApi.Endpoints
 				.WithName("GetAllCategory")
 				.Produces<ApiResponse<PaginationResult<CategoriesDto>>>();
 
+			// get category by id
+
+			routeGroupBuilder.MapGet("/{id:int}", GetInforCategoryByID)
+				.WithName("GetInforCategoryByID")
+				.Produces<ApiResponse<CategoriesDto>>();
+
+
 			// get by slug
 			routeGroupBuilder.MapGet("/slugCategory/{slug:regex(^[a-z0-9_-]+$)}", GetCategoryBySlug)
 				.WithName("GetCategoryBySlug")
@@ -52,7 +59,7 @@ namespace FarmProduct.WebApi.Endpoints
 			return app;
 		}
 
-
+		// get category by slug
 		private static async Task<IResult> GetAllCategory(
 		ICategoriesRepo categoriesRepo
 		)
@@ -62,6 +69,14 @@ namespace FarmProduct.WebApi.Endpoints
 			return Results.Ok(ApiResponse.Success(categories));
 		}
 
+		// get category by id
+		public static async Task<IResult> GetInforCategoryByID(int id, ICategoriesRepo categoriesRepo, IMapper mapper)
+		{
+			var categories = await categoriesRepo.GetCategoryById(id);
+			return categories == null
+				? Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound, $"Not find id = {id}"))
+				: Results.Ok(ApiResponse.Success(mapper.Map<AdminDto>(categories)));
+		}
 
 		// get by slug category
 		private static async Task<IResult> GetCategoryBySlug([FromRoute] string slug, ICategoriesRepo categoriesRepo, IMapper mapper)

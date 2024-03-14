@@ -13,6 +13,8 @@ namespace FarmProduce.Services.Manage.Categories
 	{
 		Task<IList<T>> GetAllCategories<T>(Func<IQueryable<Category>, IQueryable<T>> mapper, CancellationToken cancellationToken = default);
 
+		Task<Category> GetCategoryById(int id, CancellationToken cancellationToken = default);
+
 		Task<Category> GetDetailCategoryBySlug(string slug, CancellationToken cancellationToken = default);
 
 		Task<IList<T>> GetNLimitCategory<T>(int n, Func<IQueryable<Category>, IQueryable<T>> mapper, CancellationToken cancellationToken = default);
