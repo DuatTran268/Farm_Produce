@@ -19,7 +19,7 @@ var app = builder.Build();
 	app.CategoriesEndpoint();
 	app.ProductsEndpoint();
 	app.CommentsEndpoint();
-
+	app.MapUnitEndpoint();
 
 
 	using (var scope = app.Services.CreateScope())

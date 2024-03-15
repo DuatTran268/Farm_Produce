@@ -4,6 +4,7 @@ using FarmProduce.Services.Manage.Admins;
 using FarmProduce.Services.Manage.Categories;
 using FarmProduce.Services.Manage.Comments;
 using FarmProduce.Services.Manage.Products;
+using FarmProduce.Services.Manage.Units;
 using FarmProduce.Services.Timing;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,7 +19,7 @@ namespace FarmProduct.WebApi.Extensions
             builder.Services.AddDbContext<FarmDbContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 			builder.Services.AddScoped<IDataSeeder, DataSeeder>();
 			builder.Services.AddScoped<ITimeProvider, LocalTimeProvider>();
-            
+            builder.Services.AddScoped<IUnitRepo,  UnitRepo>();
             // admin
 			builder.Services.AddScoped<IAdminRepo, AdminRepo>();
            
