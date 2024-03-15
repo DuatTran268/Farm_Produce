@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import DCategory from "../../../data/DCategory";
 import { Link } from "react-router-dom";
 import "../../../styles/user/Categories.css"
 import { Image } from "react-bootstrap";

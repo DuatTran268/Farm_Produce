@@ -8,7 +8,7 @@ const FruitProduct = () => {
   return (
     <div className="fruit_product">
       
-      <ProductHeader name="Nhóm rau"/>
+      <ProductHeader name="Tất cả sản phẩm"/>
       {/* fruitproduct */}
       <ProductList/>
     </div>
