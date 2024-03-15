@@ -58,15 +58,10 @@ const ProductDetails = () => {
                 Thêm vào giỏ hàng
               </Link>
             </div>
-            
           </div>
         </div>
-        
-
       </section>
     );
-
   }
-
 };
 export default ProductDetails;

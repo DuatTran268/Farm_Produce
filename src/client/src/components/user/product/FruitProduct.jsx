@@ -7,10 +7,8 @@ import ProductList from "./ProductList";
 const FruitProduct = () => {
   return (
     <div className="fruit_product">
-      
-      <ProductHeader name="Tất cả sản phẩm"/>
-      {/* fruitproduct */}
-      <ProductList/>
+      <ProductHeader name="Tất cả sản phẩm" />
+      <ProductList />
     </div>
   );
 };
