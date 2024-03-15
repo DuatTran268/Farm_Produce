@@ -1,10 +1,12 @@
-﻿using FarmProduce.Core.Collections;
+﻿using Carter;
+using FarmProduce.Core.Collections;
 using FarmProduce.Services.Manage.Discounts;
 using FarmProduce.Services.Manage.OrderStatuses;
 using FarmProduct.WebApi.Models;
 using FarmProduct.WebApi.Models.Comments;
 using FarmProduct.WebApi.Models.Discounts;
 using FarmProduct.WebApi.Models.OrderStatuses;
+using FarmProduct.WebApi.Utilities;
 using Mapster;
 using MapsterMapper;
 using Microsoft.AspNetCore.Routing;
@@ -12,29 +14,27 @@ using System.Net;
 
 namespace FarmProduct.WebApi.Endpoints
 {
-	public static class OrderStatusEndpoint
+	public class OrderStatusEndpoint:ICarterModule
 	{
-		public static WebApplication OrderStatusesEndpoint(this WebApplication app)
-		{
-			var routeGroupBuilder = app.MapGroup("/api/oderstatus");
+
+        public void AddRoutes(IEndpointRouteBuilder app)
+        {
+            var routeGroupBuilder = app.MapGroup(RouteAPI.OrderStatus);
 
 
 
 
-			routeGroupBuilder.MapGet("/getall", GetAllOrderStatus)
-			.WithName("GetAllOrderStatus")
-			.Produces<ApiResponse<PaginationResult<OrderStatusDto>>>();
+            routeGroupBuilder.MapGet("/getall", GetAllOrderStatus)
+            .WithName("GetAllOrderStatus")
+            .Produces<ApiResponse<PaginationResult<OrderStatusDto>>>();
 
 
-			// get order status by id
-			routeGroupBuilder.MapGet("/{id:int}", GetOrderStatusById)
-				.WithName("GetOrderStatusById")
-				.Produces<ApiResponse<OrderStatusDto>>();
-
-			return app;
-		}
-
-		private static async Task<IResult> GetAllOrderStatus(
+            // get order status by id
+            routeGroupBuilder.MapGet("/{id:int}", GetOrderStatusById)
+                .WithName("GetOrderStatusById")
+                .Produces<ApiResponse<OrderStatusDto>>();
+        }
+        private static async Task<IResult> GetAllOrderStatus(
 		IOrderStatusRepo orderStatusRepo
 		)
 		{
@@ -52,5 +52,6 @@ namespace FarmProduct.WebApi.Endpoints
 				: Results.Ok(ApiResponse.Success(mapper.Map<OrderStatusDto>(orderstatus)));
 		}
 
-	}
+      
+    }
 }

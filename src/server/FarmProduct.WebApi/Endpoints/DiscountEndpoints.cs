@@ -1,4 +1,5 @@
-﻿using FarmProduce.Core.Collections;
+﻿using Carter;
+using FarmProduce.Core.Collections;
 using FarmProduce.Services.Manage.Categories;
 using FarmProduce.Services.Manage.Comments;
 using FarmProduce.Services.Manage.Discounts;
@@ -6,35 +7,31 @@ using FarmProduct.WebApi.Models;
 using FarmProduct.WebApi.Models.Categories;
 using FarmProduct.WebApi.Models.Comments;
 using FarmProduct.WebApi.Models.Discounts;
+using FarmProduct.WebApi.Utilities;
 using Mapster;
 using MapsterMapper;
 using System.Net;
 
 namespace FarmProduct.WebApi.Endpoints
 {
-	public static class DiscountEndpoints
+	public  class DiscountEndpoints:ICarterModule
 	{
-		public static WebApplication DiscountsEndpoints(this WebApplication app)
-		{
-			var routeGroupBuilder = app.MapGroup("/api/discount");
-			// get department not required
-			routeGroupBuilder.MapGet("/getall", GetAllDiscount)
-				.WithName("GetAllDiscount")
-				.Produces<ApiResponse<PaginationResult<DiscountDto>>>();
+
+        public void AddRoutes(IEndpointRouteBuilder app)
+        {
+            var routeGroupBuilder = app.MapGroup(RouteAPI.Discount);
+            // get department not required
+            routeGroupBuilder.MapGet("/getall", GetAllDiscount)
+                .WithName("GetAllDiscount")
+                .Produces<ApiResponse<PaginationResult<DiscountDto>>>();
 
 
-			// get commnet by id
-			routeGroupBuilder.MapGet("/{id:int}", GetDiscountByID)
-				.WithName("GetDiscountByID")
-				.Produces<ApiResponse<DiscountDto>>();
-
-
-			return app;
-
-		}
-
-
-		private static async Task<IResult> GetAllDiscount(
+            // get commnet by id
+            routeGroupBuilder.MapGet("/{id:int}", GetDiscountByID)
+                .WithName("GetDiscountByID")
+                .Produces<ApiResponse<DiscountDto>>();
+        }
+        private static async Task<IResult> GetAllDiscount(
 		IDiscountRepo discountRepo
 		)
 		{
@@ -51,5 +48,7 @@ namespace FarmProduct.WebApi.Endpoints
 				? Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound, $"Not find id = {id}"))
 				: Results.Ok(ApiResponse.Success(mapper.Map<DiscountDto>(discounts)));
 		}
-	}
+
+        
+    }
 }

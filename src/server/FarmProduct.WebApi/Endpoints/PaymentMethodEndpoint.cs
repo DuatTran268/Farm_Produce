@@ -1,40 +1,36 @@
-﻿using FarmProduce.Core.Collections;
+﻿using Carter;
+using FarmProduce.Core.Collections;
 using FarmProduce.Services.Manage.OrderStatuses;
 using FarmProduce.Services.Manage.PaymentMethods;
 using FarmProduct.WebApi.Models;
 using FarmProduct.WebApi.Models.OrderStatuses;
 using FarmProduct.WebApi.Models.PaymentsMethod;
 using FarmProduct.WebApi.Models.Products;
+using FarmProduct.WebApi.Utilities;
 using Mapster;
 using MapsterMapper;
 using System.Net;
 
 namespace FarmProduct.WebApi.Endpoints
 {
-	public static class PaymentMethodEndpoint
+	public class PaymentMethodEndpoint:ICarterModule
 	{
-		public static WebApplication PaymentsMethodEndpoint(this WebApplication app)
-		{
-
-			var routeGroupBuilder = app.MapGroup("/api/paymentMethods");
-
-
-			// get department not required
-			routeGroupBuilder.MapGet("/getall", GetAllPaymentMethod)
-				.WithName("GetAllPaymentMethod")
-				.Produces<ApiResponse<PaginationResult<PaymentsMethodDto>>>();
-
-			// get order status by id
-			routeGroupBuilder.MapGet("/{id:int}", GetPaymentMethodByID)
-				.WithName("GetPaymentMethodByID")
-				.Produces<ApiResponse<PaymentsMethodDto>>();
+        public void AddRoutes(IEndpointRouteBuilder app)
+        {
+            var routeGroupBuilder = app.MapGroup(RouteAPI.PaymentMethod);
 
 
-			return app;
-		}
+            // get department not required
+            routeGroupBuilder.MapGet("/getall", GetAllPaymentMethod)
+                .WithName("GetAllPaymentMethod")
+                .Produces<ApiResponse<PaginationResult<PaymentsMethodDto>>>();
 
-
-		private static async Task<IResult> GetAllPaymentMethod(
+            // get order status by id
+            routeGroupBuilder.MapGet("/{id:int}", GetPaymentMethodByID)
+                .WithName("GetPaymentMethodByID")
+                .Produces<ApiResponse<PaymentsMethodDto>>();
+        }
+        private static async Task<IResult> GetAllPaymentMethod(
 		IPaymentMethodRepo paymentMethodRepo
 		)
 		{
@@ -52,5 +48,6 @@ namespace FarmProduct.WebApi.Endpoints
 				: Results.Ok(ApiResponse.Success(mapper.Map<PaymentsMethodDto>(paymentMethods)));
 		}
 
-	}
+       
+    }
 }

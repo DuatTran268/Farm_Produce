@@ -1,11 +1,16 @@
 ﻿
 using FarmProduce.Core.Entities;
 using FarmProduct.WebApi.Models.Admin;
+using FarmProduct.WebApi.Models.Carts;
 using FarmProduct.WebApi.Models.Categories;
+using FarmProduct.WebApi.Models.CustomUI;
 using FarmProduct.WebApi.Models.Discounts;
+using FarmProduct.WebApi.Models.Images;
+using FarmProduct.WebApi.Models.Orders;
 using FarmProduct.WebApi.Models.OrderStatuses;
 using FarmProduct.WebApi.Models.PaymentsMethod;
 using FarmProduct.WebApi.Models.Products;
+using FarmProduct.WebApi.Models.Unit;
 using Mapster;
 
 namespace FarmProduct.WebApi.Mapsters
@@ -14,34 +19,22 @@ namespace FarmProduct.WebApi.Mapsters
 	{
 		public void Register(TypeAdapterConfig config)
 		{
-			// admin
 			config.NewConfig<Admin, AdminDto>();
-			
-			// category
 			config.NewConfig<Category, CategoriesDto>();
 			config.NewConfig<Category, CategoriesDetail>();
 			config.NewConfig<Category, CategoriesEditModel>();
-			
-			// product
 			config.NewConfig<Product, ProductsDto>();
 			config.NewConfig<Product, ProductDetails>();
-
-
-			// discount
+			config.NewConfig<Unit, UnitDto>();
 			config.NewConfig<Discount, DiscountDto>();
-
-
-
-			// order status
 			config.NewConfig<OrderStatus, OrderStatusDto>();
-
-
-			// payment medthos
 			config.NewConfig<PaymentMethod, PaymentsMethodDto>();
+			config.NewConfig<Order, OrderDto>();
+			config.NewConfig<CustomUI, CustomUIDto>();
+			config.NewConfig<Cart, CartDto>();
+            config.NewConfig<Image, ImageDto>();
 
-			// 
-
-		}
-	}
+        }
+    }
 
 }

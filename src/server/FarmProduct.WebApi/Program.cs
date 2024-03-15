@@ -1,3 +1,4 @@
+using Carter;
 using FarmProduce.Data.Seeders;
 using FarmProduct.WebApi.Endpoints;
 using FarmProduct.WebApi.Extensions;
@@ -15,14 +16,6 @@ var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 {
 	app.SetupRequestPipeline();
-	app.AdminEndpoint();
-	app.CategoriesEndpoint();
-	app.ProductsEndpoint();
-	app.CommentsEndpoint();
-	app.DiscountsEndpoints();
-	app.OrderStatusesEndpoint();
-	app.PaymentsMethodEndpoint();
-
 
 
 	using (var scope = app.Services.CreateScope())
@@ -31,6 +24,6 @@ var app = builder.Build();
 		seeder.Initialize();
 	}
 
-
+	app.MapCarter();
 	app.Run();
 }

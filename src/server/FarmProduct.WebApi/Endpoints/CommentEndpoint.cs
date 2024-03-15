@@ -1,4 +1,5 @@
-﻿using FarmProduce.Core.Collections;
+﻿using Carter;
+using FarmProduce.Core.Collections;
 using FarmProduce.Services.Manage.Categories;
 using FarmProduce.Services.Manage.Comments;
 using FarmProduce.Services.Manage.Products;
@@ -7,36 +8,32 @@ using FarmProduct.WebApi.Models.Admin;
 using FarmProduct.WebApi.Models.Categories;
 using FarmProduct.WebApi.Models.Comments;
 using FarmProduct.WebApi.Models.Products;
+using FarmProduct.WebApi.Utilities;
 using Mapster;
 using MapsterMapper;
 using System.Net;
 
 namespace FarmProduct.WebApi.Endpoints
 {
-	public static class CommentEndpoint
+	public class CommentEndpoint:ICarterModule
 	{
-		public static WebApplication CommentsEndpoint(this WebApplication app)
-		{
-			var routeGroupBuilder = app.MapGroup("/api/comments");
+        public void AddRoutes(IEndpointRouteBuilder app)
+        {
+            var routeGroupBuilder = app.MapGroup(RouteAPI.Comment);
 
-			// get all comment
-			routeGroupBuilder.MapGet("/getall", GetAllComment)
-			.WithName("GetAllComment")
-			.Produces<ApiResponse<PaginationResult<CommentDto>>>();
-
-
-			// get commnet by id
-			routeGroupBuilder.MapGet("/{id:int}", GetCommentByID)
-				.WithName("GetCommentByID")
-				.Produces<ApiResponse<CommentDto>>();
+            // get all comment
+            routeGroupBuilder.MapGet("/getall", GetAllComment)
+            .WithName("GetAllComment")
+            .Produces<ApiResponse<PaginationResult<CommentDto>>>();
 
 
-			return app;
-
-		}
-		
-		// get all
-		private static async Task<IResult> GetAllComment(ICommentRepo commentRepo)
+            // get commnet by id
+            routeGroupBuilder.MapGet("/{id:int}", GetCommentByID)
+                .WithName("GetCommentByID")
+                .Produces<ApiResponse<CommentDto>>();
+        }
+        // get all
+        private static async Task<IResult> GetAllComment(ICommentRepo commentRepo)
 		{
 			var comments = await commentRepo.GetAllComments(
 				comments => comments.ProjectToType<CommentDto>());
@@ -52,5 +49,6 @@ namespace FarmProduct.WebApi.Endpoints
 				: Results.Ok(ApiResponse.Success(mapper.Map<CommentDto>(commnets)));
 		}
 
-	}
+       
+    }
 }
