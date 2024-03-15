@@ -14,6 +14,7 @@ namespace FarmProduce.Services.Manage.Products
 
 		Task<IList<T>> GetAllProducts<T>(Func<IQueryable<Product>, IQueryable<T>> mapper, CancellationToken cancellationToken = default);
 
+		Task <Product> GetProductById (int id, CancellationToken cancellationToken = default);
 		Task<Product> GetDetailProductBySlug(string slug, CancellationToken cancellationToken = default);
 
 		Task<IList<T>> GetLitmitProductNewest<T>(int n, Func<IQueryable<Product>, IQueryable<T>> mapper, CancellationToken cancellationToken = default);

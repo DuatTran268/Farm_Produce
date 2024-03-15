@@ -1,5 +1,8 @@
-﻿using FarmProduce.Core.Entities;
+﻿using FarmProduce.Core.Contracts;
+using FarmProduce.Core.DTO;
+using FarmProduce.Core.Entities;
 using FarmProduce.Data.Contexts;
+using FarmProduce.Services.Extentions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using System;
@@ -25,6 +28,11 @@ namespace FarmProduce.Services.Manage.Categories
 		{
 			IQueryable<Category> categories = _context.Set<Category>().OrderBy(a => a.Name);
 			return await mapper(categories).ToListAsync(cancellationToken);
+		}
+
+		public async Task<Category> GetCategoryById(int id, CancellationToken cancellationToken = default)
+		{
+			return await _context.Set<Category>().FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
 		}
 
 		public async Task<Category> GetDetailCategoryBySlug(string slug, CancellationToken cancellationToken = default)
@@ -57,5 +65,24 @@ namespace FarmProduce.Services.Manage.Categories
 				.Take(n);
 			return await mapper(cateLimit).ToListAsync(cancellationToken);
 		}
+
+		public async Task<IPagedList<T>> GetListProductsWithSlugOfCategory<T>(ProductQuery query, IPagingParams pagingParams, Func<IQueryable<Product>, IQueryable<T>> mapper, CancellationToken cancellationToken = default)
+		{
+			IQueryable<Product> productFindQuery = FilterProduct(query);
+			IQueryable<T> queryResult = mapper(productFindQuery);
+			return await queryResult.ToPagedListAsync(pagingParams, cancellationToken); 
+
+		}
+		private IQueryable<Product> FilterProduct(ProductQuery query)
+		{
+			IQueryable<Product> productQuery = _context.Set<Product>();
+			if (!string.IsNullOrWhiteSpace(query.UrlSlug))
+			{
+				productQuery = productQuery.Where(pd => pd.Category.UrlSlug.Contains(query.UrlSlug));
+			}
+			return productQuery;
+		}
+
+
 	}
 }

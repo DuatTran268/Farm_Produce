@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { Image } from "react-bootstrap";
 import BannerProductList from "../../../assets/banner_product_list.png";
 import "../../../styles/user/Product.css";
-import DProduct from "../../../data/DProduct";
 import { getAllProduct } from "../../../api/Product";
 
 const ProductList = () => {

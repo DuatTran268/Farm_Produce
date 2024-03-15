@@ -1,10 +1,12 @@
-﻿using FarmProduce.Core.Collections;
+﻿using Carter;
+using FarmProduce.Core.Collections;
 using FarmProduce.Core.DTO;
 using FarmProduce.Services.Manage.Products;
 using FarmProduct.WebApi.Models;
 using FarmProduct.WebApi.Models.Categories;
 using FarmProduct.WebApi.Models.Comments;
 using FarmProduct.WebApi.Models.Products;
+using FarmProduct.WebApi.Utilities;
 using Mapster;
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -12,39 +14,35 @@ using System.Net;
 
 namespace FarmProduct.WebApi.Endpoints
 {
-	public static class ProductEndpoint
+	public class ProductEndpoint:ICarterModule
 	{
-		public static WebApplication ProductsEndpoint(this WebApplication app)
-		{
-			var routeGroupBuilder = app.MapGroup("/api/products");
+        public void AddRoutes(IEndpointRouteBuilder app)
+        {
+            var routeGroupBuilder = app.MapGroup(RouteAPI.Product);
 
 
 
-			// get department not required
-			routeGroupBuilder.MapGet("/getall", GetAllProducts)
-				.WithName("GetAllProducts")
-				.Produces<ApiResponse<PaginationResult<ProductsDto>>>();
+            // get department not required
+            routeGroupBuilder.MapGet("/getall", GetAllProducts)
+                .WithName("GetAllProducts")
+                .Produces<ApiResponse<PaginationResult<ProductsDto>>>();
 
-			// get by slug
-			routeGroupBuilder.MapGet("/slugProduct/{slug:regex(^[a-z0-9_-]+$)}", GetProductBySlug)
-				.WithName("GetProductBySlug")
-				.Produces<ApiResponse<ProductDetails>>();
+            // get by slug
+            routeGroupBuilder.MapGet("/slugProduct/{slug:regex(^[a-z0-9_-]+$)}", GetProductBySlug)
+                .WithName("GetProductBySlug")
+                .Produces<ApiResponse<ProductDetails>>();
 
-			routeGroupBuilder.MapGet("limitNewest/{limit:int}", GetLimitProductNewest)
-			   .WithName("GetLimitProductNewest")
-			   .Produces<ApiResponse<IList<ProductDetails>>>();
+            routeGroupBuilder.MapGet("limitNewest/{limit:int}", GetLimitProductNewest)
+               .WithName("GetLimitProductNewest")
+               .Produces<ApiResponse<IList<ProductDetails>>>();
 
 
-			// using slug of user to get posts by user upload
-			routeGroupBuilder.MapGet("/cmt/slugProduct/{slug:regex(^[a-z0-9_-]+$)}", GetCommentBySlugProduct)
-		   .WithName("GetCommentBySlugProduct")
-			.Produces<ApiResponse<PaginationResult<CommentDto>>>();
-			return app;
-
-		}
-
-		// get all
-		private static async Task<IResult> GetAllProducts(IProductRepo productRepo)
+            // using slug of user to get posts by user upload
+            routeGroupBuilder.MapGet("/cmt/slugProduct/{slug:regex(^[a-z0-9_-]+$)}", GetCommentBySlugProduct)
+           .WithName("GetCommentBySlugProduct")
+            .Produces<ApiResponse<PaginationResult<CommentDto>>>();
+        }
+        private static async Task<IResult> GetAllProducts(IProductRepo productRepo)
 		{
 			var products = await productRepo.GetAllProducts(
 				products => products.ProjectToType<ProductsDto>());
@@ -87,6 +85,6 @@ namespace FarmProduct.WebApi.Endpoints
 				: Results.Ok(ApiResponse.Success(paginationResult));
 		}
 
-
-	}
+       
+    }
 }

@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FarmProduce.Services.Manage.Order
+namespace FarmProduce.Core.DTO
 {
-    internal interface IOrderRepo
-    {
-    }
+	public class ProductQuery
+	{
+		public string UrlSlug { get; set; } = "";
+
+	}
 }

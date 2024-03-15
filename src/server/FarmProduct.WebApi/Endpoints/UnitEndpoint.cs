@@ -6,27 +6,29 @@ using Mapster;
 using FarmProduce.Services.Manage.Units;
 using FarmProduce.Services.Manage.Products;
 using FarmProduct.WebApi.Models.Unit;
+using Carter;
+using FarmProduct.WebApi.Utilities;
 
 namespace FarmProduct.WebApi.Endpoints
 {
-    public static class UnitEndpoint
+    public class UnitEndpoint:ICarterModule
     {
-        public static WebApplication MapUnitEndpoint(
-        this WebApplication app)
+        public void AddRoutes(IEndpointRouteBuilder app)
         {
-            var routeGroupBuilder = app.MapGroup("/api/units");
+            var routeGroupBuilder = app.MapGroup(RouteAPI.Unit);
 
-            routeGroupBuilder.MapGet("/getall", GetAllAsync)
+            routeGroupBuilder.MapGet("/getall", GetAllPageAsync)
                 .WithName("GetAllUnit")
-                .Produces<ApiResponse<PaginationResult<CategoriesDto>>>();
-            return app;
+                .Produces<ApiResponse<PaginationResult<UnitDto>>>();
         }
-        private static async Task<IResult> GetAllAsync(IUnitRepo unitRepo,PagingModel pagingModel,CancellationToken cancellation=default)
+        private static async Task<IResult> GetAllPageAsync(IUnitRepo unitRepo,[AsParameters]PagingModel pagingModel,CancellationToken cancellation=default)
         {
             var products = await unitRepo.GetAllPageAsync(
                 products => products.ProjectToType<UnitDto>(),pagingModel, cancellation);
             return Results.Ok(ApiResponse.Success(products));
         }
+
+       
     }
 
 }

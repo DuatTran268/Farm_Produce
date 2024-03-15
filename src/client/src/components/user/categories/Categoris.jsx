@@ -13,14 +13,13 @@ const Categoris = () => {
     getCategoryLimit().then((data) => {
       if (data){
         setGetCategory(data);
+        console.log("Check data category", data)
       }
       else{
         setGetCategory([]);
       }
     });
   }, []);
-
-
 
 
 

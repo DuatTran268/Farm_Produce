@@ -3,12 +3,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../../../styles/user/NavProduct.css";
-import DProduct from "../../../data/DProduct";
 import "../../../styles/user/NewProduct.css";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { getProductNewestLimit } from "../../../api/Product";
+import ProductHeader from "./ProductHeader";
 
 const NewProduct = () => {
 
@@ -19,6 +19,7 @@ const NewProduct = () => {
     getProductNewestLimit().then((data) => {
       if (data){
         setProduct(data);
+        console.log("check data new product", data);
       }
       else{
         setProduct([]);
@@ -42,19 +43,7 @@ const NewProduct = () => {
   return (
     <div className="new_product">
       {/* reuse */}
-      <div className="product_header">
-        <div className="product_header_title">
-          <div className="product_header_icon">
-            <FontAwesomeIcon icon={faCartShopping} />
-          </div>
-          <span className="product_header_name">Sản phẩm mới</span>
-        </div>
-        <div className="view_more">
-          <Link to={"/product/viewmore"} className="view_more_link">
-            Xem thêm ...
-          </Link>
-        </div>
-      </div>
+      <ProductHeader name="Sản phẩm mới"/>
       {/* new product body */}
       <div className="product_body">
         <div className="product_note">

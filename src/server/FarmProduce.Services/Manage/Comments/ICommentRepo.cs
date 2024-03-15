@@ -12,6 +12,7 @@ namespace FarmProduce.Services.Manage.Comments
 		Task<IList<T>> GetAllComments<T>(Func<IQueryable<Comment>, IQueryable<T>> mapper, CancellationToken cancellationToken = default);
 
 
+		Task<Comment> GetCommnetByID(int id, CancellationToken cancellationToken = default);
 
 
 

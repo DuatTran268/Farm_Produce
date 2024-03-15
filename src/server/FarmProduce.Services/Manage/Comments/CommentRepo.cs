@@ -27,5 +27,10 @@ namespace FarmProduce.Services.Manage.Comments
 			IQueryable<Comment> comments = _context.Set<Comment>().OrderBy(a => a.Name);
 			return await mapper(comments).ToListAsync(cancellationToken);
 		}
+
+		public async Task<Comment> GetCommnetByID(int id, CancellationToken cancellationToken = default)
+		{
+			return await _context.Set<Comment>().FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
+		}
 	}
 }

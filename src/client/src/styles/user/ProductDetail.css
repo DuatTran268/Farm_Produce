@@ -1,7 +1,7 @@
 .product_detail{
   display: flex;
   justify-content: center;
-  padding-top: 3rem;
+  padding: 3rem 1rem;
 }
 
 .product_detail_img{
@@ -46,3 +46,31 @@
 
 
 
+/* comment */
+.product_comment{
+  background-color: white;
+  margin: 2rem 0;
+  padding: 0 2rem;
+}
+
+.product_comment_container{
+  margin: 2rem 0;
+  padding: 2rem 0;
+}
+
+.product_col{
+  padding: 2rem;
+}
+
+
+.comment_item{
+  background-color: #f2ebeb;
+  margin: 1rem 0;
+  padding: 1rem;
+  border-radius: 10px;
+  border: 1px solid green;
+}
+
+.comment_item_col_bottom{
+  margin-top: 1rem;
+}

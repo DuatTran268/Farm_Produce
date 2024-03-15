@@ -1,9 +1,11 @@
-﻿using FarmProduce.Core.Collections;
+﻿using Carter;
+using FarmProduce.Core.Collections;
 using FarmProduce.Services.Manage.Admins;
 using FarmProduce.Services.Manage.Categories;
 using FarmProduct.WebApi.Models;
 using FarmProduct.WebApi.Models.Admin;
 using FarmProduct.WebApi.Models.Categories;
+using FarmProduct.WebApi.Utilities;
 using Mapster;
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -11,40 +13,31 @@ using System.Net;
 
 namespace FarmProduct.WebApi.Endpoints
 {
-	public static class CategoryEndpoint
+	public class CategoryEndpoint:ICarterModule
 	{
-		public static WebApplication CategoriesEndpoint(
-		this WebApplication app)
-		{
-			var routeGroupBuilder = app.MapGroup("/api/categories");
+        public void AddRoutes(IEndpointRouteBuilder app)
+        {
+            var routeGroupBuilder = app.MapGroup(RouteAPI.Category);
 
-			// get department not required
-			routeGroupBuilder.MapGet("/getall", GetAllCategory)
-				.WithName("GetAllCategory")
-				.Produces<ApiResponse<PaginationResult<CategoriesDto>>>();
+            // get department not required
+            routeGroupBuilder.MapGet("/getall", GetAllCategory)
+                .WithName("GetAllCategory")
+                .Produces<ApiResponse<PaginationResult<CategoriesDto>>>();
 
-			// get by slug
-			routeGroupBuilder.MapGet("/slugCategory/{slug:regex(^[a-z0-9_-]+$)}", GetCategoryBySlug)
-				.WithName("GetCategoryBySlug")
-				.Produces<ApiResponse<CategoriesDetail>>();
+            // get by slug
+            routeGroupBuilder.MapGet("/slugCategory/{slug:regex(^[a-z0-9_-]+$)}", GetCategoryBySlug)
+                .WithName("GetCategoryBySlug")
+                .Produces<ApiResponse<CategoriesDetail>>();
 
-			routeGroupBuilder.MapGet("limit/{limit:int}", GetLimitProduct)
-			   .WithName("GetLimitProduct")
-			   .Produces<ApiResponse<IList<CategoriesDetail>>>();
+            routeGroupBuilder.MapGet("limit/{limit:int}", GetLimitProduct)
+               .WithName("GetLimitProduct")
+               .Produces<ApiResponse<IList<CategoriesDetail>>>();
 
-			routeGroupBuilder.MapGet("limitNewest/{limit:int}", GetLimitCategoryNewest)
-			   .WithName("GetLimitCategoryNewest")
-			   .Produces<ApiResponse<IList<CategoriesDetail>>>();
-
-
-
-
-
-			return app;
-		}
-
-
-		private static async Task<IResult> GetAllCategory(
+            routeGroupBuilder.MapGet("limitNewest/{limit:int}", GetLimitCategoryNewest)
+               .WithName("GetLimitCategoryNewest")
+               .Produces<ApiResponse<IList<CategoriesDetail>>>();
+        }
+        private static async Task<IResult> GetAllCategory(
 		ICategoriesRepo categoriesRepo
 		)
 		{
@@ -77,7 +70,6 @@ namespace FarmProduct.WebApi.Endpoints
 			return Results.Ok(ApiResponse.Success(cateId));
 		}
 
-
-
-	}
+        
+    }
 }

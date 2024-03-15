@@ -31,6 +31,12 @@ namespace FarmProduce.Services.Manage.Products
 			return await mapper(products).ToListAsync(cancellationToken);
 
 		}
+
+		public async Task <Product> GetProductById(int id, CancellationToken cancellationToken = default)
+		{
+			return await _context.Set<Product>().FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
+		}
+
 		public async Task<Product> GetDetailProductBySlug(string slug, CancellationToken cancellationToken = default)
 		{
 			IQueryable<Product> productQuery = _context.Set<Product>()
@@ -82,5 +88,6 @@ namespace FarmProduce.Services.Manage.Products
 			}
 			return cmtQuery;
 		}
+
 	}
 }
