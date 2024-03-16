@@ -18,7 +18,6 @@ const ProductDetails = () => {
       if (data){
         setProductDetail(data);
         console.log(data );
-
       }
       else{
         setProductDetail({});

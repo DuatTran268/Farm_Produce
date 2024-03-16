@@ -21,3 +21,9 @@ export function getProductByCategorySlug(slug) {
     `https://localhost:7047/api/categories/product/slugCategory/${slug}?PageSize=10&PageNumber=1`
   );
 }
+
+// export function getProductByCategorySlug(slug) {
+//   return get_api(
+//     `https://localhost:7047/api/categories/slugCategory/${slug}`
+//   );
+// }
