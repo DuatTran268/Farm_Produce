@@ -17,6 +17,7 @@ import AdCategory from "../pages/admin/categories/AdCategories";
 import AdProduct from "../pages/admin/product/AdProduct";
 import Login from "../pages/login/Login";
 import ProductInCategory from "../pages/users/ProductInCategory";
+import Recruitment from "../pages/users/Recruitment";
 
 const Routers = () => {
   return (
@@ -35,6 +36,8 @@ const Routers = () => {
         <Route path="/policys" element={<Policy/>} />
         <Route path="/condition" element={<Condition/>} />
         <Route path="/contact" element={<Contact/>} />
+        <Route path="/recruitment" element={<Recruitment/>} />
+
         
         {/* Admin */} 
         <Route path="/admin" element={<Login/>} />
