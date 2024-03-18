@@ -30,9 +30,8 @@ const ProductList = () => {
             {getProduct.map((product, index) => {
               return (
                 <>
-                  <div className="product_item col-11 col-md-6 col-lg-3 ">
+                  <div className="product_item col-11 col-md-6 col-lg-3 " key={index}>
                     <ProductTemplate
-                      key={index}
                       urlSlug={product.urlSlug}
                       name={product.name}
                       price={product.price}

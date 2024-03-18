@@ -33,7 +33,6 @@ const Footer = () => {
               width="270"
               height="250"
               title="map"
-              allowfullscreen="true"
             ></iframe>
           </div>
         </div>

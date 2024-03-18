@@ -1,21 +1,30 @@
 import axios from "axios";
 
+
+const apiCache = {}; // Đối tượng lưu trữ kết quả của các yêu cầu API đã được gọi trước đó
+
 export async function get_api(your_api) {
   try {
-    const response = await axios.get(your_api);
-
-    const data = response.data;
-    // console.log("data endpoint: ", data);
-    if (data.isSuccess) return data.result;
-    
-    else return null;
-
-
+    // Kiểm tra xem kết quả của yêu cầu API đã được lưu trong cache chưa
+    if (apiCache[your_api]) {
+      return apiCache[your_api];
+    } else {
+      const response = await axios.get(your_api);
+      const data = response.data;
+      if (data.isSuccess) {
+        // Lưu kết quả vào cache trước khi trả về
+        apiCache[your_api] = data.result;
+        return data.result;
+      } else {
+        return null;
+      }
+    }
   } catch (error) {
     console.log("Error ", error.message);
     return null;
   }
 }
+
 
 
 export async function post_api(your_api, formData) {

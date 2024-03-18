@@ -19,7 +19,6 @@ const NewProduct = () => {
     getProductNewestLimit().then((data) => {
       if (data){
         setProduct(data);
-        console.log("check data new product", data);
       }
       else{
         setProduct([]);
