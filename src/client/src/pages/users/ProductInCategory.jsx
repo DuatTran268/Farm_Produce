@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../../styles/user/Product.css";
 import { Image } from "react-bootstrap";
-import { Link, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import { getProductByCategorySlug } from "../../api/Product";
 import BannerProductList from "../../assets/banner_product_list.png";
 import LayoutClient from "../../components/user/common/LayoutClient";

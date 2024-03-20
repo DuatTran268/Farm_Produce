@@ -1,13 +1,24 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Image } from "react-bootstrap";
+import { Button, Image } from "react-bootstrap";
 import "../../../styles/user/Product.css";
+import { useCart } from "react-use-cart";
+import { faCartArrowDown } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const ProductTemplate = ({ urlSlug, name, price }) => {
+const ProductTemplate = (props) => {
+  const { addItem } = useCart();
+
+  const handleAddCart = () => {
+    if (true) {
+      alert("Bạn đã thêm sản phẩm vào giỏ hàng");
+    }
+  };
+
   return (
     <section>
       <div>
-        <Link to={`/detail/${urlSlug}`} className="product_link">
+        <Link to={`/detail/${props.urlSlug}`} className="product_link">
           <div className="card p-0 overflow-hidden shadow">
             <div className="product_image">
               <Image
@@ -18,15 +29,26 @@ const ProductTemplate = ({ urlSlug, name, price }) => {
               />
             </div>
             <div className="product_content">
-              <p className="product_title">{name}</p>
+              <p className="product_title">{props.name}</p>
               <div className="product_bottom">
                 <div className="product_price">
-                  <div className="product_price_origin">{price} VNĐ</div>
-                  <div className="product_price_discount">{price} VNĐ</div>
+                  <div className="product_price_origin">{props.price} VNĐ</div>
+                  <div className="product_price_discount">
+                    {props.price} VNĐ
+                  </div>
                 </div>
-                <Link className="btn btn-success" to={"/cart"}>
-                  Mua ngay
-                </Link>
+                <Button
+                  className="btn btn-success"
+                  onClick={() => {
+                    return (
+                      handleAddCart(),
+                      addItem(props.item)
+                    )
+                  }}
+                >
+                  Add Cart
+                  <FontAwesomeIcon icon={faCartArrowDown} className="ms-2" />
+                </Button>
               </div>
             </div>
           </div>

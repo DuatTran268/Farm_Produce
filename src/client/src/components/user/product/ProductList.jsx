@@ -13,6 +13,7 @@ const ProductList = () => {
     getAllProduct().then((data) => {
       if (data) {
         setGetProduct(data);
+        console.log("Checkdata product", data);
       } else {
         setGetProduct([]);
       }
@@ -27,14 +28,14 @@ const ProductList = () => {
             <Image src={BannerProductList} alt="productbanner" />
           </div>
           <div className="product_list">
-            {getProduct.map((product, index) => {
+            {getProduct.map((item, index) => {
               return (
                 <>
                   <div className="product_item col-11 col-md-6 col-lg-3 " key={index}>
                     <ProductTemplate
-                      urlSlug={product.urlSlug}
-                      name={product.name}
-                      price={product.price}
+                      urlSlug={item.urlSlug}
+                      name={item.name}
+                      price={item.price}
                     />
                   </div>
                 </>
