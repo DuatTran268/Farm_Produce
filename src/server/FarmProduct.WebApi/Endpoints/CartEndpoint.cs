@@ -14,9 +14,7 @@ namespace FarmProduct.WebApi.Endpoints
     {
         public void AddRoutes(IEndpointRouteBuilder app)
         {
-
             var routeGroupBuilder = app.MapGroup(RouteAPI.Cart);
-
             routeGroupBuilder.MapGet("/", GetAllPageAsync)
                 .WithName("GetAllCart")
                 .Produces<ApiResponse<PaginationResult<CartDto>>>();

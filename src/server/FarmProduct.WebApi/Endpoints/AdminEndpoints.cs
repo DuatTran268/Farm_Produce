@@ -45,7 +45,5 @@ namespace FarmProduct.WebApi.Endpoints
 				? Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound, $"Không tìm thấy admin có id {id}"))
 				: Results.Ok(ApiResponse.Success(mapper.Map<AdminDto>(admin)));
 		}
-
-        
     }
 }

@@ -12,5 +12,7 @@ namespace FarmProduce.Services.Manage.Images
     {
         Task<IList<T>> GetAllAsync<T>(Func<IQueryable<Image>, IQueryable<T>> mapper, CancellationToken cancellationToken = default);
         Task<IPagedList<T>> GetAllPageAsync<T>(Func<IQueryable<Image>, IQueryable<T>> mapper, IPagingParams pagingParams, CancellationToken cancellationToken = default);
+        Task<bool> SetImageAsync(string caption, string imageUrl, CancellationToken cancellationToken = default);
+
     }
 }
