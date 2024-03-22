@@ -5,6 +5,7 @@ using FarmProduce.Data.Contexts;
 using FarmProduce.Services.Extentions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
+using SlugGenerator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,8 +32,52 @@ namespace FarmProduce.Services.Manage.Products
 			return await mapper(products).ToListAsync(cancellationToken);
 
 		}
+		
+		public async Task<bool> DeleteWithSlugAsync(string slug,CancellationToken cancellationToken)
+		{
+			var result = await _context.Set<Product>().Where(x=>x.UrlSlug== slug).FirstOrDefaultAsync();
+			if(result is null)
+			{
+				return false;
+			}
+			else
+			{
+				_context.Set<Product>().Remove(result);
+				return true;
+			}
+		}
+        public async Task<bool> IsSlugProductExisted(int id, string urlSlug, CancellationToken cancellationToken = default)
+        {
+            return await _context.Set<Product>().AnyAsync(x => x.Id != id && x.UrlSlug == urlSlug);
+        }
+        public async Task<bool> DeleteWithIDAsync(int id, CancellationToken cancellationToken)
+        {
+            var result = await _context.Set<Product>().Where(x => x.Id == id).FirstOrDefaultAsync();
+            if (result is null)
+            {
+                return false;
+            }
+            else
+            {
+                _context.Set<Product>().Remove(result);
+                return true;
+            }
+        }
+        public async Task<bool> AddOrUpdateProduct(Product product, CancellationToken cancellationToken = default)
+        {
+            if (product.Id > 0)
+            {
+                _context.Update(product);
+            }
+            else
+            {
+                _context.Add(product);
+            }
+            return await _context.SaveChangesAsync() > 0;
+        }
 
-		public async Task <Product> GetProductById(int id, CancellationToken cancellationToken = default)
+
+        public async Task <Product> GetProductById(int id, CancellationToken cancellationToken = default)
 		{
 			return await _context.Set<Product>().FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
 		}
@@ -54,9 +99,19 @@ namespace FarmProduce.Services.Manage.Products
 			return await productQuery.FirstOrDefaultAsync(cancellationToken);
 		}
 
-
-
-		public async Task<IList<T>> GetLitmitProductNewest<T>(int n, Func<IQueryable<Product>, IQueryable<T>> mapper, CancellationToken cancellationToken = default)
+		public async Task<bool> UpdateAsync(Product product, CancellationToken cancellationToken = default)
+		{
+			product.UrlSlug = product.Name.GenerateSlug();
+			_context.Update(product);
+			return await _context.SaveChangesAsync(cancellationToken) >0;
+		}
+        public async Task<bool> AddAsync(Product product, CancellationToken cancellationToken = default)
+        {
+            product.UrlSlug = product.Name.GenerateSlug();
+            _context.Add(product);
+            return await _context.SaveChangesAsync(cancellationToken) > 0;
+        }
+    public async Task<IList<T>> GetLitmitProductNewest<T>(int n, Func<IQueryable<Product>, IQueryable<T>> mapper, CancellationToken cancellationToken = default)
 		{
 			var productLimit = _context.Set<Product>()
 				.Include(p => p.Discounts)

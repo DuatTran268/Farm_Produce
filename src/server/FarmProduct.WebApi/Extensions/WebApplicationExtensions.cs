@@ -81,6 +81,9 @@ namespace FarmProduct.WebApi.Extensions
             }
             app.UseStaticFiles();
             app.UseHttpsRedirection();
+            //app.UseAuthentication();
+            app.UseRouting();
+            //app.UseAuthorization();
             app.UseCors("FarmProductApp");
             return app;
         }

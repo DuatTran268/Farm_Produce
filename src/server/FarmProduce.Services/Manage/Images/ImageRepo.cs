@@ -31,5 +31,12 @@ namespace FarmProduce.Services.Manage.Images
             IQueryable<Image> images = _context.Set<Image>();
             return await mapper(images).ToPagedListAsync(pagingParams, cancellationToken);
         }
+      
+        public async Task<bool> SetImageAsync(string caption, string imageUrl, CancellationToken cancellationToken = default)
+        {
+            return await _context.Set<Image>()
+                .Where(x => x.Caption == caption)
+                .ExecuteUpdateAsync(p => p.SetProperty(x => x.UrlImage, imageUrl), cancellationToken) > 0;
+        }
     }
 }
