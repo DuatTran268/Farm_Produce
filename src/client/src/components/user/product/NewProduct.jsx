@@ -9,9 +9,10 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { getProductNewestLimit } from "../../../api/Product";
 import ProductHeader from "./ProductHeader";
+import { useCart } from "react-use-cart";
+
 
 const NewProduct = () => {
-
 
   const [getProduct, setProduct] = useState([]);
 
@@ -25,6 +26,13 @@ const NewProduct = () => {
       }
     });
   }, [])
+
+  
+  const { addItem } = useCart();
+  const handleAddToCart = (product) => {
+    addItem(product);
+  };
+
 
   const settings = {
     dots: false,
@@ -76,7 +84,7 @@ const NewProduct = () => {
                       <div className="new_product_buy">
                         <div className="new_product_price">{product.price} VND</div>
                         <div className="new_product_add">
-                          <Link className="new_product_addcart" to={"/cart"}>
+                          <Link className="new_product_addcart" to={"/cart"} onClick={() => handleAddToCart(product)} >
                             Mua ngay
                             <FontAwesomeIcon
                               icon={faCartShopping}

@@ -31,8 +31,9 @@ const ProductList = () => {
             {getProduct.map((item, index) => {
               return (
                 <>
-                  <div className="product_item col-11 col-md-6 col-lg-3 " key={index}>
+                  <div className="product_item col-11 col-md-6 col-lg-3 " key={item.id}>
                     <ProductTemplate
+                      item={item} // Thêm dòng này để truyền item vào ProductTemplate
                       urlSlug={item.urlSlug}
                       name={item.name}
                       price={item.price}

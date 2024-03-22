@@ -37,18 +37,17 @@ const ProductTemplate = (props) => {
                     {props.price} VNĐ
                   </div>
                 </div>
-                <Button
-                  className="btn btn-success"
+
+                <Link
+                  className="text-decoration-none btn btn-success"
+                  to={"/cart"}
                   onClick={() => {
-                    return (
-                      handleAddCart(),
-                      addItem(props.item)
-                    )
+                    return handleAddCart(), addItem(props.item);
                   }}
                 >
-                  Add Cart
+                  Mua ngay
                   <FontAwesomeIcon icon={faCartArrowDown} className="ms-2" />
-                </Button>
+                </Link>
               </div>
             </div>
           </div>

@@ -55,14 +55,9 @@ const CartTable = () => {
                 <td>Xoá</td>
               </tr>
               {items.map((item, index) => {
-                // if (!item || !item.id) {
-                //   return null; // Bỏ qua nếu item không tồn tại hoặc không có thuộc tính id
-                // }
-
-                // const itemId = item?.id;
                 return (
                   <>
-                    <tr key={index} className="align-middle">
+                    <tr key={index} className="align-middle" >
                       <td>
                         {/* <img
                           src={item.image}
@@ -78,7 +73,7 @@ const CartTable = () => {
                           icon={faSubtract}
                           className="btn btn-info ms-2"
                           onClick={() =>
-                            updateItemQuantity(item.id, item.quantity - 1)
+                            updateItemQuantity(item.id,  item.quantity > 1 ? item.quantity - 1 : 1)
                           }
                         >
                           -{" "}
