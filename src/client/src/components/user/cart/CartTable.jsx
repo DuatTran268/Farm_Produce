@@ -41,9 +41,17 @@ const CartTable = () => {
     <section className="py-4 container">
       <div className="row justify-content-center">
         <div className="col-12">
-          <h5 className="text-danger py-3">
-            Sản phẩm: ({totalUniqueItems}) Tổng sản phẩm: ({totalItems})
-          </h5>
+          <div className="d-flex justify-content-between">
+            <h5 className="text-danger py-3">
+              Sản phẩm: ({totalUniqueItems}) Tổng sản phẩm: ({totalItems})
+            </h5>
+            <div className="col-auto ">
+            <Button className="btn btn-danger m-2" onClick={() => emptyCart()}>
+              Xoá tất cả
+              <FontAwesomeIcon icon={faTrash} className="ms-2" />
+            </Button>
+          </div>
+        </div>
           <table className="table table-light table-hover m-0">
             <tbody>
               <tr className="text-success">
@@ -66,7 +74,7 @@ const CartTable = () => {
                         /> */}
                       </td>
                       <td>{item.name}</td>
-                      <td>{item.price} USD</td>
+                      <td>{item.price} VNĐ</td>
                       <td>{item.quantity}</td>
                       <td>
                         <FontAwesomeIcon
@@ -104,19 +112,7 @@ const CartTable = () => {
             </tbody>
           </table>
         </div>
-        <div className="col-auto ms-auto">
-          <h3 className="text-success mt-2">Tổng tiền: {cartTotal} USD</h3>
-        </div>
-        <div className="col-auto">
-          <Button className="btn btn-danger m-2" onClick={() => emptyCart()}>
-            Xoá tất cả
-            <FontAwesomeIcon icon={faTrash} className="ms-2" />
-          </Button>
-          <Button className="btn btn-success">
-            Đặt ngay
-            <FontAwesomeIcon icon={faCartShopping} className="ms-2" />
-          </Button>
-        </div>
+       
       </div>
     </section>
   );

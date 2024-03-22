@@ -2,11 +2,14 @@ import React from "react";
 import "../../../styles/user/Cart.css";
 import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useCart } from "react-use-cart";
 
 const CartInfor = () => {
+  const { cartTotal } = useCart();
+
   return (
     <section>
-      <div className=" btn btn-success cart_update">Cập nhật giỏ hàng</div>
+      {/* <div className=" btn btn-success cart_update">Cập nhật giỏ hàng</div> */}
       <div className="cart_bottom">
         <div className="cart_table">
           <div className="cart_coupon col-7">
@@ -21,7 +24,7 @@ const CartInfor = () => {
             <div className="cart_bottom_title">Cộng giỏ hàng</div>
             <tr>
               <td className="cart-lable w-25">Tạm tính</td>
-              <td className="cart-value w-25">200.000đ</td>
+              <td className="cart-value w-25">{cartTotal} VNĐ</td>
             </tr>
             <tr>
               <td className="cart-lable w-25">Giao hàng</td>
@@ -29,7 +32,7 @@ const CartInfor = () => {
             </tr>
             <tr>
               <td className="cart-lable w-25">Tổng</td>
-              <td className="cart-value w-25">200.000đ</td>
+              <td className="cart-value w-25">{cartTotal} VNĐ</td>
             </tr>
             <Link
               className=" btn btn-success cart_update mt-3"
