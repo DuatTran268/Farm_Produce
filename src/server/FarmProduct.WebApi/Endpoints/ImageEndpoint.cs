@@ -7,6 +7,13 @@ using FarmProduct.WebApi.Utilities;
 using Mapster;
 using FarmProduct.WebApi.Models.Images;
 using FarmProduce.Services.Manage.Images;
+using FarmProduce.Core.Entities;
+using FarmProduce.Services.Manage.Products;
+using FarmProduct.WebApi.Models.Products;
+using MapsterMapper;
+using System.Net;
+using SlugGenerator;
+using FarmProduce.Services.Media;
 
 namespace FarmProduct.WebApi.Endpoints
 {
@@ -20,12 +27,46 @@ namespace FarmProduct.WebApi.Endpoints
             routeGroupBuilder.MapGet("/", GetAllPageAsync)
                 .WithName("GetAllImage")
                 .Produces<ApiResponse<PaginationResult<ImageDto>>>();
+            routeGroupBuilder.MapPost("/", AddImageAsync)
+              .WithName("AddImage")
+              .Accepts<ImageEditModel>("multipart/form-data")
+              .Produces(401)
+              .Produces<ApiResponse<ImageDto>>();
+         
         }
         private static async Task<IResult> GetAllPageAsync(IImageRepo imageRepo, [AsParameters] PagingModel pagingModel, CancellationToken cancellation = default)
         {
             var orders = await imageRepo.GetAllPageAsync(
                 orders => orders.ProjectToType<ImageDto>(), pagingModel, cancellation);
             return Results.Ok(ApiResponse.Success(orders));
+        }
+        private static async Task<IResult> AddImageAsync(HttpContext context
+        , IImageRepo imageRepo
+        , IMapper mapper
+        , IMediaManager mediaManager
+        , ImageEditModel validator)
+
+        {
+            var model = await ImageEditModel.BindAsync(context);
+
+            var image = model.Id > 0 ? await imageRepo.GetByIdAsync(model.Id) : null;
+
+
+            image.Name = model.Name;
+            image.Caption = model.Caption;
+            image.ProductId = model.ProductId;
+            if (model.ImageFile?.Length > 0)
+            {
+                string hostname = $"{context.Request.Scheme}://{context.Request.Host}{context.Request.PathBase}/";
+                string uploadedPath = await mediaManager.SaveFileAsync(model.ImageFile.OpenReadStream(), model.ImageFile.FileName, model.ImageFile.ContentType);
+                if (!string.IsNullOrWhiteSpace(uploadedPath))
+                {
+                    image.UrlImage = uploadedPath;
+                }
+            }
+            await imageRepo.AddOrUpdateImage(image);
+
+            return Results.Ok(ApiResponse.Success(mapper.Map<ImageDto>(image), HttpStatusCode.Created));
         }
     }
 }

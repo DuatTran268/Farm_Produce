@@ -44,7 +44,7 @@ namespace FarmProduct.WebApi.Endpoints
             routeGroupBuilder.MapGet("/cmt/slugProduct/{slug:regex(^[a-z0-9_-]+$)}", GetCommentBySlugProduct)
            .WithName("GetCommentBySlugProduct")
             .Produces<ApiResponse<PaginationResult<CommentDto>>>();
-            routeGroupBuilder.MapDelete("/{id:int}", DeleteFood)
+            routeGroupBuilder.MapDelete("/{id:int}", DeleteProduct)
                           .WithName("DeleteProduct")
                           .Produces(204)
                           .Produces(404);
@@ -141,7 +141,7 @@ namespace FarmProduct.WebApi.Endpoints
             return Results.Ok(ApiResponse.Success(mapper.Map<ProductsDto>(product), HttpStatusCode.Created));
         }
 
-        private static async Task<IResult> DeleteFood(int id, IProductRepo productRepo)
+        private static async Task<IResult> DeleteProduct(int id, IProductRepo productRepo)
         {
             var status = await productRepo.DeleteWithIDAsync(id);
             return Results.Ok(status ? ApiResponse.Success(HttpStatusCode.NoContent) : ApiResponse.Fail(HttpStatusCode.NotFound, $"không tìm thấy food với mã {id}"));
