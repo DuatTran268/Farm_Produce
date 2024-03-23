@@ -1,4 +1,5 @@
 ﻿using FarmProduce.Core.Contracts;
+using FarmProduce.Core.DTO;
 using FarmProduce.Core.Entities;
 using System;
 using System.Collections.Generic;
@@ -12,5 +13,11 @@ namespace FarmProduce.Services.Manage.Units
     {
         Task<IList<T>> GetAllAsync<T>(Func<IQueryable<Unit>, IQueryable<T>> mapper, CancellationToken cancellationToken = default);
         Task<IPagedList<T>> GetAllPageAsync<T>(Func<IQueryable<Unit>, IQueryable<T>> mapper, IPagingParams pagingParams, CancellationToken cancellationToken = default);
-    }
+
+		Task<IPagedList<UnitItem>> GetPagedUnit(
+		IPagingParams pagingParams,
+		string name = null,
+		CancellationToken cancellationToken = default);
+
+	}
 }

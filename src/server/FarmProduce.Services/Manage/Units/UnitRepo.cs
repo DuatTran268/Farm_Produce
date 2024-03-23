@@ -14,7 +14,7 @@ using FarmProduce.Core.DTO;
 
 namespace FarmProduce.Services.Manage.Units
 {
-    public class UnitRepo:IUnitRepo
+	public class UnitRepo : IUnitRepo
     {
         private readonly FarmDbContext _context;
 
@@ -38,6 +38,20 @@ namespace FarmProduce.Services.Manage.Units
         {
             return await _context.Set<Unit>().Where(x=> x.Id== id).FirstOrDefaultAsync(cancellationToken);
         }
-        }
-    }
+
+		public async Task<IPagedList<UnitItem>> GetPagedUnit(IPagingParams pagingParams, string name = null, CancellationToken cancellationToken = default)
+		{
+			return await _context.Set<Unit>()
+				.AsNoTracking()
+				.WhereIf(!string.IsNullOrWhiteSpace(name),
+				x => x.Name.Contains(name))
+				.Select(d => new UnitItem()
+				{
+					Id = d.Id,
+					Name = d.Name,
+					UrlSlug = d.UrlSlug,
+				}).ToPagedListAsync(pagingParams, cancellationToken);
+		}
+	}
+}
 

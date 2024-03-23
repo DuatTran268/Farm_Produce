@@ -18,6 +18,8 @@ import AdProduct from "../pages/admin/product/AdProduct";
 import Login from "../pages/login/Login";
 import ProductInCategory from "../pages/users/ProductInCategory";
 import Recruitment from "../pages/users/Recruitment";
+import AdUnit from "../pages/admin/unit/AdUnit";
+import AdUnitEdit from "../pages/admin/unit/AdUnitEdit";
 
 const Routers = () => {
   return (
@@ -46,6 +48,16 @@ const Routers = () => {
         <Route path="/admin/order" element={<AdOrder/>} />
         <Route path="/admin/category" element={<AdCategory/>} />
         <Route path="/admin/product" element={<AdProduct/>} />
+
+
+        {/* unit */}
+        <Route path="/admin/unit" element={<AdUnit/>} />
+        <Route path="/admin/unit/edit" element={<AdUnitEdit/>} />
+        <Route path="/admin/unit/edit/:id" element={<AdUnitEdit/>} />
+
+
+
+
 
 
 

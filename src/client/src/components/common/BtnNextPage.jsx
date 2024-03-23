@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 
-export default function Pager({ metadata, onPageChange }) {
+export default function BtnNextPage({ metadata, onPageChange }) {
   const { pageIndex, pageCount, hasNextPage, hasPreviousPage } = metadata;
 
   return (
