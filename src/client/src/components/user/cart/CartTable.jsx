@@ -46,12 +46,15 @@ const CartTable = () => {
               Sản phẩm: ({totalUniqueItems}) Tổng sản phẩm: ({totalItems})
             </h5>
             <div className="col-auto ">
-            <Button className="btn btn-danger m-2" onClick={() => emptyCart()}>
-              Xoá tất cả
-              <FontAwesomeIcon icon={faTrash} className="ms-2" />
-            </Button>
+              <Button
+                className="btn btn-danger m-2"
+                onClick={() => emptyCart()}
+              >
+                Xoá tất cả
+                <FontAwesomeIcon icon={faTrash} className="ms-2" />
+              </Button>
+            </div>
           </div>
-        </div>
           <table className="table table-light table-hover m-0">
             <tbody>
               <tr className="text-success">
@@ -65,7 +68,7 @@ const CartTable = () => {
               {items.map((item, index) => {
                 return (
                   <>
-                    <tr key={index} className="align-middle" >
+                    <tr key={index} className="align-middle">
                       <td>
                         {/* <img
                           src={item.image}
@@ -81,11 +84,15 @@ const CartTable = () => {
                           icon={faSubtract}
                           className="btn btn-info ms-2"
                           onClick={() =>
-                            updateItemQuantity(item.id,  item.quantity > 1 ? item.quantity - 1 : 1)
+                            updateItemQuantity(
+                              item.id,
+                              item.quantity > 1 ? item.quantity - 1 : 1 // Giữ lại số lượng cũ nếu số lượng mới nhỏ hơn 1
+                            )
                           }
                         >
                           -{" "}
                         </FontAwesomeIcon>
+
                         <FontAwesomeIcon
                           icon={faPlus}
                           className="btn btn-info ms-2"
@@ -112,7 +119,6 @@ const CartTable = () => {
             </tbody>
           </table>
         </div>
-       
       </div>
     </section>
   );

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, Navigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "../../../styles/user/ProductDetail.css";
 import dautay from "../../../assets/mutdau.jpg";
 import { Image } from "react-bootstrap";
@@ -10,9 +10,10 @@ import { useSnackbar } from "notistack";
 const ProductDetails = () => {
   const params = useParams();
   const [productDetail, setProductDetail] = useState(null);
+  const [quantity, setQuantity] = useState(1);
   const { slug } = params;
-  const { addItem } = useCart(); // Truy cập hàm addItem từ useCart
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const { addItem, items, updateItemQuantity } = useCart();
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     document.title = "Chi tiết sản phẩm";
@@ -26,13 +27,22 @@ const ProductDetails = () => {
   }, [slug]);
 
   const handleAddToCart = () => {
-    // Hàm xử lý khi người dùng nhấn vào nút "Thêm vào giỏ hàng"
-    addItem({
-      id: productDetail.id, // ID của sản phẩm
-      name: productDetail.name, // Tên sản phẩm
-      price: productDetail.price, // Giá sản phẩm
-      quantity: parseInt(document.getElementById("quantity").value), // Số lượng
-    });
+    // check item existing
+    const existingItem = items.find((item) => item.id === productDetail.id);
+
+    // if product existing in cart, update product quantity
+    if (existingItem) {
+      const updatedQuantity = existingItem.quantity + quantity;
+      updateItemQuantity(existingItem.id, updatedQuantity);
+    } else {
+      addItem({
+        // if product not existing in cart, add product to cart
+        id: productDetail.id,
+        name: productDetail.name,
+        price: productDetail.price,
+        quantity: quantity,
+      });
+    }
 
     enqueueSnackbar("Bạn đã thêm sản phẩm vào giỏ hàng", {
       variant: "success",
@@ -65,7 +75,14 @@ const ProductDetails = () => {
             <div className="product_detail_quantity_cart">
               <div className="product_detail_quantity">
                 <span>Số lượng</span>
-                <input type="number" id="quantity" min="1" max="100" />
+                <input
+                  type="number"
+                  id="quantity"
+                  min="1"
+                  max="100"
+                  value={quantity}
+                  onChange={(e) => setQuantity(parseInt(e.target.value))}
+                />
               </div>
               <Link
                 className="btn btn-success product_detail_addcart"
@@ -81,4 +98,5 @@ const ProductDetails = () => {
     );
   }
 };
+
 export default ProductDetails;
