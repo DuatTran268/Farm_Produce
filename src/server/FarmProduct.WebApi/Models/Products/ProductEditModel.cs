@@ -17,6 +17,7 @@
             var form = await context.Request.ReadFormAsync();
             return new ProductEditModel()
             {
+                Id = int.Parse(form["Id"]),
                 Name = form["Name"],
                 Description = form["Description"],
                 QuanlityAvailable = int.Parse(form["QuanlityAvailable"]),

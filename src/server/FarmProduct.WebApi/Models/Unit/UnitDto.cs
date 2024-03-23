@@ -7,6 +7,5 @@ namespace FarmProduct.WebApi.Models.Unit
         public int Id { get; set; }
         public string Name { get; set; }
         public string UrlSlug { get; set; }
-        public IList<Product> Products { get; set; }
     }
 }

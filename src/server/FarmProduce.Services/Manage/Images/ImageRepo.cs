@@ -25,18 +25,38 @@ namespace FarmProduce.Services.Manage.Images
             IQueryable<Image> images = _context.Set<Image>();
             return await mapper(images).ToListAsync();
         }
+        public async Task<Image> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+        {
+            IQueryable<Image> images = _context.Set<Image>().Where(x=>x.Id==id);
+            return await images.FirstOrDefaultAsync();
+        }
 
         public async Task<IPagedList<T>> GetAllPageAsync<T>(Func<IQueryable<Image>, IQueryable<T>> mapper, IPagingParams pagingParams, CancellationToken cancellationToken = default)
         {
             IQueryable<Image> images = _context.Set<Image>();
             return await mapper(images).ToPagedListAsync(pagingParams, cancellationToken);
         }
-      
+        public async Task<bool> IsSlugImageExisted(int id, CancellationToken cancellationToken = default)
+        {
+            return await _context.Set<Image>().AnyAsync(x => x.Id != id );
+        }
         public async Task<bool> SetImageAsync(string caption, string imageUrl, CancellationToken cancellationToken = default)
         {
             return await _context.Set<Image>()
                 .Where(x => x.Caption == caption)
                 .ExecuteUpdateAsync(p => p.SetProperty(x => x.UrlImage, imageUrl), cancellationToken) > 0;
+        }
+        public async Task<bool> AddOrUpdateImage(Image image, CancellationToken cancellationToken = default)
+        {
+            if (image.Id > 0)
+            {
+                _context.Update(image);
+            }
+            else
+            {
+                _context.Add(image);
+            }
+            return await _context.SaveChangesAsync() > 0;
         }
     }
 }
