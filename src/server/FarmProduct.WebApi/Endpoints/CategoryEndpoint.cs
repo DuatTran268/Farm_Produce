@@ -1,8 +1,11 @@
 ﻿using Carter;
 using FarmProduce.Core.Collections;
 using FarmProduce.Core.DTO;
+using FarmProduce.Core.Entities;
 using FarmProduce.Services.Manage.Admins;
 using FarmProduce.Services.Manage.Categories;
+using FarmProduce.Services.Manage.Units;
+using FarmProduce.Services.Media;
 using FarmProduct.WebApi.Models;
 using FarmProduct.WebApi.Models.Admin;
 using FarmProduct.WebApi.Models.Categories;
@@ -11,6 +14,7 @@ using FarmProduct.WebApi.Utilities;
 using Mapster;
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
+using SlugGenerator;
 using System.Net;
 
 namespace FarmProduct.WebApi.Endpoints
@@ -42,6 +46,18 @@ namespace FarmProduct.WebApi.Endpoints
 			routeGroupBuilder.MapGet("/product/slugCategory/{slug:regex(^[a-z0-9_-]+$)}", GetListProductBySlugCategory)
 				.WithName("GetListProductBySlugCategory")
 				.Produces<ApiResponse<PaginationResult<ProductsDto>>>();
+
+			routeGroupBuilder.MapPost("/", AddOrUpdateCategory)
+				.WithName("AddUpdateCategory")
+				.Accepts<CategoriesEditModel>("multipart/form-data")
+				.Produces(401)
+				.Produces<ApiResponse<CategoryItem>>();
+
+			routeGroupBuilder.MapDelete("/{id:int}", DeleteCategory)
+				.WithName("DeleteCategory")
+				.Produces(401)
+				.Produces<ApiResponse<string>>();
+
 		}
         private static async Task<IResult> GetAllCategory(
 		ICategoriesRepo categoriesRepo
@@ -91,6 +107,52 @@ namespace FarmProduct.WebApi.Endpoints
 				? Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound, $"Not find slug = '{slug}'"))
 				: Results.Ok(ApiResponse.Success(paginationResult));
 
+		}
+
+
+		// add or update
+		private static async Task<IResult> AddOrUpdateCategory(HttpContext context,
+			ICategoriesRepo categoriesRepo, IMapper mapper, IMediaManager media)
+		{
+			var model = await CategoriesEditModel.BindAsync(context);
+			var slug = model.Name.GenerateSlug();
+			if (await categoriesRepo.IsCategorySlugExistedAsync(model.Id, slug))
+			{
+				return Results.Ok(ApiResponse.Fail(HttpStatusCode.Conflict,
+					$"Slug '{slug}' existed"));
+			}
+			var categories = model.Id > 0
+				? await categoriesRepo.GetCategoryByIdAsync(model.Id) : null;
+
+			if (categories == null)
+			{
+				categories = new Category();
+			}
+			categories.Name = model.Name;
+			categories.UrlSlug = model.UrlSlug;
+			categories.UrlSlug = model.Name.GenerateSlug();
+
+			if (model.ImageFile?.Length > 0)
+			{
+				string hostname = $"{context.Request.Scheme}://{context.Request.Host}{context.Request.PathBase}/",
+					uploadedPath = await media.SaveFileAsync(
+						model.ImageFile.OpenReadStream(), model.ImageFile.FileName, model.ImageFile.ContentType);
+				if (!string.IsNullOrWhiteSpace(uploadedPath))
+				{
+					categories.ImageUrl = uploadedPath;
+				}
+			}
+
+			await categoriesRepo.AddOrUpdateAsync(categories);
+			return Results.Ok(ApiResponse.Success(mapper.Map<CategoryItem>(categories), HttpStatusCode.Created));
+		}
+
+		private static async Task<IResult> DeleteCategory(
+			int id, ICategoriesRepo categoriesRepo)
+		{
+			return await categoriesRepo.DeleteCategory(id)
+			? Results.Ok(ApiResponse.Success("Category deleted ", HttpStatusCode.NoContent))
+			: Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound, $"Not find category id = {id}"));
 		}
 
 	}

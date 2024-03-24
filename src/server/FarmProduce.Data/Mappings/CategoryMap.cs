@@ -23,6 +23,9 @@ namespace FarmProduce.Data.Mappings
                 .IsRequired()
                 .HasMaxLength(50);
 
-        }
+			builder.Property(c => c.ImageUrl)
+				.HasMaxLength(500);
+
+		}
     }
 }

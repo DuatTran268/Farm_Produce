@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace FarmProduce.Services.Manage.Categories
@@ -81,6 +82,37 @@ namespace FarmProduce.Services.Manage.Categories
 				productQuery = productQuery.Where(pd => pd.Category.UrlSlug.Contains(query.UrlSlug));
 			}
 			return productQuery;
+		}
+
+		public async Task<bool> AddOrUpdateAsync(Category category, CancellationToken cancellationToken = default)
+		{
+			if (category.Id > 0)
+			{
+				_context.Categories.Update(category);
+				_memoryCache.Remove($"User.by-id.{category.Id}");
+			}
+			else
+			{
+				_context.Categories.Add(category);
+			}
+			return await _context.SaveChangesAsync(cancellationToken) > 0;
+		}
+
+		public async Task<bool> IsCategorySlugExistedAsync(int categoryId, string slug, CancellationToken cancellationToken = default)
+		{
+			return await _context.Categories
+			   .AnyAsync(x => x.Id != categoryId && x.UrlSlug == slug, cancellationToken);
+		}
+
+		public async Task<Category> GetCategoryByIdAsync(int id, CancellationToken cancellationToken = default)
+		{
+			return await _context.Set<Category>().Include(p => p.Products)
+				.FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
+		}
+
+		public async Task<bool> DeleteCategory(int id, CancellationToken cancellationToken = default)
+		{
+			return await _context.Categories.Where(t => t.Id == id).ExecuteDeleteAsync(cancellationToken) > 0;
 		}
 
 

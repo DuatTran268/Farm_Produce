@@ -1,6 +1,7 @@
 ﻿using FarmProduce.Core.Contracts;
 using FarmProduce.Core.DTO;
 using FarmProduce.Core.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,5 +29,19 @@ namespace FarmProduce.Services.Manage.Categories
 		  Func<IQueryable<Product>,
 		  IQueryable<T>> mapper,
 		  CancellationToken cancellationToken = default);
+
+
+		// add or update category
+		Task<bool> AddOrUpdateAsync(Category category, CancellationToken cancellationToken = default);
+
+		Task<bool> IsCategorySlugExistedAsync(
+		int categoryId,
+		string slug,
+		CancellationToken cancellationToken = default);
+
+		Task<Category> GetCategoryByIdAsync(int id, CancellationToken cancellationToken = default);
+
+		Task<bool> DeleteCategory(int id, CancellationToken cancellationToken = default);
+		
 	}
 }

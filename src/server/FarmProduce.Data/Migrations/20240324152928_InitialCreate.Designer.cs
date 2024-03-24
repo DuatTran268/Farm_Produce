@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FarmProduce.Data.Migrations
 {
     [DbContext(typeof(FarmDbContext))]
-    [Migration("20240310023151_init")]
-    partial class init
+    [Migration("20240324152928_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -100,6 +100,10 @@ namespace FarmProduce.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("ImageUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -131,7 +135,7 @@ namespace FarmProduce.Data.Migrations
                     b.Property<DateTime>("Created")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 3, 10, 9, 31, 51, 302, DateTimeKind.Local).AddTicks(7606));
+                        .HasDefaultValue(new DateTime(2024, 3, 24, 22, 29, 27, 441, DateTimeKind.Local).AddTicks(7070));
 
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
@@ -245,7 +249,7 @@ namespace FarmProduce.Data.Migrations
                     b.Property<DateTime>("StartDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 3, 10, 9, 31, 51, 303, DateTimeKind.Local).AddTicks(9526));
+                        .HasDefaultValue(new DateTime(2024, 3, 24, 22, 29, 27, 443, DateTimeKind.Local).AddTicks(6759));
 
                     b.Property<string>("Status")
                         .ValueGeneratedOnAdd()
@@ -306,7 +310,7 @@ namespace FarmProduce.Data.Migrations
                     b.Property<DateTime>("DateOrder")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 3, 10, 9, 31, 51, 304, DateTimeKind.Local).AddTicks(5301));
+                        .HasDefaultValue(new DateTime(2024, 3, 24, 22, 29, 27, 444, DateTimeKind.Local).AddTicks(6842));
 
                     b.Property<int>("OrderStatusId")
                         .HasColumnType("int");
@@ -396,12 +400,12 @@ namespace FarmProduce.Data.Migrations
                     b.Property<DateTime>("DateCreate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 3, 10, 9, 31, 51, 305, DateTimeKind.Local).AddTicks(6762));
+                        .HasDefaultValue(new DateTime(2024, 3, 24, 22, 29, 27, 447, DateTimeKind.Local).AddTicks(8829));
 
                     b.Property<DateTime>("DateUpdate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 3, 10, 9, 31, 51, 305, DateTimeKind.Local).AddTicks(7260));
+                        .HasDefaultValue(new DateTime(2024, 3, 24, 22, 29, 27, 447, DateTimeKind.Local).AddTicks(9724));
 
                     b.Property<string>("Description")
                         .IsRequired()
