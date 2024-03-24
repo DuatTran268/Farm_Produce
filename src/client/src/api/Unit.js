@@ -1,4 +1,4 @@
-import { get_api } from "./AxiosCommon";
+import { delete_api, get_api, get_api_nocache, put_api } from "./AxiosCommon";
 
 export function getFilterUnit(
   name = '',
@@ -14,13 +14,21 @@ export function getFilterUnit(
   url.searchParams.append("PageSize", pageSize);
   url.searchParams.append("PageNumber", pageNumber);
 
-  return get_api(url.href);
+  return get_api_nocache(url.href);
 }
 
 // get unit by id
 export async function getUnitById(id = 0) {
   if (id > 0) {
-    return get_api(`https://localhost:7047/api/units/${id}`);
+    return get_api_nocache(`https://localhost:7047/api/units/${id}`);
   }
+}
+
+export async function newAndUpdateUnit(id = 0, formData) {
+  return put_api(`https://localhost:7047/api/units/${id}`, formData);
+}
+
+export async function deletUnit(id = 0) {
+  return delete_api(`https://localhost:7047/api/units/${id}`);
 }
 

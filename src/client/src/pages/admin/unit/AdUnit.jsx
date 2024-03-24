@@ -9,7 +9,7 @@ import { Table } from "react-bootstrap";
 import Loading from "../../../components/common/Loading";
 import BtnNextPage from "../../../components/common/BtnNextPage";
 import UnitFilter from "../../../components/admin/filter/UnitFilter";
-import { getFilterUnit } from "../../../api/Unit";
+import { deletUnit, getFilterUnit } from "../../../api/Unit";
 import BtnSuccess from "../../../components/common/BtnSuccess";
 import HeaderBtn from "../../../components/common/HeaderBtn";
 
@@ -50,25 +50,25 @@ const AdUnit = () => {
     }
   }, [unitFilter, ps, p, reRender, pageNumber]);
 
-  // const handleDeleteDepartment = (e, id) => {
-  //   e.preventDefault();
-  //   RemoveDepartment(id);
-  //   async function RemoveDepartment(id) {
-  //     if (window.confirm("Bạn có muốn xoá phòng khoa này")) {
-  //       const response = await deleteDepartment(id);
-  //       if (response) {
-  //         enqueueSnackbar("Đã xoá thành công", {
-  //           variant: "success",
-  //         });
-  //         setRender(true);
-  //       } else {
-  //         enqueueSnackbar("Đã xoá thành công", {
-  //           variant: "error",
-  //         });
-  //       }
-  //     }
-  //   }
-  // };
+  const hanldeDeleteUnit = (e, id) => {
+    e.preventDefault();
+    removeUnit(id);
+    async function removeUnit(id) {
+      if (window.confirm("Bạn có muốn unit này")) {
+        const response = await deletUnit(id);
+        if (response) {
+          enqueueSnackbar("Đã xoá thành công", {
+            variant: "success",
+          });
+          setRender(true);
+        } else {
+          enqueueSnackbar("Đã xoá thành công", {
+            variant: "error",
+          });
+        }
+      }
+    }
+  };
 
   return (
     <LayoutCommon>
@@ -107,10 +107,10 @@ const AdUnit = () => {
                       </Link>
                     </td>
                     <td className="text-center">
-                      {/* <div onClick={(e) => handleDeleteDepartment(e, item.id)}>
+                      <div onClick={(e) => hanldeDeleteUnit(e, item.id)}>
                         <FontAwesomeIcon icon={faTrash} color="red" />
-                      </div> */}
-                      <FontAwesomeIcon icon={faTrash} color="red" />
+                      </div>
+                     
                     </td>
                   </tr>
                 ))

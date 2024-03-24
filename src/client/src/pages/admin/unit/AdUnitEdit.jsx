@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import LayoutCommon from "../../../components/admin/common/LayoutCommon";
 import { useSnackbar } from "notistack";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { getUnitById, newAndUpdateUnit } from "../../../api/Unit";
+import { Button, Form } from "react-bootstrap";
 
 
 
@@ -31,13 +33,36 @@ const AdUnitEdit = () => {
     });
   }, []);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (e.currentTarget.checkValidity() === false) {
+      e.stopPropagation();
+      setValidated(true);
+    } else {
+      let data = new FormData(e.target);
+
+      newAndUpdateUnit(id, data).then((data) => {
+        if (data) {
+          enqueueSnackbar("Đã lưu thành công", {
+            variant: "success",
+          });
+          navigate(`/admin/unit`);
+        } else {
+          enqueueSnackbar("Đã xảy ra lỗi khi lưu", {
+            variant: "error",
+          });
+        }
+      });
+    }
+  };
+
 
 
 
   return (
     <LayoutCommon>
-      {/* <div className="researcher-wrapper">
-          <h3 className="text-success py-3">Thêm/cập nhật nhà khoa học</h3>
+      <div className="researcher-wrapper">
+          <h3 className="text-success py-3">Thêm/cập Unit</h3>
           <Form
             method="post"
             encType="multipart/form-data"
@@ -45,10 +70,10 @@ const AdUnitEdit = () => {
             noValidate
             validated={validated}
           >
-            <Form.Control type="hidden" name="id" value={researcher.id} />
+            <Form.Control type="hidden" name="id" value={unit.id} />
             <div className="row mb-3">
               <Form.Label className="col-sm-2 col-form-label">
-                Tên nhà khoa học
+                Tên Đơn vị tính
               </Form.Label>
               <div className="col-sm-10">
                 <Form.Control
@@ -56,9 +81,30 @@ const AdUnitEdit = () => {
                   name="name"
                   title="Name"
                   required
-                  value={researcher.name || ""}
+                  value={unit.name || ""}
                   onChange={(e) =>
-                    setResearcher({ ...researcher, name: e.target.value })
+                    setUnit({ ...unit, name: e.target.value })
+                  }
+                />
+                <Form.Control.Feedback type="invalid">
+                  Không được bỏ trống.
+                </Form.Control.Feedback>
+              </div>
+            </div>
+
+            <div className="row mb-3">
+              <Form.Label className="col-sm-2 col-form-label">
+                Tên Đơn vị tính
+              </Form.Label>
+              <div className="col-sm-10">
+                <Form.Control
+                  type="text"
+                  name="urlSlug"
+                  title="url Slug"
+                  required
+                  value={unit.urlSlug || ""}
+                  onChange={(e) =>
+                    setUnit({ ...unit, urlSlug: e.target.value })
                   }
                 />
                 <Form.Control.Feedback type="invalid">
@@ -71,12 +117,12 @@ const AdUnitEdit = () => {
               <Button variant="success" type="submit">
                 Lưu các thay đổi
               </Button>
-              <Link to="/admin/researcher" className="btn btn-danger ms-2">
+              <Link to="/admin/unit" className="btn btn-danger ms-2">
                 Hủy và quay lại
               </Link>
             </div>
           </Form>
-        </div> */}
+        </div>
     </LayoutCommon>
   )
 }
