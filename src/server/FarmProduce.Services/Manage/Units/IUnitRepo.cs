@@ -19,5 +19,16 @@ namespace FarmProduce.Services.Manage.Units
 		string name = null,
 		CancellationToken cancellationToken = default);
 
+		Task<Unit> GetUnitById(int id, CancellationToken cancellationToken = default);
+
+		Task<bool> AddOrUpdateUnitAsync(Unit unit, CancellationToken cancellationToken = default);
+
+
+		Task<bool> IsUnitSlugExistedAsync(
+			int unitId, string slug, CancellationToken cancellationToken = default);
+
+
+		Task<bool> DeleteUnit(int id, CancellationToken cancellationToken = default);
+
 	}
 }

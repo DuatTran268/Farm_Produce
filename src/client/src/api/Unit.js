@@ -17,4 +17,10 @@ export function getFilterUnit(
   return get_api(url.href);
 }
 
+// get unit by id
+export async function getUnitById(id = 0) {
+  if (id > 0) {
+    return get_api(`https://localhost:7047/api/units/${id}`);
+  }
+}
 

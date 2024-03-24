@@ -1,4 +1,5 @@
 ﻿
+using FarmProduce.Core.DTO;
 using FarmProduce.Core.Entities;
 using FarmProduct.WebApi.Models.Admin;
 using FarmProduct.WebApi.Models.Carts;
@@ -26,6 +27,11 @@ namespace FarmProduct.WebApi.Mapsters
 			config.NewConfig<Product, ProductsDto>();
 			config.NewConfig<Product, ProductDetails>();
 			config.NewConfig<Unit, UnitDto>();
+			config.NewConfig<Unit, UnitItem>()
+				  .Map(dest => dest.Id, src => src.Id);
+
+
+
 			config.NewConfig<Discount, DiscountDto>();
 			config.NewConfig<OrderStatus, OrderStatusDto>();
 			config.NewConfig<PaymentMethod, PaymentsMethodDto>();
