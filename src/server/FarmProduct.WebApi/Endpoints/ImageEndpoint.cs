@@ -14,6 +14,7 @@ using MapsterMapper;
 using System.Net;
 using SlugGenerator;
 using FarmProduce.Services.Media;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FarmProduct.WebApi.Endpoints
 {
@@ -30,7 +31,6 @@ namespace FarmProduct.WebApi.Endpoints
             routeGroupBuilder.MapPost("/", AddImageAsync)
               .WithName("AddImage")
               .Accepts<ImageEditModel>("multipart/form-data")
-              .Produces(401)
               .Produces<ApiResponse<ImageDto>>();
          
         }
@@ -41,16 +41,17 @@ namespace FarmProduct.WebApi.Endpoints
             return Results.Ok(ApiResponse.Success(orders));
         }
         private static async Task<IResult> AddImageAsync(HttpContext context
-        , IImageRepo imageRepo
+        , [FromServices]IImageRepo imageRepo
         , IMapper mapper
-        , IMediaManager mediaManager
-        , ImageEditModel validator)
-
+        , [FromServices]IMediaManager mediaManager)
         {
             var model = await ImageEditModel.BindAsync(context);
 
             var image = model.Id > 0 ? await imageRepo.GetByIdAsync(model.Id) : null;
-
+            if(image == null)
+            {
+                image = mapper.Map<Image>(model);
+            }
 
             image.Name = model.Name;
             image.Caption = model.Caption;

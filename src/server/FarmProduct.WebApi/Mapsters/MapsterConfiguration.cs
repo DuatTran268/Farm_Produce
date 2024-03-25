@@ -33,6 +33,8 @@ namespace FarmProduct.WebApi.Mapsters
 			config.NewConfig<CustomUI, CustomUIDto>();
 			config.NewConfig<Cart, CartDto>();
             config.NewConfig<Image, ImageDto>();
+			config.NewConfig<Product, ProductEditModel>();
+			config.NewConfig<Image, ImageEditModel>();
 
         }
     }
