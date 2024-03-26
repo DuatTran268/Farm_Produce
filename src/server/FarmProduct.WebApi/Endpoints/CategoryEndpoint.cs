@@ -31,6 +31,10 @@ namespace FarmProduct.WebApi.Endpoints
 				.WithName("GetCategoryAndPagination")
 				.Produces<ApiResponse<IList<CategoryItem>>>();
 
+			routeGroupBuilder.MapGet("/{id:int}", GetCategoryById)
+				.WithName("GetCategoryById")
+				.Produces<ApiResponse<CategoryItem>>();
+
 			// get by slug
 			routeGroupBuilder.MapGet("/slugCategory/{slug:regex(^[a-z0-9_-]+$)}", GetCategoryBySlug)
                 .WithName("GetCategoryBySlug")
@@ -67,6 +71,16 @@ namespace FarmProduct.WebApi.Endpoints
 			var pagingnationResult = new PaginationResult<CategoryItem>(categoryList);
 			return Results.Ok(ApiResponse.Success(pagingnationResult));
 
+		}
+
+		private static async Task<IResult> GetCategoryById(
+			int id, ICategoriesRepo categoriesRepo, IMapper mapper)
+		{
+			var unit = await categoriesRepo.GetCategoryById(id);
+
+			return unit == null
+			? Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound, $"Not find id = {id}"))
+			: Results.Ok(ApiResponse.Success(mapper.Map<CategoryItem>(unit)));
 		}
 
 

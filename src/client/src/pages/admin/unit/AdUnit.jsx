@@ -77,7 +77,7 @@ const AdUnit = () => {
       </div>
 
       <HeaderBtn>
-        <BtnSuccess icon={faAdd} slug={"unit/edit"} name="Thêm mới" />
+        <BtnSuccess icon={faAdd} slug={"/admin/unit/edit"} name="Thêm mới" />
         <UnitFilter />
       </HeaderBtn>
 

@@ -9,7 +9,7 @@ const AdProduct = () => {
   return (
     <LayoutCommon>
       <div className="title py-3 text-danger">
-        <h3>Quản lý đăng bài công trình khoa học</h3>
+        <h3>Quản lý Sản phẩm</h3>
       </div>
       <div className="post-content">
         {/* <PostFilter /> */}

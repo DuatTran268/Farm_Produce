@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const BtnError = ({ slug, name, icon }) => {
   return (
-    <Link className="btn btn-danger mx-3" to={`/admin/${slug}`}>
+    <Link className="btn btn-danger mx-3" to={`${slug}`}>
       {name} <FontAwesomeIcon icon={icon} />
     </Link>
   );

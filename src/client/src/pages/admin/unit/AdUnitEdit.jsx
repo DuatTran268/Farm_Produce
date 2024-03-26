@@ -4,8 +4,10 @@ import { useSnackbar } from "notistack";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getUnitById, newAndUpdateUnit } from "../../../api/Unit";
 import { Button, Form } from "react-bootstrap";
-
-
+import BoxEdit from "../../../components/admin/edit/BoxEdit";
+import BtnError from "../../../components/common/BtnError";
+import { faArrowRotateBack, faBackward, faBackwardStep, faCheck, faCheckCircle, faRightToBracket, faSave } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const AdUnitEdit = () => {
   const [validated, setValidated] = useState(false);
@@ -56,74 +58,64 @@ const AdUnitEdit = () => {
     }
   };
 
-
-
-
   return (
     <LayoutCommon>
-      <div className="researcher-wrapper">
-          <h3 className="text-success py-3">Thêm/cập Unit</h3>
-          <Form
-            method="post"
-            encType="multipart/form-data"
-            onSubmit={handleSubmit}
-            noValidate
-            validated={validated}
-          >
-            <Form.Control type="hidden" name="id" value={unit.id} />
-            <div className="row mb-3">
-              <Form.Label className="col-sm-2 col-form-label">
-                Tên Đơn vị tính
-              </Form.Label>
-              <div className="col-sm-10">
-                <Form.Control
-                  type="text"
-                  name="name"
-                  title="Name"
-                  required
-                  value={unit.name || ""}
-                  onChange={(e) =>
-                    setUnit({ ...unit, name: e.target.value })
-                  }
-                />
-                <Form.Control.Feedback type="invalid">
-                  Không được bỏ trống.
-                </Form.Control.Feedback>
-              </div>
-            </div>
+      <div className="wrapper">
+        <h3 className="text-success py-3">Thêm/cập Unit</h3>
+        <Form
+          method="post"
+          encType="multipart/form-data"
+          onSubmit={handleSubmit}
+          noValidate
+          validated={validated}
+        >
+          <Form.Control type="hidden" name="id" value={unit.id} />
 
-            <div className="row mb-3">
-              <Form.Label className="col-sm-2 col-form-label">
-                Tên Đơn vị tính
-              </Form.Label>
-              <div className="col-sm-10">
-                <Form.Control
-                  type="text"
-                  name="urlSlug"
-                  title="url Slug"
-                  required
-                  value={unit.urlSlug || ""}
-                  onChange={(e) =>
-                    setUnit({ ...unit, urlSlug: e.target.value })
-                  }
-                />
-                <Form.Control.Feedback type="invalid">
-                  Không được bỏ trống.
-                </Form.Control.Feedback>
-              </div>
-            </div>
+          <BoxEdit
+            label={"Tên đơn vị tính"}
+            control={
+              <Form.Control
+                type="text"
+                name="name"
+                title="Name"
+                required
+                value={unit.name || ""}
+                onChange={(e) => setUnit({ ...unit, name: e.target.value })}
+              />
+            }
+            notempty={"Không được bỏ trống"}
+          />
 
-            <div className="text-center">
-              <Button variant="success" type="submit">
-                Lưu các thay đổi
-              </Button>
-              <Link to="/admin/unit" className="btn btn-danger ms-2">
-                Hủy và quay lại
-              </Link>
-            </div>
-          </Form>
-        </div>
+          <BoxEdit
+            label={"Url Slug"}
+            control={
+              <Form.Control
+                type="text"
+                name="urlSlug"
+                title="url Slug"
+                required
+                value={unit.urlSlug || ""}
+                onChange={(e) => setUnit({ ...unit, urlSlug: e.target.value })}
+              />
+            }
+            notempty={"Không được bỏ trống"}
+          />
+
+          <div className="text-center">
+            <Button variant="success" type="submit">
+              Lưu các thay đổi 
+              <FontAwesomeIcon icon={faSave} className="px-1"/>
+            </Button>
+
+            <BtnError
+              icon={faRightToBracket}
+              slug={"/admin/unit"}
+              name="Hủy và quay lại"
+            />
+          </div>
+        </Form>
+      </div>
     </LayoutCommon>
-  )
-}
+  );
+};
 export default AdUnitEdit;

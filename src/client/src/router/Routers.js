@@ -20,6 +20,7 @@ import ProductInCategory from "../pages/users/ProductInCategory";
 import Recruitment from "../pages/users/Recruitment";
 import AdUnit from "../pages/admin/unit/AdUnit";
 import AdUnitEdit from "../pages/admin/unit/AdUnitEdit";
+import AdCategoryEdit from "../pages/admin/categories/AdCategioriesEdit";
 
 const Routers = () => {
   return (
@@ -55,6 +56,10 @@ const Routers = () => {
         <Route path="/admin/unit/edit" element={<AdUnitEdit/>} />
         <Route path="/admin/unit/edit/:id" element={<AdUnitEdit/>} />
 
+        {/* category */}
+        <Route path="/admin/category" element={<AdCategory/>} />
+        <Route path="/admin/category/edit" element={<AdCategoryEdit/>} />
+        <Route path="/admin/category/edit/:id" element={<AdCategoryEdit/>} />
 
 
 
