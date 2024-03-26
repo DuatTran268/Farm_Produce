@@ -2,7 +2,6 @@
 using FarmProduce.Data.Contexts;
 using FarmProduce.Data.Seeders;
 using FarmProduce.Services.Manage.Admins;
-using FarmProduce.Services.Manage.Carts;
 using FarmProduce.Services.Manage.Categories;
 using FarmProduce.Services.Manage.Comments;
 using FarmProduce.Services.Manage.CustomUIs;
@@ -47,8 +46,6 @@ namespace FarmProduct.WebApi.Extensions
             //customUI
             builder.Services.AddScoped<ICustomUIRepo, CustomUIRepo>();
             //cart
-            builder.Services.AddScoped<ICartRepo, CartRepo>();
-            //image
             builder.Services.AddScoped<IImageRepo, ImageRepo>();
             builder.Services.AddCarter();
 			return builder;

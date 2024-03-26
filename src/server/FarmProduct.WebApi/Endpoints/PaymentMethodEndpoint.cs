@@ -1,5 +1,6 @@
 ﻿using Carter;
 using FarmProduce.Core.Collections;
+using FarmProduce.Core.Contracts;
 using FarmProduce.Services.Manage.OrderStatuses;
 using FarmProduce.Services.Manage.PaymentMethods;
 using FarmProduct.WebApi.Models;
@@ -31,11 +32,12 @@ namespace FarmProduct.WebApi.Endpoints
                 .Produces<ApiResponse<PaymentsMethodDto>>();
         }
         private static async Task<IResult> GetAllPaymentMethod(
-		IPaymentMethodRepo paymentMethodRepo
+		IPaymentMethodRepo paymentMethodRepo,
+        [AsParameters] PagingModel pagingModel
 		)
 		{
 			var paymentMethod = await paymentMethodRepo.GetAllPaymentMethod(
-				paymentMethod => paymentMethod.ProjectToType<PaymentsMethodDto>());
+				paymentMethod => paymentMethod.ProjectToType<PaymentsMethodDto>(),pagingModel);
 			return Results.Ok(ApiResponse.Success(paymentMethod));
 		}
 

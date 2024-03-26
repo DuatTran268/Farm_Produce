@@ -26,10 +26,10 @@ namespace FarmProduce.Services.Manage.Products
 			_memoryCache = memoryCache;
 		}
 
-		public async Task<IList<T>> GetAllProducts<T>(Func<IQueryable<Product>, IQueryable<T>> mapper, CancellationToken cancellationToken = default)
+		public async Task<IPagedList<T>> GetAllProducts<T>(Func<IQueryable<Product>, IQueryable<T>> mapper,IPagingParams pagingParams ,CancellationToken cancellationToken = default)
 		{
 			IQueryable<Product> products = _context.Set<Product>().OrderBy(p => p.Name);
-			return await mapper(products).ToListAsync(cancellationToken);
+			return await mapper(products).ToPagedListAsync(pagingParams,cancellationToken);
 
 		}
 		
@@ -88,8 +88,7 @@ namespace FarmProduce.Services.Manage.Products
 				.Include(p => p.Discounts)
 				.Include(p => p.Images)
 				.Include(p => p.Comments)
-				.Include(p => p.Carts)
-				.Include(p => p.Orders);
+				.Include(p => p.OrderItems);
 			{
 				if (!string.IsNullOrEmpty(slug))
 				{
@@ -117,8 +116,7 @@ namespace FarmProduce.Services.Manage.Products
 				.Include(p => p.Discounts)
 				.Include(p => p.Images)
 				.Include(p => p.Comments)
-				.Include(p => p.Carts)
-				.Include(p => p.Orders)
+				.Include(p => p.OrderItems)
 				.OrderByDescending(p => p.Id)
 				.Take(n);
 			return await mapper(productLimit).ToListAsync(cancellationToken);

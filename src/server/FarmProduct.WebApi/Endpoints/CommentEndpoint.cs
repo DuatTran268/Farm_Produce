@@ -33,10 +33,10 @@ namespace FarmProduct.WebApi.Endpoints
                 .Produces<ApiResponse<CommentDto>>();
         }
         // get all
-        private static async Task<IResult> GetAllComment(ICommentRepo commentRepo)
+        private static async Task<IResult> GetAllComment(ICommentRepo commentRepo, [AsParameters] PagingModel pagingModel )
 		{
 			var comments = await commentRepo.GetAllComments(
-				comments => comments.ProjectToType<CommentDto>());
+				comments => comments.ProjectToType<CommentDto>(),pagingModel);
 			return Results.Ok(ApiResponse.Success(comments));
 		}
 

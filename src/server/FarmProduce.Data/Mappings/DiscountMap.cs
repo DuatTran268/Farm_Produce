@@ -25,9 +25,6 @@ namespace FarmProduce.Data.Mappings
                 .HasColumnType("datetime");
             builder.Property(d => d.Status)
                 .HasDefaultValue(false);
-            
-
-
         }
     }
 }

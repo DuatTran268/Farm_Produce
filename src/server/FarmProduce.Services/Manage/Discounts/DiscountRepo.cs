@@ -1,5 +1,7 @@
-﻿using FarmProduce.Core.Entities;
+﻿using FarmProduce.Core.Contracts;
+using FarmProduce.Core.Entities;
 using FarmProduce.Data.Contexts;
+using FarmProduce.Services.Extentions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using System;
@@ -21,10 +23,10 @@ namespace FarmProduce.Services.Manage.Discounts
 			_memoryCache = memoryCache;
 		}
 
-		public async Task<IList<T>> GetAllDiscount<T>(Func<IQueryable<Discount>, IQueryable<T>> mapper, CancellationToken cancellationToken = default)
+		public async Task<IPagedList<T>> GetAllDiscount<T>(Func<IQueryable<Discount>, IQueryable<T>> mapper,IPagingParams pagingParams ,CancellationToken cancellationToken = default)
 		{
 			IQueryable<Discount> discounts = _context.Set<Discount>();
-			return await mapper(discounts).ToListAsync(cancellationToken);
+			return await mapper(discounts).ToPagedListAsync(pagingParams, cancellationToken);
 		}
 
 		public async Task<Discount> GetDiscountByID(int id, CancellationToken cancellationToken = default)

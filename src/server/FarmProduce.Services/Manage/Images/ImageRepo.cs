@@ -27,8 +27,8 @@ namespace FarmProduce.Services.Manage.Images
         }
         public async Task<Image> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
-            IQueryable<Image> images = _context.Set<Image>().Where(x=>x.Id==id);
-            return await images.FirstOrDefaultAsync();
+            return await _context.Set<Image>().FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
+
         }
 
         public async Task<IPagedList<T>> GetAllPageAsync<T>(Func<IQueryable<Image>, IQueryable<T>> mapper, IPagingParams pagingParams, CancellationToken cancellationToken = default)

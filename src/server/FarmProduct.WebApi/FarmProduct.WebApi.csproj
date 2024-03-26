@@ -29,4 +29,8 @@
     <ProjectReference Include="..\FarmProduce.Services\FarmProduce.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\uploads\pictures\" />
+  </ItemGroup>
+
 </Project>

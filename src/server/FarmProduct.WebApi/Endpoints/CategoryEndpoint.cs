@@ -60,11 +60,12 @@ namespace FarmProduct.WebApi.Endpoints
 
 		}
         private static async Task<IResult> GetAllCategory(
-		ICategoriesRepo categoriesRepo
+		ICategoriesRepo categoriesRepo,
+		[AsParameters] PagingModel pagingModel
 		)
 		{
 			var categories = await categoriesRepo.GetAllCategories(
-				categories => categories.ProjectToType<CategoriesDto>());
+				categories => categories.ProjectToType<CategoriesDto>(),pagingModel);
 			return Results.Ok(ApiResponse.Success(categories));
 		}
 

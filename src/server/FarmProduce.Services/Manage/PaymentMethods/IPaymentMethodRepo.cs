@@ -1,4 +1,5 @@
-﻿using FarmProduce.Core.Entities;
+﻿using FarmProduce.Core.Contracts;
+using FarmProduce.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace FarmProduce.Services.Manage.PaymentMethods
 {
 	public interface IPaymentMethodRepo
 	{
-		Task<IList<T>> GetAllPaymentMethod<T>(Func<IQueryable<PaymentMethod>, IQueryable<T>> mapper, CancellationToken cancellationToken = default);
+		Task<IPagedList<T>> GetAllPaymentMethod<T>(Func<IQueryable<PaymentMethod>, IQueryable<T>> mapper, IPagingParams pagingParams, CancellationToken cancellationToken = default);
 
 		Task<PaymentMethod> GetPaymentMethodById(int id, CancellationToken cancellationToken = default);
 	

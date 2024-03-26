@@ -25,10 +25,10 @@ namespace FarmProduce.Services.Manage.Categories
 			_memoryCache = memoryCache;
 		}
 
-		public async Task<IList<T>> GetAllCategories<T>(Func<IQueryable<Category>, IQueryable<T>> mapper, CancellationToken cancellationToken = default)
+		public async Task<IPagedList<T>> GetAllCategories<T>(Func<IQueryable<Category>, IQueryable<T>> mapper,IPagingParams pagingParams, CancellationToken cancellationToken = default)
 		{
 			IQueryable<Category> categories = _context.Set<Category>().OrderBy(a => a.Name);
-			return await mapper(categories).ToListAsync(cancellationToken);
+			return await mapper(categories).ToPagedListAsync(pagingParams, cancellationToken);
 		}
 
 		public async Task<Category> GetCategoryById(int id, CancellationToken cancellationToken = default)

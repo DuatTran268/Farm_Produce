@@ -17,6 +17,5 @@ namespace FarmProduce.Core.Entities
 		public string Phone { get; set; }
 		public IList<Comment> Comments { get; set; }
 		public IList<Order> Orders { get; set; }
-		
 	}
 }

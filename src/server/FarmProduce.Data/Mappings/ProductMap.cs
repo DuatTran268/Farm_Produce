@@ -38,11 +38,7 @@ namespace FarmProduce.Data.Mappings
                 .HasColumnType("datetime")
                 .HasDefaultValue(DateTime.Now);
             builder.Property(x => x.DateUpdate)
-               .HasColumnType("datetime")
-               .HasDefaultValue(DateTime.Now);
-            builder.HasMany(p => p.Carts)
-                .WithMany(c => c.Products)
-                .UsingEntity(pc => pc.ToTable("CartDetails"));
+               .HasColumnType("datetime");
             builder.HasMany(p => p.Images)
                 .WithOne(i => i.Product)
                 .HasForeignKey(i => i.ProductId)
@@ -51,9 +47,10 @@ namespace FarmProduce.Data.Mappings
                 .WithOne(i => i.Product)
                 .HasForeignKey(i => i.ProductId)
                 .HasConstraintName("FK_Comments_Product");
-			builder.HasMany(o => o.Orders)
-				.WithMany(p => p.Products)
-				.UsingEntity(po => po.ToTable("ProductOrders"));
+            builder.HasMany(o => o.OrderItems)
+                .WithOne(p => p.Product)
+                .HasForeignKey(p => p.ProductId)
+                .HasConstraintName("FK_Product_OrderItems");
             builder.HasOne(p => p.Unit)
                 .WithMany(u => u.Products)
                 .HasForeignKey(p => p.UnitId)
