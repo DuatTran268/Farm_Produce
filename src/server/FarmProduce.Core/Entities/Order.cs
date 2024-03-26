@@ -14,10 +14,9 @@ namespace FarmProduce.Core.Entities
         public int TotalPrice { get; set; }
         public int OrderStatusId { get; set; }
         public int CustomerId { get; set; }
-        public  IList<PaymentMethod> PaymentMethods { get; set; }
         public Customer Customer { get; set; }
+        public IList<PaymentMethod> PaymentMethods { get; set; }
         public IList<OrderStatus> OrderStatuses { get; set; }
-        public IList<Product> Products { get; set; }
-
+        public IList<OrderItem> OrderItems { get; set; }
     }
 }

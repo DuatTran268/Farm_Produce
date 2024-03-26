@@ -30,13 +30,10 @@ namespace FarmProduce.Data.Mappings
                 .WithOne(p => p.Order)
                 .HasForeignKey(p => p.OrderId)
                 .HasConstraintName("FK_OrderStatuses_Order");
-            builder.HasMany(o => o.Products)
-                .WithMany(p => p.Orders)
-                .UsingEntity(po => po.ToTable("OrderDetail"));
-            
-
-
-
+            builder.HasMany(o => o.OrderItems)
+                .WithOne(i => i.Order)
+                .HasForeignKey(o => o.OrderId)
+                .HasConstraintName("FK_Order_OrderItems");
         }
     }
 }

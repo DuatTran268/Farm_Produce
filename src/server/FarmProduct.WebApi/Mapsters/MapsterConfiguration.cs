@@ -31,7 +31,6 @@ namespace FarmProduct.WebApi.Mapsters
 			config.NewConfig<PaymentMethod, PaymentsMethodDto>();
 			config.NewConfig<Order, OrderDto>();
 			config.NewConfig<CustomUI, CustomUIDto>();
-			config.NewConfig<Cart, CartDto>();
             config.NewConfig<Image, ImageDto>();
 			config.NewConfig<Product, ProductEditModel>();
 			config.NewConfig<Image, ImageEditModel>();

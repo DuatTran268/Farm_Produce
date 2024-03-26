@@ -1,6 +1,5 @@
 ﻿using Carter;
 using FarmProduce.Core.Collections;
-using FarmProduce.Services.Manage.Carts;
 using FarmProduct.WebApi.Models.Carts;
 using FarmProduct.WebApi.Models;
 using FarmProduct.WebApi.Utilities;

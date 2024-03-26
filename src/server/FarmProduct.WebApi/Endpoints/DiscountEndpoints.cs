@@ -32,11 +32,12 @@ namespace FarmProduct.WebApi.Endpoints
                 .Produces<ApiResponse<DiscountDto>>();
         }
         private static async Task<IResult> GetAllDiscount(
-		IDiscountRepo discountRepo
+		IDiscountRepo discountRepo,
+		[AsParameters] PagingModel pagingModel
 		)
 		{
 			var discounts = await discountRepo.GetAllDiscount(
-				discounts => discounts.ProjectToType<DiscountDto>());
+				discounts => discounts.ProjectToType<DiscountDto>(), pagingModel);
 			return Results.Ok(ApiResponse.Success(discounts));
 		}
 

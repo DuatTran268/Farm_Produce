@@ -34,17 +34,16 @@ namespace FarmProduce.Data.Seeders
 		
 
             var customUI = AddCustomUI();
-
             var units = AddUnits();
             var customers = AddCustomers();
             var orders = AddOrders(customers);
-            var products = AddProducts(caterories, orders,units);
+            var products = AddProducts(caterories,units);
             var comments = AddComments(customers,products);
             var images = AddImages(products);
-            var carts = AddCarts(products);
             var discounts = AddDiscounts(products);
             var orderStatuses = AddOrderStatuses(orders);
             var paymentMethods = AddPaymentMethods(orders);
+            var orderItems = AddOrderItems(products, orders);
 
 
         }
@@ -97,43 +96,8 @@ namespace FarmProduce.Data.Seeders
             return customUIs;
         }
 
-        private List<Cart> AddCarts(IList<Product> products)
-        {
-           var carts = new List<Cart>() {
-               new()
-               {
-                  Quantity = 1,
-                  AddedDate = new DateTime(2023,12,12),
-                  Products = new List<Product>()
-                  {
-                      products[0]
-                  }
-               }
-           };
-            _dbContext.AddRange(carts);
-            _dbContext.SaveChanges();
-            return carts;
-        }
-
-        private IList<Order> AddOrders(IList<Customer> customers)
-        {
-            var orders = new List<Order>() {
-
-            new(){
-                DateOrder=new DateTime(2023, 12, 28),
-                TotalPrice= 0,
-                Customer=customers[0]
-              
-               
-            }
-
-            };
-            _dbContext.AddRange(orders);
-            _dbContext.SaveChanges();
-            return orders;
-        }
-       
-        private IList<Product> AddProducts(   IList<Category> caterories, IList<Order> orders, IList<Unit> units)
+     
+        private IList<Product> AddProducts(   IList<Category> caterories, IList<Unit> units)
         {
             var products = new List<Product>() {
 
@@ -147,10 +111,7 @@ namespace FarmProduce.Data.Seeders
                    Unit=units[0],
                    DateUpdate=DateTime.Now,
                    Category= caterories[0],
-                  Orders= new List<Order>()
-                  {
-                      orders[0]
-                  }
+                 
                 },
 				new(){
 					Name="Rau cải bắp",
@@ -163,10 +124,7 @@ namespace FarmProduce.Data.Seeders
                    Unit=units[0],
                    Category= caterories[0],
 
-				  Orders= new List<Order>()
-				  {
-					  orders[0]
-				  }
+				 
 				},
     				new(){
 					Name="Củ cải",
@@ -178,10 +136,7 @@ namespace FarmProduce.Data.Seeders
 				   DateUpdate=DateTime.Now,
 				   Category= caterories[1],
                    Unit=units[0],
-                  Orders= new List<Order>()
-				  {
-					  orders[0]
-				  }
+                  
 				},
 			};
             foreach (var product in products)
@@ -215,9 +170,28 @@ namespace FarmProduce.Data.Seeders
                     _dbContext.Add(customer);
                 }
             }
+            _dbContext.AddRange(customers);
            _dbContext.SaveChanges();
             return customers;
         }
+        private IList<Order> AddOrders(IList<Customer> customers)
+        {
+            var orders = new List<Order>();
+            foreach (var customer in customers)
+            {
+                orders.Add(new Order()
+                {
+                    CustomerId = customer.Id,
+                    TotalPrice = 400000,
+                    DateOrder = DateTime.Now
+
+                });
+            }
+            _dbContext.AddRange(orders);
+            _dbContext.SaveChanges();
+            return orders;
+        }
+
 
         private IList<PaymentMethod> AddPaymentMethods(IList<Order> orders)
         {
@@ -482,8 +456,30 @@ namespace FarmProduce.Data.Seeders
 			return admins;
 
 		}
-	
+        private List<OrderItem> AddOrderItems(IList<Product> products, IList<Order> orders)
+        {
+            var r = new Random();
+            var orderItems = new List<OrderItem>();
+            for (int i = 0; i < orders.Count; i++)
+            {
+                foreach (var item in products)
+                {
+                    orderItems.Add(new OrderItem()
+                    {
+                        OrderId = orders[i].Id,
+                        ProductId = item.Id,
+                        Quantity = i + r.Next(1, 10),
+                        Price = item.Price + r.Next(3000, 50000),
 
-	}
+                    });
+                }
+            }
+            _dbContext.AddRange(orderItems);
+            _dbContext.SaveChanges();
+            return orderItems;
+        }
+
+
+    }
 	}
 

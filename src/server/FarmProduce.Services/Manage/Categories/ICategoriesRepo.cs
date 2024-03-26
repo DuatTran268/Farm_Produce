@@ -11,7 +11,7 @@ namespace FarmProduce.Services.Manage.Categories
 {
 	public interface ICategoriesRepo
 	{
-		Task<IList<T>> GetAllCategories<T>(Func<IQueryable<Category>, IQueryable<T>> mapper, CancellationToken cancellationToken = default);
+		Task<IPagedList<T>> GetAllCategories<T>(Func<IQueryable<Category>, IQueryable<T>> mapper, IPagingParams pagingParams, CancellationToken cancellationToken = default);
 
 		Task<Category> GetCategoryById(int id, CancellationToken cancellationToken = default);
 

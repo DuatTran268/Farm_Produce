@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FarmProduce.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -25,20 +25,6 @@ namespace FarmProduce.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Admins", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Carts",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
-                    AddedDate = table.Column<DateTime>(type: "datetime", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Carts", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -106,7 +92,7 @@ namespace FarmProduce.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DateOrder = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 3, 10, 9, 31, 51, 304, DateTimeKind.Local).AddTicks(5301)),
+                    DateOrder = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 3, 26, 9, 2, 2, 582, DateTimeKind.Local).AddTicks(1984)),
                     TotalPrice = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
                     OrderStatusId = table.Column<int>(type: "int", nullable: false),
                     CustomerId = table.Column<int>(type: "int", nullable: false)
@@ -134,8 +120,8 @@ namespace FarmProduce.Data.Migrations
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    DateCreate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 3, 10, 9, 31, 51, 305, DateTimeKind.Local).AddTicks(6762)),
-                    DateUpdate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 3, 10, 9, 31, 51, 305, DateTimeKind.Local).AddTicks(7260)),
+                    DateCreate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 3, 26, 9, 2, 2, 585, DateTimeKind.Local).AddTicks(1760)),
+                    DateUpdate = table.Column<DateTime>(type: "datetime", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     UnitId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -200,30 +186,6 @@ namespace FarmProduce.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CartDetails",
-                columns: table => new
-                {
-                    CartsId = table.Column<int>(type: "int", nullable: false),
-                    ProductsId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CartDetails", x => new { x.CartsId, x.ProductsId });
-                    table.ForeignKey(
-                        name: "FK_CartDetails_Carts_CartsId",
-                        column: x => x.CartsId,
-                        principalTable: "Carts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CartDetails_Products_ProductsId",
-                        column: x => x.ProductsId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Comments",
                 columns: table => new
                 {
@@ -231,7 +193,7 @@ namespace FarmProduce.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Rating = table.Column<int>(type: "int", nullable: false, defaultValue: 5),
-                    Created = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 3, 10, 9, 31, 51, 302, DateTimeKind.Local).AddTicks(7606)),
+                    Created = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 3, 26, 9, 2, 2, 576, DateTimeKind.Local).AddTicks(8022)),
                     CommentText = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     CustomerId = table.Column<int>(type: "int", nullable: false),
@@ -261,7 +223,7 @@ namespace FarmProduce.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DiscountPrice = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    StartDate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 3, 10, 9, 31, 51, 303, DateTimeKind.Local).AddTicks(9526)),
+                    StartDate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 3, 26, 9, 2, 2, 580, DateTimeKind.Local).AddTicks(445)),
                     EndDate = table.Column<DateTime>(type: "datetime", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: true, defaultValue: "False"),
                     ProductId = table.Column<int>(type: "int", nullable: false)
@@ -300,33 +262,32 @@ namespace FarmProduce.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductOrders",
+                name: "OrderItems",
                 columns: table => new
                 {
-                    OrdersId = table.Column<int>(type: "int", nullable: false),
-                    ProductsId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OrderId = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false, defaultValue: 0m)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductOrders", x => new { x.OrdersId, x.ProductsId });
+                    table.PrimaryKey("PK_OrderItems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProductOrders_Orders_OrdersId",
-                        column: x => x.OrdersId,
+                        name: "FK_Order_OrderItems",
+                        column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProductOrders_Products_ProductsId",
-                        column: x => x.ProductsId,
+                        name: "FK_Product_OrderItems",
+                        column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CartDetails_ProductsId",
-                table: "CartDetails",
-                column: "ProductsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_CustomerId",
@@ -349,6 +310,16 @@ namespace FarmProduce.Data.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_OrderItems_OrderId",
+                table: "OrderItems",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderItems_ProductId",
+                table: "OrderItems",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Orders_CustomerId",
                 table: "Orders",
                 column: "CustomerId");
@@ -362,11 +333,6 @@ namespace FarmProduce.Data.Migrations
                 name: "IX_PaymentMethods_OrderId",
                 table: "PaymentMethods",
                 column: "OrderId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProductOrders_ProductsId",
-                table: "ProductOrders",
-                column: "ProductsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryId",
@@ -386,9 +352,6 @@ namespace FarmProduce.Data.Migrations
                 name: "Admins");
 
             migrationBuilder.DropTable(
-                name: "CartDetails");
-
-            migrationBuilder.DropTable(
                 name: "Comments");
 
             migrationBuilder.DropTable(
@@ -401,31 +364,28 @@ namespace FarmProduce.Data.Migrations
                 name: "Images");
 
             migrationBuilder.DropTable(
+                name: "OrderItems");
+
+            migrationBuilder.DropTable(
                 name: "OrderStatuses");
 
             migrationBuilder.DropTable(
                 name: "PaymentMethods");
 
             migrationBuilder.DropTable(
-                name: "ProductOrders");
-
-            migrationBuilder.DropTable(
-                name: "Carts");
-
-            migrationBuilder.DropTable(
-                name: "Orders");
-
-            migrationBuilder.DropTable(
                 name: "Products");
 
             migrationBuilder.DropTable(
-                name: "Customers");
+                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Units");
+
+            migrationBuilder.DropTable(
+                name: "Customers");
         }
     }
 }
