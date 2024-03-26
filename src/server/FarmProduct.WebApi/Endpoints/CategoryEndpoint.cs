@@ -113,7 +113,7 @@ namespace FarmProduct.WebApi.Endpoints
 
 		// add or update
 		private static async Task<IResult> AddOrUpdateCategory(HttpContext context,
-			ICategoriesRepo categoriesRepo, IMapper mapper, IMediaManager media)
+			[FromServices] ICategoriesRepo categoriesRepo, IMapper mapper, [FromServices] IMediaManager media)
 		{
 			var model = await CategoriesEditModel.BindAsync(context);
 			var slug = model.Name.GenerateSlug();
@@ -130,7 +130,7 @@ namespace FarmProduct.WebApi.Endpoints
 				categories = new Category();
 			}
 			categories.Name = model.Name;
-			categories.UrlSlug = model.UrlSlug;
+			//categories.UrlSlug = model.UrlSlug;
 			categories.UrlSlug = model.Name.GenerateSlug();
 
 			if (model.ImageFile?.Length > 0)

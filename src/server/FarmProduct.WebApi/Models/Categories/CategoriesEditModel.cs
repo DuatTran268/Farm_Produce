@@ -4,7 +4,7 @@
 	{
         public int Id { get; set; }
         public string Name { get; set; }
-		public string UrlSlug { get; set; }
+		//public string UrlSlug { get; set; }
 		// image
 
 		public IFormFile ImageFile { get; set; }
@@ -16,7 +16,7 @@
 			{
 				Id = int.Parse(form["Id"]),
 				Name = (form["Name"]),
-				UrlSlug = (form["UrlSlug"]),
+				//UrlSlug = (form["UrlSlug"]),
 				ImageFile = form.Files["ImageFile"]
 			};
 		}

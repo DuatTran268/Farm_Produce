@@ -6,11 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FarmProduce.Data.Migrations
 {
     /// <inheritdoc />
-<<<<<<<< HEAD:src/server/FarmProduce.Data/Migrations/20240324152928_InitialCreate.cs
     public partial class InitialCreate : Migration
-========
-    public partial class initial : Migration
->>>>>>>> 5242a5560692f8c00b4f41d691ae1f2984bc0e2a:src/server/FarmProduce.Data/Migrations/20240326020203_initial.cs
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -97,11 +93,7 @@ namespace FarmProduce.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-<<<<<<<< HEAD:src/server/FarmProduce.Data/Migrations/20240324152928_InitialCreate.cs
-                    DateOrder = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 3, 24, 22, 29, 27, 444, DateTimeKind.Local).AddTicks(6842)),
-========
-                    DateOrder = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 3, 26, 9, 2, 2, 582, DateTimeKind.Local).AddTicks(1984)),
->>>>>>>> 5242a5560692f8c00b4f41d691ae1f2984bc0e2a:src/server/FarmProduce.Data/Migrations/20240326020203_initial.cs
+                    DateOrder = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 3, 26, 21, 50, 35, 498, DateTimeKind.Local).AddTicks(2007)),
                     TotalPrice = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
                     OrderStatusId = table.Column<int>(type: "int", nullable: false),
                     CustomerId = table.Column<int>(type: "int", nullable: false)
@@ -129,13 +121,8 @@ namespace FarmProduce.Data.Migrations
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-<<<<<<<< HEAD:src/server/FarmProduce.Data/Migrations/20240324152928_InitialCreate.cs
-                    DateCreate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 3, 24, 22, 29, 27, 447, DateTimeKind.Local).AddTicks(8829)),
-                    DateUpdate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 3, 24, 22, 29, 27, 447, DateTimeKind.Local).AddTicks(9724)),
-========
-                    DateCreate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 3, 26, 9, 2, 2, 585, DateTimeKind.Local).AddTicks(1760)),
+                    DateCreate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 3, 26, 21, 50, 35, 499, DateTimeKind.Local).AddTicks(3246)),
                     DateUpdate = table.Column<DateTime>(type: "datetime", nullable: false),
->>>>>>>> 5242a5560692f8c00b4f41d691ae1f2984bc0e2a:src/server/FarmProduce.Data/Migrations/20240326020203_initial.cs
                     Status = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     UnitId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -207,11 +194,7 @@ namespace FarmProduce.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Rating = table.Column<int>(type: "int", nullable: false, defaultValue: 5),
-<<<<<<<< HEAD:src/server/FarmProduce.Data/Migrations/20240324152928_InitialCreate.cs
-                    Created = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 3, 24, 22, 29, 27, 441, DateTimeKind.Local).AddTicks(7070)),
-========
-                    Created = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 3, 26, 9, 2, 2, 576, DateTimeKind.Local).AddTicks(8022)),
->>>>>>>> 5242a5560692f8c00b4f41d691ae1f2984bc0e2a:src/server/FarmProduce.Data/Migrations/20240326020203_initial.cs
+                    Created = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 3, 26, 21, 50, 35, 496, DateTimeKind.Local).AddTicks(5749)),
                     CommentText = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     CustomerId = table.Column<int>(type: "int", nullable: false),
@@ -241,11 +224,7 @@ namespace FarmProduce.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DiscountPrice = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-<<<<<<<< HEAD:src/server/FarmProduce.Data/Migrations/20240324152928_InitialCreate.cs
-                    StartDate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 3, 24, 22, 29, 27, 443, DateTimeKind.Local).AddTicks(6759)),
-========
-                    StartDate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 3, 26, 9, 2, 2, 580, DateTimeKind.Local).AddTicks(445)),
->>>>>>>> 5242a5560692f8c00b4f41d691ae1f2984bc0e2a:src/server/FarmProduce.Data/Migrations/20240326020203_initial.cs
+                    StartDate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2024, 3, 26, 21, 50, 35, 497, DateTimeKind.Local).AddTicks(4755)),
                     EndDate = table.Column<DateTime>(type: "datetime", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: true, defaultValue: "False"),
                     ProductId = table.Column<int>(type: "int", nullable: false)
