@@ -10,6 +10,7 @@ using FarmProduct.WebApi.Models;
 using FarmProduct.WebApi.Models.Admin;
 using FarmProduct.WebApi.Models.Categories;
 using FarmProduct.WebApi.Models.Products;
+using FarmProduct.WebApi.Models.Unit;
 using FarmProduct.WebApi.Utilities;
 using Mapster;
 using MapsterMapper;
@@ -25,13 +26,13 @@ namespace FarmProduct.WebApi.Endpoints
         {
             var routeGroupBuilder = app.MapGroup(RouteAPI.Category);
 
-            // get department not required
-            routeGroupBuilder.MapGet("/getall", GetAllCategory)
-                .WithName("GetAllCategory")
-                .Produces<ApiResponse<PaginationResult<CategoriesDto>>>();
+			// get department not required
+			routeGroupBuilder.MapGet("/pagination", GetCategoryAndPagination)
+				.WithName("GetCategoryAndPagination")
+				.Produces<ApiResponse<IList<CategoryItem>>>();
 
-            // get by slug
-            routeGroupBuilder.MapGet("/slugCategory/{slug:regex(^[a-z0-9_-]+$)}", GetCategoryBySlug)
+			// get by slug
+			routeGroupBuilder.MapGet("/slugCategory/{slug:regex(^[a-z0-9_-]+$)}", GetCategoryBySlug)
                 .WithName("GetCategoryBySlug")
                 .Produces<ApiResponse<CategoriesDetail>>();
 
@@ -59,14 +60,13 @@ namespace FarmProduct.WebApi.Endpoints
 				.Produces<ApiResponse<string>>();
 
 		}
-        private static async Task<IResult> GetAllCategory(
-		ICategoriesRepo categoriesRepo,
-		[AsParameters] PagingModel pagingModel
-		)
+		private static async Task<IResult> GetCategoryAndPagination([AsParameters] CategoriesFilterModel model, ICategoriesRepo categoriesRepo)
 		{
-			var categories = await categoriesRepo.GetAllCategories(
-				categories => categories.ProjectToType<CategoriesDto>(),pagingModel);
-			return Results.Ok(ApiResponse.Success(categories));
+			var categoryList = await categoriesRepo.GetAllPagingationCategory(model, model.Name);
+
+			var pagingnationResult = new PaginationResult<CategoryItem>(categoryList);
+			return Results.Ok(ApiResponse.Success(pagingnationResult));
+
 		}
 
 

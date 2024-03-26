@@ -25,10 +25,19 @@ namespace FarmProduce.Services.Manage.Categories
 			_memoryCache = memoryCache;
 		}
 
-		public async Task<IPagedList<T>> GetAllCategories<T>(Func<IQueryable<Category>, IQueryable<T>> mapper,IPagingParams pagingParams, CancellationToken cancellationToken = default)
+		public async Task<IPagedList<CategoryItem>> GetAllPagingationCategory(IPagingParams pagingParams, string name = null, CancellationToken cancellationToken = default)
 		{
-			IQueryable<Category> categories = _context.Set<Category>().OrderBy(a => a.Name);
-			return await mapper(categories).ToPagedListAsync(pagingParams, cancellationToken);
+			return await _context.Set<Category>()
+				.AsNoTracking()
+				.WhereIf(!string.IsNullOrWhiteSpace(name),
+				x => x.Name.Contains(name))
+				.Select(c => new CategoryItem()
+				{
+					Id = c.Id,
+					Name = c.Name,
+					UrlSlug = c.UrlSlug,
+					ImageUrl = c.ImageUrl
+				}).ToPagedListAsync(pagingParams, cancellationToken);
 		}
 
 		public async Task<Category> GetCategoryById(int id, CancellationToken cancellationToken = default)
@@ -89,7 +98,7 @@ namespace FarmProduce.Services.Manage.Categories
 			if (category.Id > 0)
 			{
 				_context.Categories.Update(category);
-				_memoryCache.Remove($"User.by-id.{category.Id}");
+				_memoryCache.Remove($"Category.by-id.{category.Id}");
 			}
 			else
 			{
