@@ -1,4 +1,5 @@
 ﻿using FarmProduce.Core.Contracts;
+using FarmProduce.Core.DTO;
 using FarmProduce.Core.Entities;
 using FarmProduce.Data.Contexts;
 using FarmProduce.Services.Extentions;
@@ -23,10 +24,25 @@ namespace FarmProduce.Services.Manage.Comments
 			_memoryCache = memoryCache;
 		}
 
-		public async Task<IPagedList<T>> GetAllComments<T>(Func<IQueryable<Comment>, IQueryable<T>> mapper,IPagingParams pagingParams ,CancellationToken cancellationToken = default)
+
+		public async Task<IPagedList<CommentItem>> GetFilterComment(IPagingParams pagingParams, string name = null, bool? status = null, CancellationToken cancellationToken = default)
 		{
-			IQueryable<Comment> comments = _context.Set<Comment>().OrderBy(a => a.Name);
-			return await mapper(comments).ToPagedListAsync(pagingParams, cancellationToken);
+			return await _context.Set<Comment>()
+				.AsNoTracking()
+				.WhereIf(!string.IsNullOrWhiteSpace(name),
+				x => x.Name.Contains(name))
+				.WhereIf(status != null, x => x.Status == status)
+				.Select(c => new CommentItem()
+				{
+					Id = c.Id,
+					Name = c.Name,
+					Rating = c.Rating,
+					Created = c.Created,
+					CommentText = c.CommentText,
+					Status = c.Status
+
+				}).ToPagedListAsync(pagingParams, cancellationToken);
+
 		}
 
 		public async Task<Comment> GetCommnetByID(int id, CancellationToken cancellationToken = default)
@@ -46,6 +62,12 @@ namespace FarmProduce.Services.Manage.Comments
 				_context.Comments.Add(comment);
 			}
 			return await _context.SaveChangesAsync(cancellationToken) > 0;
+		}
+
+		public async Task<bool> DeleteComment(int id, CancellationToken cancellationToken = default)
+		{
+			return await _context.Comments.Where(t => t.Id == id)
+			.ExecuteDeleteAsync(cancellationToken) > 0;
 		}
 	}
 }

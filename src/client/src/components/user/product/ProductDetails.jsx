@@ -20,6 +20,7 @@ const ProductDetails = () => {
     getDetailProductByUrlSlug(slug).then((data) => {
       if (data) {
         setProductDetail(data);
+        console.log("Check data detailsssss... . .",data.id);
       } else {
         setProductDetail({});
       }

@@ -28,10 +28,9 @@ namespace FarmProduct.WebApi.Endpoints
 			var routeGroupBuilder = app.MapGroup(RouteAPI.Comment);
 
 			// get all comment
-			routeGroupBuilder.MapGet("/getall", GetAllComment)
-			.WithName("GetAllComment")
-			.Produces<ApiResponse<PaginationResult<CommentDto>>>();
-
+			routeGroupBuilder.MapGet("/filter", GetFilterComment)
+				.WithName("GetFilterComment")
+				.Produces<ApiResponse<IList<CommentItem>>>();
 
 			// get commnet by id
 			routeGroupBuilder.MapGet("/{id:int}", GetCommentByID)
@@ -48,13 +47,22 @@ namespace FarmProduct.WebApi.Endpoints
 				.WithName("UpdateComment")
 				.Produces(401)
 				.Produces<ApiResponse<string>>();
+
+			routeGroupBuilder.MapDelete("/{id:int}", DeleteComment)
+				.WithName("DeleteComment")
+				.Produces(401)
+				.Produces<ApiResponse<string>>();
 		}
 		// get all
-		private static async Task<IResult> GetAllComment(ICommentRepo commentRepo, [AsParameters] PagingModel pagingModel)
+		private static async Task<IResult> GetFilterComment(
+			[AsParameters] CommentFilterModel model,
+			ICommentRepo commentRepo)
 		{
-			var comments = await commentRepo.GetAllComments(
-				comments => comments.ProjectToType<CommentDto>(), pagingModel);
-			return Results.Ok(ApiResponse.Success(comments));
+			var commentList = await commentRepo.GetFilterComment(model, model.Name, model.Status);
+
+			var pagingnationResult = new PaginationResult<CommentItem>(commentList);
+			return Results.Ok(ApiResponse.Success(pagingnationResult));
+
 		}
 
 		// get comment by id
@@ -98,6 +106,14 @@ namespace FarmProduct.WebApi.Endpoints
 				? Results.Ok(ApiResponse.Success("Comment update success", HttpStatusCode.NoContent))
 				: Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound, $"not find unit"));
 
+		}
+
+		private static async Task<IResult> DeleteComment(
+			int id, ICommentRepo commentRepo)
+		{
+			return await commentRepo.DeleteComment(id)
+			? Results.Ok(ApiResponse.Success("Unit deleted ", HttpStatusCode.NoContent))
+			: Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound, $"Not find unit id = {id}"));
 		}
 
 	}
