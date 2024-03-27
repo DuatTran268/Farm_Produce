@@ -23,7 +23,6 @@ namespace FarmProduce.Services.Manage.Comments
 			_memoryCache = memoryCache;
 		}
 
-
 		public async Task<IPagedList<T>> GetAllComments<T>(Func<IQueryable<Comment>, IQueryable<T>> mapper,IPagingParams pagingParams ,CancellationToken cancellationToken = default)
 		{
 			IQueryable<Comment> comments = _context.Set<Comment>().OrderBy(a => a.Name);
@@ -33,6 +32,20 @@ namespace FarmProduce.Services.Manage.Comments
 		public async Task<Comment> GetCommnetByID(int id, CancellationToken cancellationToken = default)
 		{
 			return await _context.Set<Comment>().FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
+		}
+
+		public async Task<bool> AddOrUpdateComment(Comment comment, CancellationToken cancellationToken = default)
+		{
+			if (comment.Id > 0)
+			{
+				_context.Comments.Update(comment);
+				_memoryCache.Remove($"comment.by-id.{comment.Id}");
+			}
+			else
+			{
+				_context.Comments.Add(comment);
+			}
+			return await _context.SaveChangesAsync(cancellationToken) > 0;
 		}
 	}
 }

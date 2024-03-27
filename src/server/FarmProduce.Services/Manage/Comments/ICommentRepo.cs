@@ -16,6 +16,7 @@ namespace FarmProduce.Services.Manage.Comments
 		Task<Comment> GetCommnetByID(int id, CancellationToken cancellationToken = default);
 
 
+		Task<bool> AddOrUpdateComment(Comment comment, CancellationToken cancellationToken = default);
 
 	}
 }
