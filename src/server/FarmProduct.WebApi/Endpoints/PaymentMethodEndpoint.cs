@@ -4,6 +4,7 @@ using FarmProduce.Core.Contracts;
 using FarmProduce.Services.Manage.OrderStatuses;
 using FarmProduce.Services.Manage.PaymentMethods;
 using FarmProduct.WebApi.Models;
+using FarmProduct.WebApi.Models.Categories;
 using FarmProduct.WebApi.Models.OrderStatuses;
 using FarmProduct.WebApi.Models.PaymentsMethod;
 using FarmProduct.WebApi.Models.Products;
@@ -38,7 +39,9 @@ namespace FarmProduct.WebApi.Endpoints
 		{
 			var paymentMethod = await paymentMethodRepo.GetAllPaymentMethod(
 				paymentMethod => paymentMethod.ProjectToType<PaymentsMethodDto>(),pagingModel);
-			return Results.Ok(ApiResponse.Success(paymentMethod));
+            var pagination = new PaginationResult<PaymentsMethodDto>(paymentMethod);
+
+            return Results.Ok(ApiResponse.Success(pagination));
 		}
 
 		// get payment method by id

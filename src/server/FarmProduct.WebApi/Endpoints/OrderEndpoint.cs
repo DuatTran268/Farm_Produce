@@ -28,6 +28,8 @@ namespace FarmProduct.WebApi.Endpoints
         {
             var orders = await orderRepo.GetAllPageAsync(
                 orders => orders.ProjectToType<OrderDto>(), pagingModel, cancellation);
+            var pagination = new PaginationResult<OrderDto>(orders);
+
             return Results.Ok(ApiResponse.Success(orders));
         }
 

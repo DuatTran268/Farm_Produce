@@ -14,6 +14,7 @@ using System.Net;
 using SlugGenerator;
 using FarmProduce.Services.Media;
 using Microsoft.AspNetCore.Mvc;
+using FarmProduct.WebApi.Models.Categories;
 
 namespace FarmProduct.WebApi.Endpoints
 {
@@ -35,9 +36,11 @@ namespace FarmProduct.WebApi.Endpoints
         }
         private static async Task<IResult> GetAllPageAsync(IImageRepo imageRepo, [AsParameters] PagingModel pagingModel, CancellationToken cancellation = default)
         {
-            var orders = await imageRepo.GetAllPageAsync(
-                orders => orders.ProjectToType<ImageDto>(), pagingModel, cancellation);
-            return Results.Ok(ApiResponse.Success(orders));
+            var images = await imageRepo.GetAllPageAsync(
+                images => images.ProjectToType<ImageDto>(), pagingModel);
+            var pagination = new PaginationResult<ImageDto>(images);
+
+            return Results.Ok(ApiResponse.Success(pagination));
         }
         private static async Task<IResult> AddImageAsync(HttpContext context
         , [FromServices]IImageRepo imageRepo
