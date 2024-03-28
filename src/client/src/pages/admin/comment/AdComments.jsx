@@ -12,6 +12,7 @@ import Loading from "../../../components/common/Loading";
 import { Table } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import BtnNextPage from "../../../components/common/BtnNextPage";
+import { format } from "date-fns";
 
 const AdComments = () => {
   const [getCommnent, setgetCommnent] = useState([]);
@@ -63,13 +64,14 @@ const AdComments = () => {
           });
           setRender(true);
         } else {
-          enqueueSnackbar("Đã xoá thành công", {
+          enqueueSnackbar("Lỗi trong khi xoá", {
             variant: "error",
           });
         }
       }
     }
   };
+  
 
   return (
     <LayoutCommon>
@@ -103,7 +105,7 @@ const AdComments = () => {
                   <tr key={index}>
                     <td>{item.name}</td>
                     <td>{item.rating}</td>
-                    <td>{item.created}</td>
+                    <td>{format(new Date(item.created), "dd/MM/yyyy")}</td>
                     <td>{item.status}</td>
 
                     <td className="text-center">

@@ -3,6 +3,7 @@ using FarmProduce.Core.Collections;
 using FarmProduce.Core.DTO;
 using FarmProduce.Core.Entities;
 using FarmProduce.Services.Manage.Products;
+using FarmProduce.Services.Manage.Units;
 using FarmProduct.WebApi.Models;
 using FarmProduct.WebApi.Models.Categories;
 using FarmProduct.WebApi.Models.Comments;
@@ -30,8 +31,13 @@ namespace FarmProduct.WebApi.Endpoints
                 .WithName("GetAllProducts")
                 .Produces<ApiResponse<PaginationResult<ProductsDto>>>();
 
-            // get by slug
-            routeGroupBuilder.MapGet("/slugProduct/{slug:regex(^[a-z0-9_-]+$)}", GetProductBySlug)
+			//
+			routeGroupBuilder.MapGet("/{id:int}", getProductById)
+			.WithName("getProductById")
+			.Produces<ApiResponse<ProductsDto>>();
+
+			// get by slug
+			routeGroupBuilder.MapGet("/slugProduct/{slug:regex(^[a-z0-9_-]+$)}", GetProductBySlug)
                 .WithName("GetProductBySlug")
                 .Produces<ApiResponse<ProductDetails>>();
 
@@ -62,6 +68,18 @@ namespace FarmProduct.WebApi.Endpoints
             var paginationResult = new PaginationResult<ProductsDto>(products);
 			return Results.Ok(ApiResponse.Success(paginationResult));
 		}
+		// get by id 
+		private static async Task<IResult> getProductById(
+			int id, IProductRepo productRepo, IMapper mapper)
+		{
+			var product = await productRepo.GetProductById(id);
+
+			return product == null
+			? Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound, $"Not find id = {id}"))
+			: Results.Ok(ApiResponse.Success(mapper.Map<ProductsDto>(product)));
+		}
+
+
 
 		// get by slug
 		private static async Task<IResult> GetProductBySlug([FromRoute] string slug, IProductRepo productRepo, IMapper mapper)

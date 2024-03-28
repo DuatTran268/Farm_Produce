@@ -12,6 +12,7 @@ export async function createNewAndUpdateComment(id = 0, formData) {
 }
 
 
+
 export function getFilterComment(
   name = '',
   // status = '',
@@ -36,3 +37,11 @@ export async function deleteComment(id = 0) {
   return delete_api(`https://localhost:7047/api/comments/${id}`);
 }
 
+
+
+// get commnet by id
+export async function getCommnetById(id = 0) {
+  if (id > 0) {
+    return get_api_nocache(`https://localhost:7047/api/comments/${id}`);
+  }
+}
