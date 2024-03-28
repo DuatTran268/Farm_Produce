@@ -126,6 +126,7 @@ const AdUnit = () => {
         )}
         <BtnNextPage metadata={metadata} onPageChange={updatePageNumber} />
       </div>
+      
     </LayoutCommon>
   );
 };

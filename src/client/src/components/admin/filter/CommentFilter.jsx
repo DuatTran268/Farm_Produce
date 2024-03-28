@@ -1,10 +1,10 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { reset, updateName } from "../../../redux/UnitRedux";
+import { reset, updateName } from "../../../redux/CommentRedux";
 import { Form } from "react-bootstrap";
 
-const UnitFilter = () => {
-  const unitFilter = useSelector((state) => state.unitFilter),
+const CommentFilter = () => {
+  const commentFilter = useSelector((state) => state.commentFilter),
     dispatch = useDispatch();
 
   const handleReset = (e) => {
@@ -19,11 +19,11 @@ const UnitFilter = () => {
           type="text"
           placeholder="Tìm kiếm theo tên"
           name="name"
-          value={unitFilter.name}
+          value={commentFilter.name}
           onChange={(e) => dispatch(updateName(e.target.value))}
         />
       </Form.Group>
     </Form>
   );
 };
-export default UnitFilter;
+export default CommentFilter;
