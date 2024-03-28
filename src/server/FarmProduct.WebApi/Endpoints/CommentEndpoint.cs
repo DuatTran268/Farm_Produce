@@ -37,7 +37,9 @@ namespace FarmProduct.WebApi.Endpoints
 		{
 			var comments = await commentRepo.GetAllComments(
 				comments => comments.ProjectToType<CommentDto>(),pagingModel);
-			return Results.Ok(ApiResponse.Success(comments));
+            var pagination = new PaginationResult<CommentDto>(comments);
+
+            return Results.Ok(ApiResponse.Success(pagination));
 		}
 
 		// get comment by id

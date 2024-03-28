@@ -12,7 +12,7 @@ namespace FarmProduce.Services.Manage.Products
     public interface IProductRepo
     {
 
-        Task<IPagedList<T>> GetAllProducts<T>(Func<IQueryable<Product>, IQueryable<T>> mapper,IPagingParams pagingParams ,CancellationToken cancellationToken = default);
+        Task<IPagedList<T>> GetAllProducts<T>(Func<IQueryable<Product>, IQueryable<T>> mapper, ProductQuery productQuery, IPagingParams pagingParams, CancellationToken cancellationToken = default);
 
         Task<Product> GetProductById(int id, CancellationToken cancellationToken = default);
         Task<Product> GetDetailProductBySlug(string slug, CancellationToken cancellationToken = default);

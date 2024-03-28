@@ -9,6 +9,7 @@ namespace FarmProduce.Core.DTO
 	public class ProductQuery
 	{
 		public string UrlSlug { get; set; } = "";
+		public string Name { get; set; }	
 
 	}
 }

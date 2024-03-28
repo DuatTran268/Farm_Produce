@@ -38,7 +38,9 @@ namespace FarmProduct.WebApi.Endpoints
 		{
 			var discounts = await discountRepo.GetAllDiscount(
 				discounts => discounts.ProjectToType<DiscountDto>(), pagingModel);
-			return Results.Ok(ApiResponse.Success(discounts));
+            var pagination = new PaginationResult<DiscountDto>(discounts);
+
+            return Results.Ok(ApiResponse.Success(pagination));
 		}
 
 		// get discount by id

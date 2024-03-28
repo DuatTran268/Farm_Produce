@@ -4,6 +4,7 @@ using FarmProduce.Core.Entities;
 using FarmProduce.Services.Manage.CustomUIs;
 using FarmProduce.Services.Manage.Orders;
 using FarmProduct.WebApi.Models;
+using FarmProduct.WebApi.Models.Categories;
 using FarmProduct.WebApi.Models.CustomUI;
 using FarmProduct.WebApi.Utilities;
 using Mapster;
@@ -23,9 +24,11 @@ namespace FarmProduct.WebApi.Endpoints
         }
         private static async Task<IResult> GetAllPageAsync(ICustomUIRepo customUIRepo, [AsParameters] PagingModel pagingModel, CancellationToken cancellation = default)
         {
-            var orders = await customUIRepo.GetAllPageAsync(
-                orders => orders.ProjectToType<CustomUIDto>(), pagingModel, cancellation);
-            return Results.Ok(ApiResponse.Success(orders));
+            var customs = await customUIRepo.GetAllPageAsync(
+                customs => customs.ProjectToType<CustomUIDto>(), pagingModel, cancellation);
+            var pagination = new PaginationResult<CustomUIDto>(customs);
+
+            return Results.Ok(ApiResponse.Success(pagination));
         }
 
     }

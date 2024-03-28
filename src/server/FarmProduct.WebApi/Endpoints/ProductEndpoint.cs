@@ -55,11 +55,12 @@ namespace FarmProduct.WebApi.Endpoints
                 .Produces(401)
                 .Produces<ApiResponse<ProductsDto>>();
         }
-        private static async Task<IResult> GetAllProducts(IProductRepo productRepo,[AsParameters]PagingModel pagingModel)
+        private static async Task<IResult> GetAllProducts(IProductRepo productRepo,[AsParameters]PagingModel pagingModel, [AsParameters]ProductQuery productQuery)
 		{
 			var products = await productRepo.GetAllProducts(
-				products => products.ProjectToType<ProductsDto>(),pagingModel);
-			return Results.Ok(ApiResponse.Success(products));
+				products => products.ProjectToType<ProductsDto>(),productQuery, pagingModel);
+            var paginationResult = new PaginationResult<ProductsDto>(products);
+			return Results.Ok(ApiResponse.Success(paginationResult));
 		}
 
 		// get by slug

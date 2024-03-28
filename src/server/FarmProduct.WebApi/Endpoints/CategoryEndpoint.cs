@@ -44,7 +44,8 @@ namespace FarmProduct.WebApi.Endpoints
 		{
 			var categories = await categoriesRepo.GetAllCategories(
 				categories => categories.ProjectToType<CategoriesDto>(),pagingModel);
-			return Results.Ok(ApiResponse.Success(categories));
+			var pagination = new PaginationResult<CategoriesDto>(categories);
+			return Results.Ok(ApiResponse.Success(pagination));
 		}
 
 
