@@ -1,4 +1,4 @@
-import { get_api, get_api_nocache, post_api, put_api } from "./AxiosCommon";
+import { delete_api, get_api, get_api_nocache, post_api, put_api } from "./AxiosCommon";
 
 // export async function getAllProduct(){
 //   return get_api (`https://localhost:7047/api/products/getall`)
@@ -7,7 +7,7 @@ import { get_api, get_api_nocache, post_api, put_api } from "./AxiosCommon";
 
 
 export function getFilterProduct(
-  // name = '',
+  name = '',
   // status = '',
   pageSize = "",
   pageNumber = 1,
@@ -15,7 +15,7 @@ export function getFilterProduct(
   sortOrder = ""
 ) {
   let url = new URL(`https://localhost:7047/api/products/getall`);
-  // name !== '' && url.searchParams.append('Name', name);
+  name !== '' && url.searchParams.append('Name', name);
   // status !== '' && url.searchParams.append('Status', status);
   sortColumn !== "" && url.searchParams.append("SortColumn", sortColumn);
   sortOrder !== "" && url.searchParams.append("SortOrder", sortColumn);
@@ -59,4 +59,9 @@ export async function getProductById(id = 0) {
 
 export async function newAndUpdateProduct( formData) {
   return post_api(`https://localhost:7047/api/products`, formData);
+}
+
+
+export async function deletProduct(id = 0) {
+  return delete_api(`https://localhost:7047/api/products/${id}`);
 }

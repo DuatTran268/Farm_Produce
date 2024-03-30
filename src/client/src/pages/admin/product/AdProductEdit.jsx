@@ -1,6 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import LayoutCommon from "../../../components/admin/common/LayoutCommon";
 import { Button, Form } from "react-bootstrap";
+import { getProductById, newAndUpdateProduct } from "../../../api/Product";
+import { useSnackbar } from "notistack";
+import { useNavigate, useParams } from "react-router-dom";
+import BoxEdit from "../../../components/admin/edit/BoxEdit";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRightToBracket, faSave } from "@fortawesome/free-solid-svg-icons";
+import BtnError from "../../../components/common/BtnError";
 
 const AdProductEdit = () => {
   const [validated, setValidated] = useState(false);
@@ -8,7 +15,7 @@ const AdProductEdit = () => {
   const initialState = {
     id: 0,
     name: "",
-    quantityAvailable: 0,
+    quantityAvailable: "",
     categoryId: 0,
     unit: "",
     price: 0,
@@ -27,9 +34,11 @@ const AdProductEdit = () => {
   useEffect(() => {
     document.title = "Thêm, cập nhật sản phẩm";
     getProductById(id).then((data) => {
+      console.log("Check dataaaaaa cua id", data);
       if (data)
-        setProduct({
+      setProduct({
           ...data,
+          
         });
       else setProduct(initialState);
     });
@@ -91,7 +100,7 @@ const AdProductEdit = () => {
           />
 
           <BoxEdit
-            label={"Tên đơn vị tính"}
+            label={"Quantity"}
             control={
               <Form.Control
                 type="text"
