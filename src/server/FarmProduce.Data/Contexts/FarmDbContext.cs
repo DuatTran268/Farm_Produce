@@ -1,5 +1,6 @@
 ﻿using FarmProduce.Core.Entities;
 using FarmProduce.Data.Mappings;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace FarmProduce.Data.Contexts
 {
-    public class FarmDbContext: DbContext
+    public class FarmDbContext: IdentityDbContext<ApplicationUser>
     {
         public DbSet<Admin> Admins { get; set; }    
         public DbSet<Customer> Customers { get; set; }
@@ -33,14 +34,15 @@ namespace FarmProduce.Data.Contexts
 		{
 		}
 
-		//protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-  //      {
-  //          optionsBuilder.UseSqlServer("Server=XUANHUNG;Database=FarmProducts;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
-  //          //optionsBuilder.UseSqlServer("Server=DESKTOP-NLUPE1I\\MSSQLSERVER01;Database=FarmProduct10;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
-  //      }
-       
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer("Server=XUANHUNG;Database=FarmProducts;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
+            //optionsBuilder.UseSqlServer("Server=DESKTOP-NLUPE1I\\MSSQLSERVER01;Database=FarmProduct10;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(CategoryMap).Assembly);
             modelBuilder.Entity<Product>().Property(p=> p.Price).HasPrecision(18,2);
             modelBuilder.Entity<Discount>().Property(p => p.DiscountPrice).HasPrecision(18, 2);
