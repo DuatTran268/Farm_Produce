@@ -1,6 +1,9 @@
 ﻿using Carter;
+using FarmProduce.Core.Contracts;
+using FarmProduce.Core.Entities;
 using FarmProduce.Data.Contexts;
 using FarmProduce.Data.Seeders;
+using FarmProduce.Services.Manage.Account;
 using FarmProduce.Services.Manage.Admins;
 using FarmProduce.Services.Manage.Categories;
 using FarmProduce.Services.Manage.Comments;
@@ -13,7 +16,13 @@ using FarmProduce.Services.Manage.PaymentMethods;
 using FarmProduce.Services.Manage.Products;
 using FarmProduce.Services.Manage.Units;
 using FarmProduce.Services.Timing;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
+using System.Text;
 
 namespace FarmProduct.WebApi.Extensions
 {
@@ -45,8 +54,13 @@ namespace FarmProduct.WebApi.Extensions
             builder.Services.AddScoped<IOrderRepo, OrderRepo>();
             //customUI
             builder.Services.AddScoped<ICustomUIRepo, CustomUIRepo>();
+            builder.Services.AddScoped<IUserAccount, AccountRepository>();
             //cart
             builder.Services.AddScoped<IImageRepo, ImageRepo>();
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<FarmDbContext>()
+                .AddSignInManager()
+                .AddRoles<IdentityRole>();
+            builder.Services.AddAuthorization();
             builder.Services.AddCarter();
 			return builder;
         }
@@ -64,8 +78,36 @@ namespace FarmProduct.WebApi.Extensions
 			this WebApplicationBuilder builder)
 		{
 			builder.Services.AddEndpointsApiExplorer();
-			builder.Services.AddSwaggerGen();
-			return builder;
+			
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidateLifetime = true,
+                    ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                    ValidAudience = builder.Configuration["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
+                };
+            });
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header,
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey
+                });
+
+                options.OperationFilter<SecurityRequirementsOperationFilter>();
+            });
+            return builder;
 		}
 
 		public static WebApplication SetupRequestPipeline(this WebApplication app)
@@ -74,14 +116,15 @@ namespace FarmProduct.WebApi.Extensions
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
+                app.UseCors("FarmProductApp");
+
 
             }
             app.UseStaticFiles();
             app.UseHttpsRedirection();
-            //app.UseAuthentication();
             app.UseRouting();
-            //app.UseAuthorization();
-            app.UseCors("FarmProductApp");
+            app.UseAuthentication();
+            app.UseAuthorization();
             return app;
         }
 

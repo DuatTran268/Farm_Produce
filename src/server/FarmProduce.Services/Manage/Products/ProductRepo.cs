@@ -92,7 +92,7 @@ namespace FarmProduce.Services.Manage.Products
 
         public async Task <Product> GetProductById(int id, CancellationToken cancellationToken = default)
 		{
-			return await _context.Set<Product>().FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
+			return await _context.Set<Product>().Include(p => p.Category).Include(p => p.Unit).FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
 		}
 
 		public async Task<Product> GetDetailProductBySlug(string slug, CancellationToken cancellationToken = default)

@@ -9,43 +9,33 @@ using System.Threading.Tasks;
 
 namespace FarmProduce.Data.Seeders
 {
-	public class DataSeeder : IDataSeeder
-	{
-		private readonly FarmDbContext _dbContext;
+    public class DataSeeder : IDataSeeder
+    {
+        private readonly FarmDbContext _dbContext;
 
-		public DataSeeder(FarmDbContext dbContext)
-		{
-			_dbContext = dbContext;
-		}
-		public void Initialize()
-		{
-			_dbContext.Database.EnsureCreated();
-			if (_dbContext.Products.Any())
-				return;
+        public DataSeeder(FarmDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+        public void Initialize()
+        {
+            _dbContext.Database.EnsureCreated();
+            if (_dbContext.Products.Any())
+                return;
 
-			var admins = AddAdmins();
+            var admins = AddAdmins();
             var caterories = AddCategories();
-			
-			
-			
-		
-			
-			
-		
-
             var customUI = AddCustomUI();
             var units = AddUnits();
             var customers = AddCustomers();
             var orders = AddOrders(customers);
-            var products = AddProducts(caterories,units);
-            var comments = AddComments(customers,products);
+            var products = AddProducts(caterories, units);
+            var comments = AddComments(customers, products);
             var images = AddImages(products);
             var discounts = AddDiscounts(products);
             var orderStatuses = AddOrderStatuses(orders);
             var paymentMethods = AddPaymentMethods(orders);
             var orderItems = AddOrderItems(products, orders);
-
-
         }
 
         private List<Unit> AddUnits()
@@ -72,13 +62,13 @@ namespace FarmProduce.Data.Seeders
             _dbContext.AddRange(units);
             _dbContext.SaveChanges();
             return units;
-           
+
         }
 
         private List<CustomUI> AddCustomUI()
         {
-           var customUIs = new List<CustomUI>() {
-            new(){ 
+            var customUIs = new List<CustomUI>() {
+            new(){
                 Title= "Test",
                 Color = "red",
                 Image="",
@@ -96,8 +86,8 @@ namespace FarmProduce.Data.Seeders
             return customUIs;
         }
 
-     
-        private IList<Product> AddProducts(   IList<Category> caterories, IList<Unit> units)
+
+        private IList<Product> AddProducts(IList<Category> caterories, IList<Unit> units)
         {
             var products = new List<Product>() {
 
@@ -111,34 +101,34 @@ namespace FarmProduce.Data.Seeders
                    Unit=units[0],
                    DateUpdate=DateTime.Now,
                    Category= caterories[0],
-                 
+
                 },
-				new(){
-					Name="Rau cải bắp",
-					UrlSlug="rau-cai-bap",
-				   QuanlityAvailable=3,
-				   Price=2000,
-				   Description="Rau cải bắp sạch",
-				   DateCreate= new DateTime(2023,08,12),
-				   DateUpdate=DateTime.Now,
+                new(){
+                    Name="Rau cải bắp",
+                    UrlSlug="rau-cai-bap",
+                   QuanlityAvailable=3,
+                   Price=2000,
+                   Description="Rau cải bắp sạch",
+                   DateCreate= new DateTime(2023,08,12),
+                   DateUpdate=DateTime.Now,
                    Unit=units[0],
                    Category= caterories[0],
 
-				 
-				},
-    				new(){
-					Name="Củ cải",
-					UrlSlug="cu-cai",
-				   QuanlityAvailable=8,
-				   Price=4000,
-				   Description="Củ cải",
-				   DateCreate= new DateTime(2023,03,12),
-				   DateUpdate=DateTime.Now,
-				   Category= caterories[1],
+
+                },
+                    new(){
+                    Name="Củ cải",
+                    UrlSlug="cu-cai",
+                   QuanlityAvailable=8,
+                   Price=4000,
+                   Description="Củ cải",
+                   DateCreate= new DateTime(2023,03,12),
+                   DateUpdate=DateTime.Now,
+                   Category= caterories[1],
                    Unit=units[0],
-                  
-				},
-			};
+
+                },
+            };
             foreach (var product in products)
             {
                 if (!_dbContext.Products.Any(p => p.UrlSlug == product.UrlSlug))
@@ -165,13 +155,13 @@ namespace FarmProduce.Data.Seeders
             };
             foreach (var customer in customers)
             {
-                if(_dbContext.Customers.Any(c=>c.Email== customer.Email))
+                if (_dbContext.Customers.Any(c => c.Email == customer.Email))
                 {
                     _dbContext.Add(customer);
                 }
             }
             _dbContext.AddRange(customers);
-           _dbContext.SaveChanges();
+            _dbContext.SaveChanges();
             return customers;
         }
         private IList<Order> AddOrders(IList<Customer> customers)
@@ -212,7 +202,7 @@ namespace FarmProduce.Data.Seeders
             };
             foreach (var paymentMethod in paymentMethods)
             {
-                if(!_dbContext.PaymentMethods.Any(p=> p.Name==paymentMethod.Name))
+                if (!_dbContext.PaymentMethods.Any(p => p.Name == paymentMethod.Name))
                 {
                     _dbContext.Add(paymentMethod);
                 }
@@ -221,7 +211,7 @@ namespace FarmProduce.Data.Seeders
             _dbContext.SaveChanges();
             return paymentMethods;
         }
-        private IList<OrderStatus> AddOrderStatuses(IList<Order> orders) 
+        private IList<OrderStatus> AddOrderStatuses(IList<Order> orders)
         {
             var orderStatuses = new List<OrderStatus>() {
                 new(){
@@ -229,7 +219,7 @@ namespace FarmProduce.Data.Seeders
                    Description="",
                    StatusDate=new DateTime(2024,2, 27),
                    Order= orders[0],
-                   
+
                 },
                  new(){
                    StatusCode="Đã xác nhận",
@@ -249,11 +239,11 @@ namespace FarmProduce.Data.Seeders
                    StatusDate=new DateTime(2024,2, 27),
                    Order= orders[0],
                 }
-               
+
             };
             foreach (var orderStatus in orderStatuses)
             {
-                if(!_dbContext.OrderStatuses.Any(o=> o.StatusCode== orderStatus.StatusCode))
+                if (!_dbContext.OrderStatuses.Any(o => o.StatusCode == orderStatus.StatusCode))
                 {
                     _dbContext.Add(orderStatus);
                 }
@@ -263,7 +253,7 @@ namespace FarmProduce.Data.Seeders
             return orderStatuses;
         }
 
-      
+
 
 
 
@@ -279,7 +269,7 @@ namespace FarmProduce.Data.Seeders
                     UrlImage="",
                     Caption="caption",
                     Product= products[0]
-                    
+
                 },
                  new(){
                     Name="Hinh2",
@@ -296,9 +286,9 @@ namespace FarmProduce.Data.Seeders
             };
             foreach (var image in images)
             {
-                if(!_dbContext.Images.Any(i=> i.Name== image.Name))
+                if (!_dbContext.Images.Any(i => i.Name == image.Name))
                 {
-                   _dbContext.Add(image);
+                    _dbContext.Add(image);
                 }
             }
             _dbContext.AddRange(images);
@@ -327,11 +317,11 @@ namespace FarmProduce.Data.Seeders
             };
             foreach (var discount in discounts)
             {
-                if(!_dbContext.Discounts.Any(d=> d.Id== discount.Id))
+                if (!_dbContext.Discounts.Any(d => d.Id == discount.Id))
                 {
                     _dbContext.Add(discount);
                 }
-               
+
             }
             _dbContext.AddRange(discounts);
             _dbContext.SaveChanges();
@@ -344,10 +334,10 @@ namespace FarmProduce.Data.Seeders
 
                 new()
                 {
-                
+
                 Name = "Rau",
                 UrlSlug= "rau",
-                
+
                 },
                  new()
                 {
@@ -373,7 +363,7 @@ namespace FarmProduce.Data.Seeders
             };
             foreach (var cate in categories)
             {
-                if(!_dbContext.Categories.Any(c=> c.UrlSlug== cate.UrlSlug))
+                if (!_dbContext.Categories.Any(c => c.UrlSlug == cate.UrlSlug))
                 {
                     _dbContext.Add(cate);
                 }
@@ -383,7 +373,7 @@ namespace FarmProduce.Data.Seeders
             return categories;
         }
 
-        private IList<Comment> AddComments( IList<Customer> customers,IList<Product> products )
+        private IList<Comment> AddComments(IList<Customer> customers, IList<Product> products)
         {
             var comments = new List<Comment>()
             {
@@ -395,8 +385,8 @@ namespace FarmProduce.Data.Seeders
                     Rating=5,
                     Customer =  customers[0],
                     Product= products[0]
-                    
-                    
+
+
                 },
                  new(){
                     Name="comment2",
@@ -411,51 +401,51 @@ namespace FarmProduce.Data.Seeders
             };
             foreach (var comment in comments)
             {
-             if(!_dbContext.Images.Any(c=> c.Name== comment.Name))
+                if (!_dbContext.Images.Any(c => c.Name == comment.Name))
                 {
                     _dbContext.Add(comment);
-                }   
+                }
             }
-      
+
             _dbContext.SaveChanges();
-           return comments;
+            return comments;
         }
 
 
 
         private IList<Admin> AddAdmins()
-		{
-			var admins = new List<Admin>()
-			{
-				new()
-				{
-					Name = "Trần Nhật Duật",
-					Password = "123456",
-					Email = "duattran36@gmail.com",
-					Role = "admin",
-				},
-				new()
-				{
-					Name = "Nguyễn Xuân Hưng",
-					Password = "234567",
-					Email = "xuanhung42@gmail.com",
-					Role = "admin",
+        {
+            var admins = new List<Admin>()
+            {
+                new()
+                {
+                    Name = "Trần Nhật Duật",
+                    Password = "123456",
+                    Email = "duattran36@gmail.com",
+                    Role = "admin",
+                },
+                new()
+                {
+                    Name = "Nguyễn Xuân Hưng",
+                    Password = "234567",
+                    Email = "xuanhung42@gmail.com",
+                    Role = "admin",
 
-				},
-			};
-			foreach (var admin in admins)
-			{
-				if (!_dbContext.Admins.Any(a => a.Name == admin.Name))
-				{
-					_dbContext.Admins.Add(admin);
-				}
-			}
-          
-			_dbContext.SaveChanges();
+                },
+            };
+            foreach (var admin in admins)
+            {
+                if (!_dbContext.Admins.Any(a => a.Name == admin.Name))
+                {
+                    _dbContext.Admins.Add(admin);
+                }
+            }
 
-			return admins;
+            _dbContext.SaveChanges();
 
-		}
+            return admins;
+
+        }
         private List<OrderItem> AddOrderItems(IList<Product> products, IList<Order> orders)
         {
             var r = new Random();
@@ -481,5 +471,5 @@ namespace FarmProduce.Data.Seeders
 
 
     }
-	}
+}
 

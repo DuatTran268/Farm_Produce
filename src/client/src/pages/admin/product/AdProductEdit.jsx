@@ -17,7 +17,6 @@ const AdProductEdit = () => {
     name: "",
     quantityAvailable: "",
     categoryId: 0,
-    unit: "",
     price: 0,
     description: "",
     status: 0,
@@ -36,9 +35,8 @@ const AdProductEdit = () => {
     getProductById(id).then((data) => {
       console.log("Check dataaaaaa cua id", data);
       if (data)
-      setProduct({
+        setProduct({
           ...data,
-          
         });
       else setProduct(initialState);
     });
@@ -83,7 +81,7 @@ const AdProductEdit = () => {
           <Form.Control type="hidden" name="id" value={product.id} />
 
           <BoxEdit
-            label={"Tên đơn vị tính"}
+            label={"Tên sản phẩm"}
             control={
               <Form.Control
                 type="text"
@@ -100,7 +98,7 @@ const AdProductEdit = () => {
           />
 
           <BoxEdit
-            label={"Quantity"}
+            label={"Số lượng"}
             control={
               <Form.Control
                 type="text"
@@ -117,7 +115,7 @@ const AdProductEdit = () => {
           />
 
           <BoxEdit
-            label={"Tên đơn vị tính"}
+            label={"Category Id"}
             control={
               <Form.Control
                 type="text"
@@ -134,24 +132,7 @@ const AdProductEdit = () => {
           />
 
           <BoxEdit
-            label={"Tên đơn vị tính"}
-            control={
-              <Form.Control
-                type="text"
-                name="unit"
-                title="unit"
-                required
-                value={product.unit || ""}
-                onChange={(e) =>
-                  setProduct({ ...product, unit: e.target.value })
-                }
-              />
-            }
-            notempty={"Không được bỏ trống"}
-          />
-
-          <BoxEdit
-            label={"Tên đơn vị tính"}
+            label={"Giá tiền"}
             control={
               <Form.Control
                 type="text"
@@ -168,7 +149,7 @@ const AdProductEdit = () => {
           />
 
           <BoxEdit
-            label={"Tên đơn vị tính"}
+            label={"Mô tả"}
             control={
               <Form.Control
                 type="text"
@@ -185,16 +166,16 @@ const AdProductEdit = () => {
           />
 
           <BoxEdit
-            label={"Tên đơn vị tính"}
+            label={"Trạng thái"}
             control={
               <Form.Control
                 type="text"
-                name="dateCreate"
-                title="dateCreate"
+                name="status"
+                title="status"
                 required
-                value={product.dateCreate || ""}
+                value={product.status || ""}
                 onChange={(e) =>
-                  setProduct({ ...product, dateCreate: e.target.value })
+                  setProduct({ ...product, status: e.target.value })
                 }
               />
             }
@@ -202,7 +183,7 @@ const AdProductEdit = () => {
           />
 
           <BoxEdit
-            label={"Tên đơn vị tính"}
+            label={"Unit Id"}
             control={
               <Form.Control
                 type="text"
@@ -219,7 +200,24 @@ const AdProductEdit = () => {
           />
 
           <BoxEdit
-            label={"Tên đơn vị tính"}
+            label={"Ngày tạo"}
+            control={
+              <Form.Control
+                type="text"
+                name="dateCreate"
+                title="dateCreate"
+                required
+                value={product.dateCreate || ""}
+                onChange={(e) =>
+                  setProduct({ ...product, dateCreate: e.target.value })
+                }
+              />
+            }
+            notempty={"Không được bỏ trống"}
+          />
+
+          <BoxEdit
+            label={"Ngày cập nhật"}
             control={
               <Form.Control
                 type="text"
@@ -229,23 +227,6 @@ const AdProductEdit = () => {
                 value={product.dateUpdate || ""}
                 onChange={(e) =>
                   setProduct({ ...product, dateUpdate: e.target.value })
-                }
-              />
-            }
-            notempty={"Không được bỏ trống"}
-          />
-
-          <BoxEdit
-            label={"Tên đơn vị tính"}
-            control={
-              <Form.Control
-                type="text"
-                name="status"
-                title="status"
-                required
-                value={product.status || ""}
-                onChange={(e) =>
-                  setProduct({ ...product, status: e.target.value })
                 }
               />
             }
@@ -268,5 +249,5 @@ const AdProductEdit = () => {
       </div>
     </LayoutCommon>
   );
-}
+};
 export default AdProductEdit;
