@@ -7,12 +7,13 @@ import ProductTemplate from "./ProductTemplate";
 import { useParams } from "react-router-dom";
 import { getFilterProduct } from "../../../api/Product";
 import Loading from "../../common/Loading";
+import { useSelector } from "react-redux";
 
 const ProductList = () => {
   const [getProduct, setGetProduct] = useState([]);
   const [isVisibleLoading, setIsVisibleLoading] = useState(true);
   const [pageNumber, setPageNumber] = useState(1);
-
+  const productFilter = useSelector((state) => state.productFilter);
   let { id } = useParams,
     p = 1,
     ps = 5;
@@ -21,7 +22,7 @@ const ProductList = () => {
   }
 
   useEffect(() => {
-    getFilterProduct(ps, pageNumber).then((data) => {
+    getFilterProduct(productFilter.name, ps, pageNumber).then((data) => {
       if (data) {
         setGetProduct(data.items);
         console.log("Checkdata", data);
@@ -30,7 +31,7 @@ const ProductList = () => {
       }
       setIsVisibleLoading(false);
     });
-  }, [ps, p, pageNumber]);
+  }, [productFilter, ps, p, pageNumber]);
 
   return (
     <>

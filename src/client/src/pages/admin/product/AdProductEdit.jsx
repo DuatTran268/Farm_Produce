@@ -165,22 +165,6 @@ const AdProductEdit = () => {
             notempty={"Không được bỏ trống"}
           />
 
-          <BoxEdit
-            label={"Trạng thái"}
-            control={
-              <Form.Control
-                type="text"
-                name="status"
-                title="status"
-                required
-                value={product.status || ""}
-                onChange={(e) =>
-                  setProduct({ ...product, status: e.target.value })
-                }
-              />
-            }
-            notempty={"Không được bỏ trống"}
-          />
 
           <BoxEdit
             label={"Unit Id"}

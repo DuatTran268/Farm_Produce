@@ -144,21 +144,6 @@ const AdCommentEdit = () => {
           />
 
           <BoxEdit
-            label={"status"}
-            control={
-              <Form.Control
-                type="text"
-                name="status"
-                title="status"
-                value={comment.status || ""}
-                onChange={(e) =>
-                  setCommnet({ ...comment, status: e.target.value })
-                }
-              />
-            }
-          />
-
-          <BoxEdit
             label={"customer Id"}
             control={
               <Form.Control
@@ -187,6 +172,25 @@ const AdCommentEdit = () => {
               />
             }
           />
+
+          <div className="row mb-3">
+            <div className="col-sm-10 offset-sm-2">
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  name="status"
+                  checked={comment.status}
+                  title="Công khai comment"
+                  onChange={(e) => {
+                    setCommnet({ ...comment, status: e.target.checked });
+                    console.log(e.target.checked);
+                  }}
+                />
+                <Form.Label className="form-check-label">Công khai</Form.Label>
+              </div>
+            </div>
+          </div>
 
           <div className="text-center">
             <Button variant="success" type="submit">
