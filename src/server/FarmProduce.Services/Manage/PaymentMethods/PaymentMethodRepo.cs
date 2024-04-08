@@ -33,6 +33,36 @@ namespace FarmProduce.Services.Manage.PaymentMethods
 		public async Task<PaymentMethod> GetPaymentMethodById(int id, CancellationToken cancellationToken = default)
 		{
 			return await _context.Set<PaymentMethod>().FirstOrDefaultAsync(pm => pm.Id == id, cancellationToken);
-		}
-	}
+        }
+        public async Task<bool> IsIdExisted(int id,CancellationToken cancellationToken = default)
+        {
+            return await _context.Set<PaymentMethod>().AnyAsync(x => x.Id==id);
+        }
+        public async Task<bool> DeleteWithIDAsync(int id, CancellationToken cancellationToken)
+        {
+            var result = await _context.Set<PaymentMethod>().Where(x => x.Id == id).FirstOrDefaultAsync();
+            if (result is null)
+            {
+                return false;
+            }
+            else
+            {
+                _context.Set<PaymentMethod>().Remove(result);
+                return true;
+            }
+        }
+        public async Task<bool> AddOrUpdateProduct(PaymentMethod paymentMethod, CancellationToken cancellationToken = default)
+        {
+            if (paymentMethod.Id > 0)
+            {
+                _context.Update(paymentMethod);
+            }
+            else
+            {
+                _context.Add(paymentMethod);
+            }
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+    }
 }

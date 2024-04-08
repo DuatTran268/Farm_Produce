@@ -31,5 +31,34 @@ namespace FarmProduce.Services.Manage.OrderStatuses
 		{
 			return await _context.Set<OrderStatus>().FirstOrDefaultAsync( o => o.Id == id,cancellationToken);
 		}
-	}
+        public async Task<bool> IsIdExisted(int id, CancellationToken cancellationToken = default)
+        {
+            return await _context.Set<OrderStatus>().AnyAsync(x => x.Id != id);
+        }
+        public async Task<bool> DeleteWithIDAsync(int id, CancellationToken cancellationToken)
+        {
+            var result = await _context.Set<OrderStatus>().Where(x => x.Id == id).FirstOrDefaultAsync();
+            if (result is null)
+            {
+                return false;
+            }
+            else
+            {
+                _context.Set<OrderStatus>().Remove(result);
+                return true;
+            }
+        }
+        public async Task<bool> AddOrUpdate(OrderStatus orderStatus, CancellationToken cancellationToken = default)
+        {
+            if (orderStatus.Id > 0)
+            {
+                _context.Update(orderStatus);
+            }
+            else
+            {
+                _context.Add(orderStatus);
+            }
+            return await _context.SaveChangesAsync() > 0;
+        }
+    }
 }

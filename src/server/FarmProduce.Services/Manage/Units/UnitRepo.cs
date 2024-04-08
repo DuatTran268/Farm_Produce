@@ -14,7 +14,7 @@ using FarmProduce.Core.DTO;
 
 namespace FarmProduce.Services.Manage.Units
 {
-    public class UnitRepo:IUnitRepo
+    public class UnitRepo : IUnitRepo
     {
         private readonly FarmDbContext _context;
 
@@ -28,16 +28,58 @@ namespace FarmProduce.Services.Manage.Units
             return await mapper(units).ToListAsync(cancellationToken);
 
         }
-        public async Task<IPagedList<T>> GetAllPageAsync<T>(Func<IQueryable<Unit>, IQueryable<T>> mapper,IPagingParams pagingParams ,CancellationToken cancellationToken = default)
+        public async Task<IPagedList<T>> GetAllPageAsync<T>(Func<IQueryable<Unit>, IQueryable<T>> mapper, IPagingParams pagingParams, CancellationToken cancellationToken = default)
         {
             IQueryable<Unit> units = _context.Set<Unit>();
-            return await mapper(units).ToPagedListAsync(pagingParams,cancellationToken);
+            return await mapper(units).ToPagedListAsync(pagingParams, cancellationToken);
 
         }
-        public async Task<Unit> GetByIdAsync(int id, CancellationToken cancellationToken=default)
+        public async Task<Unit> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
-            return await _context.Set<Unit>().Where(x=> x.Id== id).FirstOrDefaultAsync(cancellationToken);
+            return await _context.Set<Unit>().Where(x => x.Id == id).FirstOrDefaultAsync(cancellationToken);
         }
+        public async Task<bool> DeleteWithSlugAsync(string slug, CancellationToken cancellationToken)
+        {
+            var result = await _context.Set<Unit>().Where(x => x.UrlSlug == slug).FirstOrDefaultAsync();
+            if (result is null)
+            {
+                return false;
+            }
+            else
+            {
+                _context.Set<Unit>().Remove(result);
+                return true;
+            }
         }
+        public async Task<bool> IsSlugUnitExisted(int id, string urlSlug, CancellationToken cancellationToken = default)
+        {
+            return await _context.Set<Unit>().AnyAsync(x => x.Id != id && x.UrlSlug == urlSlug);
+        }
+        public async Task<bool> DeleteWithIDAsync(int id, CancellationToken cancellationToken)
+        {
+            var result = await _context.Set<Unit>().Where(x => x.Id == id).FirstOrDefaultAsync();
+            if (result is null)
+            {
+                return false;
+            }
+            else
+            {
+                _context.Set<Unit>().Remove(result);
+                return true;
+            }
+        }
+        public async Task<bool> AddOrUpdate(Unit unit, CancellationToken cancellationToken = default)
+        {
+            if (unit.Id > 0)
+            {
+                _context.Update(unit);
+            }
+            else
+            {
+                _context.Add(unit);
+            }
+            return await _context.SaveChangesAsync() > 0;
+        }
+    }
     }
 

@@ -24,14 +24,67 @@ namespace FarmProduce.Services.Manage.Comments
 			_memoryCache = memoryCache;
 		}
 
-		public async Task<IPagedList<T>> GetAllComments<T>(Func<IQueryable<Comment>, IQueryable<T>> mapper,IPagingParams pagingParams ,CancellationToken cancellationToken = default)
+		public async Task<IPagedList<T>> GetAllComments<T>(Func<IQueryable<Comment>, IQueryable<T>> mapper,CommentQuery commentQuery,IPagingParams pagingParams ,CancellationToken cancellationToken = default)
 		{
-			IQueryable<Comment> comments = _context.Set<Comment>().OrderBy(a => a.Name);
+			IQueryable<Comment> comments = FilterComment(commentQuery);
 			return await mapper(comments).ToPagedListAsync(pagingParams, cancellationToken);
 		}
+        private IQueryable<Comment> FilterComment(CommentQuery commentQuery)
+        {
+            IQueryable<Comment> comments = _context.Set<Comment>();
+            if (!String.IsNullOrWhiteSpace(commentQuery.CommentText))
+            {
+                comments = comments.Where(x => x.CommentText.Contains(commentQuery.CommentText));
+            }
+            
+            return comments;
+        }
         public async Task<Comment> GetCommnetByID(int id, CancellationToken cancellationToken = default)
 		{
 			return await _context.Set<Comment>().FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
 		}
-	}
+        public async Task<bool> DeleteWithIdsync(int id, CancellationToken cancellationToken)
+        {
+            var result = await _context.Set<Comment>().Where(x => x.Id == id).FirstOrDefaultAsync();
+            if (result is null)
+            {
+                return false;
+            }
+            else
+            {
+                _context.Set<Comment>().Remove(result);
+                return true;
+            }
+        }
+        public async Task<bool> IsIdExisted(int id,  CancellationToken cancellationToken = default)
+        {
+            return await _context.Set<Comment>().AnyAsync(x => x.Id != id);
+        }
+        public async Task<bool> DeleteWithIDAsync(int id, CancellationToken cancellationToken)
+        {
+            var result = await _context.Set<Comment>().Where(x => x.Id == id).FirstOrDefaultAsync();
+            if (result is null)
+            {
+                return false;
+            }
+            else
+            {
+                _context.Set<Comment>().Remove(result);
+                return true;
+            }
+        }
+        public async Task<bool> AddOrUpdate(Comment comment, CancellationToken cancellationToken = default)
+        {
+            if (comment.Id > 0)
+            {
+                _context.Update(comment);
+            }
+            else
+            {
+                _context.Add(comment);
+            }
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+    }
 }

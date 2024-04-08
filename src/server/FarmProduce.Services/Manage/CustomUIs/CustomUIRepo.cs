@@ -31,5 +31,48 @@ namespace FarmProduce.Services.Manage.CustomUIs
             IQueryable<CustomUI> result = _context.Set<CustomUI>();
             return await mapper(result).ToPagedListAsync(pagingParams, cancellationToken);
         }
+        public async Task<bool> DeleteWithIdsync(int id, CancellationToken cancellationToken)
+        {
+            var result = await _context.Set<CustomUI>().Where(x => x.Id == id).FirstOrDefaultAsync();
+            if (result is null)
+            {
+                return false;
+            }
+            else
+            {
+                _context.Set<CustomUI>().Remove(result);
+                return true;
+            }
+        }
+        public async Task<bool> IsIdExisted(int id, CancellationToken cancellationToken = default)
+        {
+            return await _context.Set<CustomUI>().AnyAsync(x => x.Id != id);
+        }
+        public async Task<bool> DeleteWithIDAsync(int id, CancellationToken cancellationToken)
+        {
+            var result = await _context.Set<CustomUI>().Where(x => x.Id == id).FirstOrDefaultAsync();
+            if (result is null)
+            {
+                return false;
+            }
+            else
+            {
+                _context.Set<CustomUI>().Remove(result);
+                return true;
+            }
+        }
+        public async Task<bool> AddOrUpdate(CustomUI custom, CancellationToken cancellationToken = default)
+        {
+            if (custom.Id > 0)
+            {
+                _context.Update(custom);
+            }
+            else
+            {
+                _context.Add(custom);
+            }
+            return await _context.SaveChangesAsync() > 0;
+        }
+
     }
 }

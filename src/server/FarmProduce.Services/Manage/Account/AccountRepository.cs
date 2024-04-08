@@ -20,7 +20,7 @@ namespace FarmProduce.Services.Manage.Account
     RoleManager<IdentityRole> roleManager, IConfiguration config) : IUserAccount
     {
 
-        public async Task<GeneralResponse> CreateAccount(UserDTO userDTO)
+        public async Task<GeneralResponse> CreateAccount(RegisterDTO userDTO)
         {
             if (userDTO is null) return new GeneralResponse(false, "Model is empty");
             var newUser = new ApplicationUser()
@@ -37,22 +37,21 @@ namespace FarmProduce.Services.Manage.Account
             if (!createUser.Succeeded) return new GeneralResponse(false, "Error occured.. please try again");
 
             //Assign Default Role : Admin to first registrar; rest is user
-            var checkAdmin = await roleManager.FindByNameAsync("Admin");
-            if (checkAdmin is null)
-            {
-                await roleManager.CreateAsync(new IdentityRole() { Name = "Admin" });
-                await userManager.AddToRoleAsync(newUser, "Admin");
-                return new GeneralResponse(true, "Account Created");
-            }
-            else
-            {
+           
+            //if (checkAdmin is null)
+            //{
+            //    await roleManager.CreateAsync(new IdentityRole() { Name = "Admin" });
+            //    await userManager.AddToRoleAsync(newUser, "Admin");
+            //    return new GeneralResponse(true, "Account Created");
+            //}
+        
                 var checkUser = await roleManager.FindByNameAsync("User");
                 if (checkUser is null)
                     await roleManager.CreateAsync(new IdentityRole() { Name = "User" });
 
                 await userManager.AddToRoleAsync(newUser, "User");
                 return new GeneralResponse(true, "Account Created");
-            }
+            
         }
         public async Task<GeneralResponse> CreateAccountByAdmin(UserDTO userDTO)
         {

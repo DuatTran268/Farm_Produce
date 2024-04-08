@@ -83,6 +83,48 @@ namespace FarmProduce.Services.Manage.Categories
 			return productQuery;
 		}
 
+        public async Task<bool> DeleteWithIdsync(int id, CancellationToken cancellationToken)
+        {
+            var result = await _context.Set<Category>().Where(x => x.Id == id).FirstOrDefaultAsync();
+            if (result is null)
+            {
+                return false;
+            }
+            else
+            {
+                _context.Set<Category>().Remove(result);
+                return true;
+            }
+        }
+        public async Task<bool> IsIdExisted(int id, CancellationToken cancellationToken = default)
+        {
+            return await _context.Set<Category>().AnyAsync(x => x.Id != id);
+        }
+        public async Task<bool> DeleteWithIDAsync(int id, CancellationToken cancellationToken)
+        {
+            var result = await _context.Set<Category>().Where(x => x.Id == id).FirstOrDefaultAsync();
+            if (result is null)
+            {
+                return false;
+            }
+            else
+            {
+                _context.Set<Category>().Remove(result);
+                return true;
+            }
+        }
+        public async Task<bool> AddOrUpdate(Category category, CancellationToken cancellationToken = default)
+        {
+            if (category.Id > 0)
+            {
+                _context.Update(category);
+            }
+            else
+            {
+                _context.Add(category);
+            }
+            return await _context.SaveChangesAsync() > 0;
+        }
 
-	}
+    }
 }

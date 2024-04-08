@@ -24,15 +24,25 @@ namespace FarmProduct.WebApi.Endpoints
             routeGroupBuilder.MapPost("/login", Login)
                .WithName("Login")
                .Produces<ApiResponse<UserDTO>>();
+            routeGroupBuilder.MapPost("/create-account", CreateAccountByAdmin)
+              .WithName("CreateAccount")
+              .Produces<ApiResponse<UserDTO>>();
             routeGroupBuilder.MapGet("/", GetAll)
               .WithName("getAll")
               .Produces<ApiResponse<UserDTO>>();
         }
         private static async Task<IResult> Register(
-        [FromServices]IUserAccount userAccount,[FromBody] UserDTO userDTO
+        [FromServices]IUserAccount userAccount,[FromBody] RegisterDTO userDTO
         )
         {
             var response = await userAccount.CreateAccount(userDTO);
+            return Results.Ok(ApiResponse.Success(response));
+        }
+        private static async Task<IResult> CreateAccountByAdmin(
+               [FromServices] IUserAccount userAccount, [FromBody] UserDTO userDTO
+               )
+        {
+            var response = await userAccount.CreateAccountByAdmin(userDTO);
             return Results.Ok(ApiResponse.Success(response));
         }
         private static async Task<IResult> Login(

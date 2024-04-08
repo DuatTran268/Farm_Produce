@@ -27,8 +27,6 @@ namespace FarmProduct.WebApi.Endpoints
                 products => products.ProjectToType<UnitDto>(),pagingModel, cancellation);
             return Results.Ok(ApiResponse.Success(products));
         }
-
-       
     }
 
 }

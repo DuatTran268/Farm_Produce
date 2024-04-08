@@ -28,5 +28,11 @@ namespace FarmProduce.Services.Manage.Categories
 		  Func<IQueryable<Product>,
 		  IQueryable<T>> mapper,
 		  CancellationToken cancellationToken = default);
-	}
+		Task<bool> DeleteWithIdsync(int id, CancellationToken cancellationToken);
+		Task<bool> IsIdExisted(int id, CancellationToken cancellationToken = default);
+		Task<bool> AddOrUpdate(Category category, CancellationToken cancellationToken = default);
+
+
+
+    }
 }
