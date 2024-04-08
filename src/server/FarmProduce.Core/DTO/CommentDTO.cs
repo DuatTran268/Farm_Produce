@@ -1,13 +1,12 @@
-﻿using FarmProduce.Core.Contracts;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FarmProduce.Core.Entities
+namespace FarmProduce.Core.DTO
 {
-    public class Comment:IEntity
+    public class CommentDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -15,11 +14,6 @@ namespace FarmProduce.Core.Entities
         public DateTime Created { get; set; } = DateTime.Now;
         public string CommentText { get; set; }
         public bool Status { get; set; }
-        public int CustomerId { get; set; }
         public string ApplicationUserId { get; set; }
-        public  ApplicationUser ApplicationUser { get; set; }
-        public int ProductId { get; set; }
-        public Product Product { get; set; }
-
     }
 }

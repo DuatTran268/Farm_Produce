@@ -2,6 +2,7 @@
 using FarmProduce.Core.DTO;
 using FarmProduce.Core.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -15,10 +16,10 @@ using static FarmProduce.Core.DTO.ServiceResponses;
 
 namespace FarmProduce.Services.Manage.Account
 {
-    public class AccountRepository (UserManager<ApplicationUser> userManager,
-    RoleManager<IdentityRole> roleManager, IConfiguration config): IUserAccount
+    public class AccountRepository(UserManager<ApplicationUser> userManager,
+    RoleManager<IdentityRole> roleManager, IConfiguration config) : IUserAccount
     {
-        
+
         public async Task<GeneralResponse> CreateAccount(UserDTO userDTO)
         {
             if (userDTO is null) return new GeneralResponse(false, "Model is empty");
@@ -53,7 +54,51 @@ namespace FarmProduce.Services.Manage.Account
                 return new GeneralResponse(true, "Account Created");
             }
         }
+        public async Task<GeneralResponse> CreateAccountByAdmin(UserDTO userDTO)
+        {
+            if (userDTO is null)
+                return new GeneralResponse(false, "Model is empty");
 
+            var newUser = new ApplicationUser()
+            {
+                Name = userDTO.Name,
+                Email = userDTO.Email,
+                PasswordHash = userDTO.Password,
+                UserName = userDTO.Email
+            };
+
+            var user = await userManager.FindByEmailAsync(newUser.Email);
+            if (user != null)
+                return new GeneralResponse(false, "User already registered");
+
+            var createUser = await userManager.CreateAsync(newUser, userDTO.Password);
+            if (!createUser.Succeeded)
+                return new GeneralResponse(false, "Error occurred. Please try again");
+
+            // Assign role based on user's choice
+            if (!string.IsNullOrEmpty(userDTO.Role))
+            {
+                var existingRole = await roleManager.FindByNameAsync(userDTO.Role);
+                if (existingRole == null)
+                {
+                    await roleManager.CreateAsync(new IdentityRole { Name = userDTO.Role });
+                }
+                await userManager.AddToRoleAsync(newUser, userDTO.Role);
+            }
+            else
+            {
+                // Default role if user doesn't specify
+                var defaultRole = "User"; // Or any default role you prefer
+                var existingRole = await roleManager.FindByNameAsync(defaultRole);
+                if (existingRole == null)
+                {
+                    await roleManager.CreateAsync(new IdentityRole { Name = defaultRole });
+                }
+                await userManager.AddToRoleAsync(newUser, defaultRole);
+            }
+
+            return new GeneralResponse(true, "Account Created");
+        }
 
 
         public async Task<LoginResponse> LoginAccount(LoginDTO loginDTO)
@@ -94,6 +139,38 @@ namespace FarmProduce.Services.Manage.Account
                 signingCredentials: credentials
                 );
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+        public async Task<GeneralResponse> DeleteAccount(string userId)
+        {
+            var user = await userManager.FindByIdAsync(userId);
+            if (user == null)
+                return new GeneralResponse(false, "User not found");
+
+            var result = await userManager.DeleteAsync(user);
+            if (!result.Succeeded)
+                return new GeneralResponse(false, "Error occurred while deleting user");
+            return new GeneralResponse(true, "Account deleted successfully");
+        }
+        public async Task<IEnumerable<ApplicationUser>> GetAllAccounts()
+        {
+            return await userManager.Users.ToListAsync();
+        }
+        public async Task<IEnumerable<UserWithRolesDTO>> GetAllAccountsWithRoles()
+        {
+            var usersWithRoles = new List<UserWithRolesDTO>();
+
+            foreach (var user in await userManager.Users.ToListAsync())
+            {
+                var userRoles = await userManager.GetRolesAsync(user);
+                var userWithRoles = new UserWithRolesDTO
+                {
+                    Name = user.Name,
+                    Email = user.Email,
+                    Roles = userRoles.ToList()
+                };
+                usersWithRoles.Add(userWithRoles);
+            }
+            return usersWithRoles;
         }
     }
 }

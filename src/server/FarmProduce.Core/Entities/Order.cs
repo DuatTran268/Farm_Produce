@@ -13,8 +13,8 @@ namespace FarmProduce.Core.Entities
         public DateTime DateOrder{ get; set; }
         public int TotalPrice { get; set; }
         public int OrderStatusId { get; set; }
-        public int CustomerId { get; set; }
-        public Customer Customer { get; set; }
+        public string ApplicationUserId { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
         public IList<PaymentMethod> PaymentMethods { get; set; }
         public IList<OrderStatus> OrderStatuses { get; set; }
         public IList<OrderItem> OrderItems { get; set; }

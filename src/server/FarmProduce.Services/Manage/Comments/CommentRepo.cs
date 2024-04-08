@@ -1,4 +1,5 @@
 ﻿using FarmProduce.Core.Contracts;
+using FarmProduce.Core.DTO;
 using FarmProduce.Core.Entities;
 using FarmProduce.Data.Contexts;
 using FarmProduce.Services.Extentions;
@@ -23,14 +24,12 @@ namespace FarmProduce.Services.Manage.Comments
 			_memoryCache = memoryCache;
 		}
 
-
 		public async Task<IPagedList<T>> GetAllComments<T>(Func<IQueryable<Comment>, IQueryable<T>> mapper,IPagingParams pagingParams ,CancellationToken cancellationToken = default)
 		{
 			IQueryable<Comment> comments = _context.Set<Comment>().OrderBy(a => a.Name);
 			return await mapper(comments).ToPagedListAsync(pagingParams, cancellationToken);
 		}
-
-		public async Task<Comment> GetCommnetByID(int id, CancellationToken cancellationToken = default)
+        public async Task<Comment> GetCommnetByID(int id, CancellationToken cancellationToken = default)
 		{
 			return await _context.Set<Comment>().FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
 		}

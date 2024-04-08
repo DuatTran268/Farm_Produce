@@ -1,5 +1,7 @@
 ﻿using FarmProduce.Core.Entities;
 using FarmProduce.Data.Mappings;
+using FarmProduce.Data.Seeders;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,10 +12,11 @@ using System.Threading.Tasks;
 
 namespace FarmProduce.Data.Contexts
 {
-    public class FarmDbContext: IdentityDbContext<ApplicationUser>
+    public class FarmDbContext:IdentityDbContext<
+        ApplicationUser>
     {
-        public DbSet<Admin> Admins { get; set; }    
-        public DbSet<Customer> Customers { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+      
         public DbSet<Discount> Discounts { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Unit> Units { get; set; }
@@ -28,9 +31,11 @@ namespace FarmProduce.Data.Contexts
 
 
 
-        public FarmDbContext(DbContextOptions<FarmDbContext> options) : base(options) { }
-
-		public FarmDbContext()
+        public FarmDbContext(DbContextOptions<FarmDbContext> options)
+        : base(options)
+        {
+        }
+        public FarmDbContext()
 		{
 		}
 
@@ -43,10 +48,10 @@ namespace FarmProduce.Data.Contexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(CategoryMap).Assembly);
+           
             modelBuilder.Entity<Product>().Property(p=> p.Price).HasPrecision(18,2);
             modelBuilder.Entity<Discount>().Property(p => p.DiscountPrice).HasPrecision(18, 2);
-
+         
         }
     }
 }

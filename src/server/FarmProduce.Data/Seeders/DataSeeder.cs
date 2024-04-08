@@ -1,5 +1,6 @@
 ﻿using FarmProduce.Core.Entities;
 using FarmProduce.Data.Contexts;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,30 +13,58 @@ namespace FarmProduce.Data.Seeders
     public class DataSeeder : IDataSeeder
     {
         private readonly FarmDbContext _dbContext;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly List<IdentityUserRole<string>> _userRoles;
 
-        public DataSeeder(FarmDbContext dbContext)
+        public DataSeeder(FarmDbContext dbContext, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, List<IdentityUserRole<string>> userRoles)
         {
             _dbContext = dbContext;
+            _userManager = userManager;
+            _roleManager = roleManager;
+            _userRoles = userRoles;
         }
+       
         public void Initialize()
         {
             _dbContext.Database.EnsureCreated();
             if (_dbContext.Products.Any())
                 return;
 
-            var admins = AddAdmins();
             var caterories = AddCategories();
             var customUI = AddCustomUI();
             var units = AddUnits();
-            var customers = AddCustomers();
-            var orders = AddOrders(customers);
+            var users = AddUsers();
+            var roles = SeedRoles();
+            var orders = AddOrders(users);
+            var userRole = AddUserRoles(users, roles);
             var products = AddProducts(caterories, units);
-            var comments = AddComments(customers, products);
+            var comments = AddComments(products, users);
             var images = AddImages(products);
             var discounts = AddDiscounts(products);
             var orderStatuses = AddOrderStatuses(orders);
             var paymentMethods = AddPaymentMethods(orders);
             var orderItems = AddOrderItems(products, orders);
+        }
+
+        private List<IdentityUserRole<string>> AddUserRoles(List<ApplicationUser> users, List<IdentityRole> roles)
+        {
+            // Seed UserRoles
+            List<IdentityUserRole<string>> userRoles = new List<IdentityUserRole<string>>();
+
+            userRoles.Add(new IdentityUserRole<string>
+            {
+                UserId = users[0].Id,
+                RoleId = roles.First(q => q.Name == "Admin").Id
+            });
+
+            userRoles.Add(new IdentityUserRole<string>
+            {
+                UserId = users[1].Id,
+                RoleId = roles.First(q => q.Name == "User").Id
+            });
+
+            return userRoles;
         }
 
         private List<Unit> AddUnits()
@@ -140,49 +169,83 @@ namespace FarmProduce.Data.Seeders
             _dbContext.SaveChanges();
             return products;
         }
-
-
-        private IList<Customer> AddCustomers()
+        private List<IdentityRole> SeedRoles()
         {
-            var customers = new List<Customer>(){
+            var adminRole = new IdentityRole("Admin");
+            adminRole.NormalizedName = adminRole.Name!.ToUpper();
 
-                new(){
-                Name="Hung",
-                Email="hung@gmail.com",
-                Phone="0979797979",
-                Address="Đà Lạt",
-              }
-            };
-            foreach (var customer in customers)
-            {
-                if (_dbContext.Customers.Any(c => c.Email == customer.Email))
-                {
-                    _dbContext.Add(customer);
-                }
-            }
-            _dbContext.AddRange(customers);
-            _dbContext.SaveChanges();
-            return customers;
+            var memberRole = new IdentityRole("User");
+            memberRole.NormalizedName = memberRole.Name!.ToUpper();
+
+            List<IdentityRole> roles = new List<IdentityRole>() {
+           adminRole,
+           memberRole
+        };
+
+            return roles;
         }
-        private IList<Order> AddOrders(IList<Customer> customers)
+
+        private List<ApplicationUser> AddUsers()
+        {
+            string pwd = "Amin@123";
+            var passwordHasher = new PasswordHasher<IdentityUser>();
+
+            // Seed Users
+            var adminUser = new ApplicationUser
+            {
+                UserName = "admin",
+                Email = "admin@gmail.com",
+                EmailConfirmed = true,
+            };
+            adminUser.NormalizedUserName = adminUser.UserName.ToUpper();
+            adminUser.NormalizedEmail = adminUser.Email.ToUpper();
+            adminUser.PasswordHash = passwordHasher.HashPassword(adminUser, pwd);
+
+            var memberUser = new ApplicationUser
+            {
+                UserName = "user",
+                Name = "hung",
+                Email = "user@gmail.com",
+                PhoneNumber = "097979797",
+                Address = "Da Lat",
+                EmailConfirmed = true,
+            };
+            memberUser.NormalizedUserName = memberUser.UserName.ToUpper();
+            memberUser.NormalizedEmail = memberUser.Email.ToUpper();
+            memberUser.PasswordHash = passwordHasher.HashPassword(memberUser, pwd);
+
+            List<ApplicationUser> users = new List<ApplicationUser>() {
+           adminUser,
+           memberUser,
+        };
+
+            _dbContext.ApplicationUsers.Add(memberUser);
+            _dbContext.ApplicationUsers.Add(adminUser);
+
+            _dbContext.SaveChanges();
+            return users;
+        }
+
+
+        private List<Order> AddOrders(List<ApplicationUser> users)
         {
             var orders = new List<Order>();
-            foreach (var customer in customers)
-            {
-                orders.Add(new Order()
-                {
-                    CustomerId = customer.Id,
-                    TotalPrice = 400000,
-                    DateOrder = DateTime.Now
 
-                });
-            }
-            _dbContext.AddRange(orders);
-            _dbContext.SaveChanges();
+           
+                var order = new Order
+                {
+                    ApplicationUser = users[1],
+                    TotalPrice = 400000,
+                    DateOrder = DateTime.Now,
+                };
+
+                _dbContext.Orders.Add(order);
+                _dbContext.SaveChanges();
+                orders.Add(order);
+            
+
             return orders;
         }
-
-
         private IList<PaymentMethod> AddPaymentMethods(IList<Order> orders)
         {
             var paymentMethods = new List<PaymentMethod>() {
@@ -373,79 +436,30 @@ namespace FarmProduce.Data.Seeders
             return categories;
         }
 
-        private IList<Comment> AddComments(IList<Customer> customers, IList<Product> products)
+        private IList<Comment> AddComments(IList<Product> products, List<ApplicationUser> users)
         {
-            var comments = new List<Comment>()
-            {
-                new(){
-                    Name="comment1",
-                    CommentText="Hay qua",
-                    Created= DateTime.Now,
-                    Status=false,
-                    Rating=5,
-                    Customer =  customers[0],
-                    Product= products[0]
+            var comments = new List<Comment>();
 
-
-                },
-                 new(){
-                    Name="comment2",
-                    CommentText="Hay ghr",
-                    Created= DateTime.Now,
-                    Status=false,
-                    Rating=5,
-                    Customer =  customers[0],
-                          Product= products[0]
-
-                },
-            };
-            foreach (var comment in comments)
-            {
-                if (!_dbContext.Images.Any(c => c.Name == comment.Name))
+            
+                var comment = new Comment()
                 {
-                    _dbContext.Add(comment);
-                }
-            }
+                    Name = "comment1",
+                    CommentText = "Hay qua",
+                    Created = DateTime.Now,
+                    Status = false,
+                    Rating = 5,
+                    ApplicationUser = users[1],
+                    Product = products[0]
+                };
 
-            _dbContext.SaveChanges();
+                _dbContext.Add(comment);
+                _dbContext.SaveChanges();
+                comments.Add(comment);
+            
+
             return comments;
         }
 
-
-
-        private IList<Admin> AddAdmins()
-        {
-            var admins = new List<Admin>()
-            {
-                new()
-                {
-                    Name = "Trần Nhật Duật",
-                    Password = "123456",
-                    Email = "duattran36@gmail.com",
-                    Role = "admin",
-                },
-                new()
-                {
-                    Name = "Nguyễn Xuân Hưng",
-                    Password = "234567",
-                    Email = "xuanhung42@gmail.com",
-                    Role = "admin",
-
-                },
-            };
-            foreach (var admin in admins)
-            {
-                if (!_dbContext.Admins.Any(a => a.Name == admin.Name))
-                {
-                    _dbContext.Admins.Add(admin);
-                }
-            }
-
-            _dbContext.SaveChanges();
-
-            return admins;
-
-        }
         private List<OrderItem> AddOrderItems(IList<Product> products, IList<Order> orders)
         {
             var r = new Random();

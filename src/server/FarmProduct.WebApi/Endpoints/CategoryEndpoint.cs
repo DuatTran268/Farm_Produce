@@ -1,6 +1,5 @@
 ﻿using Carter;
 using FarmProduce.Core.Collections;
-using FarmProduce.Services.Manage.Admins;
 using FarmProduce.Services.Manage.Categories;
 using FarmProduct.WebApi.Models;
 using FarmProduct.WebApi.Models.Admin;
@@ -18,12 +17,10 @@ namespace FarmProduct.WebApi.Endpoints
         public void AddRoutes(IEndpointRouteBuilder app)
         {
             var routeGroupBuilder = app.MapGroup(RouteAPI.Category);
-
             // get department not required
             routeGroupBuilder.MapGet("/getall", GetAllCategory)
                 .WithName("GetAllCategory")
                 .Produces<ApiResponse<PaginationResult<CategoriesDto>>>();
-
             // get by slug
             routeGroupBuilder.MapGet("/slugCategory/{slug:regex(^[a-z0-9_-]+$)}", GetCategoryBySlug)
                 .WithName("GetCategoryBySlug")

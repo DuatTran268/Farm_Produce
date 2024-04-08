@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FarmProduce.Services", "Far
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FarmProduct.WebApi", "FarmProduct.WebApi\FarmProduct.WebApi.csproj", "{7656E2CD-9123-4219-BB59-7D8C6287145E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FarmProduct.WinApp", "FarmProduct.WinApp\FarmProduct.WinApp.csproj", "{905A0127-6214-4FAE-B357-5ABE34129E30}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,10 +33,6 @@ Global
 		{7656E2CD-9123-4219-BB59-7D8C6287145E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7656E2CD-9123-4219-BB59-7D8C6287145E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7656E2CD-9123-4219-BB59-7D8C6287145E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{905A0127-6214-4FAE-B357-5ABE34129E30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{905A0127-6214-4FAE-B357-5ABE34129E30}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{905A0127-6214-4FAE-B357-5ABE34129E30}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{905A0127-6214-4FAE-B357-5ABE34129E30}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
