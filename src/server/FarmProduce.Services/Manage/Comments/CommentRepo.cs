@@ -25,29 +25,44 @@ namespace FarmProduce.Services.Manage.Comments
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 		public async Task<IPagedList<CommentItem>> GetFilterComment(IPagingParams pagingParams, string name = null, bool? status = null, CancellationToken cancellationToken = default)
-=======
-		public async Task<IPagedList<T>> GetAllComments<T>(Func<IQueryable<Comment>, IQueryable<T>> mapper,IPagingParams pagingParams ,CancellationToken cancellationToken = default)
->>>>>>> 88fc07b067fd5a878f0771f452ecb77c6ad75ae7
+
+        public async Task<IPagedList<T>> GetAllComments<T>(Func<IQueryable<Comment>, IQueryable<T>> mapper, IPagingParams pagingParams, CancellationToken cancellationToken = default)
+        {
+            return await _context.Set<Comment>()
+                .AsNoTracking()
+                .WhereIf(!string.IsNullOrWhiteSpace(name),
+                x => x.Name.Contains(name))
+                .WhereIf(status != null, x => x.Status == status)
+                .Select(c => new CommentItem()
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Rating = c.Rating,
+                    Created = c.Created,
+                    CommentText = c.CommentText,
+                    Status = c.Status
+
+                }).ToPagedListAsync(pagingParams, cancellationToken);
+        }
+
+		public async Task<IPagedList<T>> GetAllComments<T>(Func<IQueryable<Comment>, IQueryable<T>> mapper,CommentQuery commentQuery,IPagingParams pagingParams ,CancellationToken cancellationToken = default)
 		{
-			return await _context.Set<Comment>()
-				.AsNoTracking()
-				.WhereIf(!string.IsNullOrWhiteSpace(name),
-				x => x.Name.Contains(name))
-				.WhereIf(status != null, x => x.Status == status)
-				.Select(c => new CommentItem()
-				{
-					Id = c.Id,
-					Name = c.Name,
-					Rating = c.Rating,
-					Created = c.Created,
-					CommentText = c.CommentText,
-					Status = c.Status
-
-				}).ToPagedListAsync(pagingParams, cancellationToken);
-
+			IQueryable<Comment> comments = FilterComment(commentQuery);
+			return await mapper(comments).ToPagedListAsync(pagingParams, cancellationToken);
 		}
+        private IQueryable<Comment> FilterComment(CommentQuery commentQuery)
+        {
+            IQueryable<Comment> comments = _context.Set<Comment>();
+            if (!String.IsNullOrWhiteSpace(commentQuery.CommentText))
+            {
+                comments = comments.Where(x => x.CommentText.Contains(commentQuery.CommentText));
+            }
+            
+            return comments;
+        }
         public async Task<Comment> GetCommnetByID(int id, CancellationToken cancellationToken = default)
 		{
 			return await _context.Set<Comment>().FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
@@ -73,4 +88,50 @@ namespace FarmProduce.Services.Manage.Comments
 			.ExecuteDeleteAsync(cancellationToken) > 0;
 		}
 	}
+=======
+        public async Task<bool> DeleteWithIdsync(int id, CancellationToken cancellationToken)
+        {
+            var result = await _context.Set<Comment>().Where(x => x.Id == id).FirstOrDefaultAsync();
+            if (result is null)
+            {
+                return false;
+            }
+            else
+            {
+                _context.Set<Comment>().Remove(result);
+                return true;
+            }
+        }
+        public async Task<bool> IsIdExisted(int id,  CancellationToken cancellationToken = default)
+        {
+            return await _context.Set<Comment>().AnyAsync(x => x.Id != id);
+        }
+        public async Task<bool> DeleteWithIDAsync(int id, CancellationToken cancellationToken)
+        {
+            var result = await _context.Set<Comment>().Where(x => x.Id == id).FirstOrDefaultAsync();
+            if (result is null)
+            {
+                return false;
+            }
+            else
+            {
+                _context.Set<Comment>().Remove(result);
+                return true;
+            }
+        }
+        public async Task<bool> AddOrUpdate(Comment comment, CancellationToken cancellationToken = default)
+        {
+            if (comment.Id > 0)
+            {
+                _context.Update(comment);
+            }
+            else
+            {
+                _context.Add(comment);
+            }
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+    }
+>>>>>>> 9878650bfe75e75bc620dc0f2b9c6451d379fe73
 }

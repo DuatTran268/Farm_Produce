@@ -13,6 +13,10 @@ namespace FarmProduce.Services.Manage.Discounts
 		Task<IPagedList<T>> GetAllDiscount<T>(Func<IQueryable<Discount>, IQueryable<T>> mapper, IPagingParams pagingParams, CancellationToken cancellationToken = default);
 	
 		Task<Discount> GetDiscountByID(int id, CancellationToken cancellationToken = default);
+		Task<bool> IsIdExisted(int id, string urlSlug, CancellationToken cancellationToken = default);
+		Task<bool> DeleteWithIDAsync(int id, CancellationToken cancellationToken);
+		Task<bool> AddOrUpdate(Discount discount, CancellationToken cancellationToken = default);
 
-	}
+
+        }
 }

@@ -45,7 +45,6 @@ namespace FarmProduce.Services.Manage.Products
             }
 			return products;
         }
-		
 		public async Task<bool> DeleteWithSlugAsync(string slug,CancellationToken cancellationToken)
 		{
 			var result = await _context.Set<Product>().Where(x=>x.UrlSlug== slug).FirstOrDefaultAsync();

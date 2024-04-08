@@ -43,5 +43,8 @@ namespace FarmProduce.Services.Manage.Categories
 
 		Task<bool> DeleteCategory(int id, CancellationToken cancellationToken = default);
 		
+			Task<bool> DeleteWithIdsync(int id, CancellationToken cancellationToken);
+		Task<bool> IsIdExisted(int id, CancellationToken cancellationToken = default);
+		Task<bool> AddOrUpdate(Category category, CancellationToken cancellationToken = default);
 	}
 }
