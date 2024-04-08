@@ -3,7 +3,7 @@ import { Image } from "react-bootstrap";
 import logo from "../../../assets/logo.png";
 import MainMenu from "../menu/MainMenus";
 import Policys from "../menu/Information";
-import "../../../styles/user/Footer.css";
+import "./Footer.css";
 import { Link } from "react-router-dom";
 const Footer = () => {
   return (

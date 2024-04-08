@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { Image } from "react-bootstrap";
 import BannerProductList from "../../../assets/banner_product_list.png";
-import "../../../styles/user/Product.css";
+import "./Product.css";
 import ProductTemplate from "./ProductTemplate";
 import { useParams } from "react-router-dom";
 import { getFilterProduct } from "../../../api/Product";

@@ -1,5 +1,5 @@
 import React from "react";
-import "../../../styles/user/NavProduct.css";
+import "./NavProduct.css";
 
 import ProductHeader from "./ProductHeader";
 import ProductList from "./ProductList";

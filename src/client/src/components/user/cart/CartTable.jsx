@@ -1,5 +1,5 @@
 import React from "react";
-import "../../../styles/user/Cart.css";
+import "./Cart.css";
 import { Button } from "react-bootstrap";
 import { useCart } from "react-use-cart";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

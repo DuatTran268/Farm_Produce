@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../../styles/user/Product.css";
+import "../../components/user/product/Product.css";
 import { Image } from "react-bootstrap";
 import {  useParams } from "react-router-dom";
 import { getProductByCategorySlug } from "../../api/Product";

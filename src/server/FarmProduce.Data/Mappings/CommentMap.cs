@@ -24,19 +24,15 @@ namespace FarmProduce.Data.Mappings
             builder.Property(x => x.Created)
              .HasDefaultValue(DateTime.Now)
              .HasColumnType("datetime");
-
             builder.Property(x => x.CommentText)
                .IsRequired()
                .HasMaxLength(200);
             builder.Property(x => x.Status)
                .IsRequired()
               .HasDefaultValue(false);
-
-
-
-
-
-
+            builder.HasOne(o => o.ApplicationUser)
+                .WithMany(x => x.Comments)
+                .HasForeignKey(o => o.ApplicationUserId);
         }
     }
 }

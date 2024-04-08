@@ -1,8 +1,11 @@
 ﻿using Carter;
 using FarmProduce.Core.Collections;
+<<<<<<< HEAD
 using FarmProduce.Core.DTO;
 using FarmProduce.Core.Entities;
 using FarmProduce.Services.Manage.Admins;
+=======
+>>>>>>> 88fc07b067fd5a878f0771f452ecb77c6ad75ae7
 using FarmProduce.Services.Manage.Categories;
 using FarmProduce.Services.Manage.Units;
 using FarmProduce.Services.Media;
@@ -25,6 +28,7 @@ namespace FarmProduct.WebApi.Endpoints
         public void AddRoutes(IEndpointRouteBuilder app)
         {
             var routeGroupBuilder = app.MapGroup(RouteAPI.Category);
+<<<<<<< HEAD
 
 			// get department not required
 			routeGroupBuilder.MapGet("/pagination", GetCategoryAndPagination)
@@ -37,6 +41,14 @@ namespace FarmProduct.WebApi.Endpoints
 
 			// get by slug
 			routeGroupBuilder.MapGet("/slugCategory/{slug:regex(^[a-z0-9_-]+$)}", GetCategoryBySlug)
+=======
+            // get department not required
+            routeGroupBuilder.MapGet("/getall", GetAllCategory)
+                .WithName("GetAllCategory")
+                .Produces<ApiResponse<PaginationResult<CategoriesDto>>>();
+            // get by slug
+            routeGroupBuilder.MapGet("/slugCategory/{slug:regex(^[a-z0-9_-]+$)}", GetCategoryBySlug)
+>>>>>>> 88fc07b067fd5a878f0771f452ecb77c6ad75ae7
                 .WithName("GetCategoryBySlug")
                 .Produces<ApiResponse<CategoriesDetail>>();
 

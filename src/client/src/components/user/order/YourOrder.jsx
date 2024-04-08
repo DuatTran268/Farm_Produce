@@ -1,7 +1,7 @@
 import React from "react";
-import "../../../styles/user/Checkout.css";
+import "./Checkout.css";
 import { Button, Table } from "react-bootstrap";
-import "../../../styles/user/Order.css";
+import "./Order.css";
 import { useCart } from "react-use-cart";
 import { Link } from "react-router-dom";
 import BtnSuccess from "../../common/BtnSuccess"

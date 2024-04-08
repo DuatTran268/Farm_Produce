@@ -1,7 +1,7 @@
 import React from "react";
 import YourOrder from "./YourOrder";
 import { Link } from "react-router-dom";
-import "../../../styles/user/Order.css";
+import "./Order.css";
 
 const OrderInfor = () => {
   return (

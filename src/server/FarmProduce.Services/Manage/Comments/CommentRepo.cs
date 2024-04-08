@@ -24,8 +24,12 @@ namespace FarmProduce.Services.Manage.Comments
 			_memoryCache = memoryCache;
 		}
 
+<<<<<<< HEAD
 
 		public async Task<IPagedList<CommentItem>> GetFilterComment(IPagingParams pagingParams, string name = null, bool? status = null, CancellationToken cancellationToken = default)
+=======
+		public async Task<IPagedList<T>> GetAllComments<T>(Func<IQueryable<Comment>, IQueryable<T>> mapper,IPagingParams pagingParams ,CancellationToken cancellationToken = default)
+>>>>>>> 88fc07b067fd5a878f0771f452ecb77c6ad75ae7
 		{
 			return await _context.Set<Comment>()
 				.AsNoTracking()
@@ -44,8 +48,7 @@ namespace FarmProduce.Services.Manage.Comments
 				}).ToPagedListAsync(pagingParams, cancellationToken);
 
 		}
-
-		public async Task<Comment> GetCommnetByID(int id, CancellationToken cancellationToken = default)
+        public async Task<Comment> GetCommnetByID(int id, CancellationToken cancellationToken = default)
 		{
 			return await _context.Set<Comment>().FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
 		}

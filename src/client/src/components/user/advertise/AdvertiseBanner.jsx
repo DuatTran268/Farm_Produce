@@ -1,7 +1,7 @@
 import React from "react";
 import { Image } from "react-bootstrap";
 import adBaner from "../../../assets/dalavi.png";
-import "../../../styles/user/Advertise.css";
+import "./Advertise.css";
 import iconCarot from "../../../assets/icon-carrot.png";
 import iconFresh from "../../../assets/icon-fresh.png";
 import iconQuality from "../../../assets/icon-quality.png";

@@ -1,5 +1,5 @@
 import React from "react";
-import "../../styles/user/Cart.css";
+import "../../components/user/cart/Cart.css";
 import CartTable from "../../components/user/cart/CartTable";
 import CartInfor from "../../components/user/cart/CartInfor";
 import LayoutClient from "../../components/user/common/LayoutClient";

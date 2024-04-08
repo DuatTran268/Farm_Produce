@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import "../../../styles/user/ProductDetail.css";
+import "./ProductDetail.css";
 import dautay from "../../../assets/mutdau.jpg";
 import { Image } from "react-bootstrap";
 import { getDetailProductByUrlSlug } from "../../../api/Product";

@@ -1,4 +1,5 @@
 ﻿using FarmProduce.Core.DTO;
+using FarmProduce.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,8 @@ namespace FarmProduce.Core.Contracts
     {
         Task<GeneralResponse> CreateAccount(UserDTO userDTO);
         Task<LoginResponse> LoginAccount(LoginDTO loginDTO);
+        Task<IEnumerable<ApplicationUser>> GetAllAccounts();
+        Task<IEnumerable<UserWithRolesDTO>> GetAllAccountsWithRoles();
+        Task<GeneralResponse> CreateAccountByAdmin(UserDTO userDTO);
     }
 }

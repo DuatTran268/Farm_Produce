@@ -1,5 +1,5 @@
 import React from "react";
-import "../../../styles/user/Cart.css";
+import "./Cart.css";
 import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useCart } from "react-use-cart";

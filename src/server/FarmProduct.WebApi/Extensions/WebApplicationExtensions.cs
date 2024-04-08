@@ -4,7 +4,6 @@ using FarmProduce.Core.Entities;
 using FarmProduce.Data.Contexts;
 using FarmProduce.Data.Seeders;
 using FarmProduce.Services.Manage.Account;
-using FarmProduce.Services.Manage.Admins;
 using FarmProduce.Services.Manage.Categories;
 using FarmProduce.Services.Manage.Comments;
 using FarmProduce.Services.Manage.CustomUIs;
@@ -37,7 +36,6 @@ namespace FarmProduct.WebApi.Extensions
 			builder.Services.AddScoped<ITimeProvider, LocalTimeProvider>();
             builder.Services.AddScoped<IUnitRepo,  UnitRepo>();
             // admin
-			builder.Services.AddScoped<IAdminRepo, AdminRepo>();
             // category
             builder.Services.AddScoped<ICategoriesRepo, CategoriesRepo>();
            // product
@@ -60,6 +58,7 @@ namespace FarmProduct.WebApi.Extensions
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<FarmDbContext>()
                 .AddSignInManager()
                 .AddRoles<IdentityRole>();
+            builder.Services.AddScoped<List<IdentityUserRole<string>>>();
             builder.Services.AddAuthorization();
             builder.Services.AddCarter();
 			return builder;

@@ -1,5 +1,5 @@
 import React from "react";
-import "../../styles/user/Checkout.css";
+import "../../components/user/order/Checkout.css";
 import YourOrder from "../../components/user/order/YourOrder";
 import FormOrder from "../../components/user/order/FormOrder";
 import { Link } from "react-router-dom";

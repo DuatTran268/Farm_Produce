@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Image } from "react-bootstrap";
-import "../../../styles/user/Product.css";
+import "./Product.css";
 import { useCart } from "react-use-cart";
 import { faCartArrowDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
