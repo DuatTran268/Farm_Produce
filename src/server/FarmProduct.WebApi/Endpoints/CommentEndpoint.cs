@@ -1,5 +1,6 @@
 ﻿using Carter;
 using FarmProduce.Core.Collections;
+using FarmProduce.Core.DTO;
 using FarmProduce.Services.Manage.Categories;
 using FarmProduce.Services.Manage.Comments;
 using FarmProduce.Services.Manage.Products;
@@ -33,10 +34,10 @@ namespace FarmProduct.WebApi.Endpoints
                 .Produces<ApiResponse<CommentDto>>();
         }
         // get all
-        private static async Task<IResult> GetAllComment(ICommentRepo commentRepo, [AsParameters] PagingModel pagingModel )
+        private static async Task<IResult> GetAllComment(ICommentRepo commentRepo,CommentQuery commentQuery ,[AsParameters] PagingModel pagingModel )
 		{
 			var comments = await commentRepo.GetAllComments(
-				comments => comments.ProjectToType<CommentDto>(),pagingModel);
+				comments => comments.ProjectToType<CommentDto>(),commentQuery,pagingModel);
             var pagination = new PaginationResult<CommentDto>(comments);
 
             return Results.Ok(ApiResponse.Success(pagination));

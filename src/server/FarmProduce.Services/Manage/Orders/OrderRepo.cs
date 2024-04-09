@@ -44,7 +44,7 @@ namespace FarmProduce.Services.Manage.Orders
                 return true;
             }
         }
-        public async Task<bool> IsIdExisted(int id, string urlSlug, CancellationToken cancellationToken = default)
+        public async Task<bool> IsIdExisted(int id,CancellationToken cancellationToken = default)
         {
             return await _context.Set<Order>().AnyAsync(x => x.Id != id);
         }
