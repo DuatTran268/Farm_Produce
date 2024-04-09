@@ -1,5 +1,5 @@
 import React from "react";
-import "../../../styles/user/NavProduct.css";
+import "./NavProduct.css";
 
 import ProductHeader from "./ProductHeader";
 import ProductList from "./ProductList";
@@ -7,10 +7,8 @@ import ProductList from "./ProductList";
 const FruitProduct = () => {
   return (
     <div className="fruit_product">
-      
-      <ProductHeader name="Nhóm rau"/>
-      {/* fruitproduct */}
-      <ProductList/>
+      <ProductHeader name="Tất cả sản phẩm" />
+      <ProductList />
     </div>
   );
 };

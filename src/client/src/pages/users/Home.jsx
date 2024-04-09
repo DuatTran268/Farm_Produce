@@ -1,5 +1,4 @@
 import React from "react";
-import "../../styles/user/Home.css";
 import Categoris from "../../components/user/categories/Categoris";
 import SlideBanner from "../../components/user/slide/SlideBanner";
 import NewProduct from "../../components/user/product/NewProduct";

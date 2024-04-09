@@ -1,3 +1,17 @@
+.cart{
+  position: relative;
+}
+.cart-icon > span{
+  top: -0.6rem;
+  position: absolute;
+  right: -1rem;
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 0.8rem;
+  color: white;
+}
 
 .cart_name{
   text-align: center;

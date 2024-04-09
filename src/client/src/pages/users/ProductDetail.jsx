@@ -3,7 +3,7 @@ import ProductDetails from "../../components/user/product/ProductDetails";
 import Categoris from "../../components/user/categories/Categoris";
 import LayoutClient from "../../components/user/common/LayoutClient";
 import ProductComment from "../../components/user/commnent/ProductComment";
-import "../../styles/user/ProductDetail.css"
+import "../../components/user/product/ProductDetail.css"
 import CommentBox from "../../components/user/commnent/CommentBox";
 
 const ProductDetail = () => {

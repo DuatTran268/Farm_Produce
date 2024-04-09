@@ -13,11 +13,11 @@ namespace FarmProduct.WebApi.Validations
 				.MaximumLength(100)
 				.WithMessage("Tên Admin tối đa 100 ký tự");
 
-			RuleFor(p => p.UrlSlug)
-				.NotEmpty()
-				.WithMessage("không để trống")
-				.MaximumLength(100)
-				.WithMessage("tối đa 100 ký tự");
+			//RuleFor(p => p.UrlSlug)
+			//	.NotEmpty()
+			//	.WithMessage("không để trống")
+			//	.MaximumLength(100)
+			//	.WithMessage("tối đa 100 ký tự");
 
 		}
 	}

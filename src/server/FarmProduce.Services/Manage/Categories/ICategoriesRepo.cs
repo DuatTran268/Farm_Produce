@@ -1,6 +1,7 @@
 ﻿using FarmProduce.Core.Contracts;
 using FarmProduce.Core.DTO;
 using FarmProduce.Core.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace FarmProduce.Services.Manage.Categories
 {
 	public interface ICategoriesRepo
 	{
-		Task<IPagedList<T>> GetAllCategories<T>(Func<IQueryable<Category>, IQueryable<T>> mapper, IPagingParams pagingParams, CancellationToken cancellationToken = default);
+		Task<IPagedList<CategoryItem>> GetAllPagingationCategory(IPagingParams pagingParams,string name = null,CancellationToken cancellationToken = default);
 
 		Task<Category> GetCategoryById(int id, CancellationToken cancellationToken = default);
 
@@ -28,11 +29,22 @@ namespace FarmProduce.Services.Manage.Categories
 		  Func<IQueryable<Product>,
 		  IQueryable<T>> mapper,
 		  CancellationToken cancellationToken = default);
-		Task<bool> DeleteWithIdsync(int id, CancellationToken cancellationToken);
+
+
+		// add or update category
+		Task<bool> AddOrUpdateAsync(Category category, CancellationToken cancellationToken = default);
+
+		Task<bool> IsCategorySlugExistedAsync(
+		int categoryId,
+		string slug,
+		CancellationToken cancellationToken = default);
+
+		Task<Category> GetCategoryByIdAsync(int id, CancellationToken cancellationToken = default);
+
+		Task<bool> DeleteCategory(int id, CancellationToken cancellationToken = default);
+		
+			Task<bool> DeleteWithIdsync(int id, CancellationToken cancellationToken);
 		Task<bool> IsIdExisted(int id, CancellationToken cancellationToken = default);
 		Task<bool> AddOrUpdate(Category category, CancellationToken cancellationToken = default);
-
-
-
-    }
+	}
 }

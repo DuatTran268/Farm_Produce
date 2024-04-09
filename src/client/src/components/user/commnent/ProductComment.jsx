@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getCommentBySlugOfProduct } from "../../../api/Comment";
-import "../../../styles/user/ProductDetail.css";
+import "../../user/product/ProductDetail.css";
 import { format } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";

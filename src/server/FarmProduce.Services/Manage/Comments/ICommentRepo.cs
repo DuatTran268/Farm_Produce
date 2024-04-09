@@ -11,14 +11,24 @@ namespace FarmProduce.Services.Manage.Comments
 {
 	public interface ICommentRepo
 	{
+		Task<IPagedList<CommentItem>> GetFilterComment(
+			IPagingParams pagingParams,
+			string name = null,
+			bool? status = null,
+			CancellationToken cancellationToken = default);
+
+
+		Task<Comment> GetCommnetByID(int id, CancellationToken cancellationToken = default);
 		Task<IPagedList<T>> GetAllComments<T>(Func<IQueryable<Comment>, IQueryable<T>> mapper, CommentQuery commentQuery, IPagingParams pagingParams, CancellationToken cancellationToken = default);
-        Task<Comment> GetCommnetByID(int id, CancellationToken cancellationToken = default);
 		Task<bool> DeleteWithIdsync(int id, CancellationToken cancellationToken);
 		Task<bool> IsIdExisted(int id, CancellationToken cancellationToken = default);
 		Task<bool> DeleteWithIDAsync(int id, CancellationToken cancellationToken);
 		Task<bool> AddOrUpdate(Comment comment, CancellationToken cancellationToken = default);
 
 
+		Task<bool> AddOrUpdateComment(Comment comment, CancellationToken cancellationToken = default);
+
+		Task<bool> DeleteComment(int id, CancellationToken cancellationToken = default);
 
     }
 }

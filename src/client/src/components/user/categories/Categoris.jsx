@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import DCategory from "../../../data/DCategory";
 import { Link } from "react-router-dom";
-import "../../../styles/user/Categories.css"
+import "./Categories.css"
 import { Image } from "react-bootstrap";
 import icon from "../../../assets/logo.png";
 import { getCategoryLimit } from "../../../api/Category";
@@ -13,7 +12,6 @@ const Categoris = () => {
     getCategoryLimit().then((data) => {
       if (data){
         setGetCategory(data);
-        console.log("Check data category", data)
       }
       else{
         setGetCategory([]);

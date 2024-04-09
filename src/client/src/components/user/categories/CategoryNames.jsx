@@ -11,7 +11,6 @@ const CategoryName = () => {
     getCategoryBySlugOfItSelf(slug).then((data) => {
       if (data) {
         setProductUrlName(data);
-        console.log("chẹc data ", data);
       } else {
         setProductUrlName({});
       }

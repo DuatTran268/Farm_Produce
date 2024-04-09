@@ -1,5 +1,5 @@
 import React from "react";
-import "../../../styles/user/Advertise.css";
+import "./Advertise.css";
 import { Image } from "react-bootstrap";
 
 const AdvertiseItem = ({images, title, desc}) => {

@@ -10,7 +10,8 @@ namespace FarmProduct.WebApi.Models.Comments
 		public DateTime Created { get; set; } = DateTime.Now;
 		public string CommentText { get; set; }
 		public bool Status { get; set; }
+		public int ProductId { get; set; }
 		public string UserId { get; set; }
-		//public Customer Customer { get; set; }
+
 	}
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import "../../../styles/user/Advertise.css";
+import "./Advertise.css";
 import FakeAd from "../../../data/FakeAd";
 import AdvertiseItem from "./AdvertiesItem";
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../../../styles/user/Menu.css";
+import "./Menu.css";
 
 const MainMenu = () => {
   return (
@@ -12,7 +12,7 @@ const MainMenu = () => {
           </Link>
         </li>
         <li className="menu_item">
-          <Link className="menu_link" to={"/product"}>
+          <Link className="menu_link" to={"/product/viewmore"}>
             Sản phẩm
           </Link>
         </li>
@@ -22,7 +22,7 @@ const MainMenu = () => {
           </Link>
         </li>
         <li className="menu_item">
-          <Link className="menu_link" to={"/order"}>
+          <Link className="menu_link" to={"/checkout/orderinfor"}>
             Đơn hàng
           </Link>
         </li>
