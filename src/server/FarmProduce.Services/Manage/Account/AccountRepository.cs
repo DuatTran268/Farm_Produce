@@ -25,6 +25,7 @@ namespace FarmProduce.Services.Manage.Account
             if (userDTO is null) return new GeneralResponse(false, "Model is empty");
             var newUser = new ApplicationUser()
             {
+
                 Name = userDTO.Name,
                 Email = userDTO.Email,
                 PasswordHash = userDTO.Password,

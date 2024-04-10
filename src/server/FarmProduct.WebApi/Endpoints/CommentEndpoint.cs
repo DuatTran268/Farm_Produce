@@ -87,7 +87,7 @@ namespace FarmProduct.WebApi.Endpoints
 		private static async Task<IResult> UpdateComment(
 		int id, CommentEditModel model,
 		IValidator<CommentEditModel> validator,
-        [FromServices] ICommentRepo commentRepo,
+        [FromServices]   ICommentRepo commentRepo,
 		IMapper mapper
 		)
 		{
