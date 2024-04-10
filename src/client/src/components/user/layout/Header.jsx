@@ -1,10 +1,11 @@
 import React from "react";
 import logo from "../../../assets/logo.png";
 import { Image } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../../../styles/user/Style.css";
 import SearchBox from "../search/SearchBox";
 import CartIcon from "../cart/CartIcon";
+import BtnLogin from "../../common/BtnLogin";
 
 const Header = () => {
   return (
@@ -34,7 +35,10 @@ const Header = () => {
             </div>
           </div>
           <div className="header_cart">
-              <CartIcon/>
+            <CartIcon />
+          </div>
+          <div>
+            <BtnLogin/>
           </div>
         </div>
       </nav>

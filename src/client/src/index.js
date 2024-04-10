@@ -4,6 +4,16 @@ import './index.css';
 import App from './App';
 // import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { loginSuccess } from './redux/Account';
+
+import store from './redux/Store';
+
+const user = JSON.parse(localStorage.getItem("user"));
+if (user) {
+  // Nếu token đã được lưu trữ trong Local Storage
+  store.dispatch(loginSuccess(user)); // Sử dụng action loginSuccess để khôi phục trạng thái đăng nhập
+}
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
@@ -12,7 +22,4 @@ root.render(
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-// reportWebVitals();
+

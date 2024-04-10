@@ -48,8 +48,8 @@ const Routers = () => {
 
         
         {/* Admin */} 
-        <Route path="/admin/login" element={<Login/>} />
-        <Route path="/admin/register" element={<Register/>} />
+        <Route path="/login" element={<Login/>} />
+        <Route path="/register" element={<Register/>} />
 
         <Route path="/admin/dashboard" element={<Dashboard/>} />
         <Route path="/admin/user" element={<AdUser/>} />
