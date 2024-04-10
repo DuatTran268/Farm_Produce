@@ -10,6 +10,7 @@ import { SnackbarProvider } from "notistack";
 function App() {
   return (
     <div className="app">
+
       <Provider store={store}>
         <SnackbarProvider
           sx={{ height: "100%" }}

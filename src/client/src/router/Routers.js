@@ -15,7 +15,9 @@ import AdUser from "../pages/admin/manageuser/AdUser";
 import AdOrder from "../pages/admin/order/AdOrder";
 import AdCategory from "../pages/admin/categories/AdCategories";
 import AdProduct from "../pages/admin/product/AdProduct";
-import Login from "../pages/login/Login";
+import Login from "../pages/account/Login";
+import Register from "../pages/account/Register";  
+
 import ProductInCategory from "../pages/users/ProductInCategory";
 import Recruitment from "../pages/users/Recruitment";
 import AdUnit from "../pages/admin/unit/AdUnit";
@@ -46,7 +48,9 @@ const Routers = () => {
 
         
         {/* Admin */} 
-        <Route path="/admin" element={<Login/>} />
+        <Route path="/admin/login" element={<Login/>} />
+        <Route path="/admin/register" element={<Register/>} />
+
         <Route path="/admin/dashboard" element={<Dashboard/>} />
         <Route path="/admin/user" element={<AdUser/>} />
         <Route path="/admin/order" element={<AdOrder/>} />

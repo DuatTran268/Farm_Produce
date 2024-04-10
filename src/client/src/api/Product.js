@@ -1,9 +1,9 @@
 import { delete_api, get_api, get_api_nocache, post_api, put_api } from "./AxiosCommon";
 
-// export async function getAllProduct(){
-//   return get_api (`https://localhost:7047/api/products/getall`)
+export async function getAllProduct(){
+  return get_api (`https://localhost:7047/api/account`)
 
-// }
+}
 
 
 export function getFilterProduct(

@@ -60,7 +60,7 @@ const Login = () => {
                   </button>
                   <div className="text-end mt-3">
                     Bạn chưa có tài khoản?
-                    <Link to={`/admin/dashboard`} className=" text-danger px-1">
+                    <Link to={`/admin/register`} className=" text-danger px-1">
                       Đăng ký
                     </Link>
                   </div>
