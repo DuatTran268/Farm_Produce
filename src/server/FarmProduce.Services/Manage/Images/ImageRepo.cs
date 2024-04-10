@@ -19,7 +19,6 @@ namespace FarmProduce.Services.Manage.Images
         {
             _context = context;
         }
-
         public async Task<IList<T>> GetAllAsync<T>(Func<IQueryable<Image>, IQueryable<T>> mapper, CancellationToken cancellationToken = default)
         {
             IQueryable<Image> images = _context.Set<Image>();
@@ -30,8 +29,7 @@ namespace FarmProduce.Services.Manage.Images
             return await _context.Set<Image>().FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
 
         }
-
-        public async Task<IPagedList<T>> GetAllPageAsync<T>(Func<IQueryable<Image>, IQueryable<T>> mapper, IPagingParams pagingParams, CancellationToken cancellationToken = default)
+         public async Task<IPagedList<T>> GetAllPageAsync<T>(Func<IQueryable<Image>, IQueryable<T>> mapper, IPagingParams pagingParams, CancellationToken cancellationToken = default)
         {
             IQueryable<Image> images = _context.Set<Image>();
             return await mapper(images).ToPagedListAsync(pagingParams, cancellationToken);
