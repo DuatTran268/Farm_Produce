@@ -25,7 +25,9 @@
                 Price = decimal.Parse(form["Price"]),
                 Status = form["Status"] !="false",
                 UnitId = int.Parse(form["UnitId"]),
-            };
+				DateCreate = DateTime.Parse(form["DateCreate"]),
+				DateUpdate = DateTime.Parse(form["DateUpdate"]),
+			};
         }
     }
 }

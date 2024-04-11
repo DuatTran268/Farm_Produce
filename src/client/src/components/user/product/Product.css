@@ -47,6 +47,11 @@
   font-size: 1.2rem;
   text-align: center;
   font-weight: 500;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* number of lines to show */
+          line-clamp: 1; 
+  -webkit-box-orient: vertical;
   
 }
 .product_bottom{

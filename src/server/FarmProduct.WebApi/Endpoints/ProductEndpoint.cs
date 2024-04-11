@@ -147,10 +147,12 @@ namespace FarmProduct.WebApi.Endpoints
             product.UrlSlug = slug;
             product.Name = model.Name;
             product.Description = model.Description;
+            product.QuanlityAvailable = model.QuanlityAvailable;
+            product.CategoryId = model.CategoryId;
+            product.Price = model.Price;
             product.Status = model.Status;
             product.UnitId = model.UnitId;
-            product.DateCreate=DateTime.Now;
-            product.Price = model.Price;
+            product.DateCreate=model.DateCreate;
             product.DateUpdate = model.DateUpdate;
 
 

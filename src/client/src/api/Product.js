@@ -57,8 +57,8 @@ export async function getProductById(id = 0) {
 }
 
 
-export async function newAndUpdateProduct( formData) {
-  return post_api(`https://localhost:7047/api/products`, formData);
+export async function newAndUpdateProduct(formData) {
+  return post_api('https://localhost:7047/api/products', formData);
 }
 
 
