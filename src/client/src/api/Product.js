@@ -65,3 +65,13 @@ export async function newAndUpdateProduct( formData) {
 export async function deletProduct(id = 0) {
   return delete_api(`https://localhost:7047/api/products/${id}`);
 }
+
+
+export async function getFilterComboboxOfCategory() {
+  return get_api(`https://localhost:7047/api/categories/combobox`);
+}
+
+
+export async function getFilterComboboxOfUnit() {
+  return get_api(`https://localhost:7047/api/units/combobox`);
+}

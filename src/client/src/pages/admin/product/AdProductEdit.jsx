@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import LayoutCommon from "../../../components/admin/common/LayoutCommon";
 import { Button, Form } from "react-bootstrap";
-import { getProductById, newAndUpdateProduct } from "../../../api/Product";
+import {
+  getFilterComboboxOfCategory,
+  getFilterComboboxOfUnit,
+  getProductById,
+  newAndUpdateProduct,
+} from "../../../api/Product";
 import { useSnackbar } from "notistack";
 import { useNavigate, useParams } from "react-router-dom";
 import BoxEdit from "../../../components/admin/edit/BoxEdit";
@@ -13,17 +18,20 @@ const AdProductEdit = () => {
   const [validated, setValidated] = useState(false);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const initialState = {
-    id: 0,
-    name: "",
-    quantityAvailable: "",
-    categoryId: 0,
-    price: 0,
-    description: "",
-    status: 0,
-    unitId: 0,
-    dateCreate: "",
-    dateUpdate: "",
-  };
+      id: 0,
+      name: "",
+      quantityAvailable: "",
+      categoryId: 0,
+      price: 0,
+      description: "",
+      status: 0,
+      unitId: 0,
+      dateCreate: "",
+      dateUpdate: "",
+    },
+    [filterCategory, setFilterCategory] = useState({ categoryList: [] })
+    ,[filterUnit, setFilterUnit] = useState({ unitList: [] });
+
   const navigate = useNavigate();
   const [product, setProduct] = useState(initialState);
 
@@ -40,6 +48,31 @@ const AdProductEdit = () => {
         });
       else setProduct(initialState);
     });
+
+    // filter cate
+    getFilterComboboxOfCategory().then((data) => {
+      if (data) {
+        setFilterCategory({
+          categoryList: data.categoryList,
+        });
+      } else {
+        setFilterCategory({ categoryList: [] });
+      }
+    });
+
+
+    getFilterComboboxOfUnit().then((data) => {
+      if (data) {
+        setFilterUnit({
+          unitList: data.unitList,
+        });
+      } else {
+        setFilterUnit({ unitList: [] });
+      }
+    });
+
+
+
   }, []);
 
   const handleSubmit = (e) => {
@@ -114,7 +147,7 @@ const AdProductEdit = () => {
             notempty={"Không được bỏ trống"}
           />
 
-          <BoxEdit
+          {/* <BoxEdit
             label={"Category Id"}
             control={
               <Form.Control
@@ -129,7 +162,37 @@ const AdProductEdit = () => {
               />
             }
             notempty={"Không được bỏ trống"}
-          />
+          /> */}
+
+          <div className="row mb-3">
+            <Form.Label className="col-sm-2 col-form-label">
+              Category
+            </Form.Label>
+            <div className="col-sm-10">
+              <Form.Select
+                name="categoryId"
+                title="category Id"
+                value={product.categoryId}
+                required
+                onChange={(e) =>
+                  setProduct({
+                    ...product,
+                    categoryId: e.target.value,
+                  })
+                }
+              >
+                {filterCategory.categoryList.length > 0 &&
+                  filterCategory.categoryList.map((item, index) => (
+                    <option key={index} value={item.value}>
+                      {item.text}
+                    </option>
+                  ))}
+              </Form.Select>
+              <Form.Control.Feedback type="invalid">
+                Không được bỏ trống.
+              </Form.Control.Feedback>
+            </div>
+          </div>
 
           <BoxEdit
             label={"Giá tiền"}
@@ -165,23 +228,35 @@ const AdProductEdit = () => {
             notempty={"Không được bỏ trống"}
           />
 
-
-          <BoxEdit
-            label={"Unit Id"}
-            control={
-              <Form.Control
-                type="text"
+<div className="row mb-3">
+            <Form.Label className="col-sm-2 col-form-label">
+              Category
+            </Form.Label>
+            <div className="col-sm-10">
+              <Form.Select
                 name="unitId"
-                title="unit Id"
+                title="Unit"
+                value={product.unitId}
                 required
-                value={product.unitId || ""}
                 onChange={(e) =>
-                  setProduct({ ...product, unitId: e.target.value })
+                  setProduct({
+                    ...product,
+                    unitId: e.target.value,
+                  })
                 }
-              />
-            }
-            notempty={"Không được bỏ trống"}
-          />
+              >
+                {filterUnit.unitList.length > 0 &&
+                  filterUnit.unitList.map((item, index) => (
+                    <option key={index} value={item.value}>
+                      {item.text}
+                    </option>
+                  ))}
+              </Form.Select>
+              <Form.Control.Feedback type="invalid">
+                Không được bỏ trống.
+              </Form.Control.Feedback>
+            </div>
+          </div>
 
           <BoxEdit
             label={"Ngày tạo"}
