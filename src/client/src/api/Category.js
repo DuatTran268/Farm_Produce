@@ -20,7 +20,7 @@ export function getFilterCategory(
   sortColumn = "",
   sortOrder = ""
 ) {
-  let url = new URL(`https://localhost:7047/api/categories/pagination`);
+  let url = new URL(`https://localhost:7047/api/categories`);
   name !== '' && url.searchParams.append('Name', name);
   sortColumn !== "" && url.searchParams.append("SortColumn", sortColumn);
   sortOrder !== "" && url.searchParams.append("SortOrder", sortColumn);

@@ -1,6 +1,6 @@
 import { delete_api, get_api, get_api_nocache, post_api, put_api } from "./AxiosCommon";
 
-export async function getAllProduct(){
+export async function getAllAccount(){
   return get_api (`https://localhost:7047/api/account`)
 
 }

@@ -21,7 +21,7 @@ export function getFilterComment(
   sortColumn = "",
   sortOrder = ""
 ) {
-  let url = new URL(`https://localhost:7047/api/comments/filter`);
+  let url = new URL(`https://localhost:7047/api/comments`);
   name !== '' && url.searchParams.append('Name', name);
   // status !== '' && url.searchParams.append('Status', status);
   sortColumn !== "" && url.searchParams.append("SortColumn", sortColumn);

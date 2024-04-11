@@ -2,10 +2,14 @@
 // import './App.css';
 
 import { Provider } from "react-redux";
-import Routers from "./router/Routers";
 import store from "./redux/Store";
 import { CartProvider } from "react-use-cart";
 import { SnackbarProvider } from "notistack";
+import AdminPanel from "./pages/admin/Admin";
+import { Admin, AdminRouter, ListGuesser, Resource } from "react-admin";
+import dataProvider from "./apiProvider";
+import RouterUser from "./router/RouterUser";
+import RouterAdmin from "./router/RouterAdmin";
 
 function App() {
   return (
@@ -19,8 +23,9 @@ function App() {
           }}
         >
           <CartProvider>
-            <Routers />
+            <RouterUser />
           </CartProvider>
+          <RouterAdmin/>
         </SnackbarProvider>
       </Provider>
     </div>
