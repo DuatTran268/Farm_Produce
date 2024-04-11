@@ -167,5 +167,15 @@ namespace FarmProduce.Services.Manage.Categories
             return await _context.SaveChangesAsync() > 0;
         }
 
-    }
+		public async Task<IList<CategoryItem>> GetCategoryCombobox(CancellationToken cancellationToken = default)
+		{
+			IQueryable<Category> topics = _context.Set<Category>();
+			return await topics.OrderBy(t => t.Id)
+				.Select(t => new CategoryItem()
+				{
+					Id = t.Id,
+					Name = t.Name,
+				}).ToListAsync(cancellationToken);
+		}
+	}
 }

@@ -14,6 +14,7 @@ using FarmProduct.WebApi.Utilities;
 using Mapster;
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SlugGenerator;
 using System.Net;
 
@@ -61,6 +62,11 @@ namespace FarmProduct.WebApi.Endpoints
 				.WithName("DeleteCategory")
 				.Produces(401)
 				.Produces<ApiResponse<string>>();
+
+
+			routeGroupBuilder.MapGet("/combobox", FilterComboboxCategory)
+				.WithName("FilterComboboxCategory")
+				.Produces<ApiResponse<CategoryFilterCombobox>>();
 
 		}
 		private static async Task<IResult> GetCategoryAndPagination([AsParameters] CategoriesFilterModel model, ICategoriesRepo categoriesRepo)
@@ -168,6 +174,23 @@ namespace FarmProduct.WebApi.Endpoints
 			? Results.Ok(ApiResponse.Success("Category deleted ", HttpStatusCode.NoContent))
 			: Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound, $"Not find category id = {id}"));
 		}
+
+		// filter combobox
+		private static async Task<IResult> FilterComboboxCategory(
+			ICategoriesRepo categoriesRepo)
+		{
+			var model = new CategoryFilterCombobox()
+			{
+				CategoryList = (await categoriesRepo.GetCategoryCombobox())
+				.Select(t => new SelectListItem()
+				{
+					Text = t.Name,
+					Value = t.Id.ToString()
+				})
+			};
+			return Results.Ok(ApiResponse.Success(model));
+		}
+
 
 	}
 }

@@ -38,7 +38,10 @@ namespace FarmProduce.Services.Manage.Units
 
         Task<bool> AddOrUpdate(Unit unit, CancellationToken cancellationToken = default);
 
-    }
+
+		Task<IList<UnitItem>> GetUnitCombobox(CancellationToken cancellationToken = default);
+
+	}
 }
 
         
