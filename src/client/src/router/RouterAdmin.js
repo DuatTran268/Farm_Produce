@@ -21,10 +21,7 @@ const RouterAdmin = () => {
       <Routes>
    
         {/* Admin */} 
-        <Route path="/login" element={<Login/>} />
-        
-        <Route path="/admin" element={<AdminPanel />} />
-        <Route path="/register" element={<Register/>} />
+      
 
         <Route path="/admin/dashboard" element={<Dashboard/>} />
         <Route path="/admin/user" element={<AdUser/>} />

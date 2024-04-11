@@ -13,9 +13,10 @@ import BoxEdit from "../../../components/admin/edit/BoxEdit";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRightToBracket, faSave } from "@fortawesome/free-solid-svg-icons";
 import BtnError from "../../../components/common/BtnError";
+import { format } from "date-fns";
+
 
 const AdProductEdit = () => {
-  const [validated, setValidated] = useState(false);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const initialState = {
       id: 0,
@@ -29,8 +30,8 @@ const AdProductEdit = () => {
       dateCreate: "",
       dateUpdate: "",
     },
-    [filterCategory, setFilterCategory] = useState({ categoryList: [] })
-    ,[filterUnit, setFilterUnit] = useState({ unitList: [] });
+    [filterCategory, setFilterCategory] = useState({ categoryList: [] }),
+    [filterUnit, setFilterUnit] = useState({ unitList: [] });
 
   const navigate = useNavigate();
   const [product, setProduct] = useState(initialState);
@@ -60,7 +61,6 @@ const AdProductEdit = () => {
       }
     });
 
-
     getFilterComboboxOfUnit().then((data) => {
       if (data) {
         setFilterUnit({
@@ -70,10 +70,9 @@ const AdProductEdit = () => {
         setFilterUnit({ unitList: [] });
       }
     });
-
-
-
   }, []);
+
+  const [validated, setValidated] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -83,7 +82,6 @@ const AdProductEdit = () => {
     } else {
       let form = new FormData(e.target);
       console.log("form", form);
-
       newAndUpdateProduct(form).then((data) => {
         if (data) {
           console.log("data", data);
@@ -228,7 +226,7 @@ const AdProductEdit = () => {
             notempty={"Không được bỏ trống"}
           />
 
-<div className="row mb-3">
+          <div className="row mb-3">
             <Form.Label className="col-sm-2 col-form-label">
               Category
             </Form.Label>
@@ -262,13 +260,16 @@ const AdProductEdit = () => {
             label={"Ngày tạo"}
             control={
               <Form.Control
-                type="text"
+                type="datetime-local"
                 name="dateCreate"
-                title="dateCreate"
+                title="Date Create"
                 required
                 value={product.dateCreate || ""}
                 onChange={(e) =>
-                  setProduct({ ...product, dateCreate: e.target.value })
+                  setProduct({
+                    ...product,
+                    dateCreate: e.target.value,
+                  })
                 }
               />
             }
@@ -279,7 +280,7 @@ const AdProductEdit = () => {
             label={"Ngày cập nhật"}
             control={
               <Form.Control
-                type="text"
+                type="datetime-local"
                 name="dateUpdate"
                 title="date Update"
                 required

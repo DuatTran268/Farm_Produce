@@ -68,10 +68,10 @@ export async function deletProduct(id = 0) {
 
 
 export async function getFilterComboboxOfCategory() {
-  return get_api(`https://localhost:7047/api/categories/combobox`);
+  return get_api_nocache(`https://localhost:7047/api/categories/combobox`);
 }
 
 
 export async function getFilterComboboxOfUnit() {
-  return get_api(`https://localhost:7047/api/units/combobox`);
+  return get_api_nocache(`https://localhost:7047/api/units/combobox`);
 }

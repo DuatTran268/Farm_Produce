@@ -11,6 +11,8 @@ import OrderDetail from "../pages/users/OrderDetail";
 import MoreAllProduct from "../pages/users/MoreAllProduct";
 import ProductInCategory from "../pages/users/ProductInCategory";
 import Recruitment from "../pages/users/Recruitment";
+import Login from "../pages/account/Login";
+import Register from "../pages/account/Register";
 
 
 const RouterUser = () => {
@@ -32,6 +34,9 @@ const RouterUser = () => {
         <Route path="/contact" element={<Contact/>} />
         <Route path="/recruitment" element={<Recruitment/>} />
 
+        <Route path="/login" element={<Login/>} />
+        
+        <Route path="/register" element={<Register/>} />
       </Routes>
     </BrowserRouter>
   );

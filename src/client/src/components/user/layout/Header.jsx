@@ -37,7 +37,7 @@ const Header = () => {
           <div className="header_cart">
             <CartIcon />
           </div>
-          <div>
+          <div className="button_login">
             <BtnLogin/>
           </div>
         </div>

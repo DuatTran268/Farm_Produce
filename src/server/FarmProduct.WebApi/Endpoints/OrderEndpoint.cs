@@ -10,6 +10,8 @@ using Carter;
 using Microsoft.AspNetCore.Mvc;
 using FarmProduce.Core.Entities;
 using FarmProduct.WebApi.Utilities;
+using FarmProduce.Core.DTO;
+using FarmProduce.Services.Manage.Comments;
 
 namespace FarmProduct.WebApi.Endpoints
 {
@@ -24,15 +26,15 @@ namespace FarmProduct.WebApi.Endpoints
                 .WithName("GetAllOrder")
                 .Produces<ApiResponse<PaginationResult<OrderDto>>>();
         }
-        private static async Task<IResult> GetAllPageAsync(IOrderRepo orderRepo, [AsParameters] PagingModel pagingModel, CancellationToken cancellation = default)
+        private static async Task<IResult> GetAllPageAsync([FromServices] IOrderRepo orderRepo, [AsParameters] PagingModel pagingModel, CancellationToken cancellation = default)
         {
             var orders = await orderRepo.GetAllPageAsync(
                 orders => orders.ProjectToType<OrderDto>(), pagingModel, cancellation);
             var pagination = new PaginationResult<OrderDto>(orders);
 
-            return Results.Ok(ApiResponse.Success(orders));
+            return Results.Ok(ApiResponse.Success(pagination));
         }
 
-      
-    }
+
+	}
 }
