@@ -104,7 +104,7 @@ const AdProduct = () => {
                 getProduct.map((item, index) => (
                   <tr key={index}>
                     <td>{item.name}</td>
-                    <td>{item.quantityAvailable}</td>
+                    <td>{item.quanlityAvailable}</td>
                     <td>{item.price}</td>
                     <td>{item.description}</td>
 
