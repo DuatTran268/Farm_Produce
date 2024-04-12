@@ -59,6 +59,7 @@ namespace FarmProduct.WebApi.Extensions
                 .AddSignInManager()
                 .AddRoles<IdentityRole>();
             builder.Services.AddScoped<List<IdentityUserRole<string>>>();
+            builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             builder.Services.AddAuthorization();
             builder.Services.AddCarter();
 			return builder;

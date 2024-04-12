@@ -15,7 +15,7 @@ using FarmProduce.Services.Manage.Comments;
 
 namespace FarmProduct.WebApi.Endpoints
 {
-    public  class OrderEndpoint: ICarterModule
+    public class OrderEndpoint : ICarterModule
     {
         public void AddRoutes(IEndpointRouteBuilder app)
         {
@@ -25,6 +25,9 @@ namespace FarmProduct.WebApi.Endpoints
             routeGroupBuilder.MapGet("/", GetAllPageAsync)
                 .WithName("GetAllOrder")
                 .Produces<ApiResponse<PaginationResult<OrderDto>>>();
+            routeGroupBuilder.MapPost("/create-order", CreateOrderAsync)
+               .WithName("Create Order With User ID")
+               .Produces<ApiResponse<OrderDTO>>();
         }
         private static async Task<IResult> GetAllPageAsync([FromServices] IOrderRepo orderRepo, [AsParameters] PagingModel pagingModel, CancellationToken cancellation = default)
         {
@@ -34,7 +37,15 @@ namespace FarmProduct.WebApi.Endpoints
 
             return Results.Ok(ApiResponse.Success(pagination));
         }
+        private static async Task<IResult> CreateOrderAsync(
+      [FromServices] IOrderRepo orderRepo, [FromBody] OrderDTO orderDTO
+      )
+        {
+            var response = await orderRepo.CreateOrder(orderDTO);
+            return Results.Ok(ApiResponse.Success(response));
+        }
+
+    }
 
 
-	}
 }

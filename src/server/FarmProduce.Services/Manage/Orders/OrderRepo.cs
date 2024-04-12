@@ -1,4 +1,5 @@
 ﻿using FarmProduce.Core.Contracts;
+using FarmProduce.Core.DTO;
 using FarmProduce.Core.Entities;
 using FarmProduce.Data.Contexts;
 using FarmProduce.Services.Extentions;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static FarmProduce.Core.DTO.ServiceResponses;
 
 namespace FarmProduce.Services.Manage.Orders
 {
@@ -72,6 +74,27 @@ namespace FarmProduce.Services.Manage.Orders
                 _context.Add(order);
             }
             return await _context.SaveChangesAsync() > 0;
+        }
+        public async Task<GeneralResponse> CreateOrder(OrderDTO orderDTO)
+        {
+            if (orderDTO is null)
+            {
+                return new GeneralResponse(false, "Order data is empty");
+            }
+            var newOrder = new Order
+            {
+
+                DateOrder = orderDTO.DateOrder,
+                TotalPrice = orderDTO.TotalPrice,
+                OrderStatusId = orderDTO.OrderStatusId,
+                ApplicationUserId = orderDTO.ApplicationUserId,
+                PaymentMethods = orderDTO.PaymentMethods,
+
+            };
+            _context.Orders.Add(newOrder);
+            await _context.SaveChangesAsync();
+            return new GeneralResponse(true, "Order created successfully");
+
         }
 
     }

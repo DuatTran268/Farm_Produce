@@ -1,6 +1,7 @@
 ﻿using FarmProduce.Core.Contracts;
 using FarmProduce.Core.DTO;
 using FarmProduce.Core.Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -17,7 +18,7 @@ using static FarmProduce.Core.DTO.ServiceResponses;
 namespace FarmProduce.Services.Manage.Account
 {
     public class AccountRepository(UserManager<ApplicationUser> userManager,
-    RoleManager<IdentityRole> roleManager, IConfiguration config) : IUserAccount
+    RoleManager<IdentityRole> roleManager, IConfiguration config, IHttpContextAccessor httpContextAccessor) : IUserAccount
     {
 
         public async Task<GeneralResponse> CreateAccount(RegisterDTO userDTO)
@@ -171,6 +172,14 @@ namespace FarmProduce.Services.Manage.Account
                 usersWithRoles.Add(userWithRoles);
             }
             return usersWithRoles;
+        }
+        public async Task<string> GetCurrentUserId()
+        {
+           
+            var user = await userManager.GetUserAsync(httpContextAccessor.HttpContext.User);
+
+            // Kiểm tra nếu người dùng không null thì trả về Id của người dùng, ngược lại trả về null
+            return user?.Id;
         }
     }
 }

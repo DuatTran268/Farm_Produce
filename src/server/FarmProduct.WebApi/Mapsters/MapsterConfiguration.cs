@@ -24,7 +24,8 @@ namespace FarmProduct.WebApi.Mapsters
 			config.NewConfig<Category, CategoriesDto>();
 			config.NewConfig<Category, CategoriesDetail>();
 			config.NewConfig<Category, CategoriesEditModel>();
-			config.NewConfig<Product, ProductsDto>();
+			config.NewConfig<Product, ProductsDto>()
+                .Map(dest => dest.QuanlityAvailable, src => src.QuanlityAvailable); ;
 			config.NewConfig<Product, ProductDetails>();
 			config.NewConfig<Unit, UnitDto>();
 			config.NewConfig<Unit, UnitItem>()
@@ -45,6 +46,7 @@ namespace FarmProduct.WebApi.Mapsters
             config.NewConfig<Image, ImageDto>();
 			config.NewConfig<Product, ProductEditModel>();
 			config.NewConfig<Image, ImageEditModel>();
+			config.NewConfig<Order, OrderDto>();
 
         }
     }

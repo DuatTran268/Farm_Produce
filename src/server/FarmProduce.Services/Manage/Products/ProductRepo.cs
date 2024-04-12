@@ -32,6 +32,8 @@ namespace FarmProduce.Services.Manage.Products
 			return await mapper(products).ToPagedListAsync(pagingParams,cancellationToken);
 
 		}
+
+	
 		private IQueryable<Product> FilterProduct(ProductQuery productQuery)
 		{
 			IQueryable<Product> products = _context.Set<Product>();
@@ -85,7 +87,9 @@ namespace FarmProduce.Services.Manage.Products
             {
                 _context.Add(product);
             }
-            return await _context.SaveChangesAsync() > 0;
+
+            // Thực hiện lưu các thay đổi vào cơ sở dữ liệu và kiểm tra xem có thay đổi nào được lưu không
+            return await _context.SaveChangesAsync(cancellationToken) > 0;
         }
 
 
@@ -133,9 +137,6 @@ namespace FarmProduce.Services.Manage.Products
 				.Take(n);
 			return await mapper(productLimit).ToListAsync(cancellationToken);
 		}
-
-
-
 		public async Task<IPagedList<T>> GetCommentWithPaged<T>(CommentQuery query, IPagingParams pagingParams, Func<IQueryable<Comment>, IQueryable<T>> mapper, CancellationToken cancellationToken = default)
 		{
 			IQueryable<Comment> cmtFindQuery = FilterComment(query);
