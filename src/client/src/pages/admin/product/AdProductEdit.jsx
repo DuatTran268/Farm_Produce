@@ -1,30 +1,40 @@
 import React, { useEffect, useState } from "react";
 import LayoutCommon from "../../../components/admin/common/LayoutCommon";
 import { Button, Form } from "react-bootstrap";
-import { getProductById, newAndUpdateProduct } from "../../../api/Product";
+import {
+  getFilterComboboxOfCategory,
+  getFilterComboboxOfUnit,
+  getProductById,
+  newAndUpdateProduct,
+} from "../../../api/Product";
 import { useSnackbar } from "notistack";
 import { useNavigate, useParams } from "react-router-dom";
 import BoxEdit from "../../../components/admin/edit/BoxEdit";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRightToBracket, faSave } from "@fortawesome/free-solid-svg-icons";
 import BtnError from "../../../components/common/BtnError";
+import { format } from "date-fns";
 
 const AdProductEdit = () => {
-  const [validated, setValidated] = useState(false);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const initialState = {
-    id: 0,
-    name: "",
-    quantityAvailable: "",
-    categoryId: 0,
-    price: 0,
-    description: "",
-    status: 0,
-    unitId: 0,
-    dateCreate: "",
-    dateUpdate: "",
-  };
   const navigate = useNavigate();
+
+  const initialState = {
+      id: 0,
+      name: "",
+      quantityAvailable: 0,
+      categoryId: 0,
+      price: 0,
+      description: "",
+      status: false,
+      unitId: 0,
+      dateCreate: "",
+      dateUpdate: "",
+    },
+    [filterCategory, setFilterCategory] = useState({ categoryList: [] }),
+    [filterUnit, setFilterUnit] = useState({ unitList: [] });
+
+
   const [product, setProduct] = useState(initialState);
 
   let { id } = useParams();
@@ -40,27 +50,53 @@ const AdProductEdit = () => {
         });
       else setProduct(initialState);
     });
+
+    // filter cate
+    getFilterComboboxOfCategory().then((data) => {
+      if (data) {
+        console.log("check data conbo category: ", data)
+        setFilterCategory({
+          categoryList: data.categoryList,
+        });
+      } else {
+        setFilterCategory({ categoryList: [] });
+      }
+    });
+
+    getFilterComboboxOfUnit().then((data) => {
+      if (data) {
+        console.log("check data conbo unit: ", data)
+        setFilterUnit({
+          unitList: data.unitList,
+        });
+      } else {
+        setFilterUnit({ unitList: [] });
+      }
+    });
+
   }, []);
+
+  const [validated, setValidated] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (e.currentTarget.checkValidity() === false) {
-      e.stopPropagation();
       setValidated(true);
     } else {
       let form = new FormData(e.target);
-      console.log("form", form);
+      form.append("status", product.status);
 
       newAndUpdateProduct(form).then((data) => {
         if (data) {
-          console.log("data", data);
-          enqueueSnackbar("Đã thêm thành công", {
+          console.log("Check data update end create", data)
+          enqueueSnackbar("Đã lưu thành công", {
             variant: "success",
           });
           navigate(`/admin/product`);
         } else {
           enqueueSnackbar("Đã xảy ra lỗi", {
             variant: "error",
+            closeSnackbar,
           });
         }
       });
@@ -73,7 +109,7 @@ const AdProductEdit = () => {
         <h3 className="text-success py-3">Thêm/cập Product</h3>
         <Form
           method="post"
-          encType="multipart/form-data"
+          encType=""
           onSubmit={handleSubmit}
           noValidate
           validated={validated}
@@ -81,7 +117,7 @@ const AdProductEdit = () => {
           <Form.Control type="hidden" name="id" value={product.id} />
 
           <BoxEdit
-            label={"Tên sản phẩm"}
+            label={"Tên Sản phẩm"}
             control={
               <Form.Control
                 type="text"
@@ -101,7 +137,7 @@ const AdProductEdit = () => {
             label={"Số lượng"}
             control={
               <Form.Control
-                type="text"
+                type="number"
                 name="quantityAvailable"
                 title="quantity Available"
                 required
@@ -114,28 +150,41 @@ const AdProductEdit = () => {
             notempty={"Không được bỏ trống"}
           />
 
-          <BoxEdit
-            label={"Category Id"}
-            control={
-              <Form.Control
-                type="text"
+          <div className="row mb-3">
+            <Form.Label className="col-sm-2 col-form-label">
+              Category
+            </Form.Label>
+            <div className="col-sm-10">
+              <Form.Select
                 name="categoryId"
                 title="category Id"
+                value={product.categoryId}
                 required
-                value={product.categoryId || ""}
                 onChange={(e) =>
-                  setProduct({ ...product, categoryId: e.target.value })
+                  setProduct({
+                    ...product,
+                    categoryId: e.target.value,
+                  })
                 }
-              />
-            }
-            notempty={"Không được bỏ trống"}
-          />
+              >
+                {filterCategory.categoryList.length > 0 &&
+                  filterCategory.categoryList.map((item, index) => (
+                    <option key={index} value={item.value}>
+                      {item.text}
+                    </option>
+                  ))}
+              </Form.Select>
+              <Form.Control.Feedback type="invalid">
+                Không được bỏ trống.
+              </Form.Control.Feedback>
+            </div>
+          </div>
 
           <BoxEdit
             label={"Giá tiền"}
             control={
               <Form.Control
-                type="text"
+                type="number"
                 name="price"
                 title="price"
                 required
@@ -165,35 +214,50 @@ const AdProductEdit = () => {
             notempty={"Không được bỏ trống"}
           />
 
-
-          <BoxEdit
-            label={"Unit Id"}
-            control={
-              <Form.Control
-                type="text"
+          <div className="row mb-3">
+            <Form.Label className="col-sm-2 col-form-label">
+              Unit
+            </Form.Label>
+            <div className="col-sm-10">
+              <Form.Select
                 name="unitId"
-                title="unit Id"
+                title="Unit"
+                value={product.unitId}
                 required
-                value={product.unitId || ""}
                 onChange={(e) =>
-                  setProduct({ ...product, unitId: e.target.value })
+                  setProduct({
+                    ...product,
+                    unitId: e.target.value,
+                  })
                 }
-              />
-            }
-            notempty={"Không được bỏ trống"}
-          />
+              >
+                {filterUnit.unitList.length > 0 &&
+                  filterUnit.unitList.map((item, index) => (
+                    <option key={index} value={item.value}>
+                      {item.text}
+                    </option>
+                  ))}
+              </Form.Select>
+              <Form.Control.Feedback type="invalid">
+                Không được bỏ trống.
+              </Form.Control.Feedback>
+            </div>
+          </div>
 
           <BoxEdit
             label={"Ngày tạo"}
             control={
               <Form.Control
-                type="text"
+                type="datetime-local"
                 name="dateCreate"
-                title="dateCreate"
+                title="Date Create"
                 required
                 value={product.dateCreate || ""}
                 onChange={(e) =>
-                  setProduct({ ...product, dateCreate: e.target.value })
+                  setProduct({
+                    ...product,
+                    dateCreate: e.target.value,
+                  })
                 }
               />
             }
@@ -204,7 +268,7 @@ const AdProductEdit = () => {
             label={"Ngày cập nhật"}
             control={
               <Form.Control
-                type="text"
+                type="datetime-local"
                 name="dateUpdate"
                 title="date Update"
                 required
@@ -216,6 +280,24 @@ const AdProductEdit = () => {
             }
             notempty={"Không được bỏ trống"}
           />
+
+          <div className="row mb-3">
+            <div className="col-sm-10 offset-sm-2">
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  name="status"
+                  checked={product.status}
+                  title="Hiển thị"
+                  onChange={(e) =>
+                    setProduct({ ...product, status: e.target.checked })
+                  }
+                />
+                <Form.Label className="form-check-label">Hiển thị</Form.Label>
+              </div>
+            </div>
+          </div>
 
           <div className="text-center">
             <Button variant="success" type="submit">

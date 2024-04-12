@@ -16,6 +16,7 @@ using System.Net;
 using SlugGenerator;
 using FarmProduct.WebApi.Filters;
 using FluentValidation;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FarmProduct.WebApi.Endpoints
 {
@@ -53,6 +54,12 @@ namespace FarmProduct.WebApi.Endpoints
 				.WithName("DeleteUnit")
 				.Produces(401)
 				.Produces<ApiResponse<string>>();
+
+
+
+			routeGroupBuilder.MapGet("/combobox", FilterComboboxUnit)
+				.WithName("FilterComboboxUnit")
+				.Produces<ApiResponse<UnitFilterCombobox>>();
 
 		}
 		private static async Task<IResult> GetAllPageAsync(IUnitRepo unitRepo, [AsParameters] PagingModel pagingModel, CancellationToken cancellation = default)
@@ -137,6 +144,22 @@ namespace FarmProduct.WebApi.Endpoints
 			return await unitRepo.DeleteUnit(id)
 			? Results.Ok(ApiResponse.Success("Unit deleted ", HttpStatusCode.NoContent))
 			: Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound, $"Not find unit id = {id}"));
+		}
+
+
+		private static async Task<IResult> FilterComboboxUnit(
+			IUnitRepo unitRepo)
+		{
+			var model = new UnitFilterCombobox()
+			{
+				UnitList = (await unitRepo.GetUnitCombobox())
+				.Select(t => new SelectListItem()
+				{
+					Text = t.Name,
+					Value = t.Id.ToString()
+				})
+			};
+			return Results.Ok(ApiResponse.Success(model));
 		}
 
 	}

@@ -1,4 +1,6 @@
-﻿namespace FarmProduct.WebApi.Models.Products
+﻿using System.Globalization;
+
+namespace FarmProduct.WebApi.Models.Products
 {
     public class ProductEditModel
     {
@@ -25,7 +27,28 @@
                 Price = decimal.Parse(form["Price"]),
                 Status = form["Status"] !="false",
                 UnitId = int.Parse(form["UnitId"]),
-            };
+				DateCreate = ParseDateTime(form["DateCreate"]),
+				DateUpdate = ParseDateTime(form["DateUpdate"]),
+			};
+        }
+        private static DateTime ParseDateTime(string dateTimeString)
+        {
+            if (string.IsNullOrWhiteSpace(dateTimeString))
+            {
+                // Return a default value or handle the empty case according to your logic
+                return DateTime.MinValue;
+            }
+
+            string[] formats = { "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd" }; // Add more formats as needed
+
+            if (DateTime.TryParseExact(dateTimeString, formats, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDateTime))
+            {
+                return parsedDateTime;
+            }
+            else
+            {
+                throw new FormatException("Invalid DateTime format");
+            }
         }
     }
 }

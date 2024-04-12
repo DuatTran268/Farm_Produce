@@ -3,7 +3,7 @@ import { delete_api, get_api, get_api_nocache, post_api } from "./AxiosCommon";
 
 
 export async function getCategoryLimit(){
-  return get_api (`https://localhost:7047/api/categories/limit/4`)
+  return get_api (`https://localhost:7047/api/categories/limit/6`)
 
 }
 
@@ -20,7 +20,7 @@ export function getFilterCategory(
   sortColumn = "",
   sortOrder = ""
 ) {
-  let url = new URL(`https://localhost:7047/api/categories/pagination`);
+  let url = new URL(`https://localhost:7047/api/categories`);
   name !== '' && url.searchParams.append('Name', name);
   sortColumn !== "" && url.searchParams.append("SortColumn", sortColumn);
   sortOrder !== "" && url.searchParams.append("SortOrder", sortColumn);

@@ -131,6 +131,17 @@ namespace FarmProduce.Services.Manage.Units
             }
             return await _context.SaveChangesAsync() > 0;
         }
-    }
+
+		public async Task<IList<UnitItem>> GetUnitCombobox(CancellationToken cancellationToken = default)
+		{
+			IQueryable<Unit> unit = _context.Set<Unit>();
+			return await unit.OrderBy(t => t.Id)
+				.Select(t => new UnitItem()
+				{
+					Id = t.Id,
+					Name = t.Name,
+				}).ToListAsync(cancellationToken);
+		}
+	}
 }
 

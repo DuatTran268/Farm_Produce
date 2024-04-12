@@ -1,9 +1,9 @@
 import { delete_api, get_api, get_api_nocache, post_api, put_api } from "./AxiosCommon";
 
-// export async function getAllProduct(){
-//   return get_api (`https://localhost:7047/api/products/getall`)
+export async function getAllAccount(){
+  return get_api (`https://localhost:7047/api/account`)
 
-// }
+}
 
 
 export function getFilterProduct(
@@ -57,11 +57,21 @@ export async function getProductById(id = 0) {
 }
 
 
-export async function newAndUpdateProduct( formData) {
-  return post_api(`https://localhost:7047/api/products`, formData);
+export async function newAndUpdateProduct(formData) {
+  return post_api('https://localhost:7047/api/products', formData);
 }
 
 
 export async function deletProduct(id = 0) {
   return delete_api(`https://localhost:7047/api/products/${id}`);
+}
+
+
+export async function getFilterComboboxOfCategory() {
+  return get_api_nocache(`https://localhost:7047/api/categories/combobox`);
+}
+
+
+export async function getFilterComboboxOfUnit() {
+  return get_api_nocache(`https://localhost:7047/api/units/combobox`);
 }

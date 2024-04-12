@@ -122,49 +122,52 @@ namespace FarmProduct.WebApi.Endpoints
 		
 				: Results.Ok(ApiResponse.Success(paginationResult));
 		}
-        private static async Task<IResult> AddProduct(HttpContext context
-          , IProductRepo productRepo
-          , IMapper mapper
-          ,ProductEditModel validator)
-
+        private static async Task<IResult> AddProduct(HttpContext context, IProductRepo productRepo, IMapper mapper, ProductEditModel validator)
         {
             var model = await ProductEditModel.BindAsync(context);
-
             var slug = model.Name.GenerateSlug();
 
+            var product = await productRepo.GetProductById(model.Id);
 
-            var product = model.Id > 0 ? await productRepo.GetProductById(model.Id) : null;
             if (product == null)
             {
                 product = mapper.Map<Product>(model);
-                if (await productRepo.IsSlugProductExisted(0, slug))
-                {
-                    return Results.Ok(ApiResponse.Fail(HttpStatusCode.Conflict, $"Slug '{slug}' đã được sử dụng"));
-                }
+            }
 
-            }
-            if (model.Id > 0)
+            if (await productRepo.IsSlugProductExisted(model.Id, slug))
             {
-                if (await productRepo.IsSlugProductExisted(model.Id, slug))
-                {
-                    return Results.Ok(ApiResponse.Fail(HttpStatusCode.Conflict, $"Slug '{slug}' đã được sử dụng"));
-                }
+                return Results.Ok(ApiResponse.Fail(HttpStatusCode.Conflict, $"Slug '{slug}' đã được sử dụng"));
             }
+
             product.UrlSlug = slug;
             product.Name = model.Name;
             product.Description = model.Description;
+            product.QuanlityAvailable = model.QuanlityAvailable;
+            product.CategoryId = model.CategoryId;
+            product.Price = model.Price;
             product.Status = model.Status;
             product.UnitId = model.UnitId;
-            product.DateCreate=DateTime.Now;
-            product.Price = model.Price;
-            product.DateUpdate = model.DateUpdate;
 
+            // Tự động cập nhật thời gian
+            if (model.Id == 0)
+            {
+                product.DateCreate = DateTime.Now;
+            }
+            product.DateUpdate = DateTime.Now;
 
-   
-            await productRepo.AddOrUpdateProduct(product);
-
-            return Results.Ok(ApiResponse.Success(mapper.Map<ProductsDto>(product), HttpStatusCode.Created));
+            try
+            {
+                await productRepo.AddOrUpdateProduct(product);
+                return Results.Ok(ApiResponse.Success(mapper.Map<ProductsDto>(product), model.Id > 0 ? HttpStatusCode.OK : HttpStatusCode.Created));
+            }
+            catch (Exception ex)
+            {
+                // Xử lý các trường hợp ngoại lệ và trả về thông báo lỗi phù hợp
+                return Results.Ok(ApiResponse.Fail(HttpStatusCode.BadRequest, ex.Message));
+            }
         }
+
+
 
         private static async Task<IResult> DeleteProduct(int id, IProductRepo productRepo)
         {

@@ -22,8 +22,7 @@ namespace FarmProduce.Data.Mappings
                 .IsRequired()
                 .HasMaxLength(50);
             builder.Property(x => x.QuanlityAvailable)
-                .IsRequired()
-               .HasDefaultValue(0);
+                .IsRequired();
             builder.Property(x => x.Price)
                 .IsRequired()
                 .HasPrecision(2,18);
