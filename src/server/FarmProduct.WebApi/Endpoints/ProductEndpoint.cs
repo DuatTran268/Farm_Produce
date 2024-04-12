@@ -153,7 +153,7 @@ namespace FarmProduct.WebApi.Endpoints
             {
                 product.DateCreate = DateTime.Now;
             }
-            product.DateUpdate = DateTime.Now;
+            product.DateUpdate = DateTime.Now;  
 
             try
             {

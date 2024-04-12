@@ -22,14 +22,14 @@ const AdProductEdit = () => {
   const initialState = {
       id: 0,
       name: "",
-      quantityAvailable: 0,
-      categoryId: 0,
-      price: 0,
       description: "",
-      status: false,
+      quanlityAvailable: 0,
+      categoryId: 0,
       unitId: 0,
+      price: 0,
       dateCreate: "",
       dateUpdate: "",
+      status: false,
     },
     [filterCategory, setFilterCategory] = useState({ categoryList: [] }),
     [filterUnit, setFilterUnit] = useState({ unitList: [] });
@@ -84,7 +84,11 @@ const AdProductEdit = () => {
       setValidated(true);
     } else {
       let form = new FormData(e.target);
-      form.append("status", product.status);
+      form.delete("status");
+      form.append("status", product.status ? "true" : "false");
+      for (const entry of form.entries()) {
+        console.log(entry[0] + ": " + entry[1]);
+      }
 
       newAndUpdateProduct(form).then((data) => {
         if (data) {
@@ -138,12 +142,12 @@ const AdProductEdit = () => {
             control={
               <Form.Control
                 type="number"
-                name="quantityAvailable"
-                title="quantity Available"
+                name="quanlityAvailable"
+                title="quanlity Available"
                 required
-                value={product.quantityAvailable || ""}
+                value={product.quanlityAvailable || ""}
                 onChange={(e) =>
-                  setProduct({ ...product, quantityAvailable: e.target.value })
+                  setProduct({ ...product, quanlityAvailable: e.target.value })
                 }
               />
             }
@@ -244,7 +248,7 @@ const AdProductEdit = () => {
             </div>
           </div>
 
-          <BoxEdit
+          {/* <BoxEdit
             label={"Ngày tạo"}
             control={
               <Form.Control
@@ -279,7 +283,7 @@ const AdProductEdit = () => {
               />
             }
             notempty={"Không được bỏ trống"}
-          />
+          /> */}
 
           <div className="row mb-3">
             <div className="col-sm-10 offset-sm-2">
