@@ -1,4 +1,5 @@
-﻿using FarmProduce.Core.Entities;
+﻿using FarmProduce.Core.DTO;
+using FarmProduce.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,5 +17,7 @@ namespace FarmProduce.Services.Manage.OrderStatuses
         Task<bool> DeleteWithIDAsync(int id, CancellationToken cancellationToken);
         Task<bool> AddOrUpdate(OrderStatus orderStatus, CancellationToken cancellationToken = default);
 
-    }
+		Task<IList<OrderStatusItem>> GetOrderStatusCombobox(CancellationToken cancellationToken = default);
+
+	}
 }

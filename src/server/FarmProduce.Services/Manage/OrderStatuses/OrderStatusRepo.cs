@@ -1,4 +1,5 @@
-﻿using FarmProduce.Core.Entities;
+﻿using FarmProduce.Core.DTO;
+using FarmProduce.Core.Entities;
 using FarmProduce.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
@@ -60,5 +61,17 @@ namespace FarmProduce.Services.Manage.OrderStatuses
             }
             return await _context.SaveChangesAsync() > 0;
         }
-    }
+
+		public async Task<IList<OrderStatusItem>> GetOrderStatusCombobox(CancellationToken cancellationToken = default)
+		{
+			IQueryable<OrderStatus> unit = _context.Set<OrderStatus>();
+			return await unit.OrderBy(t => t.Id)
+				.Select(t => new OrderStatusItem()
+				{
+					Id = t.Id,
+					StatusCode = t.StatusCode,
+				}).ToListAsync(cancellationToken);
+		}
+
+	}
 }

@@ -11,37 +11,45 @@ using FarmProduct.WebApi.Models.Products;
 using FarmProduct.WebApi.Utilities;
 using Mapster;
 using MapsterMapper;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Net;
 
 namespace FarmProduct.WebApi.Endpoints
 {
-	public class PaymentMethodEndpoint:ICarterModule
+	public class PaymentMethodEndpoint : ICarterModule
 	{
-        public void AddRoutes(IEndpointRouteBuilder app)
-        {
-            var routeGroupBuilder = app.MapGroup(RouteAPI.PaymentMethod);
+		public void AddRoutes(IEndpointRouteBuilder app)
+		{
+			var routeGroupBuilder = app.MapGroup(RouteAPI.PaymentMethod);
 
 
-            // get department not required
-            routeGroupBuilder.MapGet("/getall", GetAllPaymentMethod)
-                .WithName("GetAllPaymentMethod")
-                .Produces<ApiResponse<PaginationResult<PaymentsMethodDto>>>();
+			// get department not required
+			routeGroupBuilder.MapGet("/getall", GetAllPaymentMethod)
+				.WithName("GetAllPaymentMethod")
+				.Produces<ApiResponse<PaginationResult<PaymentsMethodDto>>>();
 
-            // get order status by id
-            routeGroupBuilder.MapGet("/{id:int}", GetPaymentMethodByID)
-                .WithName("GetPaymentMethodByID")
-                .Produces<ApiResponse<PaymentsMethodDto>>();
-        }
-        private static async Task<IResult> GetAllPaymentMethod(
+			// get order status by id
+			routeGroupBuilder.MapGet("/{id:int}", GetPaymentMethodByID)
+				.WithName("GetPaymentMethodByID")
+				.Produces<ApiResponse<PaymentsMethodDto>>();
+
+
+
+			routeGroupBuilder.MapGet("/combobox", FilterComboboxPaymentMethod)
+				.WithName("FilterComboboxPaymentMethod")
+				.Produces<ApiResponse<PaymentMethodFilterCombobox>>();
+
+		}
+		private static async Task<IResult> GetAllPaymentMethod(
 		IPaymentMethodRepo paymentMethodRepo,
-        [AsParameters] PagingModel pagingModel
+		[AsParameters] PagingModel pagingModel
 		)
 		{
 			var paymentMethod = await paymentMethodRepo.GetAllPaymentMethod(
-				paymentMethod => paymentMethod.ProjectToType<PaymentsMethodDto>(),pagingModel);
-            var pagination = new PaginationResult<PaymentsMethodDto>(paymentMethod);
+				paymentMethod => paymentMethod.ProjectToType<PaymentsMethodDto>(), pagingModel);
+			var pagination = new PaginationResult<PaymentsMethodDto>(paymentMethod);
 
-            return Results.Ok(ApiResponse.Success(pagination));
+			return Results.Ok(ApiResponse.Success(pagination));
 		}
 
 		// get payment method by id
@@ -53,6 +61,20 @@ namespace FarmProduct.WebApi.Endpoints
 				: Results.Ok(ApiResponse.Success(mapper.Map<PaymentsMethodDto>(paymentMethods)));
 		}
 
-       
-    }
+		private static async Task<IResult> FilterComboboxPaymentMethod(IPaymentMethodRepo paymentMethodRepo)
+		{
+			var model = new PaymentMethodFilterCombobox()
+			{
+				PaymentMethodList = (await paymentMethodRepo.GetPaymentMethodComboobox())
+				.Select(t => new SelectListItem()
+				{
+					Text = t.Name,
+					Value = t.Id.ToString()
+				})
+			};
+			return Results.Ok(ApiResponse.Success(model));
+		}
+
+
+	}
 }

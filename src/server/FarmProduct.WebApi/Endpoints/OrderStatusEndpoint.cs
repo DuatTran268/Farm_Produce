@@ -2,13 +2,16 @@
 using FarmProduce.Core.Collections;
 using FarmProduce.Services.Manage.Discounts;
 using FarmProduce.Services.Manage.OrderStatuses;
+using FarmProduce.Services.Manage.Units;
 using FarmProduct.WebApi.Models;
 using FarmProduct.WebApi.Models.Comments;
 using FarmProduct.WebApi.Models.Discounts;
 using FarmProduct.WebApi.Models.OrderStatuses;
+using FarmProduct.WebApi.Models.Unit;
 using FarmProduct.WebApi.Utilities;
 using Mapster;
 using MapsterMapper;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Routing;
 using System.Net;
 
@@ -33,7 +36,11 @@ namespace FarmProduct.WebApi.Endpoints
             routeGroupBuilder.MapGet("/{id:int}", GetOrderStatusById)
                 .WithName("GetOrderStatusById")
                 .Produces<ApiResponse<OrderStatusDto>>();
-        }
+
+			routeGroupBuilder.MapGet("/combobox", FilterComboboxOrderStautus)
+				.WithName("FilterComboboxOrderStautus")
+				.Produces<ApiResponse<OderStatusFilterCombobox>>();
+		}
         private static async Task<IResult> GetAllOrderStatus(
 		IOrderStatusRepo orderStatusRepo
 		)
@@ -52,6 +59,21 @@ namespace FarmProduct.WebApi.Endpoints
 				: Results.Ok(ApiResponse.Success(mapper.Map<OrderStatusDto>(orderstatus)));
 		}
 
-      
-    }
+		// combobox of order status
+		private static async Task<IResult> FilterComboboxOrderStautus(
+		IOrderStatusRepo statusRepo)
+		{
+			var model = new OderStatusFilterCombobox()
+			{
+				OrderStatusList = (await statusRepo.GetOrderStatusCombobox())
+				.Select(t => new SelectListItem()
+				{
+					Text = t.StatusCode,
+					Value = t.Id.ToString()
+				})
+			};
+			return Results.Ok(ApiResponse.Success(model));
+		}
+
+	}
 }

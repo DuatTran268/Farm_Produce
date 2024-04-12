@@ -88,7 +88,7 @@ const AdOrder = () => {
           <Table responsive bordered>
             <thead>
               <tr>
-                <th>id</th>
+                <th>ID đơn</th>
                 <th>Date Order</th>
                 <th>Total Price</th>
                 <th>Sửa</th>

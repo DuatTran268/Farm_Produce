@@ -1,4 +1,5 @@
 ﻿using FarmProduce.Core.Contracts;
+using FarmProduce.Core.DTO;
 using FarmProduce.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -17,5 +18,7 @@ namespace FarmProduce.Services.Manage.PaymentMethods
         Task<bool> IsIdExisted(int id, CancellationToken cancellationToken = default);
         Task<bool> DeleteWithIDAsync(int id, CancellationToken cancellationToken);
         Task<bool> AddOrUpdateProduct(PaymentMethod paymentMethod, CancellationToken cancellationToken = default);
-    }
+		Task<IList<PaymentMethodItems>> GetPaymentMethodComboobox(CancellationToken cancellationToken = default);
+
+	}
 }

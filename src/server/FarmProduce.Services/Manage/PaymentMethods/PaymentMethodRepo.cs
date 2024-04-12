@@ -1,13 +1,16 @@
 ﻿using FarmProduce.Core.Contracts;
+using FarmProduce.Core.DTO;
 using FarmProduce.Core.Entities;
 using FarmProduce.Data.Contexts;
 using FarmProduce.Services.Extentions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace FarmProduce.Services.Manage.PaymentMethods
@@ -64,5 +67,17 @@ namespace FarmProduce.Services.Manage.PaymentMethods
             return await _context.SaveChangesAsync() > 0;
         }
 
-    }
+		public async Task<IList<PaymentMethodItems>> GetPaymentMethodComboobox(CancellationToken cancellationToken = default)
+		{
+			IQueryable<PaymentMethod> unit = _context.Set<PaymentMethod>();
+			return await unit.OrderBy(t => t.Id)
+				.Select(t => new PaymentMethodItems()
+				{
+					Id = t.Id,
+					Name = t.Name,
+				}).ToListAsync(cancellationToken);
+		}
+
+		
+	}
 }
