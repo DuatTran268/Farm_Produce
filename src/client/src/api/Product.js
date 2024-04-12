@@ -22,7 +22,7 @@ export function getFilterProduct(
   url.searchParams.append("PageSize", pageSize);
   url.searchParams.append("PageNumber", pageNumber);
 
-  return get_api(url.href);
+  return get_api_nocache(url.href);
 }
 
 

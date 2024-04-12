@@ -16,7 +16,7 @@ export const LoginUser = async (user, dispatch, navigate) => {
     
     const data = response.data;
     // localStorage.setItem("token", data.token)
-    if (data.isSuccess === false){
+    if (data.result.flag === false){
       alert("Xảy ra lỗi không thể đăng nhập");
       return;
     }
@@ -37,7 +37,7 @@ export const RegisterUser = async (user, dispatch, navigate) => {
     const response = await axios.post("https://localhost:7047/api/account/register", user);
 
     const data = response.data;
-    if (data.isSuccess === false){
+    if (data.result.flag === false){
       alert("Xảy ra lỗi không thể đăng ký")
       return;
     }
@@ -45,6 +45,6 @@ export const RegisterUser = async (user, dispatch, navigate) => {
     alert("Đăng ký tài khoản thành công")
     navigate("/login");
   } catch (error) {
-    dispatch(registerFail);
+    dispatch(registerFail());
   }
 }
