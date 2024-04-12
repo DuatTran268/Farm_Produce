@@ -1,4 +1,5 @@
 ﻿using FarmProduce.Core.Contracts;
+using FarmProduce.Core.DTO;
 using FarmProduce.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static FarmProduce.Core.DTO.ServiceResponses;
 
 namespace FarmProduce.Services.Manage.Orders
 {
@@ -16,6 +18,6 @@ namespace FarmProduce.Services.Manage.Orders
         Task<bool> IsIdExisted(int id, CancellationToken cancellationToken = default);
         Task<bool> DeleteWithIDAsync(int id, CancellationToken cancellationToken);
         Task<bool> AddOrUpdate(Order order, CancellationToken cancellationToken = default);
-
+        Task<GeneralResponse> CreateOrder(OrderDTO orderDTO);
     }
 }

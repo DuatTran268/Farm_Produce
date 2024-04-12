@@ -63,10 +63,16 @@ namespace FarmProduct.WebApi.Endpoints
         }
         private static async Task<IResult> GetAllProducts(IProductRepo productRepo,[AsParameters]PagingModel pagingModel, [AsParameters]ProductQuery productQuery)
 		{
-			var products = await productRepo.GetAllProducts(
-				products => products.ProjectToType<ProductsDto>(),productQuery, pagingModel);
-            var paginationResult = new PaginationResult<ProductsDto>(products);
-			return Results.Ok(ApiResponse.Success(paginationResult));
+            try
+            {
+                var products = await productRepo.GetAllProducts(
+            products => products.ProjectToType<ProductsDto>(), productQuery, pagingModel);
+                var paginationResult = new PaginationResult<ProductsDto>(products);
+                return Results.Ok(ApiResponse.Success(paginationResult));
+            }catch(Exception ex)
+            {
+                return Results.Ok(ApiResponse.Fail(HttpStatusCode.BadRequest, ex.Message));
+            }
 		}
 		// get by id 
 		private static async Task<IResult> getProductById(
@@ -163,7 +169,7 @@ namespace FarmProduct.WebApi.Endpoints
         private static async Task<IResult> DeleteProduct(int id, IProductRepo productRepo)
         {
             var status = await productRepo.DeleteWithIDAsync(id);
-            return Results.Ok(status ? ApiResponse.Success(HttpStatusCode.NoContent) : ApiResponse.Fail(HttpStatusCode.NotFound, $"không tìm thấy food với mã {id}"));
+            return Results.Ok(status ? ApiResponse.Success(HttpStatusCode.NoContent) : ApiResponse.Fail(HttpStatusCode.NotFound, $"không tìm thấy rau với mã {id}"));
         }
 
     }

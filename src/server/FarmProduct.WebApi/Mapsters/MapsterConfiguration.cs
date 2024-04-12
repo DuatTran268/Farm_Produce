@@ -45,6 +45,7 @@ namespace FarmProduct.WebApi.Mapsters
             config.NewConfig<Image, ImageDto>();
 			config.NewConfig<Product, ProductEditModel>();
 			config.NewConfig<Image, ImageEditModel>();
+			config.NewConfig<Order, OrderDto>();
 
         }
     }

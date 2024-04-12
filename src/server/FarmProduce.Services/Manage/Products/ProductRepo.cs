@@ -32,6 +32,8 @@ namespace FarmProduce.Services.Manage.Products
 			return await mapper(products).ToPagedListAsync(pagingParams,cancellationToken);
 
 		}
+
+	
 		private IQueryable<Product> FilterProduct(ProductQuery productQuery)
 		{
 			IQueryable<Product> products = _context.Set<Product>();
