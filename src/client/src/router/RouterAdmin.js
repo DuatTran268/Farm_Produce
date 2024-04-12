@@ -14,6 +14,8 @@ import AdComments from "../pages/admin/comment/AdComments";
 import AdCommentEdit from "../pages/admin/comment/AdCommentEdit";
 import AdProductEdit from "../pages/admin/product/AdProductEdit";
 import AdminPanel from "../pages/admin/Admin";
+import AdDiscount from "../pages/admin/discount/AdDiscount";
+import AdDiscountEdit from "../pages/admin/discount/AdDiscountEdit";
 
 const RouterAdmin = () => {
   return (
@@ -27,9 +29,11 @@ const RouterAdmin = () => {
         <Route path="/admin/user" element={<AdUser/>} />
         <Route path="/admin/order" element={<AdOrder/>} />
         <Route path="/admin/category" element={<AdCategory/>} />
+        
         <Route path="/admin/product" element={<AdProduct/>} />
         <Route path="/admin/product/edit" element={<AdProductEdit/>} />
         <Route path="/admin/product/edit/:id" element={<AdProductEdit/>} />
+
         <Route path="/admin/unit" element={<AdUnit/>} />
         <Route path="/admin/unit/edit" element={<AdUnitEdit/>} />
         <Route path="/admin/unit/edit/:id" element={<AdUnitEdit/>} />
@@ -41,6 +45,10 @@ const RouterAdmin = () => {
         <Route path="/admin/comment" element={<AdComments/>} />
         <Route path="/admin/comment/edit" element={<AdCommentEdit/>} />
         <Route path="/admin/comment/edit/:id" element={<AdCommentEdit/>} />
+
+        <Route path="/admin/discount" element={<AdDiscount/>} />
+        <Route path="/admin/discount/edit" element={<AdDiscountEdit/>} />
+        <Route path="/admin/discount/edit/:id" element={<AdDiscountEdit/>} />
 
       </Routes>
     </BrowserRouter>

@@ -8,6 +8,7 @@ import {
   faMessage,
   faSignOut,
   faTicket,
+  faUpDown,
   faUser,
   faUserCircle,
 } from "@fortawesome/free-solid-svg-icons";
@@ -92,12 +93,25 @@ const Sidebar = () => {
               active={activeMenu === "unit"}
               onClick={handleMenuClick}
             />
+
+            <SidebarCommon
+              slug="discount"
+              icon={faUpDown}
+              title="Giảm giá"
+              active={activeMenu === "discount"}
+              onClick={handleMenuClick}
+            />
           </div>
 
           <div className="sidebar-main">
             <span className="sidebar-tile">Cài đặt</span>
-            <SidebarCommon slug="setting" icon={faEdit} title="Cài đặt" active={activeMenu === "setting"}
-              onClick={handleMenuClick}/>
+            <SidebarCommon
+              slug="setting"
+              icon={faEdit}
+              title="Cài đặt"
+              active={activeMenu === "setting"}
+              onClick={handleMenuClick}
+            />
             <SidebarCommon slug="" icon={faSignOut} title="Đăng xuất" />
           </div>
         </ul>

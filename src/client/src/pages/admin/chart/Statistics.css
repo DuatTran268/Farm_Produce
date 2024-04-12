@@ -1,0 +1,29 @@
+.statistics{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  background-color: #22d04d;
+  border: 2px solid #ccc;
+  border-radius: 1rem ;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.statistics_wrapper{
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-around;
+
+}
+
+.statistics_icon{
+  font-size: 3rem;
+  color: #ccc;
+}
+.statistics_value{
+  color: red;
+  font-weight: bold;
+  font-size: 1.3rem;
+}

@@ -47,7 +47,7 @@ function PieChart() {
   };
 
   return (
-    <div className="pie-item">
+    <div className="pie-item m-5">
       <ReactApexChart
         options={options}
         series={series}

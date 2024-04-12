@@ -12,7 +12,6 @@ const Cart = () => {
         <div className="cart_name">Giỏ hàng của bạn</div>
         <div className="cart_content">
           <CartTable />
-          <CartInfor />
         </div>
       </div>
     </LayoutClient>

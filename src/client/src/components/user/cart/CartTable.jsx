@@ -10,6 +10,7 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import CartInfor from "./CartInfor";
 
 const CartTable = () => {
   const {
@@ -120,6 +121,8 @@ const CartTable = () => {
           </table>
         </div>
       </div>
+      <CartInfor />
+
     </section>
   );
 };
