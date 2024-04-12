@@ -51,6 +51,7 @@ const AdCommentEdit = () => {
     } else {
       let data = new FormData(e.target);
 
+
       createNewAndUpdateComment(id, data).then((data) => {
         if (data) {
           enqueueSnackbar("Đã lưu thành công", {

@@ -7,7 +7,7 @@ import ProductList from "./ProductList";
 const FruitProduct = () => {
   return (
     <div className="fruit_product">
-      <ProductHeader name="Tất cả sản phẩm" />
+      <ProductHeader name="Tất cả sản phẩm" slug={"/product/viewmore"} />
       <ProductList />
     </div>
   );

@@ -40,7 +40,7 @@ const AdvertiseBanner = () => {
             </div>
             <div className="col-lg-6">
               <div className="ad_banner">
-                <Image src={adBaner} />
+                <Image src={adBaner} className="rotating-image"/>
               </div>
             </div>
             <div className="col-lg-3">

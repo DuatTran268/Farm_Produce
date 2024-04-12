@@ -6,6 +6,7 @@ import FruitProduct from "../../components/user/product/FruitProduct";
 import Advertise from "../../components/user/advertise/Advertise";
 import AdvertiseBanner from "../../components/user/advertise/AdvertiseBanner";
 import LayoutClient from "../../components/user/common/LayoutClient";
+import ProductCategory from "../../components/user/product/ProductCategory";
 
 const Home = () => {
   return (
@@ -26,7 +27,7 @@ const Home = () => {
       <div className="new_product">
         <NewProduct />
       </div>
-      <div className="fruit_product">
+      <div className="list_product">
         <FruitProduct />
       </div>
       <div className="advertise">
@@ -34,6 +35,9 @@ const Home = () => {
       </div>
       <div className="advertise">
         <AdvertiseBanner />
+      </div>
+      <div className="list_product">
+        <ProductCategory/>
       </div>
     </LayoutClient>
   );

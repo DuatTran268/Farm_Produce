@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 
 
-const ProductHeader = ({name}) => {
+const ProductHeader = ({name, slug}) => {
   return (
     <>
       <div className="product_header">
@@ -17,7 +17,7 @@ const ProductHeader = ({name}) => {
           <span className="product_header_name">{name}</span>
         </div>
         <div className="view_more">
-          <Link to={"/product/viewmore"} className="view_more_link">
+          <Link to={slug} className="view_more_link">
             Xem thêm ...
           </Link>
         </div>

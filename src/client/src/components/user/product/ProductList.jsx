@@ -16,7 +16,7 @@ const ProductList = () => {
   const productFilter = useSelector((state) => state.productFilter);
   let { id } = useParams,
     p = 1,
-    ps = 5;
+    ps = 8;
   function updatePageNumber(inc) {
     setPageNumber((currentVal) => currentVal + inc);
   }
@@ -53,7 +53,7 @@ const ProductList = () => {
                         key={item.id}
                       >
                         <ProductTemplate
-                          item={item} // Thêm dòng này để truyền item vào ProductTemplate
+                          item={item} 
                           urlSlug={item.urlSlug}
                           name={item.name}
                           price={item.price}

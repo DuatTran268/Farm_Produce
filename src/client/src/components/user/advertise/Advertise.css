@@ -62,3 +62,16 @@
 .ad_banner{
   padding: 10px 0;
 }
+
+.rotating-image {
+  animation: rotate 4s linear infinite; /* 4s là thời gian mỗi vòng, linear là kiểu chuyển động */
+}
+
+@keyframes rotate {
+  from {
+    transform: rotateY(360deg);
+  }
+  to {
+    transform: rotateY(0deg);
+  }
+}
