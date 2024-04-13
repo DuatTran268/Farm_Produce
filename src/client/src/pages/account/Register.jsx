@@ -29,6 +29,7 @@ const Register = () => {
     RegisterUser(newRegister, dispatch, navigate);
     console.log("Đăng ký thành công");
   };
+  // test login push code success
 
   return (
     <section className="login">
