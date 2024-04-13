@@ -27,12 +27,15 @@ namespace FarmProduct.WebApi.Endpoints
             routeGroupBuilder.MapPost("/create-account", CreateAccountByAdmin)
               .WithName("CreateAccount")
               .Produces<ApiResponse<UserDTO>>();
-            routeGroupBuilder.MapGet("/", GetAll)
-              .WithName("getAll")
-              .Produces<ApiResponse<UserDTO>>();
-            routeGroupBuilder.MapGet("/curentId", GetCurentUserId)
-             .WithName("GetCurrentId")
-             .Produces<ApiResponse<UserDTO>>();
+            //routeGroupBuilder.MapGet("/", GetAll)
+            //  .WithName("getAll")
+            //  .Produces<ApiResponse<UserDTO>>();
+            routeGroupBuilder.MapGet("/", GetAllUser)
+             .WithName("GetAllAccount")
+             .Produces<ApiResponse<DetailUserDTO>>();
+            routeGroupBuilder.MapGet("/{id}", GetUserByEmail)
+             .WithName("GetDetail")
+             .Produces<ApiResponse<DetailUserDTO>>();
         }
      
         private static async Task<IResult> Register(
@@ -70,12 +73,12 @@ namespace FarmProduct.WebApi.Endpoints
             try
             {
             var response = await userAccount.LoginAccount(loginDTO);
-            return Results.Ok(ApiResponse.Success(response));
+            return Results.Ok(response);
 
             }
             catch(Exception ex)
             {
-                return Results.NotFound(ApiResponse.Fail(HttpStatusCode.BadRequest, ex.Message));
+                return Results.NotFound(HttpStatusCode.BadRequest);
             }
         }
 
@@ -94,19 +97,34 @@ namespace FarmProduct.WebApi.Endpoints
                 return Results.NotFound(ApiResponse.Fail(HttpStatusCode.NotFound, ex.Message));
             }
         }
-        private static async Task<IResult> GetCurentUserId(
-      [FromServices] IUserAccount userAccount
-      )  
+        private static async Task<IResult> GetAllUser(
+     [FromServices] IUserAccount userAccount
+     )
         {
             try
             {
-            var response = await userAccount.GetCurrentUserId();
-            return Results.Ok(ApiResponse.Success(response));
+                var response = await userAccount.GetAllUser();
+                return Results.Ok(ApiResponse.Success(response));
 
             }
             catch (Exception ex)
             {
-                return Results.NotFound(ApiResponse.Fail(HttpStatusCode.BadRequest, ex.Message));
+                return Results.NotFound(ApiResponse.Fail(HttpStatusCode.NotFound, ex.Message));
+            }
+        }
+        private static async Task<IResult> GetUserByEmail(
+         [FromServices] IUserAccount userAccount, string id
+         )
+        {
+            try
+            {
+                var response = await userAccount.GetUserWithOrdersById(id);
+                return Results.Ok(ApiResponse.Success(response));
+
+            }
+            catch (Exception ex)
+            {
+                return Results.NotFound(ApiResponse.Fail(HttpStatusCode.NotFound, ex.Message));
             }
         }
     }

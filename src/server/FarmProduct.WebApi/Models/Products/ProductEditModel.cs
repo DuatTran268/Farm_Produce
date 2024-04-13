@@ -12,8 +12,8 @@ namespace FarmProduct.WebApi.Models.Products
         public string Description { get; set; }
         public bool Status { get; set; }
         public int UnitId { get; set; }
-        //public DateTime DateCreate { get; set; } = DateTime.Now; 
-        //public DateTime DateUpdate { get; set; } = DateTime.Now;
+        public DateTime DateCreate { get; set; } = DateTime.Now;
+        public DateTime DateUpdate { get; set; } = DateTime.Now;
         public static async ValueTask<ProductEditModel> BindAsync(HttpContext context)
         {
             var form = await context.Request.ReadFormAsync();
@@ -27,9 +27,9 @@ namespace FarmProduct.WebApi.Models.Products
                 Price = decimal.Parse(form["Price"]),
                 Status = form["Status"] !="false",
                 UnitId = int.Parse(form["UnitId"]),
-				//DateCreate = DateTime.Parse(form["DateCreate"]),
-				//DateUpdate = DateTime.Parse(form["DateUpdate"]),
-			};
+                DateCreate = DateTime.Parse(form["DateCreate"]),
+                DateUpdate = DateTime.Parse(form["DateUpdate"]),
+            };
         }
     }
 }
