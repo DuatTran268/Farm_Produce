@@ -1,6 +1,7 @@
 ﻿using FarmProduce.Core.Contracts;
 using FarmProduce.Core.DTO;
 using FarmProduce.Core.Entities;
+using FarmProduce.Data.Contexts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +19,7 @@ using static FarmProduce.Core.DTO.ServiceResponses;
 namespace FarmProduce.Services.Manage.Account
 {
     public class AccountRepository(UserManager<ApplicationUser> userManager,
-    RoleManager<IdentityRole> roleManager, IConfiguration config, IHttpContextAccessor httpContextAccessor) : IUserAccount
+    RoleManager<IdentityRole> roleManager, IConfiguration config) : IUserAccount
     {
 
         public async Task<GeneralResponse> CreateAccount(RegisterDTO userDTO)
@@ -156,6 +157,27 @@ namespace FarmProduce.Services.Manage.Account
         {
             return await userManager.Users.ToListAsync();
         }
+        public async Task<IEnumerable<DetailUserDTO>> GetAllUser()
+        {
+            var usersWithOrders = await userManager.Users
+                .Select(user => new DetailUserDTO
+                {
+                   Id = user.Id,
+                    Name = user.Name,
+                    Email = user.Email,
+                    Orders = user.Orders.Select(order => new OrderDTO
+                    {
+                        Id = order.Id,
+                        TotalPrice = order.TotalPrice,
+                        OrderItems= order.OrderItems,
+                        PaymentMethods=order.PaymentMethods,
+                        OrderStatusId= order.OrderStatusId,
+                    }).ToList()
+                })
+                .ToListAsync();
+
+            return usersWithOrders;
+        }
         public async Task<IEnumerable<UserWithRolesDTO>> GetAllAccountsWithRoles()
         {
             var usersWithRoles = new List<UserWithRolesDTO>();
@@ -173,13 +195,27 @@ namespace FarmProduce.Services.Manage.Account
             }
             return usersWithRoles;
         }
-        public async Task<string> GetCurrentUserId()
+        public async Task<DetailUserDTO> GetUserWithOrdersById(string userId)
         {
-           
-            var user = await userManager.GetUserAsync(httpContextAccessor.HttpContext.User);
+            var user = await userManager.Users
+                .Where(u => u.Id == userId)
+                .Select(u => new DetailUserDTO
+                {
+                    Id = u.Id,
+                    Name = u.Name,
+                    Email = u.Email,
+                    Orders = u.Orders.Select(order => new OrderDTO
+                    {
+                        Id = order.Id,
+                        TotalPrice = order.TotalPrice,
+                        OrderItems = order.OrderItems,
+                        PaymentMethods = order.PaymentMethods,
+                        OrderStatusId = order.OrderStatusId,
+                    }).ToList()
+                })
+                .FirstOrDefaultAsync();
 
-            // Kiểm tra nếu người dùng không null thì trả về Id của người dùng, ngược lại trả về null
-            return user?.Id;
+            return user;
         }
     }
 }
