@@ -1,5 +1,4 @@
 
-
 .product_note{
   text-align: center;
   font-size: 1.6rem;
@@ -94,3 +93,25 @@ margin-left: 1.4rem;
 }
 
 
+
+
+/* Swipper */
+
+
+.swiper {
+  width: 60%;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.swiper-slide {
+  background-position: center;
+  background-size: cover;
+  width: 300px;
+  height: 300px;
+}
+
+.swiper-slide .new_product_wrapper {
+  display: block;
+  width: 100%;
+}

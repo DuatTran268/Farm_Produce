@@ -13,6 +13,16 @@ import ProductHeader from "./ProductHeader";
 import { useCart } from "react-use-cart";
 import { useSnackbar } from "notistack";
 
+
+import { Swiper, SwiperSlide } from 'swiper/react';
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/effect-coverflow';
+import 'swiper/css/pagination';
+import { EffectCoverflow, Pagination } from 'swiper/modules';
+
+
+
 const NewProduct = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
@@ -59,53 +69,76 @@ const NewProduct = () => {
           Các sản phẩm mới nhất của công ty Nông sản Đà Lạt
         </div>
 
-        <Slider {...settings}>
-          {getProduct.map((product, index) => {
-            return (
-              <div className="new_product_wrapper" key={index}>
-                <Link
-                  className="product_item"
-                  to={`/detail/${product.urlSlug}`}
-                >
-                  <div className="new_product_image">
-                    <img
-                      className="new_product_img"
-                      src="https://nongsandalat.vn/wp-content/uploads/2021/10/mut-dau-tay-1-370x290.jpg"
-                      alt={product.name}
-                    ></img>
-                  </div>
-                  <div className="new_product_content">
-                    <div className="new_product_name">
-                      <h4>{product.name}</h4>
-                    </div>
+        {/* <Slider {...settings}> */}
 
-                    <div className="new_product_desc">
-                      {product.description}
-                    </div>
-                    <div className="new_product_buy">
-                      <div className="new_product_price">
-                        {product.price} VND
+        <Swiper
+          effect={'coverflow'}
+          grabCursor={true}
+          centeredSlides={true}
+          slidesPerView={'auto'}
+          coverflowEffect={{
+            rotate: 50,
+            stretch: 0,
+            depth: 100,
+            modifier: 1,
+            slideShadows: true,
+          }}
+          pagination={true}
+          modules={[EffectCoverflow, Pagination]}
+          className="mySwiper"
+        
+        >
+            {getProduct.map((product, index) => {
+              return (
+                <SwiperSlide>
+                  <div className="new_product_wrapper" key={index}>
+                    <Link
+                      className="product_item"
+                      to={`/detail/${product.urlSlug}`}
+                    >
+                      <div className="new_product_image">
+                        <img
+                          className="new_product_img"
+                          src="https://nongsandalat.vn/wp-content/uploads/2021/10/mut-dau-tay-1-370x290.jpg"
+                          alt={product.name}
+                        ></img>
                       </div>
-                      <div className="new_product_add">
-                        <Link
-                          className="new_product_addcart"
-                          to={"/cart"}
-                          onClick={() => handleAddToCart(product)}
-                        >
-                          Mua ngay
-                          <FontAwesomeIcon
-                            icon={faCartShopping}
-                            className="new_product_icon"
-                          />
-                        </Link>
+                      <div className="new_product_content">
+                        <div className="new_product_name">
+                          <h4>{product.name}</h4>
+                        </div>
+
+                        <div className="new_product_desc">
+                          {product.description}
+                        </div>
+                        <div className="new_product_buy">
+                          <div className="new_product_price">
+                            {product.price} VND
+                          </div>
+                          <div className="new_product_add">
+                            <Link
+                              className="new_product_addcart"
+                              to={"/cart"}
+                              onClick={() => handleAddToCart(product)}
+                            >
+                              Mua ngay
+                              <FontAwesomeIcon
+                                icon={faCartShopping}
+                                className="new_product_icon"
+                              />
+                            </Link>
+                          </div>
+                        </div>
                       </div>
-                    </div>
+                    </Link>
                   </div>
-                </Link>
-              </div>
-            );
-          })}
-        </Slider>
+                </SwiperSlide>
+              );
+            })}
+        </Swiper>
+
+
+        {/* </Slider> */}
       </div>
     </div>
   );

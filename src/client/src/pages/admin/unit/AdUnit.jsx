@@ -13,6 +13,8 @@ import { deletUnit, getFilterUnit } from "../../../api/Unit";
 import BtnSuccess from "../../../components/common/BtnSuccess";
 import HeaderBtn from "../../../components/common/HeaderBtn";
 
+import Popup from "../../../components/common/Popup";
+
 const AdUnit = () => {
   const [getUnit, setgetUnit] = useState([]);
   const [reRender, setRender] = useState(false);
@@ -22,6 +24,10 @@ const AdUnit = () => {
 
   const [isVisibleLoading, setIsVisibleLoading] = useState(true),
     unitFilter = useSelector((state) => state.unitFilter);
+
+  const [popupMessage, setPopupMessage] = useState("");
+  const [popupVisible, setPopupVisible] = useState(false);
+  const [unitIdToDelete, setUnitIdToDelete] = useState(null);
 
   let { id } = useParams,
     p = 1,
@@ -50,24 +56,29 @@ const AdUnit = () => {
     }
   }, [unitFilter, ps, p, reRender, pageNumber]);
 
-  const hanldeDeleteUnit = (e, id) => {
-    e.preventDefault();
-    removeUnit(id);
-    async function removeUnit(id) {
-      if (window.confirm("Bạn có muốn unit này")) {
-        const response = await deletUnit(id);
-        if (response) {
-          enqueueSnackbar("Đã xoá thành công", {
-            variant: "success",
-          });
-          setRender(true);
-        } else {
-          enqueueSnackbar("Đã xoá thành công", {
-            variant: "error",
-          });
-        }
-      }
+  const handleDeleteUnit = (id) => {
+    setUnitIdToDelete(id);
+    setPopupMessage("Bạn có muốn xoá unit này?");
+    setPopupVisible(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    const response = await deletUnit(unitIdToDelete);
+    if (response) {
+      enqueueSnackbar("Đã xoá thành công", {
+        variant: "success",
+      });
+      setRender(true);
+    } else {
+      enqueueSnackbar("Xoá thất bại", {
+        variant: "error",
+      });
     }
+    setPopupVisible(false);
+  };
+
+  const handleCancelDelete = () => {
+    setPopupVisible(false);
   };
 
   return (
@@ -107,10 +118,9 @@ const AdUnit = () => {
                       </Link>
                     </td>
                     <td className="text-center">
-                      <div onClick={(e) => hanldeDeleteUnit(e, item.id)}>
+                      <div onClick={() => handleDeleteUnit(item.id)}>
                         <FontAwesomeIcon icon={faTrash} color="red" />
                       </div>
-                     
                     </td>
                   </tr>
                 ))
@@ -126,7 +136,14 @@ const AdUnit = () => {
         )}
         <BtnNextPage metadata={metadata} onPageChange={updatePageNumber} />
       </div>
-      
+
+      {popupVisible && (
+        <Popup
+          message={popupMessage}
+          onCancel={handleCancelDelete}
+          onConfirm={handleConfirmDelete}
+        />
+      )}
     </LayoutCommon>
   );
 };
