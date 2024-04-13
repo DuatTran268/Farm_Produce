@@ -24,3 +24,15 @@
   width: 50%;
   transform: translateY(100%);
 }
+
+
+.form_inputpassword{
+  position: absolute;
+
+}
+
+.toggle-password{
+  position: relative;
+  top: 5px;
+  right: -45%;
+}

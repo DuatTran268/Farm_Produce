@@ -6,6 +6,7 @@ const AdDiscountEdit = () => {
   return(
     <LayoutCommon>
       <h1>Đây là trang sửa Discount</h1>
+      
     </LayoutCommon>
   )
 }
