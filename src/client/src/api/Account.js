@@ -12,7 +12,9 @@ import {
 export const LoginUser = async (user, dispatch, navigate) => {
   dispatch(loginStart());
   try {
+    
     const response = await axios.post("https://localhost:7047/api/account/login", user);
+    alert("code da vao day",  response);
     
     const data = response.data;
     // localStorage.setItem("token", data.token)

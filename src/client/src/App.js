@@ -7,6 +7,7 @@ import { CartProvider } from "react-use-cart";
 import { SnackbarProvider } from "notistack";
 import RouterUser from "./router/RouterUser";
 import RouterAdmin from "./router/RouterAdmin";
+import "./index.css"
 
 function App() {
   return (

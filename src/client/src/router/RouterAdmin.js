@@ -13,12 +13,12 @@ import AdCommentEdit from "../pages/admin/comment/AdCommentEdit";
 import AdProductEdit from "../pages/admin/product/AdProductEdit";
 import AdDiscount from "../pages/admin/discount/AdDiscount";
 import AdDiscountEdit from "../pages/admin/discount/AdDiscountEdit";
+import NotFound from "../pages/NotFound";
 
 const RouterAdmin = () => {
   return (
     <BrowserRouter>
       <Routes>
-
         <Route path="/admin/dashboard" element={<Dashboard/>} />
         <Route path="/admin/user" element={<AdUser/>} />
 

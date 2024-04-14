@@ -5,10 +5,10 @@ const Popup = ({ message, onCancel, onConfirm }) => {
   return (
     <div className="popup-container">
       <div className="popup">
-        <p>{message}</p>
+        <p className="messgae_popup">{message}</p>
         <div className="popup-buttons">
-          <button onClick={onCancel}>Cancel</button>
-          <button onClick={onConfirm}>OK</button>
+          <button className="btn_action btn_cancel" onClick={onCancel}>Cancel</button>
+          <button className="btn_action btn_oke" onClick={onConfirm}>OK</button>
         </div>
       </div>
     </div>

@@ -4,7 +4,7 @@
   justify-content: space-around;
   flex-wrap: wrap;
   background-color: #22d04d;
-  border: 2px solid #ccc;
+  border: 2px solid #ebebeb;
   border-radius: 1rem ;
   padding: 1rem;
   margin-bottom: 1rem;
@@ -20,7 +20,7 @@
 
 .statistics_icon{
   font-size: 3rem;
-  color: #ccc;
+  color: #ebebeb;
 }
 .statistics_value{
   color: red;

@@ -29,9 +29,9 @@ const ProductInCategory = () => {
       <div className="product_body">
         <CategoryName />
         <div className="product_body_flex">
-          <div className="product_banner">
+          {/* <div className="product_banner">
             <Image src={BannerProductList} alt="productbanner" />
-          </div>
+          </div> */}
           <div className="product_list">
             {productCategory.length > 0 ? (
               <>

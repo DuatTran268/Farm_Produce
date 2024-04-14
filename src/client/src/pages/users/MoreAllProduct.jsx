@@ -8,7 +8,7 @@ const MoreAllProduct = () => {
   return (
     <LayoutClient>
       <div className="more_title">
-        Tất cả các sản phẩm
+        <h3 className="text-success text-center mt-3 mb-3">Tất cả các sản phẩm</h3>
       </div>
       <ProductList/>
     </LayoutClient>

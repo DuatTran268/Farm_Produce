@@ -12,6 +12,7 @@ import { useSnackbar } from "notistack";
 import { useSelector } from "react-redux";
 import { deletProduct, getFilterProduct } from "../../../api/Product";
 import ProductFilter from "../../../components/admin/filter/ProductFilter";
+import Popup from "../../../components/common/Popup";
 
 const AdProduct = () => {
   const [getProduct, setgetProduct] = useState([]);
@@ -22,6 +23,11 @@ const AdProduct = () => {
 
   const [isVisibleLoading, setIsVisibleLoading] = useState(true),
     productFilter = useSelector((state) => state.productFilter);
+
+
+  const [popupMessage, setPopupMessage] = useState("");
+  const [popupVisible, setPopupVisible] = useState(false);
+  const [IdToDelete, setIdToDelete] = useState(null);
 
   let { id } = useParams,
     p = 1,
@@ -51,27 +57,31 @@ const AdProduct = () => {
   }, [productFilter, ps, p, reRender, pageNumber]);
 
 
-  const hanldeDeleteProduct = (e, id) => {
-    e.preventDefault();
-    removeProduct(id);
-    async function removeProduct(id) {
-      if (window.confirm("Bạn có muốn product này")) {
-        const response = await deletProduct(id);
-        if (response) {
-          enqueueSnackbar("Đã xoá thành công", {
-            variant: "success",
-          });
-          setRender(true);
-        } else {
-          enqueueSnackbar("Đã xoá thành công", {
-            variant: "error",
-          });
-        }
-      }
-    }
+  
+  const handleDelete = (id) => {
+    setIdToDelete(id);
+    setPopupMessage("Bạn có muốn xoá category này?");
+    setPopupVisible(true);
   };
 
+  const handleConfirmDelete = async () => {
+    const response = await deletProduct(IdToDelete);
+    if (response) {
+      enqueueSnackbar("Đã xoá thành công", {
+        variant: "success",
+      });
+      setRender(true);
+    } else {
+      enqueueSnackbar("Xoá thất bại", {
+        variant: "error",
+      });
+    }
+    setPopupVisible(false);
+  };
 
+  const handleCancelDelete = () => {
+    setPopupVisible(false);
+  };
   return (
     <>
       <LayoutCommon>
@@ -107,9 +117,6 @@ const AdProduct = () => {
                     <td>{item.quanlityAvailable}</td>
                     <td>{item.price}</td>
                     <td>{item.description}</td>
-
-
-
                     <td className="text-center">
                       <Link
                         to={`/admin/product/edit/${item.id}`}
@@ -119,10 +126,9 @@ const AdProduct = () => {
                       </Link>
                     </td>
                     <td className="text-center">
-                      <div onClick={(e) => hanldeDeleteProduct(e, item.id)}>
+                      <div onClick={() => handleDelete(item.id)}>
                         <FontAwesomeIcon icon={faTrash} color="red" />
                       </div>
-                     
                     </td>
                   </tr>
                 ))
@@ -138,6 +144,16 @@ const AdProduct = () => {
         )}
         <BtnNextPage metadata={metadata} onPageChange={updatePageNumber} />
       </div>
+
+      {popupVisible && (
+        <Popup
+          message={popupMessage}
+          onCancel={handleCancelDelete}
+          onConfirm={handleConfirmDelete}
+        />
+      )}
+
+
       </LayoutCommon>
     </>
   )

@@ -64,6 +64,7 @@ const Login = () => {
                     className="form-control form_inputpassword"
                     placeholder="Nhập vào mật khẩu ..."
                     required
+                    value={passwordLogin}
                     onChange={(e) => setPasswordLogin(e.target.value)}
                   />
                   <span
@@ -97,3 +98,4 @@ const Login = () => {
   );
 };
 export default Login;
+

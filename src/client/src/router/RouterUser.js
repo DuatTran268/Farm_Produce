@@ -13,6 +13,7 @@ import ProductInCategory from "../pages/users/ProductInCategory";
 import Recruitment from "../pages/users/Recruitment";
 import Login from "../pages/account/Login";
 import Register from "../pages/account/Register";
+import NotFound from "../pages/NotFound";
 
 
 const RouterUser = () => {

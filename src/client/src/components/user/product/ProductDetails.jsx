@@ -59,12 +59,12 @@ const ProductDetails = () => {
           </div>
           <div className="product_detail_content col-7">
             <div className="product_detail_title">{productDetail.name}</div>
-            <div className="product_detail_price">{productDetail.price}</div>
+            <div className="product_detail_price">{productDetail.price} VNĐ</div>
 
             <div className="product_detail_desc">
               {productDetail.description}
             </div>
-            <div className="product_detail_size">
+            {/* <div className="product_detail_size">
               <label htmlFor="size">Lựa chọn size: </label>
               <select name="size" id="size">
                 <option value="S">S</option>
@@ -72,11 +72,12 @@ const ProductDetails = () => {
                 <option value="L">L</option>
                 <option value="XL">XL</option>
               </select>
-            </div>
+            </div> */}
             <div className="product_detail_quantity_cart">
               <div className="product_detail_quantity">
                 <span>Số lượng</span>
                 <input
+                  className="box_quantity_product"
                   type="number"
                   id="quantity"
                   min="1"

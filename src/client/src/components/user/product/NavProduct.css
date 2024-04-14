@@ -3,7 +3,7 @@
 .product_header{
   display: flex;
   justify-content: space-between;
-  background-color: #ccc;
+  background-color: #ebebeb;
   align-items: center;
   margin-top: 1rem;
 
@@ -41,6 +41,6 @@
 }
 
 .product_body{
-  margin-top: 0.5rem;
-  background-color: white;
+  background-color: #ebebeb;
+  border-radius: 0px 0px 25px 25px;
 }

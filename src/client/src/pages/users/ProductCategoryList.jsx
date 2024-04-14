@@ -24,9 +24,6 @@ const ProductCategoryList = () => {
   return (
       <div className="product_body">
         <div className="product_body_flex">
-          <div className="product_banner">
-            <Image src={BannerProductList} alt="productbanner" />
-          </div>
           <div className="product_list">
             {productCategory.length > 0 ? (
               <>

@@ -6,7 +6,8 @@
   background-color: red;
   color: white;
   padding: 10px;
-
+  border-radius: 2rem;
+  font-weight: 400;
 }
 
 .category_link{
@@ -15,6 +16,7 @@
   font-size: 1.1rem;
   display: flex;
   align-items: center;
+  padding: 10px 20px;
 }
 
 .category_link :hover{
@@ -26,7 +28,14 @@
 }
 
 .category_item{
-  background-color: white;
-  margin: 6px 0px;
-  padding: 10px;
+  margin: 10px 0px;
+  border-radius: 25px 0px 25px 0px;
+  border: 2px solid #6bd16b;
+  box-shadow: 5px 5px 2px rgb(230, 255, 237);
+}
+.category_item :hover{
+  background: #6bd16b;
+  color: white;
+  border-radius: 25px 0px 25px 0px;
+  cursor: pointer;
 }

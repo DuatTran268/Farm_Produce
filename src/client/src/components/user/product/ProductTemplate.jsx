@@ -47,8 +47,7 @@ const ProductTemplate = (props) => {
                     return handleAddCart(), addItem(props.item);
                   }}
                 >
-                  Mua ngay
-                  <FontAwesomeIcon icon={faCartArrowDown} className="ms-2" />
+                  <FontAwesomeIcon icon={faCartArrowDown} />
                 </Link>
               </div>
             </div>

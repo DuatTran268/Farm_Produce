@@ -13,6 +13,7 @@ import { Table } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import BtnNextPage from "../../../components/common/BtnNextPage";
 import { format } from "date-fns";
+import Popup from "../../../components/common/Popup";
 
 const AdComments = () => {
   const [getCommnent, setgetCommnent] = useState([]);
@@ -23,6 +24,11 @@ const AdComments = () => {
 
   const [isVisibleLoading, setIsVisibleLoading] = useState(true),
     commentFilter = useSelector((state) => state.commentFilter);
+
+  const [popupMessage, setPopupMessage] = useState("");
+  const [popupVisible, setPopupVisible] = useState(false);
+  const [unitIdToDelete, setUnitIdToDelete] = useState(null);
+
 
   let { id } = useParams,
     p = 1,
@@ -52,26 +58,32 @@ const AdComments = () => {
     }
   }, [commentFilter, ps, p, reRender, pageNumber]);
 
-  const handleDeletComment = (e, id) => {
-    e.preventDefault();
-    removeComment(id);
-    async function removeComment(id) {
-      if (window.confirm("Bạn có muốn unit này")) {
-        const response = await deleteComment(id);
-        if (response) {
-          enqueueSnackbar("Đã xoá thành công", {
-            variant: "success",
-          });
-          setRender(true);
-        } else {
-          enqueueSnackbar("Lỗi trong khi xoá", {
-            variant: "error",
-          });
-        }
-      }
-    }
+
+  const handleDelete = (id) => {
+    setUnitIdToDelete(id);
+    setPopupMessage("Bạn có muốn xoá category này?");
+    setPopupVisible(true);
   };
-  
+
+  const handleConfirmDelete = async () => {
+    const response = await deleteComment(unitIdToDelete);
+    if (response) {
+      enqueueSnackbar("Đã xoá thành công", {
+        variant: "success",
+      });
+      setRender(true);
+    } else {
+      enqueueSnackbar("Xoá thất bại", {
+        variant: "error",
+      });
+    }
+    setPopupVisible(false);
+  };
+
+  const handleCancelDelete = () => {
+    setPopupVisible(false);
+  };
+
 
   return (
     <LayoutCommon>
@@ -117,10 +129,9 @@ const AdComments = () => {
                       </Link>
                     </td>
                     <td className="text-center">
-                      <div onClick={(e) => handleDeletComment(e, item.id)}>
+                      <div onClick={() => handleDelete(item.id)}>
                         <FontAwesomeIcon icon={faTrash} color="red" />
                       </div>
-                     
                     </td>
                   </tr>
                 ))
@@ -136,7 +147,13 @@ const AdComments = () => {
         )}
         <BtnNextPage metadata={metadata} onPageChange={updatePageNumber} />
       </div>
-      
+      {popupVisible && (
+        <Popup
+          message={popupMessage}
+          onCancel={handleCancelDelete}
+          onConfirm={handleConfirmDelete}
+        />
+      )}
     </LayoutCommon>
   );
 };

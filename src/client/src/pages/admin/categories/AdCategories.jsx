@@ -12,6 +12,7 @@ import { Link, useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import { deletCategory, getFilterCategory } from "../../../api/Category";
 import { useSelector } from "react-redux";
+import Popup from "../../../components/common/Popup";
 
 const AdCategory = () => {
 
@@ -23,6 +24,10 @@ const AdCategory = () => {
 
   const [isVisibleLoading, setIsVisibleLoading] = useState(true),
     unitFilter = useSelector((state) => state.unitFilter);
+  
+  const [popupMessage, setPopupMessage] = useState("");
+  const [popupVisible, setPopupVisible] = useState(false);
+  const [IdToDelete, setIdToDelete] = useState(null);
 
   let { id } = useParams,
     p = 1,
@@ -53,24 +58,30 @@ const AdCategory = () => {
     }
   }, [unitFilter, ps, p, reRender, pageNumber]);
 
-  const hanldeDeleteUnit = (e, id) => {
-    e.preventDefault();
-    removeUnit(id);
-    async function removeUnit(id) {
-      if (window.confirm("Bạn có muốn unit này")) {
-        const response = await deletCategory(id);
-        if (response) {
-          enqueueSnackbar("Đã xoá thành công", {
-            variant: "success",
-          });
-          setRender(true);
-        } else {
-          enqueueSnackbar("Đã xoá thành công", {
-            variant: "error",
-          });
-        }
-      }
+
+  const handleDelete = (id) => {
+    setIdToDelete(id);
+    setPopupMessage("Bạn có muốn xoá category này?");
+    setPopupVisible(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    const response = await deletCategory(IdToDelete);
+    if (response) {
+      enqueueSnackbar("Đã xoá thành công", {
+        variant: "success",
+      });
+      setRender(true);
+    } else {
+      enqueueSnackbar("Xoá thất bại", {
+        variant: "error",
+      });
     }
+    setPopupVisible(false);
+  };
+
+  const handleCancelDelete = () => {
+    setPopupVisible(false);
   };
 
 
@@ -113,10 +124,9 @@ const AdCategory = () => {
                       </Link>
                     </td>
                     <td className="text-center">
-                      <div onClick={(e) => hanldeDeleteUnit(e, item.id)}>
+                      <div onClick={() => handleDelete(item.id)}>
                         <FontAwesomeIcon icon={faTrash} color="red" />
                       </div>
-                     
                     </td>
                   </tr>
                 ))
@@ -132,6 +142,13 @@ const AdCategory = () => {
         )}
         <BtnNextPage metadata={metadata} onPageChange={updatePageNumber} />
       </div>
+      {popupVisible && (
+        <Popup
+          message={popupMessage}
+          onCancel={handleCancelDelete}
+          onConfirm={handleConfirmDelete}
+        />
+      )}
     </LayoutCommon>
   );
 };

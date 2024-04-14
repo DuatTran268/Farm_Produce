@@ -19,9 +19,11 @@ ul, li{
   list-style: none;
   margin: 0;
   padding: 0;
+
 }
 
 a{
+  
   margin: 0px;
   padding: 0px;
   height: fit-content;
@@ -30,9 +32,8 @@ a{
 
 h1, h2, h3, h4, h5, h6{
   margin: 0rem;
+  padding: 0px;
 }
-.app{
-  background-color: #e6e6e6;
-}
+
 
 
