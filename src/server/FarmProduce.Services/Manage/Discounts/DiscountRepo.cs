@@ -77,5 +77,23 @@ namespace FarmProduce.Services.Manage.Discounts
             return await _context.SaveChangesAsync() > 0;
         }
 
-    }
+		public async Task<bool> IsDiscountSlugExistedAsync(int discountId, string status, CancellationToken cancellationToken = default)
+		{
+			return await _context.Discounts.AnyAsync(x => x.Id != discountId && x.Status == status, cancellationToken);
+		}
+
+		public async Task<bool> AddOrUpdateDiscountAsync(Discount discount, CancellationToken cancellationToken = default)
+		{
+			if (discount.Id > 0)
+			{
+				_context.Discounts.Update(discount);
+				_memoryCache.Remove($"discount.by-id.{discount.Id}");
+			}
+			else
+			{
+				_context.Discounts.Add(discount);
+			}
+			return await _context.SaveChangesAsync(cancellationToken) > 0;
+		}
+	}
 }

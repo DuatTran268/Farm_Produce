@@ -39,6 +39,9 @@ namespace FarmProduct.WebApi.Mapsters
 
 
 			config.NewConfig<Discount, DiscountDto>();
+			config.NewConfig<Discount, DiscountItem>();
+			config.NewConfig<DiscountEditModel, Discount>();
+
 			config.NewConfig<OrderStatus, OrderStatusDto>();
 			config.NewConfig<PaymentMethod, PaymentsMethodDto>();
 			config.NewConfig<Order, OrderDto>();
