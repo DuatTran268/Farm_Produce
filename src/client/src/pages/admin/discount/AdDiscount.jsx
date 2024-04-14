@@ -10,8 +10,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import BtnNextPage from "../../../components/common/BtnNextPage";
 import { useSnackbar } from "notistack";
 import { useSelector } from "react-redux";
-import { getFilterDiscountPagination, getVoucherDiscountPagination } from "../../../api/Discount";
+import { deleteVoucherDiscount, getFilterDiscountPagination, getVoucherDiscountPagination } from "../../../api/Discount";
 import { format } from "date-fns";
+import Popup from "../../../components/common/Popup";
 
 
 const AdDiscount = () => {
@@ -23,6 +24,9 @@ const AdDiscount = () => {
   const [pageNumber, setPageNumber] = useState(1);
 
   const [isVisibleLoading, setIsVisibleLoading] = useState(true);
+
+
+
 
   let { id } = useParams,
     p = 1,
@@ -52,27 +56,36 @@ const AdDiscount = () => {
     }
   }, [ ps, p, reRender, pageNumber]);
 
-  // const handleDeleteDiscount = (e, id) => {
-  //   e.preventDefault();
-  //   removeDiscount(id);
-  //   async function removeDiscount(id) {
-  //     if (window.confirm("Bạn có muốn Discount này")) {
-  //       const response = await deleteDiscount(id);
-  //       if (response) {
-  //         enqueueSnackbar("Đã xoá thành công", {
-  //           variant: "success",
-  //         });
-  //         setRender(true);
-  //       } else {
-  //         enqueueSnackbar("Đã xoá thành công", {
-  //           variant: "error",
-  //         });
-  //       }
-  //     }
-  //   }
-  // };
   
 
+  const [popupMessage, setPopupMessage] = useState("");
+  const [popupVisible, setPopupVisible] = useState(false);
+  const [unitIdToDelete, setUnitIdToDelete] = useState(null);
+  
+  const handleDelete = (id) => {
+    setUnitIdToDelete(id);
+    setPopupMessage("Bạn có muốn xoá unit này?");
+    setPopupVisible(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    const response = await deleteVoucherDiscount(unitIdToDelete);
+    if (response) {
+      enqueueSnackbar("Đã xoá thành công", {
+        variant: "success",
+      });
+      setRender(true);
+    } else {
+      enqueueSnackbar("Xoá thất bại", {
+        variant: "error",
+      });
+    }
+    setPopupVisible(false);
+  };
+
+  const handleCancelDelete = () => {
+    setPopupVisible(false);
+  };
 
 
   return(
@@ -108,20 +121,19 @@ const AdDiscount = () => {
                     <td>{item.status}</td>
                     <td>{format(new Date(item.startDate), "dd/MM/yyyy")}</td>
                     <td>{format(new Date(item.endDate), "dd/MM/yyyy")}</td>
-                    <td>{item.discountPrice}</td>
+                    <td>{item.discountPrice} VNĐ</td>
                     <td className="text-center">
                       <Link
-                        to={`/admin/voucher/edit/${item.id}`}
+                        to={`/admin/discount/edit/${item.id}`}
                         className="text-warning"
                       >
                         <FontAwesomeIcon icon={faEdit} />
                       </Link>
                     </td>
                     <td className="text-center">
-                      {/* <div onClick={(e) => handleDeleteDiscount(e, item.id)}>
+                      <div onClick={() => handleDelete(item.id)}>
                         <FontAwesomeIcon icon={faTrash} color="red" />
-                      </div> */}
-                     
+                      </div>
                     </td>
                   </tr>
                 ))
@@ -137,6 +149,16 @@ const AdDiscount = () => {
         )}
         <BtnNextPage metadata={metadata} onPageChange={updatePageNumber} />
       </div>
+
+      {popupVisible && (
+        <Popup
+          message={popupMessage}
+          onCancel={handleCancelDelete}
+          onConfirm={handleConfirmDelete}
+        />
+      )}
+
+
     </LayoutCommon>
   )
 }

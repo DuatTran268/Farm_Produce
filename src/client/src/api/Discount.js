@@ -1,4 +1,4 @@
-import { get_api_nocache } from "./AxiosCommon";
+import { delete_api, get_api_nocache, put_api } from "./AxiosCommon";
 
 
 export function getVoucherDiscountPagination(
@@ -15,3 +15,21 @@ export function getVoucherDiscountPagination(
 
   return get_api_nocache(url.href);
 }
+
+
+export async function getDiscountById(id = 0) {
+  if (id > 0) {
+    return get_api_nocache(`https://localhost:7047/api/discount/${id}`);
+  }
+}
+
+
+export async function newCreateAndUpdateDiscount(id = 0, formData) {
+  return put_api(`https://localhost:7047/api/discount/${id}`, formData);
+}
+
+
+export async function deleteVoucherDiscount(id = 0) {
+  return delete_api(`https://localhost:7047/api/discount/${id}`);
+}
+
