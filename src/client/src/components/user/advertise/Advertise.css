@@ -25,6 +25,10 @@
 
 }
 
+.adver_content{
+  color: var(--color-textred);
+  font-weight: 600;
+}
 
 /* advertise banner */
 .advertise_wrapper{

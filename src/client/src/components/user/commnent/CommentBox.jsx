@@ -1,29 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import BoxEdit from "../../admin/edit/BoxEdit";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import { createNewAndUpdateComment } from "../../../api/Comment";
+import FieldComment from "../../admin/edit/FieldBox";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { faStar as faStarRegular } from "@fortawesome/free-regular-svg-icons";
+import "./Comment.css"
 
 const CommentBox = () => {
-  // const [commnetText, setCommentText ] = useState('');
-  const [customerId, setCustomerId] = useState(null);
   const [validated, setValidated] = useState(false);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const initialState = {
-      id: 0,
-      name: "",
-      rating: "",
-      commentText: "",
-      customerId: 0,
-      productId: 0,
-    },
-    [commnet, setCommnet] = useState(initialState);
-
+    id: 0,
+    name: "",
+    rating: 0,
+    commentText: "",
+  };
+  const [comment, setComment] = useState(initialState);
   const navigate = useNavigate();
-
   let { id } = useParams();
   id = id ?? 0;
 
@@ -36,6 +33,13 @@ const CommentBox = () => {
       setValidated(true);
     } else {
       let data = new FormData(e.target);
+      // Lấy thông tin người dùng từ local storage hoặc từ context API
+      const userId = localStorage.getItem("userId"); // Đây là ví dụ, bạn cần cập nhật phù hợp với cách lấy thông tin người dùng của bạn
+      // Lấy ID của sản phẩm từ slug (giả sử bạn có một hàm để làm điều này)
+      // const productId = getProductIdFromSlug(id); // Đây là ví dụ, bạn cần thay thế bằng cách lấy ID sản phẩm từ slug của bạn
+
+      data.append("customerId", userId);
+      // data.append("productId", productId);
 
       createNewAndUpdateComment(id, data).then((data) => {
         if (data) {
@@ -52,6 +56,10 @@ const CommentBox = () => {
     }
   };
 
+  const handleStarClick = (value) => {
+    setComment({ ...comment, rating: value });
+  };
+
   return (
     <section>
       <div className="comment_content">
@@ -65,85 +73,51 @@ const CommentBox = () => {
           noValidate
           validated={validated}
         >
-          <Form.Control type="hidden" name="id" value={commnet.id} />
+          <Form.Control type="hidden" name="id" value={comment.id} />
 
-          <BoxEdit
-            label={"Tên bạn"}
+          <div className="mb-2 px-3">
+            <span>Đánh giá:</span>{" "}
+            {[1, 2, 3, 4, 5].map((value) => (
+              <FontAwesomeIcon
+                key={value}
+                icon={value <= comment.rating ? faStar : faStarRegular}
+                onClick={() => handleStarClick(value)}
+                className="px-1 icon_start"
+                style={{ cursor: "pointer" }}
+              />
+            ))}
+          </div>
+
+          <FieldComment
             control={
               <Form.Control
+                className="form_control_comment"
+                placeholder="Tên của bạn"
                 type="text"
                 name="name"
                 title="Name"
                 required
-                value={commnet.name || ""}
+                value={comment.name || ""}
                 onChange={(e) =>
-                  setCommnet({ ...commnet, name: e.target.value })
+                  setComment({ ...comment, name: e.target.value })
                 }
               />
             }
             notempty={"Không được bỏ trống"}
           />
 
-          <BoxEdit
-            label={"Rating"}
+          <FieldComment
             control={
               <Form.Control
-                type="text"
-                name="rating"
-                title="Rating"
-                required
-                value={commnet.rating || ""}
-                onChange={(e) =>
-                  setCommnet({ ...commnet, rating: e.target.value })
-                }
-              />
-            }
-            notempty={"Không được bỏ trống"}
-          />
-          <BoxEdit
-            label={"Cusommer"}
-            control={
-              <Form.Control
+                className="form_control_comment"
+                placeholder="Nội dung bình luận"
                 type="text"
                 name="commentText"
                 title="Comment Text"
                 required
-                value={commnet.commentText || ""}
+                value={comment.commentText || ""}
                 onChange={(e) =>
-                  setCommnet({ ...commnet, commentText: e.target.value })
-                }
-              />
-            }
-            notempty={"Không được bỏ trống"}
-          />
-          <BoxEdit
-            label={"Comment Text"}
-            control={
-              <Form.Control
-                type="text"
-                name="customerId"
-                title="customer Id"
-                required
-                value={commnet.customerId || ""}
-                onChange={(e) =>
-                  setCommnet({ ...commnet, customerId: e.target.value })
-                }
-              />
-            }
-            notempty={"Không được bỏ trống"}
-          />
-
-          <BoxEdit
-            label={"product Id"}
-            control={
-              <Form.Control
-                type="text"
-                name="productId"
-                title="product Id"
-                required
-                value={commnet.productId || ""}
-                onChange={(e) =>
-                  setCommnet({ ...commnet, productId: e.target.value })
+                  setComment({ ...comment, commentText: e.target.value })
                 }
               />
             }
@@ -152,8 +126,8 @@ const CommentBox = () => {
 
           <div className="text-center">
             <Button variant="success" type="submit">
-              Lưu các thay đổi
-              <FontAwesomeIcon icon={faSave} className="px-1" />
+              Bình luận
+              <FontAwesomeIcon icon={faSave} className="px-2" />
             </Button>
           </div>
         </Form>
@@ -161,4 +135,5 @@ const CommentBox = () => {
     </section>
   );
 };
+
 export default CommentBox;

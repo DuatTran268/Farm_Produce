@@ -37,3 +37,9 @@ h1, h2, h3, h4, h5, h6{
 
 
 
+:root{
+  --color-main: #6bd16b;
+  --color-textwhite: white;
+  --color-bg: #f2ebeb;
+  --color-textred: red;
+}

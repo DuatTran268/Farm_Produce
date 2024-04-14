@@ -1,13 +1,13 @@
 
 .category_title{
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   text-transform: uppercase;
   text-align: center;
-  background-color: red;
-  color: white;
+  background-color: var(--color-textred);
+  color: var(--color-textwhite);
   padding: 10px;
   border-radius: 2rem;
-  font-weight: 400;
+  font-weight: 500;
 }
 
 .category_link{
@@ -30,12 +30,12 @@
 .category_item{
   margin: 10px 0px;
   border-radius: 25px 0px 25px 0px;
-  border: 2px solid #6bd16b;
+  border: 2px solid var(--color-main);
   box-shadow: 5px 5px 2px rgb(230, 255, 237);
 }
 .category_item :hover{
-  background: #6bd16b;
-  color: white;
+  background: var(--color-main);
+  color: var(--color-textwhite);
   border-radius: 23px 0px 23px 0px;
   cursor: pointer;
 }

@@ -1,0 +1,12 @@
+.input-group > .input_search{
+  border-radius: 25px;
+  padding: 12px 20px;
+  border: 2px solid var(--color-textred);
+}
+
+.input-group > button{
+  background-color: var(--color-textred);
+  border-radius: 25px;
+  border: 2px solid var(--color-textred);
+
+}

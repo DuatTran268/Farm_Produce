@@ -6,6 +6,8 @@ import { Image } from "react-bootstrap";
 import { getDetailProductByUrlSlug } from "../../../api/Product";
 import { useCart } from "react-use-cart";
 import { useSnackbar } from "notistack";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCartArrowDown } from "@fortawesome/free-solid-svg-icons";
 
 const ProductDetails = () => {
   const params = useParams();
@@ -87,11 +89,12 @@ const ProductDetails = () => {
                 />
               </div>
               <Link
-                className="btn btn-success product_detail_addcart"
+                className="product_detail_addcart"
                 to={"/cart"}
                 onClick={handleAddToCart}
               >
                 Thêm vào giỏ hàng
+                <FontAwesomeIcon icon={faCartArrowDown} className="px-2"/>
               </Link>
             </div>
           </div>

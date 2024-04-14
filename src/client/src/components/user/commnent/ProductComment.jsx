@@ -29,25 +29,25 @@ const ProductComment = () => {
       <div className="comment_wrapper">
         {comment.length > 0 ? (
           comment.map((item, index) => (
-            <div className="comment_item row " key={index}>
+            <div className="comment_item " key={index}>
               <div className="comment_item_col col-2">
                 <FontAwesomeIcon icon={faUser} fontSize={60} />
               </div>
               <div className="comment_item_col col-10">
                 <div className="comment_item_col_top row">
-                  <h5 className="col">Comment{item.name}</h5>
+                  <h5 className="col">Tên: {item.name}</h5>
                   <div className="col">
-                    Ngày đăng {format(new Date(item.created), "dd/MM/yyyy")}
+                    {format(new Date(item.created), "dd/MM/yyyy")}
                   </div>
                 </div>
                 <div className="comment_item_col_bottom">
-                  Content {item.commentText}
+                  Nội dung: {item.commentText}
                 </div>
               </div>
             </div>
           ))
         ) : (
-          <>Khong có comment</>
+          <p>Chưa có bình luận nào</p>
         )}
       </div>
     </section>

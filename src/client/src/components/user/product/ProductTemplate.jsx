@@ -34,14 +34,14 @@ const ProductTemplate = (props) => {
               <p className="product_title">{props.name}</p>
               <div className="product_bottom">
                 <div className="product_price">
-                  <div className="product_price_origin">{props.price} VNĐ</div>
                   <div className="product_price_discount">
                     {props.price} VNĐ
                   </div>
+                  <div className="product_price_origin">{props.price} VNĐ</div>
                 </div>
 
                 <Link
-                  className="text-decoration-none btn btn-success"
+                  className="btn_addtocart"
                   to={"/cart"}
                   onClick={() => {
                     return handleAddCart(), addItem(props.item);
