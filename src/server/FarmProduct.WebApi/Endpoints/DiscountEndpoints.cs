@@ -21,22 +21,22 @@ using System.Net;
 
 namespace FarmProduct.WebApi.Endpoints
 {
-	public  class DiscountEndpoints:ICarterModule
+	public class DiscountEndpoints : ICarterModule
 	{
 
-        public void AddRoutes(IEndpointRouteBuilder app)
-        {
-            var routeGroupBuilder = app.MapGroup(RouteAPI.Discount);
-            // get department not required
-            routeGroupBuilder.MapGet("/getall", GetAllDiscount)
-                .WithName("GetAllDiscount")
-                .Produces<ApiResponse<PaginationResult<DiscountDto>>>();
+		public void AddRoutes(IEndpointRouteBuilder app)
+		{
+			var routeGroupBuilder = app.MapGroup(RouteAPI.Discount);
+			// get department not required
+			routeGroupBuilder.MapGet("/getall", GetAllDiscount)
+				.WithName("GetAllDiscount")
+				.Produces<ApiResponse<PaginationResult<DiscountDto>>>();
 
 
-            // get commnet by id
-            routeGroupBuilder.MapGet("/{id:int}", GetDiscountByID)
-                .WithName("GetDiscountByID")
-                .Produces<ApiResponse<DiscountDto>>();
+			// get commnet by id
+			routeGroupBuilder.MapGet("/{id:int}", GetDiscountByID)
+				.WithName("GetDiscountByID")
+				.Produces<ApiResponse<DiscountDto>>();
 
 			routeGroupBuilder.MapPost("/", CreateNewDiscount)
 				.WithName("CreateNewDiscount")
@@ -48,17 +48,23 @@ namespace FarmProduct.WebApi.Endpoints
 				.WithName("UpdateDiscount")
 				.Produces(401)
 				.Produces<ApiResponse<string>>();
+
+			routeGroupBuilder.MapDelete("/{id:int}", DeleteVoucherDiscount)
+				.WithName("DeleteVoucherDiscount")
+				.Produces(401)
+				.Produces<ApiResponse<string>>();
+
 		}
-        private static async Task<IResult> GetAllDiscount(
+		private static async Task<IResult> GetAllDiscount(
 		IDiscountRepo discountRepo,
 		[AsParameters] PagingModel pagingModel
 		)
 		{
 			var discounts = await discountRepo.GetAllDiscount(
 				discounts => discounts.ProjectToType<DiscountDto>(), pagingModel);
-            var pagination = new PaginationResult<DiscountDto>(discounts);
+			var pagination = new PaginationResult<DiscountDto>(discounts);
 
-            return Results.Ok(ApiResponse.Success(pagination));
+			return Results.Ok(ApiResponse.Success(pagination));
 		}
 
 		// get discount by id
@@ -83,11 +89,10 @@ namespace FarmProduct.WebApi.Endpoints
 
 
 		private static async Task<IResult> UpdateDiscount(
-	int id, DiscountEditModel model,
-	IValidator<DiscountEditModel> validator,
-	[FromServices] IDiscountRepo discountRepo,
-	IMapper mapper
-	)
+			int id, DiscountEditModel model,
+			IValidator<DiscountEditModel> validator,
+			[FromServices] IDiscountRepo discountRepo,
+			IMapper mapper)
 		{
 			var validatorResult = await validator.ValidateAsync(model);
 			if (!validatorResult.IsValid)
@@ -102,6 +107,14 @@ namespace FarmProduct.WebApi.Endpoints
 				? Results.Ok(ApiResponse.Success("Update success", HttpStatusCode.NoContent))
 				: Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound, $"not find unit"));
 
+		}
+
+		private static async Task<IResult> DeleteVoucherDiscount(
+			int id, IDiscountRepo discountRepo)
+		{
+			return await discountRepo.DeleteDiscount(id)
+			? Results.Ok(ApiResponse.Success(" Deleted success ", HttpStatusCode.NoContent))
+			: Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound, $"Not find id = {id}"));
 		}
 
 

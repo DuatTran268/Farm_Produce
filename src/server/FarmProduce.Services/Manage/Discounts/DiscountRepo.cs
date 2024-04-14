@@ -95,5 +95,10 @@ namespace FarmProduce.Services.Manage.Discounts
 			}
 			return await _context.SaveChangesAsync(cancellationToken) > 0;
 		}
+
+		public async Task<bool> DeleteDiscount(int id, CancellationToken cancellationToken = default)
+		{
+			return await _context.Discounts.Where(t => t.Id == id).ExecuteDeleteAsync(cancellationToken) > 0;
+		}
 	}
 }
