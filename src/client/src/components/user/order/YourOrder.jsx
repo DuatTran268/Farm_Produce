@@ -6,6 +6,7 @@ import { useCart } from "react-use-cart";
 import { Link } from "react-router-dom";
 import BtnSuccess from "../../common/BtnSuccess"
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { colors } from "@material-ui/core";
 
 const YourOrder = () => {
   const {
@@ -49,7 +50,7 @@ const YourOrder = () => {
               <tr>
                 <td>
                   {items.map((item, index) => {
-                    return <div key={index}>{item.name}</div>;
+                    return <div className="name_product_table" key={index}>{item.name}</div>;
                   })}
                 </td>
                 <td>
@@ -68,7 +69,7 @@ const YourOrder = () => {
               </tr>
               <tr>
                 <td colSpan={3}>Tạm tính</td>
-                <td>{cartTotal} VNĐ</td>
+                <td >{cartTotal} VNĐ</td>
               </tr>
               <tr>
                 <td colSpan={3}>Giao hàng</td>
@@ -76,7 +77,7 @@ const YourOrder = () => {
               </tr>
               <tr>
                 <td colSpan={3}>Tổng</td>
-                <td>{cartTotal} VNĐ</td>
+                <td className="name_product_table">{cartTotal} VNĐ</td>
               </tr>
               <tr>
                 <td colSpan={3}>Phương thức thanh toán</td>

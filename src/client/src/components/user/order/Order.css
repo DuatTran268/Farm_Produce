@@ -36,3 +36,7 @@
   box-shadow: 4px 4px 1px 1px #b0e9c1;
 }
 
+.name_product_table{
+  color: var(--color-textred);
+  font-weight: 500;
+}
