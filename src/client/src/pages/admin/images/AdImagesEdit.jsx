@@ -7,7 +7,11 @@ import { faRightFromBracket, faSave } from "@fortawesome/free-solid-svg-icons";
 import BoxEdit from "../../../components/admin/edit/BoxEdit";
 import BtnError from "../../../components/common/BtnError";
 import { useSnackbar } from "notistack";
-import { createAndUpdateImage, getImageById } from "../../../api/Image";
+import {
+  createAndUpdateImage,
+  getFilterComboboxProduct,
+  getImageById,
+} from "../../../api/Image";
 import { isEmptyOrSpaces } from "../../../api/Utils";
 
 const AdImagesEdit = () => {
@@ -15,11 +19,13 @@ const AdImagesEdit = () => {
   const [validated, setValidated] = useState(false);
 
   const initialState = {
-    id: 0,
-    name: "",
-    urlImage: "",
-    productId: 0,
-  };
+      id: 0,
+      name: "",
+      urlImage: "",
+      productId: 0,
+    },
+    [filterProduct, setfilterProduct] = useState({ productList: [] });
+
   const navigate = useNavigate();
 
   const [Image, setImage] = useState(initialState);
@@ -32,11 +38,20 @@ const AdImagesEdit = () => {
     getImageById(id).then((data) => {
       console.log("Checkddd dataa image", data);
       if (data)
-
         setImage({
           ...data,
         });
       else setImage(initialState);
+    });
+
+    getFilterComboboxProduct().then((data) => {
+      if (data) {
+        setfilterProduct({
+          productList: data.productList,
+        });
+      } else {
+        setfilterProduct({ productList: [] });
+      }
     });
   }, []);
 
@@ -93,7 +108,6 @@ const AdImagesEdit = () => {
             notempty={"Không được bỏ trống"}
           />
 
-          
           {!isEmptyOrSpaces(Image.urlImage) && (
             <div className="row mb-3">
               <Form.Label className="col-sm-2 col-form-label">
@@ -127,7 +141,7 @@ const AdImagesEdit = () => {
             }
           />
 
-          <BoxEdit
+          {/* <BoxEdit
             label={"Mã sản phẩm"}
             control={
               <Form.Control
@@ -140,7 +154,37 @@ const AdImagesEdit = () => {
               />
             }
             notempty={"Không được bỏ trống"}
-          />
+          /> */}
+
+          <div className="row mb-3">
+            <Form.Label className="col-sm-2 col-form-label">
+              Mã sản phẩm
+            </Form.Label>
+            <div className="col-sm-10">
+              <Form.Select
+                name="productId"
+                title="Product Id"
+                value={Image.productId}
+                required
+                onChange={(e) =>
+                  setImage({
+                    ...Image,
+                    productId: e.target.value,
+                  })
+                }
+              >
+                {filterProduct.productList.length > 0 &&
+                  filterProduct.productList.map((item, index) => (
+                    <option key={index} value={item.value}>
+                      {item.text}
+                    </option>
+                  ))}
+              </Form.Select>
+              <Form.Control.Feedback type="invalid">
+                Không được bỏ trống.
+              </Form.Control.Feedback>
+            </div>
+          </div>
 
           <div className="text-center">
             <Button variant="success" type="submit">

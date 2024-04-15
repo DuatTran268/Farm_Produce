@@ -10,7 +10,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import BtnNextPage from "../../../components/common/BtnNextPage";
 import Popup from "../../../components/common/Popup";
 import { useSnackbar } from "notistack";
-import { deleteImage, getAllImagePagination } from "../../../api/Image";
+import {
+  deleteImage,
+  getAllImagePagination,
+  getFilterComboboxProduct,
+} from "../../../api/Image";
 
 const AdImages = () => {
   const [getImage, setgetImage] = useState([]);
@@ -24,6 +28,8 @@ const AdImages = () => {
   const [popupMessage, setPopupMessage] = useState("");
   const [popupVisible, setPopupVisible] = useState(false);
   const [IdToDelete, setIdToDelete] = useState(null);
+
+  const [filterProduct, setfilterProduct] = useState({ productList: [] });
 
   let { id } = useParams,
     p = 1,
@@ -52,6 +58,16 @@ const AdImages = () => {
         setIsVisibleLoading(false);
       });
     }
+
+    getFilterComboboxProduct().then((data) => {
+      if (data) {
+        setfilterProduct({
+          productList: data.productList,
+        });
+      } else {
+        setfilterProduct({ productList: [] });
+      }
+    });
   }, [ps, p, reRender, pageNumber]);
 
   const handleDelete = (id) => {

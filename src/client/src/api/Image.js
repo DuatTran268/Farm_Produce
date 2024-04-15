@@ -35,3 +35,7 @@ export async function getImageById(id = 0) {
 export async function createAndUpdateImage( formData) {
   return post_api(`https://localhost:7047/api/images`, formData);
 }
+
+export async function getFilterComboboxProduct() {
+  return get_api_nocache(`https://localhost:7047/api/products/combobox`);
+}
