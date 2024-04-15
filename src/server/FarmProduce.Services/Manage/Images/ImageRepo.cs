@@ -101,7 +101,10 @@ namespace FarmProduce.Services.Manage.Images
                 return true;
             }
         }
-  
 
-    }
+		public async Task<bool> DeleteImage(int id, CancellationToken cancellationToken = default)
+		{
+			return await _context.Images.Where(t => t.Id == id).ExecuteDeleteAsync(cancellationToken) > 0;
+		}
+	}
 }
