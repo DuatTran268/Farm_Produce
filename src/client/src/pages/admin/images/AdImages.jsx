@@ -12,8 +12,6 @@ import Popup from "../../../components/common/Popup";
 import { useSnackbar } from "notistack";
 import { deleteImage, getAllImagePagination } from "../../../api/Image";
 
-
-
 const AdImages = () => {
   const [getImage, setgetImage] = useState([]);
   const [reRender, setRender] = useState(false);
@@ -22,7 +20,7 @@ const AdImages = () => {
   const [pageNumber, setPageNumber] = useState(1);
 
   const [isVisibleLoading, setIsVisibleLoading] = useState(true);
-  
+
   const [popupMessage, setPopupMessage] = useState("");
   const [popupVisible, setPopupVisible] = useState(false);
   const [IdToDelete, setIdToDelete] = useState(null);
@@ -44,7 +42,7 @@ const AdImages = () => {
         setgetImage(props.items);
         setMetadata(props.metadata);
       }
-      getAllImagePagination( ps, pageNumber).then((data) => {
+      getAllImagePagination(ps, pageNumber).then((data) => {
         if (data) {
           setData(data);
           // console.log("Check data catgego",data)
@@ -55,7 +53,6 @@ const AdImages = () => {
       });
     }
   }, [ps, p, reRender, pageNumber]);
-
 
   const handleDelete = (id) => {
     setIdToDelete(id);
@@ -82,13 +79,8 @@ const AdImages = () => {
     setPopupVisible(false);
   };
 
-
-
-
-
-
   return (
-    <LayoutCommon> 
+    <LayoutCommon>
       <div className="title py-3 text-danger">
         <h3>Quản lý Bộ sưu tập ảnh sản phẩm</h3>
       </div>
@@ -114,7 +106,17 @@ const AdImages = () => {
               {getImage.length > 0 ? (
                 getImage.map((item, index) => (
                   <tr key={index}>
-                    <td></td>
+                    <td>
+                      {item.urlImage ? (
+                        <img
+                          src={`https://localhost:7047/${item.urlImage}`}
+                          alt={item.name}
+                          height={50}
+                        />
+                      ) : (
+                        <span>Không có hình</span>
+                      )}
+                    </td>
                     <td>{item.name}</td>
                     <td>{item.productId}</td>
                     <td className="text-center">
@@ -152,6 +154,6 @@ const AdImages = () => {
         />
       )}
     </LayoutCommon>
-  )
-}
+  );
+};
 export default AdImages;
