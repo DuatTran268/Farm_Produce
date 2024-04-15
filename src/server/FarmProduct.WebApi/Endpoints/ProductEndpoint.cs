@@ -2,8 +2,10 @@
 using FarmProduce.Core.Collections;
 using FarmProduce.Core.DTO;
 using FarmProduce.Core.Entities;
+using FarmProduce.Services.Manage.Images;
 using FarmProduce.Services.Manage.Products;
 using FarmProduce.Services.Manage.Units;
+using FarmProduce.Services.Media;
 using FarmProduct.WebApi.Models;
 using FarmProduct.WebApi.Models.Categories;
 using FarmProduct.WebApi.Models.Comments;
@@ -122,10 +124,21 @@ namespace FarmProduct.WebApi.Endpoints
 		
 				: Results.Ok(ApiResponse.Success(paginationResult));
 		}
-        private static async Task<IResult> AddProduct(HttpContext context, IProductRepo productRepo, IMapper mapper, ProductEditModel validator)
+        private static async Task<IResult> AddProduct(HttpContext context,[FromServices] IProductRepo productRepo,[FromServices]IImageRepo imageRepo ,IMapper mapper, ProductEditModel validator, [FromServices] IMediaManager mediaManager)
         {
             var model = await ProductEditModel.BindAsync(context);
+
+            if (model == null)
+            {
+                return Results.Ok(ApiResponse.Fail(HttpStatusCode.BadRequest, "Invalid product data"));
+            }
+
             var slug = model.Name.GenerateSlug();
+
+            if (string.IsNullOrEmpty(slug))
+            {
+                return Results.Ok(ApiResponse.Fail(HttpStatusCode.BadRequest, "Invalid product name"));
+            }
 
             var product = await productRepo.GetProductById(model.Id);
 
@@ -148,12 +161,36 @@ namespace FarmProduct.WebApi.Endpoints
             product.Status = model.Status;
             product.UnitId = model.UnitId;
 
-            // Tự động cập nhật thời gian
+            //foreach (var imageFile in model.Images)
+            //{
+            //    if (imageFile == null || imageFile.Length == 0)
+            //    {
+            //        continue;
+            //    }
+
+            //    string uploadedPath = await mediaManager.SaveFileAsync(imageFile.OpenReadStream(), imageFile.FileName, imageFile.ContentType);
+
+            //    if (!string.IsNullOrWhiteSpace(uploadedPath))
+            //    {
+            //        var image = new Image
+            //        {
+            //            Name = imageFile.FileName,
+            //            UrlImage = uploadedPath,
+            //            ProductId = product.Id,
+            //            Caption = "Caption"
+            //        };
+            //        product.Images.Add(image);  
+
+            //        // Thêm ảnh mới vào bảng Images
+            //        await imageRepo.AddOrUpdateImage(image);
+            //    }
+            //}
+
             if (model.Id == 0)
             {
                 product.DateCreate = DateTime.Now;
             }
-            product.DateUpdate = DateTime.Now;  
+            product.DateUpdate = DateTime.Now;
 
             try
             {
@@ -162,12 +199,11 @@ namespace FarmProduct.WebApi.Endpoints
             }
             catch (Exception ex)
             {
-                // Xử lý các trường hợp ngoại lệ và trả về thông báo lỗi phù hợp
                 return Results.Ok(ApiResponse.Fail(HttpStatusCode.BadRequest, ex.Message));
             }
         }
 
-
+            
 
         private static async Task<IResult> DeleteProduct(int id, IProductRepo productRepo)
         {

@@ -14,6 +14,7 @@ using FarmProduce.Services.Manage.OrderStatuses;
 using FarmProduce.Services.Manage.PaymentMethods;
 using FarmProduce.Services.Manage.Products;
 using FarmProduce.Services.Manage.Units;
+using FarmProduce.Services.Media;
 using FarmProduce.Services.Timing;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -34,6 +35,8 @@ namespace FarmProduct.WebApi.Extensions
             builder.Services.AddDbContext<FarmDbContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 			builder.Services.AddScoped<IDataSeeder, DataSeeder>();
 			builder.Services.AddScoped<ITimeProvider, LocalTimeProvider>();
+            builder.Services
+               .AddScoped<IMediaManager, LocalFileSystemMediaManager>();
             builder.Services.AddScoped<IUnitRepo,  UnitRepo>();
             // admin
             // category

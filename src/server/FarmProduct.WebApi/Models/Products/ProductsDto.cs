@@ -17,5 +17,6 @@ namespace FarmProduct.WebApi.Models.Products
         public DateTime DateCreate { get; set; }
         public DateTime DateUpdate { get; set; }
         public bool Status { get; set; }
+        public IList<Image> Images { get; set; }
     }
 }

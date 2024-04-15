@@ -17,8 +17,9 @@ export const LoginUser = async (user, dispatch, navigate) => {
     alert("code da vao day",  response);
     
     const data = response.data;
+    console.log(data);
     // localStorage.setItem("token", data.token)
-    if (data.result.flag === false){
+    if (data.flag === false){
       alert("Xảy ra lỗi không thể đăng nhập");
       return;
     }
@@ -28,6 +29,8 @@ export const LoginUser = async (user, dispatch, navigate) => {
     navigate("/");
     alert("Đăng nhập thành công")
   } catch (error) {
+  
+
     dispatch(loginFail());
   }
 }
