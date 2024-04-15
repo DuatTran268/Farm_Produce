@@ -7,13 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="wwwroot\uploads\**" />
-    <Content Remove="wwwroot\uploads\**" />
-    <EmbeddedResource Remove="wwwroot\uploads\**" />
-    <None Remove="wwwroot\uploads\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Carter" Version="8.0.0" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
     <PackageReference Include="Mapster.DependencyInjection" Version="1.0.1" />
@@ -36,6 +29,10 @@
     <ProjectReference Include="..\FarmProduce.Core\FarmProduce.Core.csproj" />
     <ProjectReference Include="..\FarmProduce.Data\FarmProduce.Data.csproj" />
     <ProjectReference Include="..\FarmProduce.Services\FarmProduce.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\uploads\pictures\" />
   </ItemGroup>
 
 </Project>

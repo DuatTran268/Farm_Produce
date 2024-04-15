@@ -70,16 +70,10 @@ namespace FarmProduct.WebApi.Endpoints
        [FromServices] IUserAccount userAccount, [FromBody] LoginDTO loginDTO
        )
         {
-            try
-            {
             var response = await userAccount.LoginAccount(loginDTO);
             return Results.Ok(response);
 
-            }
-            catch(Exception ex)
-            {
-                return Results.NotFound(HttpStatusCode.BadRequest);
-            }
+           
         }
 
         //[Authorize(Roles = "Admin")]

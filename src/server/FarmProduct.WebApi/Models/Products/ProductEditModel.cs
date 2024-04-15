@@ -12,11 +12,14 @@ namespace FarmProduct.WebApi.Models.Products
         public string Description { get; set; }
         public bool Status { get; set; }
         public int UnitId { get; set; }
-        public DateTime DateCreate { get; set; } = DateTime.Now;
-        public DateTime DateUpdate { get; set; } = DateTime.Now;
+        //public DateTime DateCreate { get; set; } = DateTime.Now;
+        //public DateTime DateUpdate { get; set; } = DateTime.Now;
+        //public List<IFormFile> Images { get; set; } // Thêm trường Images
+
         public static async ValueTask<ProductEditModel> BindAsync(HttpContext context)
         {
             var form = await context.Request.ReadFormAsync();
+            //var images = form.Files.GetFiles("Images"); 
             return new ProductEditModel()
             {
                 Id = int.Parse(form["Id"]),
@@ -25,10 +28,11 @@ namespace FarmProduct.WebApi.Models.Products
                 QuanlityAvailable = int.Parse(form["QuanlityAvailable"]),
                 CategoryId = int.Parse(form["CategoryId"]),
                 Price = decimal.Parse(form["Price"]),
-                Status = form["Status"] !="false",
+                Status = form["Status"] != "false",
                 UnitId = int.Parse(form["UnitId"]),
-                DateCreate = DateTime.Parse(form["DateCreate"]),
-                DateUpdate = DateTime.Parse(form["DateUpdate"]),
+                //DateCreate = DateTime.Parse(form["DateCreate"]),
+                //DateUpdate = DateTime.Parse(form["DateUpdate"]),
+                //Images = images.ToList() 
             };
         }
     }

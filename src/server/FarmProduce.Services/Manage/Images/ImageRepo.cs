@@ -56,6 +56,21 @@ namespace FarmProduce.Services.Manage.Images
             }
             return await _context.SaveChangesAsync() > 0;
         }
+        public async Task<bool> AddOrUpdateImages(List<Image> images, CancellationToken cancellationToken = default)
+        {
+            foreach (var image in images)
+            {
+                if (image.Id > 0)
+                {
+                    _context.Update(image);
+                }
+                else
+                {
+                    _context.Add(image);
+                }
+            }
+            return await _context.SaveChangesAsync() > 0;
+        }
         public async Task<bool> DeleteWithIdsync(int id, CancellationToken cancellationToken)
         {
             var result = await _context.Set<Image>().Where(x => x.Id == id).FirstOrDefaultAsync();

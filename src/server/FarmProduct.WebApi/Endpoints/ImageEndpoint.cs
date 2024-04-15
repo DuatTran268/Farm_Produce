@@ -15,6 +15,7 @@ using SlugGenerator;
 using FarmProduce.Services.Media;
 using Microsoft.AspNetCore.Mvc;
 using FarmProduct.WebApi.Models.Categories;
+using Microsoft.Extensions.Hosting;
 
 namespace FarmProduct.WebApi.Endpoints
 {
@@ -43,14 +44,14 @@ namespace FarmProduct.WebApi.Endpoints
             return Results.Ok(ApiResponse.Success(pagination));
         }
         private static async Task<IResult> AddImageAsync(HttpContext context
-        , [FromServices]IImageRepo imageRepo
-        , IMapper mapper
-        , [FromServices]IMediaManager mediaManager)
+     , [FromServices] IImageRepo imageRepo
+     , IMapper mapper
+     , [FromServices] IMediaManager mediaManager)
         {
             var model = await ImageEditModel.BindAsync(context);
 
             var image = model.Id > 0 ? await imageRepo.GetByIdAsync(model.Id) : null;
-            if(image == null)
+            if (image == null)
             {
                 image = mapper.Map<Image>(model);
             }
@@ -60,11 +61,12 @@ namespace FarmProduct.WebApi.Endpoints
             image.ProductId = model.ProductId;
             if (model.ImageFile?.Length > 0)
             {
-                string hostname = $"{context.Request.Scheme}://{context.Request.Host}{context.Request.PathBase}/";
-                string uploadedPath = await mediaManager.SaveFileAsync(model.ImageFile.OpenReadStream(), model.ImageFile.FileName, model.ImageFile.ContentType);
+                string hostname = $"{context.Request.Scheme}://{context.Request.Host}{context.Request.PathBase}/",
+                    uploadedPath = await mediaManager.SaveFileAsync(
+                        model.ImageFile.OpenReadStream(), model.ImageFile.FileName, model.ImageFile.ContentType);
                 if (!string.IsNullOrWhiteSpace(uploadedPath))
                 {
-                    image.UrlImage = uploadedPath;
+                    image.UrlImage = uploadedPath; // Gán đường dẫn lưu trữ hình ảnh trên máy chủ cho UrlImage
                 }
             }
             await imageRepo.AddOrUpdateImage(image);

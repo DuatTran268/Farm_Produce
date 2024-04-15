@@ -32,5 +32,6 @@ namespace FarmProduce.Services.Manage.Products
         Task<bool> DeleteWithSlugAsync(string slug, CancellationToken cancellationToken);
         Task<bool> IsSlugProductExisted(int id, string urlSlug, CancellationToken cancellationToken = default);
         Task<bool> AddOrUpdateProduct(Product product, CancellationToken cancellationToken = default);
+        Task<bool> AddProductWithImages(Product product, List<Image> images, CancellationToken cancellationToken = default);
     }
 }

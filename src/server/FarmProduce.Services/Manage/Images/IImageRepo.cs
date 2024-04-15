@@ -16,5 +16,6 @@ namespace FarmProduce.Services.Manage.Images
         Task<bool> AddOrUpdateImage(Image image, CancellationToken cancellationToken = default);
         Task<Image> GetByIdAsync(int id, CancellationToken cancellationToken = default);
         Task<bool> IsSlugImageExisted(int id, CancellationToken cancellationToken = default);
+        Task<bool> AddOrUpdateImages(List<Image> images, CancellationToken cancellationToken = default);
     }
 }

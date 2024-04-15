@@ -154,6 +154,27 @@ namespace FarmProduce.Services.Manage.Products
 			}
 			return cmtQuery;
 		}
+        public async Task<bool> AddProductWithImages(Product product, List<Image> images, CancellationToken cancellationToken = default)
+        {
+       
+            foreach (var image in images)
+            {
+                product.Images.Add(image);
+            }
 
-	}
+        
+            if (product.Id > 0)
+            {
+                _context.Update(product);
+            }
+            else
+            {
+                _context.Add(product);
+            }
+
+      
+            return await _context.SaveChangesAsync(cancellationToken) > 0;
+        }
+
+    }
 }
