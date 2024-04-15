@@ -27,3 +27,12 @@
 .checkout_title{
   color: red;
 }
+
+.checkout_input{
+  padding: 10px 20px;
+  border-radius: 0px 25px 0px 25px;
+  border: 2px solid var(--color-main);
+  outline: none;
+  box-shadow: 4px 4px 1px 1px #b0e9c1;
+}
+

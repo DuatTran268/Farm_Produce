@@ -33,3 +33,17 @@
 .button_checkout{
   text-align: center;
 }
+
+
+.text_titlecart{
+  text-align: center;
+  color: var(--color-textred);
+}
+
+.cart_coupon_text{
+  padding: 12px 20px ;
+  border-radius: 25px 0 25px 0;
+  border: 2px solid var(--color-main);
+  margin-top: 2rem;
+  outline: none;
+}

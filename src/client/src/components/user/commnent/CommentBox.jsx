@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSave } from "@fortawesome/free-solid-svg-icons";
+import { faMessage, faSave } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import { createNewAndUpdateComment } from "../../../api/Comment";
@@ -127,7 +127,7 @@ const CommentBox = () => {
           <div className="text-center">
             <Button variant="success" type="submit">
               Bình luận
-              <FontAwesomeIcon icon={faSave} className="px-2" />
+              <FontAwesomeIcon icon={faMessage} className="px-2" />
             </Button>
           </div>
         </Form>

@@ -11,6 +11,9 @@ import {
   createNewAndUpdateComment,
   getCommnetById,
 } from "../../../api/Comment";
+import { format } from "date-fns";
+
+
 
 const AdCommentEdit = () => {
   const [validated, setValidated] = useState(false);
@@ -22,7 +25,7 @@ const AdCommentEdit = () => {
       created: "",
       commentText: "",
       status: false,
-      customerId: 0,
+      userId: 0,
       productId: 0,
     },
     [comment, setCommnet] = useState(initialState);
@@ -34,9 +37,16 @@ const AdCommentEdit = () => {
 
   useEffect(() => {
     document.title = "Thêm, cập nhật comment";
+    
     getCommnetById(id).then((data) => {
       if (data) {
-        setCommnet(data);
+        // Chuyển đổi định dạng ngày tháng
+        const formattedDateCreate = format(new Date(data.created), 'yyyy-MM-dd');
+        console.log("Check dataa of comment: ",data)
+        setCommnet({
+          ...data,
+          created: formattedDateCreate,
+        });
       } else {
         setCommnet(initialState);
       }
@@ -118,7 +128,7 @@ const AdCommentEdit = () => {
             label={"Created"}
             control={
               <Form.Control
-                type="text"
+                type="date"
                 name="created"
                 title="Created"
                 value={comment.created || ""}
@@ -145,15 +155,15 @@ const AdCommentEdit = () => {
           />
 
           <BoxEdit
-            label={"customer Id"}
+            label={"User Id"}
             control={
               <Form.Control
                 type="text"
-                name="customerId"
-                title="customer Id"
-                value={comment.customerId || ""}
+                name="userId"
+                title="User Id"
+                value={comment.userId || ""}
                 onChange={(e) =>
-                  setCommnet({ ...comment, customerId: e.target.value })
+                  setCommnet({ ...comment, userId: e.target.value })
                 }
               />
             }
