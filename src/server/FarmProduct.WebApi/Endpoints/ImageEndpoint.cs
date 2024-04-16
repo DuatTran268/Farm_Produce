@@ -35,6 +35,7 @@ namespace FarmProduct.WebApi.Endpoints
               .WithName("AddImage")
               .Accepts<ImageEditModel>("multipart/form-data")
               .Produces<ApiResponse<ImageDto>>();
+<<<<<<< HEAD
 
 			routeGroupBuilder.MapGet("/{id:int}", GetImageById)
 				.WithName("GetImageById")
@@ -46,6 +47,13 @@ namespace FarmProduct.WebApi.Endpoints
 				.Produces(401)
 				.Produces<ApiResponse<string>>();
 		}
+=======
+            routeGroupBuilder.MapDelete("/{id:int}", DeleteAsync)
+                            .WithName("DeleteImage")
+                            .Produces(204)
+                            .Produces(404);
+        }
+>>>>>>> 85fab6d3716a99a74ca168a9065e65f50aee94c7
         private static async Task<IResult> GetAllPageAsync(IImageRepo imageRepo, [AsParameters] PagingModel pagingModel, CancellationToken cancellation = default)
         {
             var images = await imageRepo.GetAllPageAsync(
@@ -84,6 +92,7 @@ namespace FarmProduct.WebApi.Endpoints
 
             return Results.Ok(ApiResponse.Success(mapper.Map<ImageDto>(image), HttpStatusCode.Created));
         }
+<<<<<<< HEAD
 
 
 
@@ -105,4 +114,12 @@ namespace FarmProduct.WebApi.Endpoints
 			: Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound, $"Not find id = {id}"));
 		}
 	}
+=======
+        private static async Task<IResult> DeleteAsync(int id, IImageRepo imageRepo)
+        {
+            var status = await imageRepo.DeleteWithIDAsync(id);
+            return Results.Ok(status ? ApiResponse.Success(HttpStatusCode.NoContent) : ApiResponse.Fail(HttpStatusCode.NotFound, $"không tìm thấy rau với mã {id}"));
+        }
+    }
+>>>>>>> 85fab6d3716a99a74ca168a9065e65f50aee94c7
 }

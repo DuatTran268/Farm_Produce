@@ -17,7 +17,7 @@ namespace FarmProduce.Services.Manage.PaymentMethods
         Task<PaymentMethod> GetPaymentMethodById(int id, CancellationToken cancellationToken = default);
         Task<bool> IsIdExisted(int id, CancellationToken cancellationToken = default);
         Task<bool> DeleteWithIDAsync(int id, CancellationToken cancellationToken);
-        Task<bool> AddOrUpdateProduct(PaymentMethod paymentMethod, CancellationToken cancellationToken = default);
+        Task<bool> AddOrUpdate(PaymentMethod paymentMethod, CancellationToken cancellationToken = default);
 		Task<IList<PaymentMethodItems>> GetPaymentMethodComboobox(CancellationToken cancellationToken = default);
 
 	}

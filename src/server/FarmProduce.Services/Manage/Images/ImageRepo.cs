@@ -101,6 +101,10 @@ namespace FarmProduce.Services.Manage.Images
                 return true;
             }
         }
+<<<<<<< HEAD
+=======
+      
+>>>>>>> 85fab6d3716a99a74ca168a9065e65f50aee94c7
 
 		public async Task<bool> DeleteImage(int id, CancellationToken cancellationToken = default)
 		{

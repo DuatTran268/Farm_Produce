@@ -24,6 +24,7 @@ const Login = () => {
       email: emailLogin,
       password: passwordLogin,
     };
+    
     LoginUser(newUser, dispatch, naviagate)
       .then(() => {
         localStorage.setItem("isLoggedIn", true);

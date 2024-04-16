@@ -113,8 +113,6 @@ namespace FarmProduct.WebApi.Endpoints
 			var productId = await productRepo.GetLitmitProductNewest(limit, pd => pd.ProjectToType<ProductDetails>());
 			return Results.Ok(ApiResponse.Success(productId));
 		}
-
-
 		// using slug of product to get all comment
 		private static async Task<IResult> GetCommentBySlugProduct([FromRoute] string slug,
 		  [AsParameters] PagingModel pagingModel, IProductRepo productRepo)

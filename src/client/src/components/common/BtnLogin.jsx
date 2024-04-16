@@ -8,8 +8,8 @@ import { logout } from "../../redux/Account";
 const BtnLogin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  let user = useSelector((state) => state.auth.login.currentUser);
-
+let user = useSelector((state) => state.auth.login.currentUser);
+//let user = localStorage.getItem("users");
   const handleLogout = async () => {
     await dispatch(logout());
     navigate(`/`);
@@ -26,9 +26,9 @@ const BtnLogin = () => {
               // to={`/profile/${user.result.id}`}
               className="px-1 text-white"
             >
-              {user.result.email}
+              {user.email}
             </Link>
-            {console.log("Check user: ", user.result)}
+            
           </span>
 
           <Link
