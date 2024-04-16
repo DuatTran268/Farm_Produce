@@ -8,6 +8,7 @@ import {
   registerFail,
 } from "../redux/Account";
 import { jwtDecode } from "jwt-decode";
+import { get_api } from "./AxiosCommon";
 const decodeAndSaveUserInfo = (token) => {
   const userInfo = jwtDecode(token);
   const user = {
@@ -80,3 +81,13 @@ export const RegisterUser = async (user, dispatch, navigate) => {
     dispatch(registerFail());
   }
 };
+
+
+
+
+
+export async function getUserById(id = "") {
+  if (id != "") {
+    return get_api(`https://localhost:7047/api/account/${id}`);
+  }
+}
