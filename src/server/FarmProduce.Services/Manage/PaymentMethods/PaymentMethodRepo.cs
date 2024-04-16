@@ -54,7 +54,7 @@ namespace FarmProduce.Services.Manage.PaymentMethods
                 return true;
             }
         }
-        public async Task<bool> AddOrUpdateProduct(PaymentMethod paymentMethod, CancellationToken cancellationToken = default)
+        public async Task<bool> AddOrUpdate(PaymentMethod paymentMethod, CancellationToken cancellationToken = default)
         {
             if (paymentMethod.Id > 0)
             {

@@ -66,15 +66,15 @@ namespace FarmProduct.WebApi.Endpoints
               return Results.NotFound(ApiResponse.Fail(HttpStatusCode.BadRequest, ex.Message));
             }
         }
-        private static async Task<IResult> Login(
-       [FromServices] IUserAccount userAccount, [FromBody] LoginDTO loginDTO
-       )
-        {
-            var response = await userAccount.LoginAccount(loginDTO);
-            return Results.Ok(response);
+                private static async Task<IResult> Login(
+               [FromServices] IUserAccount userAccount, [FromBody] LoginDTO loginDTO
+               )
+                {
+                    var response = await userAccount.LoginAccount(loginDTO);
+                    return Results.Ok(response);
 
            
-        }
+                }
 
         //[Authorize(Roles = "Admin")]
         private static async Task<IResult> GetAll(

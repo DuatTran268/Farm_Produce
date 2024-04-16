@@ -7,8 +7,19 @@ import {
   registerSuccess,
   registerFail,
 } from "../redux/Account";
-
-
+import { jwtDecode } from "jwt-decode";
+const decodeAndSaveUserInfo = (token) => {
+  const userInfo = jwtDecode(token);
+  const user = {
+    id: userInfo['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'],
+    username: userInfo['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'],
+    email: userInfo['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'],
+    role: userInfo['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
+  };
+  localStorage.setItem("token", token);
+  localStorage.setItem("user", JSON.stringify(user));
+  return user
+};
 export const LoginUser = async (user, dispatch, navigate) => {
   dispatch(loginStart());
   try {
@@ -17,13 +28,17 @@ export const LoginUser = async (user, dispatch, navigate) => {
     alert("code da vao day",  response);
     
     const data = response.data;
-    console.log(data);
-    // localStorage.setItem("token", data.token)
+    
+    const userInfo = decodeAndSaveUserInfo(data.token);
+    dispatch(loginSuccess(userInfo));
+  
+
+    
     if (data.flag === false){
       alert("Xảy ra lỗi không thể đăng nhập");
       return;
     }
-    dispatch(loginSuccess(response.data));
+   
 
     console.log("Chécdcdssdcsdcdsdsc", response.data)
     navigate("/");
