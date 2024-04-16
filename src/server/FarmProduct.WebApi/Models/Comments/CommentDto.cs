@@ -11,7 +11,11 @@ namespace FarmProduct.WebApi.Models.Comments
 		public string CommentText { get; set; }
 		public bool Status { get; set; }
 		public int ProductId { get; set; }
-		public int UserId { get; set; }
+		public string ApplicationUserId { get; set; }
+
+		//public int CustomerId { get; set; }
+
+		//public int UserId { get; set; }
 
 	}
 }

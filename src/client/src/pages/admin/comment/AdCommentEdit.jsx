@@ -25,7 +25,7 @@ const AdCommentEdit = () => {
       created: "",
       commentText: "",
       status: false,
-      userId: 0,
+      applicationUserId: "",
       productId: 0,
     },
     [comment, setCommnet] = useState(initialState);
@@ -159,11 +159,11 @@ const AdCommentEdit = () => {
             control={
               <Form.Control
                 type="text"
-                name="userId"
-                title="User Id"
-                value={comment.userId || ""}
+                name="applicationUserId"
+                title="applicationUserId"
+                value={comment.applicationUserId || ""}
                 onChange={(e) =>
-                  setCommnet({ ...comment, userId: e.target.value })
+                  setCommnet({ ...comment, applicationUserId: e.target.value })
                 }
               />
             }
