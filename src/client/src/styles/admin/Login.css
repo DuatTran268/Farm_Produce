@@ -22,7 +22,7 @@
 }
 .form-container{
   width: 50%;
-  transform: translateY(100%);
+  transform: translateY(30%);
 }
 
 
@@ -35,4 +35,32 @@
   position: relative;
   top: 5px;
   right: -45%;
+}
+
+.image_banner{
+  cursor: pointer;
+}
+
+.form-group > input{
+  padding: 10px 20px;
+  border-radius: 25px 0px 25px 0px;
+  border: 2px solid var(--color-main);
+  outline: none;
+  box-shadow: 4px 4px 1px 1px var(--color-main);
+}
+
+
+.button_action{
+  margin-top: 2rem;
+  padding: 8px 16px;
+  border: 2px solid var(--color-main);
+  background-color: var(--color-textwhite);
+  border-radius: 20px;
+  font-weight: 500;
+  outline: none;
+}
+
+.button_action:hover{
+  background-color: var(--color-main);
+  color: var(--color-textwhite) ;
 }

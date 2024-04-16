@@ -7,6 +7,7 @@ import Advertise from "../../components/user/advertise/Advertise";
 import AdvertiseBanner from "../../components/user/advertise/AdvertiseBanner";
 import LayoutClient from "../../components/user/common/LayoutClient";
 import ProductCategory from "../../components/user/product/ProductCategory";
+import UserProfile from "../account/UserProfile";
 const Home = () => {
   return (
     <LayoutClient>
@@ -38,6 +39,7 @@ const Home = () => {
       <div className="list_product">
         <ProductCategory/>
       </div>
+      {/* <UserProfile/> */}
     </LayoutClient>
   );
 };

@@ -13,6 +13,7 @@ import {
   faUserCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import SidebarCommon from "../common/SidebarCommon";
+import { faImage } from "@fortawesome/free-regular-svg-icons";
 
 const Sidebar = () => {
   const [activeMenu, setActiveMenu] = useState();
@@ -40,8 +41,8 @@ const Sidebar = () => {
             <SidebarCommon slug="order" icon={faArrowCircleUp} title="Đơn hàng"/>
             <SidebarCommon slug="deliver" icon={faCar} title="Vận chuyển" />
             <SidebarCommon slug="comment" icon={faMessage} title="Bình luận" />
-            <SidebarCommon slug="customer" icon={faUser} title="Khách hàng" />
-            <SidebarCommon slug="user" icon={faUserCircle} title="Người dùng" />
+            <SidebarCommon slug="user" icon={faUser} title="Người dùng" />
+            <SidebarCommon slug="image" icon={faImage} title="Ảnh sản phẩm" />
             <SidebarCommon slug="unit" icon={faList} title="Đơn vị" />
 
             <SidebarCommon slug="discount" icon={faUpDown} title="Giảm giá" />

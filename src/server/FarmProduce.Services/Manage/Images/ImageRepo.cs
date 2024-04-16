@@ -31,7 +31,7 @@ namespace FarmProduce.Services.Manage.Images
         }
          public async Task<IPagedList<T>> GetAllPageAsync<T>(Func<IQueryable<Image>, IQueryable<T>> mapper, IPagingParams pagingParams, CancellationToken cancellationToken = default)
         {
-            IQueryable<Image> images = _context.Set<Image>();
+            IQueryable<Image> images = _context.Set<Image>().Include(pi => pi.Product);
             return await mapper(images).ToPagedListAsync(pagingParams, cancellationToken);
         }
         public async Task<bool> IsSlugImageExisted(int id, CancellationToken cancellationToken = default)
@@ -101,7 +101,10 @@ namespace FarmProduce.Services.Manage.Images
                 return true;
             }
         }
-      
 
-    }
+		public async Task<bool> DeleteImage(int id, CancellationToken cancellationToken = default)
+		{
+			return await _context.Images.Where(t => t.Id == id).ExecuteDeleteAsync(cancellationToken) > 0;
+		}
+	}
 }

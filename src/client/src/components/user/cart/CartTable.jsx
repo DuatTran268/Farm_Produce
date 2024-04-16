@@ -27,10 +27,10 @@ const CartTable = () => {
   if (isEmpty)
     return (
       <>
-        <h1 className="text-center mt-5 mb-5">Giỏ hàng của bạn không có gì</h1>
+        <h1 className="text_titlecart mt-5 mb-5">Giỏ hàng của bạn không có gì</h1>
         <div className="text-center">
           <Link to={`/home`}>
-            <Button className="btn btn-success mt-5 mb-5 text-center">
+            <Button className="btn_go_buyproduct mt-5 mb-5 text-center text-bg-success">
               Đi mua sản phẩm thôi
             </Button>
           </Link>

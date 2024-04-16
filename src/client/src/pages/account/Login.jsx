@@ -43,9 +43,9 @@ const Login = () => {
         </div>
         <div className="login_row">
           <div className="login_col col-6">
-            <div className="image_banner">
+            <Link to={'/'} className="image_banner">
               <Image src={IconImage} />
-            </div>
+            </Link>
           </div>
           <div className="login_col col-6">
             <div className="form-container">
@@ -53,7 +53,7 @@ const Login = () => {
                 <div className="form-group mb-3 mt-3">
                   <input
                     type="email"
-                    className="form-control"
+                    className="form-control input_field_account"
                     placeholder="Nhập vào Email"
                     required
                     onChange={(e) => setEmailLogin(e.target.value)}
@@ -62,7 +62,7 @@ const Login = () => {
                 <div className="form-group mb-3 mt-3">
                   <input
                     type={showPassword ? "text" : "password"} // Thay đổi loại của trường input dựa trên trạng thái hiển thị mật khẩu
-                    className="form-control form_inputpassword"
+                    className="form-control form_inputpassword input_field_account"
                     placeholder="Nhập vào mật khẩu ..."
                     required
                     value={passwordLogin}
@@ -80,7 +80,7 @@ const Login = () => {
                   </span>
                 </div>
                 <div className="form-group text-center">
-                  <button type="submit" className="btn btn-success">
+                  <button type="submit" className="button_action">
                     Đăng nhập
                   </button>
                   <div className="text-end mt-3">

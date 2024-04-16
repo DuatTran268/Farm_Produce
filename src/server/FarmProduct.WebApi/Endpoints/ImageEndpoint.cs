@@ -16,6 +16,8 @@ using FarmProduce.Services.Media;
 using Microsoft.AspNetCore.Mvc;
 using FarmProduct.WebApi.Models.Categories;
 using Microsoft.Extensions.Hosting;
+using FarmProduce.Core.DTO;
+using FarmProduce.Services.Manage.Categories;
 
 namespace FarmProduct.WebApi.Endpoints
 {
@@ -33,11 +35,17 @@ namespace FarmProduct.WebApi.Endpoints
               .WithName("AddImage")
               .Accepts<ImageEditModel>("multipart/form-data")
               .Produces<ApiResponse<ImageDto>>();
-            routeGroupBuilder.MapDelete("/{id:int}", DeleteAsync)
-                            .WithName("DeleteImage")
-                            .Produces(204)
-                            .Produces(404);
-        }
+
+			routeGroupBuilder.MapGet("/{id:int}", GetImageById)
+				.WithName("GetImageById")
+				.Produces<ApiResponse<ImageDto>>();
+
+
+			routeGroupBuilder.MapDelete("/{id:int}", DeleteImage)
+				.WithName("DeleteImage")
+				.Produces(401)
+				.Produces<ApiResponse<string>>();
+		}
         private static async Task<IResult> GetAllPageAsync(IImageRepo imageRepo, [AsParameters] PagingModel pagingModel, CancellationToken cancellation = default)
         {
             var images = await imageRepo.GetAllPageAsync(
@@ -76,10 +84,33 @@ namespace FarmProduct.WebApi.Endpoints
 
             return Results.Ok(ApiResponse.Success(mapper.Map<ImageDto>(image), HttpStatusCode.Created));
         }
+
         private static async Task<IResult> DeleteAsync(int id, IImageRepo imageRepo)
         {
             var status = await imageRepo.DeleteWithIDAsync(id);
             return Results.Ok(status ? ApiResponse.Success(HttpStatusCode.NoContent) : ApiResponse.Fail(HttpStatusCode.NotFound, $"không tìm thấy rau với mã {id}"));
         }
-    }
+    
+
+
+
+
+		// get image by id
+		private static async Task<IResult> GetImageById(
+		int id, IImageRepo imageRepo, IMapper mapper)
+		{
+			var image = await imageRepo.GetByIdAsync(id);
+			return image == null
+			? Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound, $"Not find id = {id}"))
+			: Results.Ok(ApiResponse.Success(mapper.Map<ImageDto>(image)));
+		}
+
+		private static async Task<IResult> DeleteImage(
+			int id, IImageRepo imageRepo)
+		{
+			return await imageRepo.DeleteImage(id)
+			? Results.Ok(ApiResponse.Success("Deleted ", HttpStatusCode.NoContent))
+			: Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound, $"Not find id = {id}"));
+		}
+	}
 }

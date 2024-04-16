@@ -11,6 +11,8 @@
   import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
   import { faRightToBracket, faSave } from "@fortawesome/free-solid-svg-icons";
   import BtnError from "../../../components/common/BtnError";
+  import { format } from 'date-fns';
+
 
   const AdDiscountEdit = () => {
     const [validated, setValidated] = useState(false);
@@ -30,11 +32,30 @@
     let { id } = useParams();
     id = id ?? 0;
 
+    // useEffect(() => {
+    //   document.title = "Thêm, cập nhật Discount";
+    //   getDiscountById(id).then((data) => {
+    //     if (data) {
+    //       setDiscount(data);
+    //     } else {
+    //       setDiscount(initialState);
+    //     }
+    //   });
+    // }, []);
+
     useEffect(() => {
       document.title = "Thêm, cập nhật Discount";
       getDiscountById(id).then((data) => {
         if (data) {
-          setDiscount(data);
+          // Chuyển đổi định dạng ngày tháng
+          const formattedStartDate = format(new Date(data.startDate), 'yyyy-MM-dd');
+          const formattedEndDate = format(new Date(data.endDate), 'yyyy-MM-dd');
+          
+          setDiscount({
+            ...data,
+            startDate: formattedStartDate,
+            endDate: formattedEndDate
+          });
         } else {
           setDiscount(initialState);
         }
@@ -115,7 +136,7 @@
               label={"Ngày bắt đầu"}
               control={
                 <Form.Control
-                  type="text"
+                  type="date"
                   name="startDate"
                   title="Start Date"
                   required
@@ -132,7 +153,7 @@
               label={"Ngày hết hạn"}
               control={
                 <Form.Control
-                  type="text"
+                  type="date"
                   name="endDate"
                   title="End Date"
                   required

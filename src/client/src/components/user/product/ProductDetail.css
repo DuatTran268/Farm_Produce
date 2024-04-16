@@ -8,6 +8,7 @@
   padding-left: 2rem;
 }
 
+
 .product_detail_content {
   padding: 0rem 1rem 1rem 0;
 }
@@ -63,6 +64,22 @@
   border: 1px solid var(--color-main);
 }
 
+.image_avt_product{
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  overflow: hidden;
+}
+
+
+
+
+
+
+
+
+
+
 /* comment */
 .comment_title {
   color: var(--color-main);
@@ -108,4 +125,13 @@
   border-radius: 20px;
   padding-left: 20px;
   border: 2px solid var(--color-main);
+}
+
+.image_product_related{
+  width: 200px;
+  height: 100px;
+  object-fit: cover;
+  overflow: hidden;
+  padding: 0 10px;
+
 }

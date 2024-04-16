@@ -20,20 +20,20 @@ namespace FarmProduce.Services.Manage.Products
 		private readonly IMemoryCache _memoryCache;
 
 
-		public ProductRepo (FarmDbContext context, IMemoryCache memoryCache)
+		public ProductRepo(FarmDbContext context, IMemoryCache memoryCache)
 		{
 			_context = context;
 			_memoryCache = memoryCache;
 		}
 
-		public async Task<IPagedList<T>> GetAllProducts<T>(Func<IQueryable<Product> ,IQueryable<T>> mapper,ProductQuery productQuery ,IPagingParams pagingParams ,CancellationToken cancellationToken = default)
+		public async Task<IPagedList<T>> GetAllProducts<T>(Func<IQueryable<Product>, IQueryable<T>> mapper, ProductQuery productQuery, IPagingParams pagingParams, CancellationToken cancellationToken = default)
 		{
 			IQueryable<Product> products = FilterProduct(productQuery);
-			return await mapper(products).ToPagedListAsync(pagingParams,cancellationToken);
+			return await mapper(products).ToPagedListAsync(pagingParams, cancellationToken);
 
 		}
 
-	
+
 		private IQueryable<Product> FilterProduct(ProductQuery productQuery)
 		{
 			IQueryable<Product> products = _context.Set<Product>();
@@ -41,16 +41,16 @@ namespace FarmProduce.Services.Manage.Products
 			{
 				products = products.Where(x => x.UrlSlug.Contains(productQuery.UrlSlug));
 			}
-            if (!String.IsNullOrWhiteSpace(productQuery.Name))
-            {
-                products = products.Where(x => x.Name.Contains(productQuery.Name));
-            }
+			if (!String.IsNullOrWhiteSpace(productQuery.Name))
+			{
+				products = products.Where(x => x.Name.Contains(productQuery.Name));
+			}
 			return products;
-        }
-		public async Task<bool> DeleteWithSlugAsync(string slug,CancellationToken cancellationToken)
+		}
+		public async Task<bool> DeleteWithSlugAsync(string slug, CancellationToken cancellationToken)
 		{
-			var result = await _context.Set<Product>().Where(x=>x.UrlSlug== slug).FirstOrDefaultAsync();
-			if(result is null)
+			var result = await _context.Set<Product>().Where(x => x.UrlSlug == slug).FirstOrDefaultAsync();
+			if (result is null)
 			{
 				return false;
 			}
@@ -60,40 +60,40 @@ namespace FarmProduce.Services.Manage.Products
 				return true;
 			}
 		}
-        public async Task<bool> IsSlugProductExisted(int id, string urlSlug, CancellationToken cancellationToken = default)
-        {
-            return await _context.Set<Product>().AnyAsync(x => x.Id != id && x.UrlSlug == urlSlug);
-        }
-        public async Task<bool> DeleteWithIDAsync(int id, CancellationToken cancellationToken)
-        {
-            var result = await _context.Set<Product>().Where(x => x.Id == id).FirstOrDefaultAsync();
-            if (result is null)
-            {
-                return false;
-            }
-            else
-            {
-                _context.Set<Product>().Remove(result);
-                return true;
-            }
-        }
-        public async Task<bool> AddOrUpdateProduct(Product product, CancellationToken cancellationToken = default)
-        {
-            if (product.Id > 0)
-            {
-                _context.Update(product);
-            }
-            else
-            {
-                _context.Add(product);
-            }
+		public async Task<bool> IsSlugProductExisted(int id, string urlSlug, CancellationToken cancellationToken = default)
+		{
+			return await _context.Set<Product>().AnyAsync(x => x.Id != id && x.UrlSlug == urlSlug);
+		}
+		public async Task<bool> DeleteWithIDAsync(int id, CancellationToken cancellationToken)
+		{
+			var result = await _context.Set<Product>().Where(x => x.Id == id).FirstOrDefaultAsync();
+			if (result is null)
+			{
+				return false;
+			}
+			else
+			{
+				_context.Set<Product>().Remove(result);
+				return true;
+			}
+		}
+		public async Task<bool> AddOrUpdateProduct(Product product, CancellationToken cancellationToken = default)
+		{
+			if (product.Id > 0)
+			{
+				_context.Update(product);
+			}
+			else
+			{
+				_context.Add(product);
+			}
 
-            // Thực hiện lưu các thay đổi vào cơ sở dữ liệu và kiểm tra xem có thay đổi nào được lưu không
-            return await _context.SaveChangesAsync(cancellationToken) > 0;
-        }
+			// Thực hiện lưu các thay đổi vào cơ sở dữ liệu và kiểm tra xem có thay đổi nào được lưu không
+			return await _context.SaveChangesAsync(cancellationToken) > 0;
+		}
 
 
-        public async Task <Product> GetProductById(int id, CancellationToken cancellationToken = default)
+		public async Task<Product> GetProductById(int id, CancellationToken cancellationToken = default)
 		{
 			return await _context.Set<Product>().Include(p => p.Category).Include(p => p.Unit).FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
 		}
@@ -118,15 +118,15 @@ namespace FarmProduce.Services.Manage.Products
 		{
 			product.UrlSlug = product.Name.GenerateSlug();
 			_context.Update(product);
-			return await _context.SaveChangesAsync(cancellationToken) >0;
+			return await _context.SaveChangesAsync(cancellationToken) > 0;
 		}
-        public async Task<bool> AddAsync(Product product, CancellationToken cancellationToken = default)
-        {
-            product.UrlSlug = product.Name.GenerateSlug();
-            _context.Add(product);
-            return await _context.SaveChangesAsync(cancellationToken) > 0;
-        }
-    public async Task<IList<T>> GetLitmitProductNewest<T>(int n, Func<IQueryable<Product>, IQueryable<T>> mapper, CancellationToken cancellationToken = default)
+		public async Task<bool> AddAsync(Product product, CancellationToken cancellationToken = default)
+		{
+			product.UrlSlug = product.Name.GenerateSlug();
+			_context.Add(product);
+			return await _context.SaveChangesAsync(cancellationToken) > 0;
+		}
+		public async Task<IList<T>> GetLitmitProductNewest<T>(int n, Func<IQueryable<Product>, IQueryable<T>> mapper, CancellationToken cancellationToken = default)
 		{
 			var productLimit = _context.Set<Product>()
 				.Include(p => p.Discounts)
@@ -141,7 +141,7 @@ namespace FarmProduce.Services.Manage.Products
 		{
 			IQueryable<Comment> cmtFindQuery = FilterComment(query);
 			IQueryable<T> queryResult = mapper(cmtFindQuery);
-			return await queryResult.ToPagedListAsync(pagingParams ,cancellationToken);
+			return await queryResult.ToPagedListAsync(pagingParams, cancellationToken);
 
 		}
 
@@ -154,27 +154,37 @@ namespace FarmProduce.Services.Manage.Products
 			}
 			return cmtQuery;
 		}
-        public async Task<bool> AddProductWithImages(Product product, List<Image> images, CancellationToken cancellationToken = default)
-        {
-       
-            foreach (var image in images)
-            {
-                product.Images.Add(image);
-            }
+		public async Task<bool> AddProductWithImages(Product product, List<Image> images, CancellationToken cancellationToken = default)
+		{
 
-        
-            if (product.Id > 0)
-            {
-                _context.Update(product);
-            }
-            else
-            {
-                _context.Add(product);
-            }
+			foreach (var image in images)
+			{
+				product.Images.Add(image);
+			}
 
-      
-            return await _context.SaveChangesAsync(cancellationToken) > 0;
-        }
 
-    }
+			if (product.Id > 0)
+			{
+				_context.Update(product);
+			}
+			else
+			{
+				_context.Add(product);
+			}
+
+
+			return await _context.SaveChangesAsync(cancellationToken) > 0;
+		}
+
+		public async Task<IList<ProductItem>> GetProductCombobox(CancellationToken cancellationToken = default)
+		{
+			IQueryable<Product> topics = _context.Set<Product>();
+			return await topics.OrderBy(t => t.Id)
+				.Select(t => new ProductItem()
+				{
+					Id = t.Id,
+					Name = t.Name,
+				}).ToListAsync(cancellationToken);
+		}
+	}
 }

@@ -14,6 +14,8 @@ import AdProductEdit from "../pages/admin/product/AdProductEdit";
 import AdDiscount from "../pages/admin/discount/AdDiscount";
 import AdDiscountEdit from "../pages/admin/discount/AdDiscountEdit";
 import NotFound from "../pages/NotFound";
+import AdImages from "../pages/admin/images/AdImages";
+import AdImagesEdit from "../pages/admin/images/AdImagesEdit";
 
 const RouterAdmin = () => {
   return (
@@ -46,6 +48,11 @@ const RouterAdmin = () => {
         <Route path="/admin/discount" element={<AdDiscount/>} />
         <Route path="/admin/discount/edit" element={<AdDiscountEdit/>} />
         <Route path="/admin/discount/edit/:id" element={<AdDiscountEdit/>} />
+
+
+        <Route path="/admin/image" element={<AdImages/>} />
+        <Route path="/admin/image/edit" element={<AdImagesEdit/>} />
+        <Route path="/admin/image/edit/:id" element={<AdImagesEdit/>} />
 
       </Routes>
     </BrowserRouter>

@@ -43,12 +43,19 @@ const AdProductEdit = () => {
   useEffect(() => {
     document.title = "Thêm, cập nhật sản phẩm";
     getProductById(id).then((data) => {
-      console.log("Check dataaaaaa cua id", data);
-      if (data)
+      if (data) {
+        // Chuyển đổi định dạng ngày tháng
+        const formattedDateCreate = format(new Date(data.dateCreate), 'yyyy-MM-dd');
+        const formattedDateUpdate = format(new Date(data.dateUpdate), 'yyyy-MM-dd');
+        
         setProduct({
           ...data,
+          dateCreate: formattedDateCreate,
+          dateUpdate: formattedDateUpdate
         });
-      else setProduct(initialState);
+      } else {
+        setProduct(initialState);
+      }
     });
 
     // filter cate
@@ -248,11 +255,11 @@ const AdProductEdit = () => {
             </div>
           </div>
 
-          {/* <BoxEdit
+          <BoxEdit
             label={"Ngày tạo"}
             control={
               <Form.Control
-                type="datetime-local"
+                type="date"
                 name="dateCreate"
                 title="Date Create"
                 required
@@ -272,7 +279,7 @@ const AdProductEdit = () => {
             label={"Ngày cập nhật"}
             control={
               <Form.Control
-                type="datetime-local"
+                type="date"
                 name="dateUpdate"
                 title="date Update"
                 required
@@ -283,7 +290,7 @@ const AdProductEdit = () => {
               />
             }
             notempty={"Không được bỏ trống"}
-          /> */}
+          />
 
           <div className="row mb-3">
             <div className="col-sm-10 offset-sm-2">

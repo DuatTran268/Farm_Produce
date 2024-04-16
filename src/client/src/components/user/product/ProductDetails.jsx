@@ -22,7 +22,7 @@ const ProductDetails = () => {
     getDetailProductByUrlSlug(slug).then((data) => {
       if (data) {
         setProductDetail(data);
-        console.log("Check data detailsssss... . .",data.id);
+        console.log("Check data detailsssss... . .",data);
       } else {
         setProductDetail({});
       }
@@ -57,7 +57,19 @@ const ProductDetails = () => {
       <section>
         <div className="product_detail">
           <div className="product_detail_img col-5">
-            <Image src={dautay} width={300} />
+            {/* chỉ muốn lấy ra 1 hình ảnh đầu tiên làm avt */}
+            {/* <Image src={`https://localhost:7047/${productDetail.images[0].urlImage}`}width={300} />\ */}
+
+            {productDetail.images.length > 0 ? (
+              <Image src={`https://localhost:7047/${productDetail.images[0].urlImage}`} className="image_avt_product" />
+            ) : (
+              <>
+                <p>
+                  Sản phẩm chưa có hình ảnh
+                </p>
+                <Image alt={productDetail.name} width={300} />
+              </>
+            )}
           </div>
           <div className="product_detail_content col-7">
             <div className="product_detail_title">{productDetail.name}</div>
@@ -66,15 +78,6 @@ const ProductDetails = () => {
             <div className="product_detail_desc">
               {productDetail.description}
             </div>
-            {/* <div className="product_detail_size">
-              <label htmlFor="size">Lựa chọn size: </label>
-              <select name="size" id="size">
-                <option value="S">S</option>
-                <option value="M">M</option>
-                <option value="L">L</option>
-                <option value="XL">XL</option>
-              </select>
-            </div> */}
             <div className="product_detail_quantity_cart">
               <div className="product_detail_quantity">
                 <span>Số lượng</span>
@@ -99,6 +102,17 @@ const ProductDetails = () => {
             </div>
           </div>
         </div>
+        {productDetail ? (
+        <div className="image_gallery">
+          <div className="image_gallery_product">
+            {productDetail.images.map((image, index) => (
+              <Image className="image_product_related" key={index} src={`https://localhost:7047/${image.urlImage}`}/>
+            ))}
+          </div>
+        </div>
+      ): (
+        <>Ok</>
+      )}
       </section>
     );
   }
