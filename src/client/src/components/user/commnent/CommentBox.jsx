@@ -83,9 +83,7 @@ const CommentBox = () => {
 
   return (
     <section>
-      <div className="comment_content">
-        <h5 className="comment_title">Để lại bình luận của bạn</h5>
-      </div>
+      
       <div className="comment_box">
         <Form
           method="post"

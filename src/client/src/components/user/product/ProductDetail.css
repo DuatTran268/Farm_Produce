@@ -70,11 +70,16 @@
   object-fit: cover;
   overflow: hidden;
 }
-
-
-
-
-
+.comment_announced{
+  text-align: center;
+}
+.message_announced{
+  color: var(--color-textred);
+  text-align: center;
+  text-decoration: none;
+  font-size: 1.6rem;
+  font-weight: 500;
+}
 
 
 

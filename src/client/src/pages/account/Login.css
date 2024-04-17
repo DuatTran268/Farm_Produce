@@ -64,3 +64,16 @@
   background-color: var(--color-main);
   color: var(--color-textwhite) ;
 }
+
+.rotating-image {
+  animation: rotate 4s linear infinite; /* 4s là thời gian mỗi vòng, linear là kiểu chuyển động */
+}
+
+@keyframes rotate {
+  from {
+    transform: rotateY(360deg);
+  }
+  to {
+    transform: rotateY(0deg);
+  }
+}
