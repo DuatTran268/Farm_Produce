@@ -14,7 +14,7 @@ namespace FarmProduce.Core.Contracts
         Task<GeneralResponse> CreateAccount(RegisterDTO userDTO);
         Task<LoginResponse> LoginAccount(LoginDTO loginDTO);
         Task<IEnumerable<ApplicationUser>> GetAllAccounts();
-        Task<IEnumerable<UserWithRolesDTO>> GetAllAccountsWithRoles();
+        //Task<IEnumerable<UserWithRolesDTO>> GetAllAccountsWithRoles();
         Task<GeneralResponse> CreateAccountByAdmin(UserDTO userDTO);
         Task<IEnumerable<DetailUserDTO>> GetAllUser();
         Task<DetailUserDTO> GetUserWithOrdersById(string userId);

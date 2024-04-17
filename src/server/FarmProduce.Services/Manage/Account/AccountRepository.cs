@@ -131,7 +131,7 @@ namespace FarmProduce.Services.Manage.Account
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
                 new Claim(ClaimTypes.Name, user.Name),
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role, user.Role)
+                new Claim(ClaimTypes.Role, user.Role),
             };
             var token = new JwtSecurityToken(
                 issuer: config["Jwt:Issuer"],
@@ -178,23 +178,23 @@ namespace FarmProduce.Services.Manage.Account
 
             return usersWithOrders;
         }
-        public async Task<IEnumerable<UserWithRolesDTO>> GetAllAccountsWithRoles()
-        {
-            var usersWithRoles = new List<UserWithRolesDTO>();
+        //public async Task<IEnumerable<Us>> GetAllAccountsWithRoles()
+        //{
+        //    var usersWithRoles = new List<UserWithRolesDTO>();
 
-            foreach (var user in await userManager.Users.ToListAsync())
-            {
-                var userRoles = await userManager.GetRolesAsync(user);
-                var userWithRoles = new UserWithRolesDTO
-                {
-                    Name = user.Name,
-                    Email = user.Email,
-                    Roles = userRoles.ToList()
-                };
-                usersWithRoles.Add(userWithRoles);
-            }
-            return usersWithRoles;
-        }
+        //    foreach (var user in await userManager.Users.ToListAsync())
+        //    {
+        //        var userRoles = await userManager.GetRolesAsync(user);
+        //        var userWithRoles = new UserWithRolesDTO
+        //        {
+        //            Name = user.Name,
+        //            Email = user.Email,
+        //            Roles = userRoles.ToList()
+        //        };
+        //        usersWithRoles.Add(userWithRoles);
+        //    }
+        //    return usersWithRoles;
+        //}
         public async Task<DetailUserDTO> GetUserWithOrdersById(string userId)
         {
             var user = await userManager.Users
