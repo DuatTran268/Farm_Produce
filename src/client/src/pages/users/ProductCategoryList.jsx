@@ -21,6 +21,14 @@ const ProductCategoryList = () => {
     });
   }, [slug]);
 
+  const getThumbnailUrl = (product) => {
+    if (product.images && product.images.length > 0) {
+      return product.images[0].urlImage; // Trả về URL của ảnh đầu tiên trong mảng images của sản phẩm
+    } else {
+      return  // Trả về URL của ảnh mặc định nếu không có ảnh trong mảng images
+    }
+  };
+
   return (
       <div className="product_body">
         <div className="product_body_flex">
@@ -29,12 +37,13 @@ const ProductCategoryList = () => {
               <>
                 {productCategory.map((product, index) => {
                   return (
-                    <div className="product_item col-11 col-md-6 col-lg-3 ">
+                    <div className="product_item col-11 col-md-6 col-lg-3 " key={index}>
                       <ProductTemplate
-                        key={index}
                         urlSlug={product.urlSlug}
                         name={product.name}
                         price={product.price}
+                        thumbnailUrl={getThumbnailUrl(product)}
+
                       />
                     </div>
                   );
