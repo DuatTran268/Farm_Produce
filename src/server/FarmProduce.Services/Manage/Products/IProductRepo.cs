@@ -16,8 +16,10 @@ namespace FarmProduce.Services.Manage.Products
 
         Task<Product> GetProductById(int id, CancellationToken cancellationToken = default);
         Task<Product> GetDetailProductBySlug(string slug, CancellationToken cancellationToken = default);
+		Task<Product> GetIdSlugOfProductForComment(string slug, CancellationToken cancellationToken = default);
 
-        Task<IList<T>> GetLitmitProductNewest<T>(int n, Func<IQueryable<Product>, IQueryable<T>> mapper, CancellationToken cancellationToken = default);
+
+		Task<IList<T>> GetLitmitProductNewest<T>(int n, Func<IQueryable<Product>, IQueryable<T>> mapper, CancellationToken cancellationToken = default);
 
         // get comment have paged
         Task<IPagedList<T>> GetCommentWithPaged<T>(CommentQuery query,

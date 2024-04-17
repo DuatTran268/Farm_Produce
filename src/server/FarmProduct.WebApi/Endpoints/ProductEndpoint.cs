@@ -45,6 +45,11 @@ namespace FarmProduct.WebApi.Endpoints
 				.WithName("GetProductBySlug")
 				.Produces<ApiResponse<ProductDetails>>();
 
+			routeGroupBuilder.MapGet("/slugidProduct/{slug:regex(^[a-z0-9_-]+$)}", GetIdAndSlugOfProductForComment)
+				.WithName("GetIdAndSlugOfProductForComment")
+				.Produces<ApiResponse<ProductIdSlug>>();
+
+
 			routeGroupBuilder.MapGet("limitNewest/{limit:int}", GetLimitProductNewest)
 			   .WithName("GetLimitProductNewest")
 			   .Produces<ApiResponse<IList<ProductDetails>>>();
@@ -106,6 +111,16 @@ namespace FarmProduct.WebApi.Endpoints
 				? Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound, $"Not find slug = {slug}"))
 				: Results.Ok(ApiResponse.Success(mapper.Map<ProductDetails>(product)));
 		}
+
+		private static async Task<IResult> GetIdAndSlugOfProductForComment([FromRoute] string slug, IProductRepo productRepo, IMapper mapper)
+		{
+			var productIdSlugComment = await productRepo.GetIdSlugOfProductForComment(slug);
+
+			return productIdSlugComment == null
+				? Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound, $"Not find slug = {slug}"))
+				: Results.Ok(ApiResponse.Success(mapper.Map<ProductIdSlug>(productIdSlugComment)));
+		}
+
 
 		// get limit product newest
 		private static async Task<IResult> GetLimitProductNewest(int limit, IProductRepo productRepo, ILogger<IResult> logger)

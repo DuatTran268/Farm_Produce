@@ -60,7 +60,10 @@ const AdCommentEdit = () => {
       setValidated(true);
     } else {
       let data = new FormData(e.target);
-
+      console.log("Form data:");
+      for (const pair of data.entries()) {
+        console.log(pair[0] + ': ' + pair[1]);
+      }
 
       createNewAndUpdateComment(id, data).then((data) => {
         if (data) {

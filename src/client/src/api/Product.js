@@ -36,6 +36,11 @@ export async function getDetailProductByUrlSlug(urlSlug = ''){
   return get_api (`https://localhost:7047/api/products/slugProduct/${urlSlug}`)
 }
 
+export async function getIdAndSlugOfProductForComment(urlSlug = ''){
+  return get_api (`https://localhost:7047/api/products/slugidProduct/${urlSlug}`)
+}
+
+
 
 // get product with slug of category
 export function getProductByCategorySlug(slug) {
