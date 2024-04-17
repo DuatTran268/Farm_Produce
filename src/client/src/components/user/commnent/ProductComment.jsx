@@ -4,8 +4,8 @@ import { getCommentBySlugOfProduct } from "../../../api/Comment";
 import "../../user/product/ProductDetail.css";
 import { format } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-regular-svg-icons";
-
+import { faUser,  faStar } from "@fortawesome/free-solid-svg-icons";
+import { faStar as faStarRegular } from "@fortawesome/free-regular-svg-icons";
 const ProductComment = () => {
   const [comment, setComment] = useState([]);
   const params = useParams();
@@ -21,6 +21,19 @@ const ProductComment = () => {
     });
   }, [slug]);
 
+    // Function to generate star icons based on rating
+    const renderRatingStars = (rating) => {
+      const stars = [];
+      for (let i = 0; i < 5; i++) {
+        if (i < rating) {
+          stars.push(  <FontAwesomeIcon key={i} icon={faStar} className="text-warning"/>);
+        } else {
+          stars.push(<FontAwesomeIcon key={i} icon={faStarRegular} className="text-warning"/>);
+        }
+      }
+      return stars;
+    };
+
   return (
     <section className="comment_container">
       <div className="comment_content">
@@ -35,8 +48,9 @@ const ProductComment = () => {
               </div>
               <div className="comment_item_col col-10">
                 <div className="comment_item_col_top row">
-                  <h5 className="col">Tên: {item.name}</h5>
-                  <div className="col">
+                  <h5 className="col-6">Tên: {item.name}</h5>
+                  <div className="col-3">{renderRatingStars(item.rating)}</div>
+                  <div className="col-3">
                     {format(new Date(item.created), "dd/MM/yyyy")}
                   </div>
                 </div>

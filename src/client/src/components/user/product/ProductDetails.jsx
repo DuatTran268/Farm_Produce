@@ -8,6 +8,8 @@ import { useCart } from "react-use-cart";
 import { useSnackbar } from "notistack";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartArrowDown } from "@fortawesome/free-solid-svg-icons";
+import imagenotfound from "../../../assets/imagenotfound.jpg"
+
 
 const ProductDetails = () => {
   const params = useParams();
@@ -64,10 +66,7 @@ const ProductDetails = () => {
               <Image src={`https://localhost:7047/${productDetail.images[0].urlImage}`} className="image_avt_product" />
             ) : (
               <>
-                <p>
-                  Sản phẩm chưa có hình ảnh
-                </p>
-                <Image alt={productDetail.name} width={300} />
+                <Image src={imagenotfound} width={300} />
               </>
             )}
           </div>

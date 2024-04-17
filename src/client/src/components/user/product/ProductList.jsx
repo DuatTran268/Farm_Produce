@@ -9,6 +9,9 @@ import { getFilterProduct } from "../../../api/Product";
 import Loading from "../../common/Loading";
 import { useSelector } from "react-redux";
 
+import imagenotfound from "../../../assets/imagenotfound.jpg";
+
+
 const ProductList = () => {
   const [getProduct, setGetProduct] = useState([]);
   const [isVisibleLoading, setIsVisibleLoading] = useState(true);
@@ -25,13 +28,25 @@ const ProductList = () => {
     getFilterProduct(productFilter.name, ps, pageNumber).then((data) => {
       if (data) {
         setGetProduct(data.items);
-        console.log("Checkdata", data);
+        
+        console.log("Checkdata item", data.items[0].images[0].urlImage);
+
       } else {
         setGetProduct([]);
       }
       setIsVisibleLoading(false);
     });
   }, [productFilter, ps, p, pageNumber]);
+
+  // Hàm lấy URL của ảnh thumbnail
+  const getThumbnailUrl = (item) => {
+    if (item.images && item.images.length > 0) {
+      return item.images[0].urlImage; // Trả về URL của ảnh đầu tiên trong mảng images của sản phẩm
+    } else {
+      return  // Trả về URL của ảnh mặc định nếu không có ảnh trong mảng images
+    }
+  };
+
 
   return (
     <>
@@ -51,6 +66,7 @@ const ProductList = () => {
                       >
                         <ProductTemplate
                           item={item} 
+                          thumbnailUrl={getThumbnailUrl(item)}
                           urlSlug={item.urlSlug}
                           name={item.name}
                           price={item.price}

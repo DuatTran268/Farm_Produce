@@ -7,13 +7,15 @@ import HeaderBtn from "../../../components/common/HeaderBtn";
 import BtnSuccess from "../../../components/common/BtnSuccess";
 import CommentFilter from "../../../components/admin/filter/CommentFilter";
 import { deleteComment, getFilterComment } from "../../../api/Comment";
-import { faAdd, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faAdd, faEdit, faTrash, faStar } from "@fortawesome/free-solid-svg-icons";
 import Loading from "../../../components/common/Loading";
 import { Table } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import BtnNextPage from "../../../components/common/BtnNextPage";
 import { format } from "date-fns";
 import Popup from "../../../components/common/Popup";
+
+import { faStar as faStarRegular } from "@fortawesome/free-regular-svg-icons";
 
 const AdComments = () => {
   const [getCommnent, setgetCommnent] = useState([]);
@@ -85,6 +87,20 @@ const AdComments = () => {
   };
 
 
+  const renderRatingStars = (rating) => {
+    const stars = [];
+    for (let i = 0; i < 5; i++) {
+      if (i < rating) {
+        stars.push(  <FontAwesomeIcon key={i} icon={faStar} className="text-warning"/>);
+      } else {
+        stars.push(<FontAwesomeIcon key={i} icon={faStarRegular} className="text-warning"/>);
+      }
+    }
+    return stars;
+  };
+
+
+
   return (
     <LayoutCommon>
       <div className="title py-3 text-danger">
@@ -104,7 +120,7 @@ const AdComments = () => {
             <thead>
               <tr>
                 <th>Tên Người Bình Luận</th>
-                <th>Số đánh giá</th>
+                <th>Số  sao đánh giá</th>
                 <th>Ngày đánh giá</th>
                 <th>Trạng thái</th>
                 <th>Sửa</th>
@@ -116,7 +132,9 @@ const AdComments = () => {
                 getCommnent.map((item, index) => (
                   <tr key={index}>
                     <td>{item.name}</td>
-                    <td>{item.rating}</td>
+                    <td>
+                    {renderRatingStars(item.rating)}
+                      </td>
                     <td>{format(new Date(item.created), "dd/MM/yyyy")}</td>
                     <td>{item.status}</td>
 

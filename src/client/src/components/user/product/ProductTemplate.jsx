@@ -6,6 +6,7 @@ import { useCart } from "react-use-cart";
 import { faCartArrowDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSnackbar } from "notistack";
+import imagenotfound from "../../../assets/imagenotfound.jpg"
 
 const ProductTemplate = (props) => {
   const { addItem } = useCart();
@@ -23,12 +24,30 @@ const ProductTemplate = (props) => {
         <Link to={`/detail/${props.urlSlug}`} className="product_link">
           <div className="card p-0 overflow-hidden shadow">
             <div className="product_image">
-              <Image
+              {/* <Image
                 src={
                   "https://nongsandalat.vn/wp-content/uploads/2021/10/mut-dau-tay-1-370x290.jpg"
                 }
                 className="product_img"
-              />
+              /> */}
+
+   
+              {props.thumbnailUrl ? (
+                <Image
+                  src={`https://localhost:7047/${props.thumbnailUrl}`}
+                  width={300}
+                  height={300}
+                  className="product_img"
+                />
+              ) : (
+                // Nếu không có hình ảnh, hiển thị hình ảnh mặc định
+                <Image
+                  src={imagenotfound}
+                  width={300}
+                  height={300}
+                  className="product_img"
+                />
+              )}
             </div>
             <div className="product_content">
               <p className="product_title">{props.name}</p>

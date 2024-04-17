@@ -28,7 +28,7 @@ export function getFilterProduct(
 
 
 export async function getProductNewestLimit(){
-  return get_api (`https://localhost:7047/api/products/limitNewest/4`)
+  return get_api (`https://localhost:7047/api/products/limitNewest/5`)
 
 }
 
