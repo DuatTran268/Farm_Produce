@@ -34,3 +34,17 @@
 .button_login{
   margin-left: 3rem;
 }
+
+
+.rotating-image {
+  animation: rotate 4s linear infinite; 
+}
+
+@keyframes rotate {
+  from {
+    transform: rotateY(360deg);
+  }
+  to {
+    transform: rotateY(0deg);
+  }
+}

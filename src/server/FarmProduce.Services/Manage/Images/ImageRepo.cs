@@ -88,23 +88,10 @@ namespace FarmProduce.Services.Manage.Images
         {
             return await _context.Set<Image>().AnyAsync(x => x.Id != id);
         }
-        public async Task<bool> DeleteWithIDAsync(int id, CancellationToken cancellationToken)
-        {
-            var result = await _context.Set<Image>().Where(x => x.Id == id).FirstOrDefaultAsync();
-            if (result is null)
-            {
-                return false;
-            }
-            else
-            {
-                _context.Set<Image>().Remove(result);
-                return true;
-            }
-        }
 
-		public async Task<bool> DeleteImage(int id, CancellationToken cancellationToken = default)
-		{
-			return await _context.Images.Where(t => t.Id == id).ExecuteDeleteAsync(cancellationToken) > 0;
-		}
-	}
+        public async Task<bool> DeleteImage(int id, CancellationToken cancellationToken = default)
+        {
+            return await _context.Images.Where(t => t.Id == id).ExecuteDeleteAsync(cancellationToken) > 0;
+        }
+    }
 }

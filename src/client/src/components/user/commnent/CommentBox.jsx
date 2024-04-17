@@ -1,30 +1,56 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMessage, faSave } from "@fortawesome/free-solid-svg-icons";
+import { faMessage, faStar } from "@fortawesome/free-solid-svg-icons";
+import { faStar as faStarRegular } from "@fortawesome/free-regular-svg-icons";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import { createNewAndUpdateComment } from "../../../api/Comment";
 import FieldComment from "../../admin/edit/FieldBox";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
-import { faStar as faStarRegular } from "@fortawesome/free-regular-svg-icons";
+import { getDetailProductByUrlSlug, getIdAndSlugOfProductForComment } from "../../../api/Product";
+import { useSelector } from "react-redux";
 import "./Comment.css"
 
+
 const CommentBox = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const [validated, setValidated] = useState(false);
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const initialState = {
     id: 0,
     name: "",
     rating: 0,
+    created: "",
     commentText: "",
+    status: false,
+    applicationUserId: "",
+    productId: 0,
   };
   const [comment, setComment] = useState(initialState);
   const navigate = useNavigate();
+  const { slug } = useParams();
+  const productDetail = useSelector(state => state.productDetail);
   let { id } = useParams();
   id = id ?? 0;
+  useEffect(() => {
+    document.title = "Chi tiết sản phẩm";
+    // get id and slug of product
+    getIdAndSlugOfProductForComment(slug).then((data) => {
+      if (data) {
+        console.log("Product detail:", data.id);
+        setComment(prevState => ({ ...prevState, productId: data.id }));
+      } else {
+        console.log("Product not found");
+      }
+    });
+  }, [slug]);
+  let user = useSelector((state) => state.auth.login.currentUser);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    console.log('Check id của user:  ', user.id)
+    if (user.id) {
+      setComment(prevState => ({ ...prevState, applicationUserId: user.id }));
+    }
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -33,22 +59,21 @@ const CommentBox = () => {
       setValidated(true);
     } else {
       let data = new FormData(e.target);
-      // Lấy thông tin người dùng từ local storage hoặc từ context API
-      const userId = localStorage.getItem("userId"); // Đây là ví dụ, bạn cần cập nhật phù hợp với cách lấy thông tin người dùng của bạn
-      // Lấy ID của sản phẩm từ slug (giả sử bạn có một hàm để làm điều này)
-      // const productId = getProductIdFromSlug(id); // Đây là ví dụ, bạn cần thay thế bằng cách lấy ID sản phẩm từ slug của bạn
-
-      data.append("customerId", userId);
-      // data.append("productId", productId);
+      data.append("rating", comment.rating); // Thêm rating vào formData
+      
+      console.log("Form data:");
+      for (const pair of data.entries()) {
+        console.log(pair[0] + ': ' + pair[1]);
+      }
 
       createNewAndUpdateComment(id, data).then((data) => {
         if (data) {
-          enqueueSnackbar("Đã lưu thành công", {
+          enqueueSnackbar("Cảm ơn bạn đã bình luận", {
             variant: "success",
           });
-          navigate(`/home`);
+          navigate(`/detail/${slug}`);
         } else {
-          enqueueSnackbar("Đã xảy ra lỗi khi lưu", {
+          enqueueSnackbar("Đã xảy ra lỗi bình luận", {
             variant: "error",
           });
         }
@@ -56,15 +81,9 @@ const CommentBox = () => {
     }
   };
 
-  const handleStarClick = (value) => {
-    setComment({ ...comment, rating: value });
-  };
-
   return (
     <section>
-      <div className="comment_content">
-        <h5 className="comment_title">Để lại bình luận của bạn</h5>
-      </div>
+      
       <div className="comment_box">
         <Form
           method="post"
@@ -81,7 +100,7 @@ const CommentBox = () => {
               <FontAwesomeIcon
                 key={value}
                 icon={value <= comment.rating ? faStar : faStarRegular}
-                onClick={() => handleStarClick(value)}
+                onClick={() => setComment({ ...comment, rating: value })} // Thay đổi rating trong state
                 className="px-1 icon_start"
                 style={{ cursor: "pointer" }}
               />
@@ -92,12 +111,12 @@ const CommentBox = () => {
             control={
               <Form.Control
                 className="form_control_comment"
-                placeholder="Tên của bạn"
+                placeholder="Tên hiển thị"
                 type="text"
                 name="name"
                 title="Name"
                 required
-                value={comment.name || ""}
+                value={comment.name}
                 onChange={(e) =>
                   setComment({ ...comment, name: e.target.value })
                 }
@@ -115,7 +134,7 @@ const CommentBox = () => {
                 name="commentText"
                 title="Comment Text"
                 required
-                value={comment.commentText || ""}
+                value={comment.commentText}
                 onChange={(e) =>
                   setComment({ ...comment, commentText: e.target.value })
                 }
@@ -123,6 +142,9 @@ const CommentBox = () => {
             }
             notempty={"Không được bỏ trống"}
           />
+
+          <Form.Control type="hidden" name="applicationUserId" value={comment.applicationUserId} />
+          <Form.Control type="hidden" name="productId" value={comment.productId} />
 
           <div className="text-center">
             <Button variant="success" type="submit">

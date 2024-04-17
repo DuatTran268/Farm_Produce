@@ -20,13 +20,13 @@ let user = useSelector((state) => state.auth.login.currentUser);
     <>
       {user != null ? (
         <>
-          <span className="text-white">
+          <span className="text-white px-3">
             Xin chào
             <Link
-              // to={`/profile/${user.result.id}`}
+              to={`/profile/${user.id}`}
               className="px-1 text-white"
             >
-              {user.email}
+              {user.username}
             </Link>
             
           </span>

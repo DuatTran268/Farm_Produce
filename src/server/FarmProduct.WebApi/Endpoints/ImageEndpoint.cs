@@ -41,11 +41,12 @@ namespace FarmProduct.WebApi.Endpoints
 				.Produces<ApiResponse<ImageDto>>();
 
 
-			routeGroupBuilder.MapDelete("/{id:int}", DeleteImage)
-				.WithName("DeleteImage")
-				.Produces(401)
-				.Produces<ApiResponse<string>>();
-		}
+            routeGroupBuilder.MapDelete("/{id:int}", DeleteImage)
+                .WithName("DeleteImage")
+                .Produces(401)
+                .Produces<ApiResponse<string>>();
+        
+        }
         private static async Task<IResult> GetAllPageAsync(IImageRepo imageRepo, [AsParameters] PagingModel pagingModel, CancellationToken cancellation = default)
         {
             var images = await imageRepo.GetAllPageAsync(
@@ -85,14 +86,6 @@ namespace FarmProduct.WebApi.Endpoints
             return Results.Ok(ApiResponse.Success(mapper.Map<ImageDto>(image), HttpStatusCode.Created));
         }
 
-        private static async Task<IResult> DeleteAsync(int id, IImageRepo imageRepo)
-        {
-            var status = await imageRepo.DeleteWithIDAsync(id);
-            return Results.Ok(status ? ApiResponse.Success(HttpStatusCode.NoContent) : ApiResponse.Fail(HttpStatusCode.NotFound, $"không tìm thấy rau với mã {id}"));
-        }
-    
-
-
 
 
 		// get image by id
@@ -105,12 +98,13 @@ namespace FarmProduct.WebApi.Endpoints
 			: Results.Ok(ApiResponse.Success(mapper.Map<ImageDto>(image)));
 		}
 
-		private static async Task<IResult> DeleteImage(
-			int id, IImageRepo imageRepo)
-		{
-			return await imageRepo.DeleteImage(id)
-			? Results.Ok(ApiResponse.Success("Deleted ", HttpStatusCode.NoContent))
-			: Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound, $"Not find id = {id}"));
-		}
-	}
+        private static async Task<IResult> DeleteImage(
+            int id, IImageRepo imageRepo)
+        {
+            return await imageRepo.DeleteImage(id)
+            ? Results.Ok(ApiResponse.Success("Deleted ", HttpStatusCode.NoContent))
+            : Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound, $"Not find id = {id}"));
+        }
+     
+    }
 }

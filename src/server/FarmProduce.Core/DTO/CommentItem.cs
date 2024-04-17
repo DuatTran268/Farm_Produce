@@ -15,7 +15,9 @@ namespace FarmProduce.Core.DTO
 		public string CommentText { get; set; }
 		public bool Status { get; set; }
 		public int CustomerId { get; set; }
-		public int ProductId { get; set; }
+		public string ApplicationUserId { get; set; }
+
+		//public int ProductId { get; set; }
 
 	}
 }

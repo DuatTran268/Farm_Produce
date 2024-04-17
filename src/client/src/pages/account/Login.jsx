@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Image } from "react-bootstrap";
 import IconImage from "../../assets/dalavi.png";
-import "../../styles/admin/Login.css";
+import "./Login.css";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
@@ -44,7 +44,7 @@ const Login = () => {
         <div className="login_row">
           <div className="login_col col-6">
             <Link to={'/'} className="image_banner">
-              <Image src={IconImage} />
+              <Image src={IconImage} className="rotating-image" />
             </Link>
           </div>
           <div className="login_col col-6">

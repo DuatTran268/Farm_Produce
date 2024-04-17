@@ -114,6 +114,19 @@ namespace FarmProduce.Services.Manage.Products
 			return await productQuery.FirstOrDefaultAsync(cancellationToken);
 		}
 
+		// get id and slug of product for comment
+		public async Task<Product> GetIdSlugOfProductForComment(string slug, CancellationToken cancellationToken = default)
+		{
+			IQueryable<Product> productQuery = _context.Set<Product>();
+			{
+				if (!string.IsNullOrEmpty(slug))
+				{
+					productQuery = productQuery.Where(pq => pq.UrlSlug == slug);
+				}
+			}
+			return await productQuery.FirstOrDefaultAsync(cancellationToken);
+		}
+
 		public async Task<bool> UpdateAsync(Product product, CancellationToken cancellationToken = default)
 		{
 			product.UrlSlug = product.Name.GenerateSlug();

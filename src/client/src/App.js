@@ -5,13 +5,13 @@ import { Provider } from "react-redux";
 import store from "./redux/Store";
 import { CartProvider } from "react-use-cart";
 import { SnackbarProvider } from "notistack";
-import RouterUser from "./router/RouterUser";
-import RouterAdmin from "./router/RouterAdmin";
 import "./index.css"
+import Router from "./router/Router";
 
 function App() {
   return (
     <div className="app">
+
       <Provider store={store}>
         <SnackbarProvider
           sx={{ height: "100%" }}
@@ -21,9 +21,8 @@ function App() {
           }}
         >
           <CartProvider>
-            <RouterUser />
+            <Router />
           </CartProvider>
-          <RouterAdmin/>
         </SnackbarProvider>
       </Provider>
     </div>
