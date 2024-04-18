@@ -29,7 +29,7 @@ const ProductList = () => {
       if (data) {
         setGetProduct(data.items);
         
-        console.log("Checkdata item", data.items[0].images[0].urlImage);
+        // console.log("Checkdata item", data.items[0].images[0].urlImage);
 
       } else {
         setGetProduct([]);
