@@ -140,3 +140,26 @@
   padding: 0 10px;
 
 }
+
+
+/* show popup comment */
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60%; /* điều chỉnh kích thước của popup tại đây */
+  height: auto; /* hoặc sử dụng một chiều cao cố định */
+  background-color: rgba(255, 255, 255, 0.9); /* màu nền của popup */
+  z-index: 9999; /* đảm bảo popup hiển thị trên cùng */
+  padding: 20px; /* padding bên trong của popup */
+  border-radius: 8px; /* bo tròn góc của popup */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* đổ bóng cho popup */
+}
+
+
+.popup-image {
+  max-width: 90%;
+  max-height: 90%;
+}
