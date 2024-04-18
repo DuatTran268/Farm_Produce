@@ -36,14 +36,15 @@ namespace FarmProduce.Data.Seeders
             var units = AddUnits();
             var users = AddUsers();
             var roles = SeedRoles();
-            var orders = AddOrders(users);
+            var paymentMethods = AddPaymentMethods();
+            var orderStatuses = AddOrderStatuses();
+            var orders = AddOrders(users, paymentMethods,orderStatuses );
+            var discounts = AddDiscounts(orders);
+
             var userRole = AddUserRoles(users, roles);
             var products = AddProducts(caterories, units);
             var comments = AddComments(products, users);
             var images = AddImages(products);
-            var discounts = AddDiscounts(products);
-            var orderStatuses = AddOrderStatuses(orders);
-            var paymentMethods = AddPaymentMethods(orders);
             var orderItems = AddOrderItems(products, orders);
         }
 
@@ -227,7 +228,7 @@ namespace FarmProduce.Data.Seeders
         }
 
 
-        private List<Order> AddOrders(List<ApplicationUser> users)
+        private List<Order> AddOrders(List<ApplicationUser> users, IList<PaymentMethod> paymentMethods, IList<OrderStatus> orderStatuses)
         {
             var orders = new List<Order>();
 
@@ -237,6 +238,9 @@ namespace FarmProduce.Data.Seeders
                     ApplicationUser = users[1],
                     TotalPrice = 400000,
                     DateOrder = DateTime.Now,
+                    OrderStatus = orderStatuses[1],
+                    PaymentMethod = paymentMethods[1],
+
                 };
 
                 _dbContext.Orders.Add(order);
@@ -246,19 +250,18 @@ namespace FarmProduce.Data.Seeders
 
             return orders;
         }
-        private IList<PaymentMethod> AddPaymentMethods(IList<Order> orders)
+        private IList<PaymentMethod> AddPaymentMethods()
         {
             var paymentMethods = new List<PaymentMethod>() {
 
                 new(){
                     Name="QR Pay",
                     Description="QR",
-                    Order= orders[0]
+                  
                 },
                  new(){
                     Name="Thanh toán trực tiếp",
                     Description="Thanh toán trực tiếp khi nhận hàng",
-                    Order= orders[0]
 
 
                 }
@@ -274,33 +277,29 @@ namespace FarmProduce.Data.Seeders
             _dbContext.SaveChanges();
             return paymentMethods;
         }
-        private IList<OrderStatus> AddOrderStatuses(IList<Order> orders)
+        private IList<OrderStatus> AddOrderStatuses()
         {
             var orderStatuses = new List<OrderStatus>() {
                 new(){
                    StatusCode="Chờ xác nhận",
                    Description="",
                    StatusDate=new DateTime(2024,2, 27),
-                   Order= orders[0],
 
                 },
                  new(){
                    StatusCode="Đã xác nhận",
                    Description="",
                    StatusDate=new DateTime(2024,2, 27),
-                   Order= orders[0],
                 },
                   new(){
                    StatusCode="Đang giao",
                    Description="",
                    StatusDate=new DateTime(2024,2, 27),
-                   Order= orders[0],
                 },
                    new(){
                    StatusCode="Đã giao",
                    Description="",
                    StatusDate=new DateTime(2024,2, 27),
-                   Order= orders[0],
                 }
 
             };
@@ -359,23 +358,22 @@ namespace FarmProduce.Data.Seeders
             return images;
         }
 
-        private IList<Discount> AddDiscounts(IList<Product> products)
+        private IList<Discount> AddDiscounts(IList<Order> orders)
         {
             var discounts = new List<Discount>() {
-
             new(){
                     DiscountPrice=50,
                     StartDate= DateTime.Now,
                     EndDate=(DateTime.Now).AddDays(7),
                     Status="Ongoing",
-                    Products= products[0]
+                     OrderId = orders[0].Id
                 },
              new(){
                     DiscountPrice=20,
                     StartDate= DateTime.Now,
                     EndDate=(DateTime.Now).AddDays(10),
                     Status="Ongoing",
-                    Products=products[0]
+                     OrderId = orders[0].Id
                 }
             };
             foreach (var discount in discounts)

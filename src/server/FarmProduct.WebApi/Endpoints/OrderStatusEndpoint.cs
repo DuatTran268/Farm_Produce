@@ -100,7 +100,6 @@ namespace FarmProduct.WebApi.Endpoints
             }
 
             orderStatus.StatusCode = model.StatusCode;
-            orderStatus.OrderId = model.OrderId;
             orderStatus.Description = model.Description;
           
             try

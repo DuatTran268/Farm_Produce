@@ -21,8 +21,6 @@ namespace FarmProduce.Data.Mappings
             builder.Property(x => x.Description)
                .IsRequired()
                .HasMaxLength(100);
-
-
         }
     }
 }

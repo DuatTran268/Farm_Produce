@@ -77,20 +77,20 @@ namespace FarmProduct.WebApi.Endpoints
                 }
 
         //[Authorize(Roles = "Admin")]
-        private static async Task<IResult> GetAll(
-       [FromServices] IUserAccount userAccount
-       )
-        {
-            try
-            {
-            var response = await userAccount.GetAllAccountsWithRoles();
-            return Results.Ok(ApiResponse.Success(response));
+       // private static async Task<IResult> GetAll(
+       //[FromServices] IUserAccount userAccount
+       //)
+       // {
+       //     try
+       //     {
+       //     var response = await userAccount.GetAllAccountsWithRoles();
+       //     return Results.Ok(ApiResponse.Success(response));
 
-            }catch(Exception ex)
-            {
-                return Results.NotFound(ApiResponse.Fail(HttpStatusCode.NotFound, ex.Message));
-            }
-        }
+       //     }catch(Exception ex)
+       //     {
+       //         return Results.NotFound(ApiResponse.Fail(HttpStatusCode.NotFound, ex.Message));
+       //     }
+       // }
         private static async Task<IResult> GetAllUser(
      [FromServices] IUserAccount userAccount
      )
