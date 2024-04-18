@@ -11,11 +11,11 @@ namespace FarmProduce.Core.DTO
     {
         public int Id { get; set; }
         public DateTime DateOrder { get; set; }
-        public int TotalPrice { get; set; }
+        public decimal TotalPrice { get; set; }
         public int OrderStatusId { get; set; }
         public string ApplicationUserId { get; set; }
-        public IList<PaymentMethod> PaymentMethods { get; set; }
-        public IList<OrderStatus> OrderStatuses { get; set; }
+        public int PaymentMethodId { get; set; }
+        
         public IList<OrderItem> OrderItems { get; set; }
     }
 }

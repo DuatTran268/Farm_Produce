@@ -88,7 +88,7 @@ namespace FarmProduce.Services.Manage.Orders
                 TotalPrice = orderDTO.TotalPrice,
                 OrderStatusId = orderDTO.OrderStatusId,
                 ApplicationUserId = orderDTO.ApplicationUserId,
-                PaymentMethods = orderDTO.PaymentMethods,
+                PaymentMethodId = orderDTO.PaymentMethodId,
 
             };
             _context.Orders.Add(newOrder);

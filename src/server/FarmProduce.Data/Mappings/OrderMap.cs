@@ -22,14 +22,14 @@ namespace FarmProduce.Data.Mappings
             builder.Property(o => o.TotalPrice)
                .IsRequired()
                .HasDefaultValue(0);
-            builder.HasMany(o => o.PaymentMethods)
-                 .WithOne(p => p.Order)
-                 .HasForeignKey(p => p.OrderId)
-                 .HasConstraintName("FK_PaymentMethods_Order");
-            builder.HasMany(o => o.OrderStatuses)
-                .WithOne(p => p.Order)
-                .HasForeignKey(p => p.OrderId)
-                .HasConstraintName("FK_OrderStatuses_Order");
+            builder.HasOne(o => o.PaymentMethod)
+                 .WithMany(p => p.Orders)
+                 .HasForeignKey(p => p.PaymentMethodId)
+                 .HasConstraintName("FK_PaymentMethod_Orders");
+            builder.HasOne(o => o.OrderStatus)
+                .WithMany(p => p.Order)
+                .HasForeignKey(p => p.OrderStatusId)
+                .HasConstraintName("FK_OrderStatus_Orders");
             builder.HasMany(o => o.OrderItems)
                 .WithOne(i => i.Order)
                 .HasForeignKey(o => o.OrderId)
@@ -37,6 +37,9 @@ namespace FarmProduce.Data.Mappings
             builder.HasOne(o => o.ApplicationUser)
                 .WithMany(u => u.Orders)
                 .HasForeignKey(o => o.ApplicationUserId);
+            builder.HasOne(o => o.Discount)
+                .WithOne(d => d.Order)
+                 .HasForeignKey<Discount>(d => d.OrderId); ;
         }
     }
 }

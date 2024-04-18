@@ -100,7 +100,6 @@ namespace FarmProduct.WebApi.Endpoints
 
             paymentMethod.Description = model.Description;
             paymentMethod.Id = model.Id;
-            paymentMethod.OrderId = model.OrderId;
 
 
             try

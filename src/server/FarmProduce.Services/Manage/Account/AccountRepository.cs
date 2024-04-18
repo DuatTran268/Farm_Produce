@@ -170,7 +170,7 @@ namespace FarmProduce.Services.Manage.Account
                         Id = order.Id,
                         TotalPrice = order.TotalPrice,
                         OrderItems= order.OrderItems,
-                        PaymentMethods=order.PaymentMethods,
+                        PaymentMethodId=order.PaymentMethodId,
                         OrderStatusId= order.OrderStatusId,
                     }).ToList()
                 })
@@ -209,7 +209,7 @@ namespace FarmProduce.Services.Manage.Account
                         Id = order.Id,
                         TotalPrice = order.TotalPrice,
                         OrderItems = order.OrderItems,
-                        PaymentMethods = order.PaymentMethods,
+                        PaymentMethodId = order.PaymentMethodId,
                         OrderStatusId = order.OrderStatusId,
                     }).ToList()
                 })

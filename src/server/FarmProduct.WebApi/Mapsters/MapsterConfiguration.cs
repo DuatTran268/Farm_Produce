@@ -38,18 +38,24 @@ namespace FarmProduct.WebApi.Mapsters
 
 
 
-			config.NewConfig<Discount, DiscountDto>();
-			config.NewConfig<Discount, DiscountItem>();
-			config.NewConfig<DiscountEditModel, Discount>();
+			config.NewConfig<Discount, DiscountDto>()
+                .Map(dest => dest.OrderId, src => src.Order.Id);
+			config.NewConfig<Discount, DiscountItem>()
+                .Map(dest => dest.OrderId, src => src.Order.Id);
+            ;
+            config.NewConfig<Discount, DiscountEditModel>()
+                .Map(dest => dest.OrderId, src => src.Order.Id);
+           
 
-			config.NewConfig<OrderStatus, OrderStatusDto>();
+            config.NewConfig<OrderStatus, OrderStatusDto>();
 			config.NewConfig<PaymentMethod, PaymentsMethodDto>();
 			config.NewConfig<Order, OrderDto>();
 			config.NewConfig<CustomUI, CustomUIDto>();
             config.NewConfig<Image, ImageDto>();
 			config.NewConfig<Product, ProductEditModel>();
 			config.NewConfig<Image, ImageEditModel>();
-			config.NewConfig<Order, OrderDto>();
+			config.NewConfig<Order, OrderDto>()
+				;
 
         }
     }

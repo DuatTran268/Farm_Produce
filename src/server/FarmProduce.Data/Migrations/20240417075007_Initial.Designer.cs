@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FarmProduce.Data.Migrations
 {
     [DbContext(typeof(FarmDbContext))]
-    [Migration("20240411155318_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240417075007_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -196,7 +196,7 @@ namespace FarmProduce.Data.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ProductId")
+                    b.Property<int>("OrderId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("StartDate")
@@ -207,7 +207,8 @@ namespace FarmProduce.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("OrderId")
+                        .IsUnique();
 
                     b.ToTable("Discounts");
                 });
@@ -256,12 +257,19 @@ namespace FarmProduce.Data.Migrations
                     b.Property<int>("OrderStatusId")
                         .HasColumnType("int");
 
-                    b.Property<int>("TotalPrice")
+                    b.Property<int>("PaymentMethodId")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("OrderStatusId");
+
+                    b.HasIndex("PaymentMethodId");
 
                     b.ToTable("Orders");
                 });
@@ -306,9 +314,6 @@ namespace FarmProduce.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
                     b.Property<string>("StatusCode")
                         .HasColumnType("nvarchar(max)");
 
@@ -316,8 +321,6 @@ namespace FarmProduce.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
 
                     b.ToTable("OrderStatuses");
                 });
@@ -336,12 +339,7 @@ namespace FarmProduce.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
 
                     b.ToTable("PaymentMethods");
                 });
@@ -565,13 +563,13 @@ namespace FarmProduce.Data.Migrations
 
             modelBuilder.Entity("FarmProduce.Core.Entities.Discount", b =>
                 {
-                    b.HasOne("FarmProduce.Core.Entities.Product", "Products")
-                        .WithMany("Discounts")
-                        .HasForeignKey("ProductId")
+                    b.HasOne("FarmProduce.Core.Entities.Order", "Order")
+                        .WithOne("Discount")
+                        .HasForeignKey("FarmProduce.Core.Entities.Discount", "OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Products");
+                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("FarmProduce.Core.Entities.Image", b =>
@@ -591,7 +589,23 @@ namespace FarmProduce.Data.Migrations
                         .WithMany("Orders")
                         .HasForeignKey("ApplicationUserId");
 
+                    b.HasOne("FarmProduce.Core.Entities.OrderStatus", "OrderStatus")
+                        .WithMany("Order")
+                        .HasForeignKey("OrderStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FarmProduce.Core.Entities.PaymentMethod", "PaymentMethod")
+                        .WithMany("Orders")
+                        .HasForeignKey("PaymentMethodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("ApplicationUser");
+
+                    b.Navigation("OrderStatus");
+
+                    b.Navigation("PaymentMethod");
                 });
 
             modelBuilder.Entity("FarmProduce.Core.Entities.OrderItem", b =>
@@ -611,28 +625,6 @@ namespace FarmProduce.Data.Migrations
                     b.Navigation("Order");
 
                     b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("FarmProduce.Core.Entities.OrderStatus", b =>
-                {
-                    b.HasOne("FarmProduce.Core.Entities.Order", "Order")
-                        .WithMany("OrderStatuses")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-                });
-
-            modelBuilder.Entity("FarmProduce.Core.Entities.PaymentMethod", b =>
-                {
-                    b.HasOne("FarmProduce.Core.Entities.Order", "Order")
-                        .WithMany("PaymentMethods")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("FarmProduce.Core.Entities.Product", b =>
@@ -719,18 +711,24 @@ namespace FarmProduce.Data.Migrations
 
             modelBuilder.Entity("FarmProduce.Core.Entities.Order", b =>
                 {
+                    b.Navigation("Discount");
+
                     b.Navigation("OrderItems");
+                });
 
-                    b.Navigation("OrderStatuses");
+            modelBuilder.Entity("FarmProduce.Core.Entities.OrderStatus", b =>
+                {
+                    b.Navigation("Order");
+                });
 
-                    b.Navigation("PaymentMethods");
+            modelBuilder.Entity("FarmProduce.Core.Entities.PaymentMethod", b =>
+                {
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("FarmProduce.Core.Entities.Product", b =>
                 {
                     b.Navigation("Comments");
-
-                    b.Navigation("Discounts");
 
                     b.Navigation("Images");
 
