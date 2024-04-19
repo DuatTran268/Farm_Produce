@@ -8,8 +8,8 @@ import { useCart } from "react-use-cart";
 import { useSnackbar } from "notistack";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartArrowDown } from "@fortawesome/free-solid-svg-icons";
-import imagenotfound from "../../../assets/imagenotfound.jpg"
-
+import imagenotfound from "../../../assets/imagenotfound.jpg";
+import iconSale from "../../../assets/sale-big.gif";
 
 const ProductDetails = () => {
   const params = useParams();
@@ -24,7 +24,7 @@ const ProductDetails = () => {
     getDetailProductByUrlSlug(slug).then((data) => {
       if (data) {
         setProductDetail(data);
-        console.log("Check data detailsssss... . .",data);
+        console.log("Check data detailsssss... . .", data);
       } else {
         setProductDetail({});
       }
@@ -54,16 +54,24 @@ const ProductDetails = () => {
     });
   };
 
+  // Hàm định dạng giá tiền thành VNĐ
+  const formatCurrency = (number) => {
+    return number.toLocaleString("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    });
+  };
+
   if (productDetail) {
     return (
       <section>
         <div className="product_detail">
           <div className="product_detail_img col-5">
-            {/* chỉ muốn lấy ra 1 hình ảnh đầu tiên làm avt */}
-            {/* <Image src={`https://localhost:7047/${productDetail.images[0].urlImage}`}width={300} />\ */}
-
             {productDetail.images.length > 0 ? (
-              <Image src={`https://localhost:7047/${productDetail.images[0].urlImage}`} className="image_avt_product" />
+              <Image
+                src={`https://localhost:7047/${productDetail.images[0].urlImage}`}
+                className="image_avt_product"
+              />
             ) : (
               <>
                 <Image src={imagenotfound} width={300} />
@@ -72,9 +80,15 @@ const ProductDetails = () => {
           </div>
           <div className="product_detail_content col-7">
             <div className="product_detail_title">{productDetail.name}</div>
-            <div className="product_detail_price">{productDetail.price} VNĐ</div>
-
-            <div className="product_detail_desc">
+            <div className="product_price_virtual mt-3">
+              {productDetail.priceVirtual !== 0 && (
+                <h5>{formatCurrency(productDetail.priceVirtual)}</h5>
+              )}
+            </div>
+            <h5 className="product_price_sell mt-3">
+              {formatCurrency(productDetail.price)}
+            </h5>
+            <div className="product_detail_desc mt-3">
               {productDetail.description}
             </div>
             <div className="product_detail_quantity_cart">
@@ -96,22 +110,26 @@ const ProductDetails = () => {
                 onClick={handleAddToCart}
               >
                 Thêm vào giỏ hàng
-                <FontAwesomeIcon icon={faCartArrowDown} className="px-2"/>
+                <FontAwesomeIcon icon={faCartArrowDown} className="px-2" />
               </Link>
             </div>
           </div>
         </div>
         {productDetail ? (
-        <div className="image_gallery">
-          <div className="image_gallery_product">
-            {productDetail.images.map((image, index) => (
-              <Image className="image_product_related" key={index} src={`https://localhost:7047/${image.urlImage}`}/>
-            ))}
+          <div className="image_gallery">
+            <div className="image_gallery_product">
+              {productDetail.images.map((image, index) => (
+                <Image
+                  className="image_product_related"
+                  key={index}
+                  src={`https://localhost:7047/${image.urlImage}`}
+                />
+              ))}
+            </div>
           </div>
-        </div>
-      ): (
-        <>Ok</>
-      )}
+        ) : (
+          <>Ok</>
+        )}
       </section>
     );
   }

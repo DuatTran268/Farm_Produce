@@ -181,7 +181,6 @@ namespace FarmProduct.WebApi.Endpoints
 			product.CategoryId = model.CategoryId;
 			product.Price = model.Price;
 			product.PriceVirtual = model.PriceVirtual;
-			product.ViewCount = model.ViewCount;
 			product.Status = model.Status;
 			product.UnitId = model.UnitId;
 

@@ -6,7 +6,8 @@ import { useCart } from "react-use-cart";
 import { faCartArrowDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSnackbar } from "notistack";
-import imagenotfound from "../../../assets/imagenotfound.jpg"
+import imagenotfound from "../../../assets/imagenotfound.jpg";
+import iconSale from "../../../assets/sale-big.gif";
 
 const ProductTemplate = (props) => {
   const { addItem } = useCart();
@@ -18,20 +19,23 @@ const ProductTemplate = (props) => {
     });
   };
 
+  
+  // Hàm định dạng giá tiền thành VNĐ
+  const formatCurrency = (number) => {
+    return number.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+  };
+
+
   return (
     <section>
       <div>
         <Link to={`/detail/${props.urlSlug}`} className="product_link">
           <div className="card p-0 overflow-hidden shadow">
-            <div className="product_image">
-              {/* <Image
-                src={
-                  "https://nongsandalat.vn/wp-content/uploads/2021/10/mut-dau-tay-1-370x290.jpg"
-                }
-                className="product_img"
-              /> */}
+            {props.priceVirtual !== 0 && (
+              <Image className="product_icon_sale" src={iconSale} width={80} />
+            )}
 
-   
+            <div className="product_image">
               {props.thumbnailUrl ? (
                 <Image
                   src={`https://localhost:7047/${props.thumbnailUrl}`}
@@ -53,12 +57,14 @@ const ProductTemplate = (props) => {
               <p className="product_title">{props.name}</p>
               <div className="product_bottom">
                 <div className="product_price">
-                  <div className="product_price_discount">
-                    {props.price} VNĐ
+                  <div className="product_price_virtual">
+                    {/* check value = 0 disable div virtual */}
+                    {props.priceVirtual !== 0 && (
+                      <div>{formatCurrency(props.priceVirtual)}</div>
+                    )}
                   </div>
-                  <div className="product_price_origin">{props.price} VNĐ</div>
+                  <div className="product_price_sell">{formatCurrency(props.price)}</div>
                 </div>
-
                 <Link
                   className="btn_addtocart"
                   to={"/cart"}

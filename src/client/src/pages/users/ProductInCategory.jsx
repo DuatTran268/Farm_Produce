@@ -36,6 +36,15 @@ const ProductInCategory = () => {
     }
   };
 
+   // Hàm định dạng giá tiền thành VNĐ
+   const formatCurrency = (number) => {
+    return number.toLocaleString("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    });
+  };
+
+
   return (
     <LayoutClient>
       <div className="product_body">
@@ -50,6 +59,7 @@ const ProductInCategory = () => {
                       <ProductTemplate
                         urlSlug={product.urlSlug}
                         name={product.name}
+                        priceVirtual={product.priceVirtual}
                         price={product.price}
                         thumbnailUrl={getThumbnailUrl(product)}
                       />

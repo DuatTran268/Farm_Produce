@@ -29,6 +29,8 @@ const ProductCategoryList = () => {
     }
   };
 
+
+
   return (
       <div className="product_body">
         <div className="product_body_flex">
@@ -43,7 +45,7 @@ const ProductCategoryList = () => {
                         name={product.name}
                         price={product.price}
                         thumbnailUrl={getThumbnailUrl(product)}
-
+                        priceVirtual={product.priceVirtual}
                       />
                     </div>
                   );

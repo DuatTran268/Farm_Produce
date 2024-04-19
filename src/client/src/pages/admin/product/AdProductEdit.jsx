@@ -27,13 +27,13 @@ const AdProductEdit = () => {
       categoryId: 0,
       unitId: 0,
       price: 0,
+      priceVirtual: 0,
       dateCreate: "",
       dateUpdate: "",
       status: false,
     },
     [filterCategory, setFilterCategory] = useState({ categoryList: [] }),
     [filterUnit, setFilterUnit] = useState({ unitList: [] });
-
 
   const [product, setProduct] = useState(initialState);
 
@@ -44,14 +44,21 @@ const AdProductEdit = () => {
     document.title = "Thêm, cập nhật sản phẩm";
     getProductById(id).then((data) => {
       if (data) {
+        console.log("Check data of by id: ", data);
         // Chuyển đổi định dạng ngày tháng
-        const formattedDateCreate = format(new Date(data.dateCreate), 'yyyy-MM-dd');
-        const formattedDateUpdate = format(new Date(data.dateUpdate), 'yyyy-MM-dd');
-        
+        const formattedDateCreate = format(
+          new Date(data.dateCreate),
+          "yyyy-MM-dd"
+        );
+        const formattedDateUpdate = format(
+          new Date(data.dateUpdate),
+          "yyyy-MM-dd"
+        );
+
         setProduct({
           ...data,
           dateCreate: formattedDateCreate,
-          dateUpdate: formattedDateUpdate
+          dateUpdate: formattedDateUpdate,
         });
       } else {
         setProduct(initialState);
@@ -61,7 +68,6 @@ const AdProductEdit = () => {
     // filter cate
     getFilterComboboxOfCategory().then((data) => {
       if (data) {
-        console.log("check data conbo category: ", data)
         setFilterCategory({
           categoryList: data.categoryList,
         });
@@ -72,7 +78,6 @@ const AdProductEdit = () => {
 
     getFilterComboboxOfUnit().then((data) => {
       if (data) {
-        console.log("check data conbo unit: ", data)
         setFilterUnit({
           unitList: data.unitList,
         });
@@ -80,7 +85,6 @@ const AdProductEdit = () => {
         setFilterUnit({ unitList: [] });
       }
     });
-
   }, []);
 
   const [validated, setValidated] = useState(false);
@@ -99,7 +103,7 @@ const AdProductEdit = () => {
 
       newAndUpdateProduct(form).then((data) => {
         if (data) {
-          console.log("Check data update end create", data)
+          console.log("Check data update end create", data);
           enqueueSnackbar("Đã lưu thành công", {
             variant: "success",
           });
@@ -145,7 +149,7 @@ const AdProductEdit = () => {
           />
 
           <BoxEdit
-            label={"Số lượng"}
+            label={"Số lượng trong kho"}
             control={
               <Form.Control
                 type="number"
@@ -192,6 +196,22 @@ const AdProductEdit = () => {
           </div>
 
           <BoxEdit
+            label={"Giá ảo"}
+            control={
+              <Form.Control
+                type="number"
+                name="priceVirtual"
+                title="priceVirtual"
+                value={product.priceVirtual || ""}
+                onChange={(e) =>
+                  setProduct({ ...product, priceVirtual: e.target.value })
+                }
+              />
+            }
+            notempty={"Không được bỏ trống"}
+          />
+
+          <BoxEdit
             label={"Giá tiền"}
             control={
               <Form.Control
@@ -226,9 +246,7 @@ const AdProductEdit = () => {
           />
 
           <div className="row mb-3">
-            <Form.Label className="col-sm-2 col-form-label">
-              Unit
-            </Form.Label>
+            <Form.Label className="col-sm-2 col-form-label">Unit</Form.Label>
             <div className="col-sm-10">
               <Form.Select
                 name="unitId"
@@ -262,7 +280,7 @@ const AdProductEdit = () => {
                 type="date"
                 name="dateCreate"
                 title="Date Create"
-                required
+                disabled={true}
                 value={product.dateCreate || ""}
                 onChange={(e) =>
                   setProduct({
@@ -282,7 +300,7 @@ const AdProductEdit = () => {
                 type="date"
                 name="dateUpdate"
                 title="date Update"
-                required
+                disabled={true}
                 value={product.dateUpdate || ""}
                 onChange={(e) =>
                   setProduct({ ...product, dateUpdate: e.target.value })

@@ -28,9 +28,7 @@ const ProductList = () => {
     getFilterProduct(productFilter.name, ps, pageNumber).then((data) => {
       if (data) {
         setGetProduct(data.items);
-        
-        // console.log("Checkdata item", data.items[0].images[0].urlImage);
-
+        console.log("Check data item product list: ", data.items)
       } else {
         setGetProduct([]);
       }
@@ -46,6 +44,7 @@ const ProductList = () => {
       return  // Trả về URL của ảnh mặc định nếu không có ảnh trong mảng images
     }
   };
+
 
 
   return (
@@ -69,7 +68,9 @@ const ProductList = () => {
                           thumbnailUrl={getThumbnailUrl(item)}
                           urlSlug={item.urlSlug}
                           name={item.name}
+                          priceVirtual={item.priceVirtual}
                           price={item.price}
+                          
                         />
                       </div>
                     </>

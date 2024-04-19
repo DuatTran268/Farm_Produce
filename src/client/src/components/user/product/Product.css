@@ -22,13 +22,25 @@
 .product_image{
   overflow: hidden;
   object-fit: cover;
+
+  position: relative;
+
 }
 
-.product_price_origin{
+.product_icon_sale{
+  position: absolute;
+  z-index: 10;
+  top: 1rem;
+  transform: rotate(330deg);
+}
+
+.product_price_sell{
   color: var(--color-main);
 }
-.product_price_discount{
+.product_price_virtual{
   color: var(--color-textred);
+  text-decoration-line: line-through;
+
 }
 
 .btn_addtocart{
@@ -75,9 +87,6 @@
   justify-content: space-between;
 }
 
-.product_price_discount{
-  text-decoration-line: line-through;
-}
 
 .notFindProduct{
   text-align: center;

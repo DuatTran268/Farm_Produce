@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import LayoutCommon from "../../../components/admin/common/LayoutCommon";
 import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAdd, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faAdd, faEdit, faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Table } from "react-bootstrap";
 import HeaderBtn from "../../../components/common/HeaderBtn";
 import BtnSuccess from "../../../components/common/BtnSuccess";
@@ -83,6 +83,15 @@ const AdProduct = () => {
   const handleCancelDelete = () => {
     setPopupVisible(false);
   };
+
+   // Hàm định dạng giá tiền thành VNĐ
+   const formatCurrency = (number) => {
+    return number.toLocaleString("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    });
+  };
+
   return (
     <>
       <LayoutCommon>
@@ -103,7 +112,8 @@ const AdProduct = () => {
             <thead>
               <tr>
                 <th>Tên Sản phẩm</th>
-                <th>Số lượng</th>
+                <th>Lượt xem</th>
+                <th>Tồn kho</th>
                 <th>Giá</th>
                 <th>Mô tả</th>
                 <th>Sửa</th>
@@ -115,8 +125,9 @@ const AdProduct = () => {
                 getProduct.map((item, index) => (
                   <tr key={index}>
                     <td>{item.name}</td>
+                    <td>{item.viewCount} <FontAwesomeIcon icon={faEye} color="red"/></td>
                     <td>{item.quantityAvailable}</td>
-                    <td>{item.price}</td>
+                    <td>{formatCurrency(item.price)}</td>
                     <td>{item.description}</td>
                     <td className="text-center">
                       <Link
