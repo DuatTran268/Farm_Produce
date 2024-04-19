@@ -10,5 +10,6 @@ namespace FarmProduce.Core.DTO
 	{
 		public string UrlSlug { get; set; } = "";
 		public string Name { get; set; }	
+		public bool? Status { get; set; }
 	}
 }

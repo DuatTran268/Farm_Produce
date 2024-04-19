@@ -36,7 +36,7 @@ const CommentBox = () => {
     // get id and slug of product
     getIdAndSlugOfProductForComment(slug).then((data) => {
       if (data) {
-        console.log("Product detail:", data.id);
+        // console.log("Product detail:", data.id);
         setComment(prevState => ({ ...prevState, productId: data.id }));
       } else {
         console.log("Product not found");
@@ -46,7 +46,7 @@ const CommentBox = () => {
   let user = useSelector((state) => state.auth.login.currentUser);
 
   useEffect(() => {
-    console.log('Check id của user:  ', user.id)
+    // console.log('Check id của user:  ', user.id)
     if (user.id) {
       setComment(prevState => ({ ...prevState, applicationUserId: user.id }));
     }

@@ -30,7 +30,15 @@ const ProductCategoryList = () => {
   };
 
 
+   // Hàm định dạng giá tiền thành VNĐ
+   const formatCurrency = (number) => {
+    return number.toLocaleString("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    });
+  };
 
+  
   return (
       <div className="product_body">
         <div className="product_body_flex">

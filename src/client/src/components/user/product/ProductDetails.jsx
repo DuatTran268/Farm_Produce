@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import "./ProductDetail.css";
 import dautay from "../../../assets/mutdau.jpg";
 import { Image } from "react-bootstrap";
-import { getDetailProductByUrlSlug } from "../../../api/Product";
+import { getDetailProductByUrlSlug, increaseView } from "../../../api/Product";
 import { useCart } from "react-use-cart";
 import { useSnackbar } from "notistack";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -24,10 +24,12 @@ const ProductDetails = () => {
     getDetailProductByUrlSlug(slug).then((data) => {
       if (data) {
         setProductDetail(data);
-        console.log("Check data detailsssss... . .", data);
+        // console.log("Check data detailsssss... . .", data);
       } else {
         setProductDetail({});
       }
+      increaseView(slug)
+      // console.log("Check slug: ", slug);
     });
   }, [slug]);
 

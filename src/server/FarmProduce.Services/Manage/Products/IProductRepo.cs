@@ -38,5 +38,7 @@ namespace FarmProduce.Services.Manage.Products
 
 		Task<IList<ProductItem>> GetProductCombobox(CancellationToken cancellationToken = default);
 
+		Task<bool> IncreaseViewCountAsync(string slug, CancellationToken cancellationToken = default);
+
 	}
 }

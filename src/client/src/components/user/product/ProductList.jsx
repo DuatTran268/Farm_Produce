@@ -25,10 +25,10 @@ const ProductList = () => {
   }
 
   useEffect(() => {
-    getFilterProduct(productFilter.name, ps, pageNumber).then((data) => {
+    getFilterProduct(productFilter.name, true, ps, pageNumber).then((data) => {
       if (data) {
         setGetProduct(data.items);
-        console.log("Check data item product list: ", data.items)
+        // console.log("Check data item product list: ", data.items)
       } else {
         setGetProduct([]);
       }

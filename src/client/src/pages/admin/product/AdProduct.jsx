@@ -45,7 +45,7 @@ const AdProduct = () => {
         setgetProduct(props.items);
         setMetadata(props.metadata);
       }
-      getFilterProduct(productFilter.name, ps, pageNumber).then((data) => {
+      getFilterProduct(productFilter.name, "", ps, pageNumber).then((data) => {
         if (data) {
           console.log("Check data of manage product: ", data)
           setData(data);

@@ -5,12 +5,14 @@ using FarmProduce.Data.Contexts;
 using FarmProduce.Services.Extentions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Hosting;
 using SlugGenerator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace FarmProduce.Services.Manage.Products
 {
@@ -44,6 +46,14 @@ namespace FarmProduce.Services.Manage.Products
 			if (!String.IsNullOrWhiteSpace(productQuery.Name))
 			{
 				products = products.Where(x => x.Name.Contains(productQuery.Name));
+			}
+			if (productQuery.Status == true)
+			{
+				products = products.Where(p => p.Status);
+			}
+			if (productQuery.Status == false)
+			{
+				products = products.Where(p => !p.Status);
 			}
 			return products;
 		}
@@ -196,6 +206,16 @@ namespace FarmProduce.Services.Manage.Products
 					Id = t.Id,
 					Name = t.Name,
 				}).ToListAsync(cancellationToken);
+		}
+
+		public async Task<bool> IncreaseViewCountAsync(string slug, CancellationToken cancellationToken = default)
+		{
+			var productView = await _context.Set<Product>()
+				 .Where(p => p.UrlSlug == slug)
+				 .FirstOrDefaultAsync(cancellationToken);
+			productView.ViewCount = productView.ViewCount + 1;
+			_context.Update(productView);
+			return await _context.SaveChangesAsync(cancellationToken) > 0;
 		}
 	}
 }

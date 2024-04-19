@@ -8,7 +8,7 @@ export async function getAllAccount(){
 
 export function getFilterProduct(
   name = '',
-  // status = '',
+  status = '',
   pageSize = "",
   pageNumber = 1,
   sortColumn = "",
@@ -16,7 +16,7 @@ export function getFilterProduct(
 ) {
   let url = new URL(`https://localhost:7047/api/products/getall`);
   name !== '' && url.searchParams.append('Name', name);
-  // status !== '' && url.searchParams.append('Status', status);
+  status !== '' && url.searchParams.append('Status', status);
   sortColumn !== "" && url.searchParams.append("SortColumn", sortColumn);
   sortOrder !== "" && url.searchParams.append("SortOrder", sortColumn);
   url.searchParams.append("PageSize", pageSize);
@@ -80,3 +80,9 @@ export async function getFilterComboboxOfCategory() {
 export async function getFilterComboboxOfUnit() {
   return get_api_nocache(`https://localhost:7047/api/units/combobox`);
 }
+
+// increse view count product
+export function increaseView(slug){
+  return post_api(`https://localhost:7047/api/products/viewCount/${slug}`)
+}
+

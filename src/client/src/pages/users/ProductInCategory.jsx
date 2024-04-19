@@ -35,15 +35,7 @@ const ProductInCategory = () => {
       return  // Trả về URL của ảnh mặc định nếu không có ảnh trong mảng images
     }
   };
-
-   // Hàm định dạng giá tiền thành VNĐ
-   const formatCurrency = (number) => {
-    return number.toLocaleString("vi-VN", {
-      style: "currency",
-      currency: "VND",
-    });
-  };
-
+  
 
   return (
     <LayoutClient>

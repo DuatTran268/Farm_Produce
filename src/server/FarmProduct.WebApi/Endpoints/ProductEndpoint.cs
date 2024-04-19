@@ -75,6 +75,10 @@ namespace FarmProduct.WebApi.Endpoints
 				.WithName("FilterComboboxProduct")
 				.Produces<ApiResponse<ProductFilterCombobox>>();
 
+			routeGroupBuilder.MapPost("/viewCount/{slug:regex(^[a-z0-9_-]+$)}", IncreaseViewProducts)
+				.WithName("IncreaseViewProducts")
+				.Produces<ApiResponse<string>>();
+
 		}
 		private static async Task<IResult> GetAllProducts(IProductRepo productRepo, [AsParameters] PagingModel pagingModel, [AsParameters] ProductQuery productQuery)
 		{
@@ -247,6 +251,15 @@ namespace FarmProduct.WebApi.Endpoints
 				})
 			};
 			return Results.Ok(ApiResponse.Success(model));
+		}
+
+		// increase view product 
+		private static async Task<IResult> IncreaseViewProducts(
+			string slug,
+			IProductRepo productRepo)
+		{
+			await productRepo.IncreaseViewCountAsync(slug);
+			return Results.Ok(ApiResponse.Success($"Increase view {slug} success"));
 		}
 
 	}
