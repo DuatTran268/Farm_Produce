@@ -123,9 +123,11 @@ namespace FarmProduce.Data.Seeders
                 new(){
                     Name="Rau muống",
                     UrlSlug="rau-muong",
-                   QuanlityAvailable=6,
-                   Price=2000,
+                   QuantityAvailable=66,
+                   Price=20000,
+                   PriceVirtual=25000,
                    Description="rau sach",
+                   ViewCount=1,
                    DateCreate= new DateTime(2023,12,12),
                    Unit=units[0],
                    DateUpdate=DateTime.Now,
@@ -135,10 +137,12 @@ namespace FarmProduce.Data.Seeders
                 new(){
                     Name="Rau cải bắp",
                     UrlSlug="rau-cai-bap",
-                   QuanlityAvailable=3,
-                   Price=2000,
-                   Description="Rau cải bắp sạch",
-                   DateCreate= new DateTime(2023,08,12),
+                   QuantityAvailable=38,
+                   Price=45000,
+				   PriceVirtual=50000,
+				   Description="Rau cải bắp sạch",
+				   ViewCount=5,
+				   DateCreate= new DateTime(2023,08,12),
                    DateUpdate=DateTime.Now,
                    Unit=units[0],
                    Category= caterories[0],
@@ -148,9 +152,11 @@ namespace FarmProduce.Data.Seeders
                     new(){
                     Name="Củ cải",
                     UrlSlug="cu-cai",
-                   QuanlityAvailable=8,
-                   Price=4000,
-                   Description="Củ cải",
+                   QuantityAvailable=8,
+                   Price=20000,
+				   PriceVirtual=25000,
+				   Description="Củ cải",
+                   ViewCount=3,
                    DateCreate= new DateTime(2023,03,12),
                    DateUpdate=DateTime.Now,
                    Category= caterories[1],
@@ -329,21 +335,21 @@ namespace FarmProduce.Data.Seeders
                 new(){
                     Name="Hinh1",
                     UrlImage="",
-                    Caption="caption",
+                    Caption="Hình sản phẩm 1",
                     Product= products[0]
 
                 },
                  new(){
                     Name="Hinh2",
                     UrlImage="",
-                    Caption="caption",
-                     Product= products[0]
+                    Caption="Hình sản phẩm 2",
+                     Product= products[1]
                 },
                   new(){
                     Name="Hinh3",
                     UrlImage="",
-                    Caption="caption",
-                     Product= products[0]
+                    Caption="Hình sản phẩm 3",
+                     Product= products[2]
                 },
             };
             foreach (var image in images)

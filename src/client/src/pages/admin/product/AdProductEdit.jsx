@@ -23,7 +23,7 @@ const AdProductEdit = () => {
       id: 0,
       name: "",
       description: "",
-      quanlityAvailable: 0,
+      quantityAvailable: 0,
       categoryId: 0,
       unitId: 0,
       price: 0,
@@ -149,12 +149,12 @@ const AdProductEdit = () => {
             control={
               <Form.Control
                 type="number"
-                name="quanlityAvailable"
+                name="quantityAvailable"
                 title="quanlity Available"
                 required
-                value={product.quanlityAvailable || ""}
+                value={product.quantityAvailable || ""}
                 onChange={(e) =>
-                  setProduct({ ...product, quanlityAvailable: e.target.value })
+                  setProduct({ ...product, quantityAvailable: e.target.value })
                 }
               />
             }

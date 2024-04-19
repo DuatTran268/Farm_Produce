@@ -367,7 +367,10 @@ namespace FarmProduce.Data.Migrations
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("QuanlityAvailable")
+                    b.Property<decimal>("PriceVirtual")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("QuantityAvailable")
                         .HasColumnType("int");
 
                     b.Property<bool>("Status")
@@ -378,6 +381,9 @@ namespace FarmProduce.Data.Migrations
 
                     b.Property<string>("UrlSlug")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ViewCount")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

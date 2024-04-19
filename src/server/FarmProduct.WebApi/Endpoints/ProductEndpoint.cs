@@ -177,9 +177,11 @@ namespace FarmProduct.WebApi.Endpoints
 			product.UrlSlug = slug;
 			product.Name = model.Name;
 			product.Description = model.Description;
-			product.QuanlityAvailable = model.QuanlityAvailable;
+			product.QuantityAvailable = model.QuantityAvailable;
 			product.CategoryId = model.CategoryId;
 			product.Price = model.Price;
+			product.PriceVirtual = model.PriceVirtual;
+			product.ViewCount = model.ViewCount;
 			product.Status = model.Status;
 			product.UnitId = model.UnitId;
 

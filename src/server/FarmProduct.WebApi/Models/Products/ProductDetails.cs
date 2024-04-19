@@ -11,11 +11,13 @@ namespace FarmProduct.WebApi.Models.Products
 		public int Id { get; set; }
 		public string Name { get; set; }
 		public string UrlSlug { get; set; }
-		public int QuanlityAvailable { get; set; }
+		public int QuantityAvailable { get; set; }
 		public string Unit { get; set; }
 		public decimal Price { get; set; } = 0;
-		public string Description { get; set; }
-		public DateTime DateCreate { get; set; } = DateTime.Now; // lay ngay hom nay de tao san pham
+        public decimal PriceVirtual { get; set; }
+        public string Description { get; set; }
+        public int ViewCount { get; set; }
+        public DateTime DateCreate { get; set; } = DateTime.Now; // lay ngay hom nay de tao san pham
 		public DateTime DateUpdate { get; set; } = DateTime.Now;
 		public bool Status { get; set; }
 		public IList<DiscountDto> Discounts { get; set; }

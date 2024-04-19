@@ -25,7 +25,7 @@ namespace FarmProduct.WebApi.Mapsters
 			config.NewConfig<Category, CategoriesDetail>();
 			config.NewConfig<Category, CategoriesEditModel>();
 			config.NewConfig<Product, ProductsDto>()
-                .Map(dest => dest.QuanlityAvailable, src => src.QuanlityAvailable); ;
+                .Map(dest => dest.QuantityAvailable, src => src.QuantityAvailable); ;
 			config.NewConfig<Product, ProductDetails>();
 			config.NewConfig<Unit, UnitDto>();
 			config.NewConfig<Unit, UnitItem>()

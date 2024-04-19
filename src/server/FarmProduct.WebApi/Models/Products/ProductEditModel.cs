@@ -6,9 +6,11 @@ namespace FarmProduct.WebApi.Models.Products
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int QuanlityAvailable { get; set; }
+        public int QuantityAvailable { get; set; }
         public int CategoryId { get; set; }
         public decimal Price { get; set; } = 0;
+        public decimal PriceVirtual { get; set; }
+        public int ViewCount { get; set; }
         public string Description { get; set; }
         public bool Status { get; set; }
         public int UnitId { get; set; }
@@ -25,7 +27,7 @@ namespace FarmProduct.WebApi.Models.Products
                 Id = int.Parse(form["Id"]),
                 Name = form["Name"],
                 Description = form["Description"],
-                QuanlityAvailable = int.Parse(form["QuanlityAvailable"]),
+                QuantityAvailable = int.Parse(form["QuantityAvailable"]),
                 CategoryId = int.Parse(form["CategoryId"]),
                 Price = decimal.Parse(form["Price"]),
                 Status = form["Status"] != "false",

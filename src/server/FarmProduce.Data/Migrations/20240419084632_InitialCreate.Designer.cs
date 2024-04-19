@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FarmProduce.Data.Migrations
 {
     [DbContext(typeof(FarmDbContext))]
-    [Migration("20240419052625_InitialCreate")]
+    [Migration("20240419084632_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -370,7 +370,10 @@ namespace FarmProduce.Data.Migrations
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("QuanlityAvailable")
+                    b.Property<decimal>("PriceVirtual")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("QuantityAvailable")
                         .HasColumnType("int");
 
                     b.Property<bool>("Status")
@@ -381,6 +384,9 @@ namespace FarmProduce.Data.Migrations
 
                     b.Property<string>("UrlSlug")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ViewCount")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

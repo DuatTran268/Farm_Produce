@@ -9,6 +9,6 @@ namespace FarmProduct.WebApi.Models.Images
 		public string UrlImage { get; set; }
 		public string Caption { get; set; }
 		public int ProductId { get; set; }
-		public ProductImage Products { get; set; }
+		//public ProductImage Products { get; set; }
 	}
 }

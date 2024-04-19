@@ -12,12 +12,13 @@ namespace FarmProduce.Core.Entities
 		public int Id { get; set; }
 		public string Name { get; set; }
 		public string UrlSlug { get; set; }
-		public int QuanlityAvailable { get; set; }
+		public int QuantityAvailable { get; set; }
 		public int CategoryId { get; set; }
 		public Category Category { get; set; }
-		public decimal Price { get; set; } = 0;
+		public decimal Price { get; set; } = 0;	// gia ban ra 
+		public decimal PriceVirtual { get; set; }  // gia ao de khuyen mai
 		public string Description { get; set; }
-	
+		public int ViewCount { get; set; }		// so luot xem san pham
 		public DateTime DateCreate { get; set; } = DateTime.Now; 
 		public DateTime DateUpdate { get; set; } = DateTime.Now;
 		public bool Status { get; set; }

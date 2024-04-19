@@ -21,15 +21,18 @@ namespace FarmProduce.Data.Mappings
             builder.Property(x => x.UrlSlug)
                 .IsRequired()
                 .HasMaxLength(50);
-            builder.Property(x => x.QuanlityAvailable)
+            builder.Property(x => x.QuantityAvailable)
                 .IsRequired();
             builder.Property(x => x.Price)
                 .IsRequired()
                 .HasPrecision(2,18);
-            builder.Property(x => x.Description)
+			builder.Property(x => x.PriceVirtual)
+				.HasPrecision(2, 18);
+			builder.Property(x => x.Description)
                 .IsRequired()
                 .HasMaxLength(100);
-            builder.Property(x => x.Status)
+			builder.Property(x => x.ViewCount);
+			builder.Property(x => x.Status)
                 .IsRequired()
                 .HasDefaultValue(false);
             builder.Property(x => x.DateCreate)
