@@ -6,8 +6,7 @@
 		public decimal DiscountPrice { get; set; }
 		public DateTime StartDate { get; set; }
 		public DateTime EndDate { get; set; }
-		public string Status { get; set; }
-		public int OrderId { get; set; }
+		public string CodeName { get; set; }
 
 	}
 }

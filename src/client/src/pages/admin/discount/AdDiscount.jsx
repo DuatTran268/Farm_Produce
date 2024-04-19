@@ -118,7 +118,7 @@ const AdDiscount = () => {
               {getDiscount.length > 0 ? (
                 getDiscount.map((item, index) => (
                   <tr key={index}>
-                    <td>{item.status}</td>
+                    <td>{item.codeName}</td>
                     <td>{format(new Date(item.startDate), "dd/MM/yyyy")}</td>
                     <td>{format(new Date(item.endDate), "dd/MM/yyyy")}</td>
                     <td>{item.discountPrice} VNĐ</td>

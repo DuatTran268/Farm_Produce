@@ -13,8 +13,8 @@ namespace FarmProduce.Core.Entities
         public decimal DiscountPrice { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public string Status { get; set; }
-        public int OrderId { get; set; }
-        public Order Order { get; set; }
-    }
+        public string CodeName { get; set; }
+		public IList<Order> Orders { get; set; }
+
+	}
 }

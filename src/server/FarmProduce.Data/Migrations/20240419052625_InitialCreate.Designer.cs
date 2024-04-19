@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FarmProduce.Data.Migrations
 {
     [DbContext(typeof(FarmDbContext))]
-    [Migration("20240418094659_InitialCreate")]
+    [Migration("20240419052625_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -189,6 +189,9 @@ namespace FarmProduce.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("CodeName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal>("DiscountPrice")
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
@@ -196,19 +199,10 @@ namespace FarmProduce.Data.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("OrderId")
-                        .IsUnique();
 
                     b.ToTable("Discounts");
                 });
@@ -254,6 +248,9 @@ namespace FarmProduce.Data.Migrations
                     b.Property<DateTime>("DateOrder")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("DiscountId")
+                        .HasColumnType("int");
+
                     b.Property<int>("OrderStatusId")
                         .HasColumnType("int");
 
@@ -266,6 +263,8 @@ namespace FarmProduce.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("DiscountId");
 
                     b.HasIndex("OrderStatusId");
 
@@ -561,17 +560,6 @@ namespace FarmProduce.Data.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("FarmProduce.Core.Entities.Discount", b =>
-                {
-                    b.HasOne("FarmProduce.Core.Entities.Order", "Order")
-                        .WithOne("Discount")
-                        .HasForeignKey("FarmProduce.Core.Entities.Discount", "OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-                });
-
             modelBuilder.Entity("FarmProduce.Core.Entities.Image", b =>
                 {
                     b.HasOne("FarmProduce.Core.Entities.Product", "Product")
@@ -589,6 +577,12 @@ namespace FarmProduce.Data.Migrations
                         .WithMany("Orders")
                         .HasForeignKey("ApplicationUserId");
 
+                    b.HasOne("FarmProduce.Core.Entities.Discount", "Discount")
+                        .WithMany("Orders")
+                        .HasForeignKey("DiscountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("FarmProduce.Core.Entities.OrderStatus", "OrderStatus")
                         .WithMany("Order")
                         .HasForeignKey("OrderStatusId")
@@ -602,6 +596,8 @@ namespace FarmProduce.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("ApplicationUser");
+
+                    b.Navigation("Discount");
 
                     b.Navigation("OrderStatus");
 
@@ -709,10 +705,13 @@ namespace FarmProduce.Data.Migrations
                     b.Navigation("Products");
                 });
 
+            modelBuilder.Entity("FarmProduce.Core.Entities.Discount", b =>
+                {
+                    b.Navigation("Orders");
+                });
+
             modelBuilder.Entity("FarmProduce.Core.Entities.Order", b =>
                 {
-                    b.Navigation("Discount");
-
                     b.Navigation("OrderItems");
                 });
 

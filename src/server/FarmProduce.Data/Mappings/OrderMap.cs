@@ -37,9 +37,11 @@ namespace FarmProduce.Data.Mappings
             builder.HasOne(o => o.ApplicationUser)
                 .WithMany(u => u.Orders)
                 .HasForeignKey(o => o.ApplicationUserId);
-            builder.HasOne(o => o.Discount)
-                .WithOne(d => d.Order)
-                 .HasForeignKey<Discount>(d => d.OrderId); ;
-        }
+			builder.HasOne(o => o.Discount)
+				 .WithMany(p => p.Orders)
+				 .HasForeignKey(p => p.DiscountId)
+				 .HasConstraintName("FK_Discounts_Orders");
+
+		}
     }
 }

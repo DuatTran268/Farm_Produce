@@ -19,11 +19,11 @@ namespace FarmProduct.WebApi.Validations
 					.GreaterThan(DateTime.MinValue)
 					.WithMessage("Ngày không hợp lệ");
 
-			RuleFor(p => p.Status)
+			RuleFor(p => p.CodeName)
 					.NotEmpty()
-					.WithMessage("Không được để trống")
-					.MaximumLength(50)
-					.WithMessage("Tối đa 100 ký tự");
+					.WithMessage("CodeName không để trống")
+					.MaximumLength(100)
+					.WithMessage("CodeName tối đa 100 ký tự");
 
 		}
 	}

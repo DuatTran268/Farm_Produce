@@ -22,8 +22,7 @@
         discountPrice: 0,
         startDate: "",
         endDate: "",
-        status: "",
-        productId: 0,
+        codeName: "",
       },
       [discount, setDiscount] = useState(initialState);
 
@@ -48,6 +47,8 @@
       getDiscountById(id).then((data) => {
         if (data) {
           // Chuyển đổi định dạng ngày tháng
+          console.log("Chek data of discount by id: ", data)
+          
           const formattedStartDate = format(new Date(data.startDate), 'yyyy-MM-dd');
           const formattedEndDate = format(new Date(data.endDate), 'yyyy-MM-dd');
           
@@ -103,12 +104,12 @@
               control={
                 <Form.Control
                   type="text"
-                  name="status"
+                  name="codeName"
                   title="Mã voucher Discount"
                   required
-                  value={discount.status || ""}
+                  value={discount.codeName || ""}
                   onChange={(e) =>
-                    setDiscount({ ...discount, status: e.target.value })
+                    setDiscount({ ...discount, codeName: e.target.value })
                   }
                 />
               }
@@ -139,7 +140,7 @@
                   type="date"
                   name="startDate"
                   title="Start Date"
-                  required
+                  disabled={true}
                   value={discount.startDate || ""}
                   onChange={(e) =>
                     setDiscount({ ...discount, startDate: e.target.value })
@@ -166,22 +167,6 @@
               notempty={"Không được bỏ trống"}
             />
 
-            <BoxEdit
-              label={"Mã sản phẩm áp dụng"}
-              control={
-                <Form.Control
-                  type="number"
-                  name="productId"
-                  title="Product Id"
-                  required
-                  value={discount.productId || ""}
-                  onChange={(e) =>
-                    setDiscount({ ...discount, productId: e.target.value })
-                  }
-                />
-              }
-              notempty={"Không được bỏ trống"}
-            />
 
             <div className="text-center">
               <Button variant="success" type="submit">

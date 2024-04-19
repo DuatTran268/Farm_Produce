@@ -19,7 +19,8 @@ namespace FarmProduce.Core.Entities
         public int PaymentMethodId { get; set; }
         public OrderStatus OrderStatus { get; set; }
         public IList<OrderItem> OrderItems { get; set; }
-        public Discount Discount{ get; set; }
+		public int DiscountId { get; set; }
+		public Discount Discount { get; set; }
 
-    }
+	}
 }

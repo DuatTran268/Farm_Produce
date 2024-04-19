@@ -23,8 +23,9 @@ namespace FarmProduce.Data.Mappings
                 .HasColumnType("datetime");
             builder.Property(d => d.EndDate)
                 .HasColumnType("datetime");
-            builder.Property(d => d.Status)
-                .HasDefaultValue(false);
-        }
+            builder.Property(d => d.CodeName)
+				.IsRequired()
+				.HasMaxLength(50);
+		}
     }
 }

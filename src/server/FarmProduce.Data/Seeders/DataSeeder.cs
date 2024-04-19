@@ -38,9 +38,8 @@ namespace FarmProduce.Data.Seeders
             var roles = SeedRoles();
             var paymentMethods = AddPaymentMethods();
             var orderStatuses = AddOrderStatuses();
-            var orders = AddOrders(users, paymentMethods,orderStatuses );
-            var discounts = AddDiscounts(orders);
-
+            var discounts = AddDiscounts();
+            var orders = AddOrders(users, paymentMethods,orderStatuses, discounts );
             var userRole = AddUserRoles(users, roles);
             var products = AddProducts(caterories, units);
             var comments = AddComments(products, users);
@@ -228,7 +227,7 @@ namespace FarmProduce.Data.Seeders
         }
 
 
-        private List<Order> AddOrders(List<ApplicationUser> users, IList<PaymentMethod> paymentMethods, IList<OrderStatus> orderStatuses)
+        private List<Order> AddOrders(List<ApplicationUser> users, IList<PaymentMethod> paymentMethods, IList<OrderStatus> orderStatuses, IList<Discount> discounts)
         {
             var orders = new List<Order>();
 
@@ -240,6 +239,7 @@ namespace FarmProduce.Data.Seeders
                     DateOrder = DateTime.Now,
                     OrderStatus = orderStatuses[1],
                     PaymentMethod = paymentMethods[1],
+                    Discount = discounts[1],
 
                 };
 
@@ -358,22 +358,20 @@ namespace FarmProduce.Data.Seeders
             return images;
         }
 
-        private IList<Discount> AddDiscounts(IList<Order> orders)
+        private IList<Discount> AddDiscounts()
         {
             var discounts = new List<Discount>() {
             new(){
-                    DiscountPrice=50,
+                    DiscountPrice=50000,
                     StartDate= DateTime.Now,
                     EndDate=(DateTime.Now).AddDays(7),
-                    Status="Ongoing",
-                     OrderId = orders[0].Id
+                    CodeName="Discount50",
                 },
              new(){
-                    DiscountPrice=20,
+                    DiscountPrice=20000,
                     StartDate= DateTime.Now,
                     EndDate=(DateTime.Now).AddDays(10),
-                    Status="Ongoing",
-                     OrderId = orders[0].Id
+                    CodeName="Discount20",
                 }
             };
             foreach (var discount in discounts)

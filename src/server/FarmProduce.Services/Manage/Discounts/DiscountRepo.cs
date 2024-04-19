@@ -77,9 +77,9 @@ namespace FarmProduce.Services.Manage.Discounts
             return await _context.SaveChangesAsync() > 0;
         }
 
-		public async Task<bool> IsDiscountSlugExistedAsync(int discountId, string status, CancellationToken cancellationToken = default)
+		public async Task<bool> IsDiscountSlugExistedAsync(int discountId, string codename, CancellationToken cancellationToken = default)
 		{
-			return await _context.Discounts.AnyAsync(x => x.Id != discountId && x.Status == status, cancellationToken);
+			return await _context.Discounts.AnyAsync(x => x.Id != discountId && x.CodeName == codename, cancellationToken);
 		}
 
 		public async Task<bool> AddOrUpdateDiscountAsync(Discount discount, CancellationToken cancellationToken = default)

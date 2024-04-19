@@ -17,7 +17,7 @@ namespace FarmProduce.Services.Manage.Discounts
 		Task<bool> DeleteWithIDAsync(int id, CancellationToken cancellationToken);
 		Task<bool> AddOrUpdate(Discount discount, CancellationToken cancellationToken = default);
 		Task<bool> IsDiscountSlugExistedAsync(
-		int discountId, string status, CancellationToken cancellationToken = default);
+		int discountId, string codename, CancellationToken cancellationToken = default);
 		Task<bool> AddOrUpdateDiscountAsync(Discount discount, CancellationToken cancellationToken = default);
 		Task<bool> DeleteDiscount(int id, CancellationToken cancellationToken = default);
 
