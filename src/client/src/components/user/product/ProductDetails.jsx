@@ -104,6 +104,7 @@ const ProductDetails = () => {
             </div>
             <h5 className="product_price_sell mt-3">
               {formatCurrency(productDetail.price)}
+              {/* <span> / {productDetail.unitId}</span> */}
             </h5>
             <div className="product_detail_desc mt-3">
               {productDetail.description}

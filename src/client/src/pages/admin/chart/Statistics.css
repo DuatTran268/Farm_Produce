@@ -3,11 +3,12 @@
   align-items: center;
   justify-content: space-around;
   flex-wrap: wrap;
-  background-color: #22d04d;
-  border: 2px solid #ebebeb;
+  background-color: var(--color-main);
+  border: 2px solid var(--color-textwhite);
   border-radius: 1rem ;
   padding: 1rem;
   margin-bottom: 1rem;
+  color: var(--color-textwhite);
 }
 
 .statistics_wrapper{
@@ -20,10 +21,10 @@
 
 .statistics_icon{
   font-size: 3rem;
-  color: #ebebeb;
+  color: var(--color-textwhite);
 }
 .statistics_value{
-  color: red;
+  color: var(--color-textred);
   font-weight: bold;
   font-size: 1.3rem;
 }

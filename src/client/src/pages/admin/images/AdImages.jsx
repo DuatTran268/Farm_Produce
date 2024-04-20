@@ -113,7 +113,7 @@ const AdImages = () => {
               <tr>
                 <th>Hình ảnh</th>
                 <th>Tên hình ảnh</th>
-                <th>Thuộc sản phẩm</th>
+                {/* <th>Thuộc sản phẩm</th> */}
                 <th>Sửa</th>
                 <th>Xoá</th>
               </tr>
@@ -134,7 +134,7 @@ const AdImages = () => {
                       )}
                     </td>
                     <td>{item.name}</td>
-                    <td>{item.productId}</td>
+                    {/* <td>{item.productId}</td> */}
                     <td className="text-center">
                       <Link
                         to={`/admin/image/edit/${item.id}`}
