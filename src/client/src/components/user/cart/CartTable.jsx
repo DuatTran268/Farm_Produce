@@ -58,8 +58,7 @@ const CartTable = () => {
           </div>
           <table className="table table-light table-hover m-0">
             <tbody>
-              <tr className="text-success">
-                <td>Hình ảnh</td>
+              <tr className="bg_header_table">
                 <td>Tên sản phẩm</td>
                 <td>Giá</td>
                 <td>Số lượng</td>
@@ -70,13 +69,6 @@ const CartTable = () => {
                 return (
                   <>
                     <tr key={index} className="align-middle">
-                      <td>
-                        {/* <img
-                          src={item.image}
-                          style={{ height: "6rem" }}
-                          alt={item.name}
-                        /> */}
-                      </td>
                       <td>{item.name}</td>
                       <td>{item.price} VNĐ</td>
                       <td>{item.quantity}</td>

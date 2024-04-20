@@ -143,23 +143,42 @@
 
 
 /* show popup comment */
+.overlay {
+  position: fixed; /* Thay đổi vị trí thành absolute */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Màu nền mờ */
+  z-index: 9999; /* Chỉ số z cao hơn để che phủ toàn bộ nội dung đằng sau */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .popup {
+  width: 50%;
+  height: 90%;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 60%; /* điều chỉnh kích thước của popup tại đây */
-  height: auto; /* hoặc sử dụng một chiều cao cố định */
-  background-color: rgba(255, 255, 255, 0.9); /* màu nền của popup */
-  z-index: 9999; /* đảm bảo popup hiển thị trên cùng */
-  padding: 20px; /* padding bên trong của popup */
-  border-radius: 8px; /* bo tròn góc của popup */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* đổ bóng cho popup */
+  background-color: #fff;
+  z-index: 10000; /* Chỉ số z cao hơn popup */
+  max-width: 80%; 
+  max-height: 80%; 
+  overflow: hidden; 
 }
 
+.popup-content {
+  text-align: center; 
+}
 
-.popup-image {
-  max-width: 90%;
-  max-height: 90%;
+.popup-image{
+  width: 100%;
+  object-fit: cover;
+}
+/* Thêm thuộc tính pointer-events: none để ngăn chặn tương tác với nội dung đằng sau */
+.popup-show {
+  pointer-events: auto;
 }

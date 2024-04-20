@@ -23,7 +23,7 @@
 }
 
 .cart_bottom{
-  margin-top: 1rem;
+  margin-top: 2rem;
 }
 .cart_table{
   display: flex;
@@ -46,4 +46,9 @@
   border: 2px solid var(--color-main);
   margin-top: 2rem;
   outline: none;
+}
+
+
+.bg_header_table > td{
+  background-color: var(--color-main);
 }

@@ -15,6 +15,8 @@ const ProductDetails = () => {
   const params = useParams();
   const [productDetail, setProductDetail] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  const [showPopup, setShowPopup] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
   const { slug } = params;
   const { addItem, items, updateItemQuantity } = useCart();
   const { enqueueSnackbar } = useSnackbar();
@@ -64,6 +66,18 @@ const ProductDetails = () => {
     });
   };
 
+  // Mở popup và hiển thị hình ảnh
+  const openPopup = (image) => {
+    setSelectedImage(image);
+    setShowPopup(true);
+  };
+
+  // Đóng popup
+  const closePopup = () => {
+    setSelectedImage(null);
+    setShowPopup(false);
+  };
+
   if (productDetail) {
     return (
       <section>
@@ -73,6 +87,7 @@ const ProductDetails = () => {
               <Image
                 src={`https://localhost:7047/${productDetail.images[0].urlImage}`}
                 className="image_avt_product"
+                onClick={() => openPopup(`https://localhost:7047/${productDetail.images[0].urlImage}`)}
               />
             ) : (
               <>
@@ -117,14 +132,25 @@ const ProductDetails = () => {
             </div>
           </div>
         </div>
+        {/* Popup */}
+        {showPopup && (
+          <div className="popup">
+            <div className="popup-content">
+              <img src={selectedImage} alt="Popup Image" className="popup-image" />
+            </div>
+          </div>
+        )}
+        {/* Overlay */}
+        {showPopup && <div className="overlay popup-show" onClick={closePopup}></div>}
         {productDetail ? (
           <div className="image_gallery">
             <div className="image_gallery_product">
-              {productDetail.images.map((image, index) => (
+              {productDetail.images.map((image, index) => ( 
                 <Image
                   className="image_product_related"
                   key={index}
                   src={`https://localhost:7047/${image.urlImage}`}
+                  onClick={() => openPopup(`https://localhost:7047/${image.urlImage}`)}
                 />
               ))}
             </div>
