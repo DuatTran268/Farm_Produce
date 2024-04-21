@@ -17,9 +17,6 @@ namespace FarmProduce.Data.Mappings
             builder.Property(x=>x.Quantity)
                 .HasDefaultValue(0)
                 .IsRequired();
-            builder.Property(x => x.Price)
-               .HasDefaultValue(0)
-               .IsRequired();
         }
     }
 }

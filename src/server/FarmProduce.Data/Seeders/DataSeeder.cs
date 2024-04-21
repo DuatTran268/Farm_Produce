@@ -472,7 +472,6 @@ namespace FarmProduce.Data.Seeders
                 Order= orders[0],
                 Product = products[0],
                 Quantity = 1000,
-                Price= 0
             };
 
             // Thêm danh sách OrderItems vào DbContext và lưu thay đổi vào cơ sở dữ liệu
