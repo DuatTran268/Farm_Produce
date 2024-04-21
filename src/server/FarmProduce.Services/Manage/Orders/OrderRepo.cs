@@ -24,13 +24,13 @@ namespace FarmProduce.Services.Manage.Orders
 
         public async Task<IList<T>> GetAllAsync<T>(Func<IQueryable<Order>, IQueryable<T>> mapper, CancellationToken cancellationToken = default)
         {
-            IQueryable<Order> orders = _context.Set<Order>();
+            IQueryable<Order> orders = _context.Set<Order>().Include(x=>x.OrderItems);
             return await mapper(orders).ToListAsync(cancellationToken);
         }
 
         public async Task<IPagedList<T>> GetAllPageAsync<T>(Func<IQueryable<Order>, IQueryable<T>> mapper, IPagingParams pagingParams, CancellationToken cancellationToken = default)
         {
-            IQueryable<Order> orders = _context.Set<Order>();
+            IQueryable<Order> orders = _context.Set<Order>().Include(x=>x.OrderItems);
             return await mapper(orders).ToPagedListAsync(pagingParams, cancellationToken);
         }
         public async Task<bool> DeleteWithIdsync(int id, CancellationToken cancellationToken)
@@ -63,6 +63,10 @@ namespace FarmProduce.Services.Manage.Orders
                 return true;
             }
         }
+        public async Task<Order> GetOrderById(int id, CancellationToken cancellationToken = default)
+        {
+            return await _context.Set<Order>().FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
+        }
         public async Task<bool> AddOrUpdate(Order order, CancellationToken cancellationToken = default)
         {
             if (order.Id > 0)
@@ -75,13 +79,13 @@ namespace FarmProduce.Services.Manage.Orders
             }
             return await _context.SaveChangesAsync() > 0;
         }
-        public async Task<GeneralResponse> CreateOrder(OrderDTO orderDTO)
+        public async Task<GeneralResponse> CreateOrder(DetailOrder orderDTO)
         {
             if (orderDTO is null)
             {
                 return new GeneralResponse(false, "Order data is empty");
             }
-            var newOrder = new Order
+            var newOrder = new DetailOrder
             {
 
                 DateOrder = orderDTO.DateOrder,
@@ -89,9 +93,15 @@ namespace FarmProduce.Services.Manage.Orders
                 OrderStatusId = orderDTO.OrderStatusId,
                 ApplicationUserId = orderDTO.ApplicationUserId,
                 PaymentMethodId = orderDTO.PaymentMethodId,
+                OrderItems = orderDTO.OrderItems.Select(item => new OrderItemDTO
+                {
+                    Id = item.Id,
+                    ProductId = item.ProductId,
+                    Quantity = item.Quantity,
+                    Price = item.Price
+                }).ToList()
 
             };
-            _context.Orders.Add(newOrder);
             await _context.SaveChangesAsync();
             return new GeneralResponse(true, "Order created successfully");
 

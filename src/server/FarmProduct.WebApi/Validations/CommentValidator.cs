@@ -17,8 +17,7 @@ namespace FarmProduct.WebApi.Validations
 
 
 			RuleFor(p => p.Rating)
-					.NotEmpty();
-					
+					.NotEmpty();	
 			RuleFor(u => u.Created)
 					.GreaterThan(DateTime.MinValue)
 					.WithMessage("Ngày không hợp lệ");
