@@ -35,7 +35,6 @@ const ProductInCategory = () => {
       return  // Trả về URL của ảnh mặc định nếu không có ảnh trong mảng images
     }
   };
-  
 
   return (
     <LayoutClient>
@@ -43,12 +42,14 @@ const ProductInCategory = () => {
         <CategoryName />
         <div className="product_body_flex">
           <div className="product_list">
+
             {productCategory.length > 0 ? (
               <>
                 {productCategory.map((product, index) => {
                   return (
                     <div className="product_item col-11 col-md-6 col-lg-3 " key={index}>
                       <ProductTemplate
+                          item={product} 
                         urlSlug={product.urlSlug}
                         name={product.name}
                         priceVirtual={product.priceVirtual}
@@ -64,6 +65,8 @@ const ProductInCategory = () => {
                 <h3 className="text-danger px-3">Không có sản phẩm nào </h3>
               </>
             )}
+
+
           </div>
         </div>
       </div>

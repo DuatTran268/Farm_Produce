@@ -83,6 +83,7 @@ const ProductDetails = () => {
       <section>
         <div className="product_detail">
           <div className="product_detail_img col-5">
+            
             {productDetail.images.length > 0 ? (
               <Image
                 src={`https://localhost:7047/${productDetail.images[0].urlImage}`}
@@ -94,6 +95,7 @@ const ProductDetails = () => {
                 <Image src={imagenotfound} width={300} />
               </>
             )}
+
           </div>
           <div className="product_detail_content col-7">
             <div className="product_detail_title">{productDetail.name}</div>

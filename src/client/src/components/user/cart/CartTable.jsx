@@ -80,7 +80,7 @@ const CartTable = () => {
                   <>
                     <tr key={index} className="align-middle">
                       <td>
-                        {item.images.length > 0 ? (
+                      {item.images && item.images.length > 0 ? (
                           <Image
                             src={`https://localhost:7047/${item.images[0].urlImage}`}
                             width={50}
