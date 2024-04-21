@@ -18,6 +18,7 @@ namespace FarmProduce.Services.Manage.Orders
         Task<bool> IsIdExisted(int id, CancellationToken cancellationToken = default);
         Task<bool> DeleteWithIDAsync(int id, CancellationToken cancellationToken);
         Task<bool> AddOrUpdate(Order order, CancellationToken cancellationToken = default);
-        Task<GeneralResponse> CreateOrder(OrderDTO orderDTO);
+        Task<GeneralResponse> CreateOrder(DetailOrder orderDTO);
+        Task<Order> GetOrderById(int id, CancellationToken cancellationToken = default);
     }
 }

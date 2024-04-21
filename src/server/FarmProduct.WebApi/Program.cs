@@ -1,10 +1,8 @@
 using Carter;
 using FarmProduce.Data.Seeders;
-using FarmProduct.WebApi.Endpoints;
 using FarmProduct.WebApi.Extensions;
 using FarmProduct.WebApi.Mapsters;
 using FarmProduct.WebApi.Validations;
-using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 {
@@ -25,7 +23,6 @@ var app = builder.Build();
 	{
 		var seeder = scope.ServiceProvider.GetRequiredService<IDataSeeder>();
 		seeder.Initialize();
-
 		app.MapCarter();
 		app.Run();
 	}

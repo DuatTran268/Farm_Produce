@@ -9,6 +9,7 @@ using FarmProduce.Services.Manage.Comments;
 using FarmProduce.Services.Manage.CustomUIs;
 using FarmProduce.Services.Manage.Discounts;
 using FarmProduce.Services.Manage.Images;
+using FarmProduce.Services.Manage.OrderItems;
 using FarmProduce.Services.Manage.Orders;
 using FarmProduce.Services.Manage.OrderStatuses;
 using FarmProduce.Services.Manage.PaymentMethods;
@@ -55,6 +56,7 @@ namespace FarmProduct.WebApi.Extensions
             builder.Services.AddScoped<IOrderRepo, OrderRepo>();
             //customUI
             builder.Services.AddScoped<ICustomUIRepo, CustomUIRepo>();
+            builder.Services.AddScoped<IOrderItemRepo, OrderItemRepo>();
             builder.Services.AddScoped<IUserAccount, AccountRepository>();
             //cart
             builder.Services.AddScoped<IImageRepo, ImageRepo>();

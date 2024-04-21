@@ -466,24 +466,22 @@ namespace FarmProduce.Data.Seeders
         {
             var r = new Random();
             var orderItems = new List<OrderItem>();
-            for (int i = 0; i < orders.Count; i++)
-            {
-                foreach (var item in products)
-                {
-                    orderItems.Add(new OrderItem()
-                    {
-                        OrderId = orders[i].Id,
-                        ProductId = item.Id,
-                        Quantity = i + r.Next(1, 10),
-                        Price = item.Price + r.Next(3000, 50000),
 
-                    });
-                }
-            }
-            _dbContext.AddRange(orderItems);
+            var orderItem = new OrderItem()
+            {
+                Order= orders[0],
+                Product = products[0],
+                Quantity = 1000,
+                Price= 0
+            };
+
+            // Thêm danh sách OrderItems vào DbContext và lưu thay đổi vào cơ sở dữ liệu
+            _dbContext.AddRange(orderItem);
             _dbContext.SaveChanges();
+
             return orderItems;
         }
+
 
 
     }
