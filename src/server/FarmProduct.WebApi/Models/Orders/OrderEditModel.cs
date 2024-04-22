@@ -12,14 +12,14 @@ namespace FarmProduct.WebApi.Models.Orders
         public int DiscountId { get; set; }
         public int PaymentMethodId { get; set; }
         public string ApplicationUserId { get; set; }
-        public IList<OrderItemDTO> OrderItems { get; set; }
+    
 
 
-        public static async ValueTask<OrderEditModel> BindAsync(HttpContext context)
+        public static async Task<OrderEditModel> BindAsync(HttpContext context)
         {
             var form = await context.Request.ReadFormAsync();
 
-            var orderItemIds = form["OrderItemIds"].Select(id => int.Parse(id)).ToList();
+       
 
             var orderEditModel = new OrderEditModel()
             {
@@ -29,15 +29,11 @@ namespace FarmProduct.WebApi.Models.Orders
                 TotalPrice = int.Parse(form["TotalPrice"]),
                 OrderStatusId = int.Parse(form["OrderStatusId"]),
                 ApplicationUserId = form["ApplicationUserId"],
-                OrderItems = new List<OrderItemDTO>()
+              
+              
             };
-
-            foreach (var orderId in orderItemIds)
-            {
-                orderEditModel.OrderItems.Add(new OrderItemDTO { Id = orderId });
-            }
-
             return orderEditModel;
+           
         }
 
     }

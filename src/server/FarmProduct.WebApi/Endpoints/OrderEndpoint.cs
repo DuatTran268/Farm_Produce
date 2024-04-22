@@ -72,9 +72,6 @@ namespace FarmProduct.WebApi.Endpoints
             {
                 return Results.Ok(ApiResponse.Fail(HttpStatusCode.BadRequest, "Invalid order data"));
             }
-
-
-            // Tạo một đối tượng Order từ model
             var order = new Order
             {
 
@@ -82,59 +79,16 @@ namespace FarmProduct.WebApi.Endpoints
                 OrderStatusId = model.OrderStatusId,
                 ApplicationUserId = model.ApplicationUserId,
                 DiscountId = model.DiscountId,
-                PaymentMethodId = model.PaymentMethodId
+                PaymentMethodId = model.PaymentMethodId,
+                DateOrder = DateTime.Now
             };
-
-            //// Thêm Order vào cơ sở dữ liệu
-            //await orderRepo.AddOrUpdate(order);
-
-            //// Lấy Id của Order vừa được thêm
-            //var orderId = order.Id;
-
-            //// Duyệt qua danh sách OrderItems từ model và thêm vào Order
-            //foreach (var item in model.OrderItems)
-            //{
-            //    var orderItem = new OrderItem
-            //    {
-            //        ProductId = item.ProductId,
-            //        Quantity = item.Quantity,
-            //        Price = item.Price,
-            //        OrderId = orderId,
-
-
-            //    };
-
-            //    // Nếu Id của OrderItem là 0, tạo mới OrderItem
-            //    if (item.Id == 0)
-            //    {
-            //        // Gán OrderId cho OrderItem mới tạo
-            //        orderItem.OrderId = orderId;
-
-            //        // Thêm mới OrderItem vào cơ sở dữ liệu
-            //        await orderItemRepo.AddOrUpdate(orderItem);
-            //    }
-            //    else
-            //    {
-            //        // Nếu Id của OrderItem khác 0, sử dụng Id hiện có
-            //        orderItem.Id = item.Id;
-            //        await orderItemRepo.AddOrUpdate(orderItem);
-            //    }
-
-            //    // Thêm OrderItem vào danh sách OrderItems của Order
-            //    order.OrderItems.Add(orderItem);
-            //}
-
-            // Cập nhật Order trong cơ sở dữ liệu với danh sách OrderItems mới
             if (model.Id == 0)
             {
                 order.DateOrder = DateTime.Now;
             }
-
             await orderRepo.AddOrUpdate(order);
 
-            // Trả về kết quả thành công
             return Results.Ok(ApiResponse.Success(mapper.Map<DetailOrder>(order), model.Id > 0 ? HttpStatusCode.OK : HttpStatusCode.Created));
-
         }
         private static async Task<IResult> AddOrderItemAsync(HttpContext context, [FromServices] IOrderItemRepo orderItemRepo, IMapper mapper)
         {
@@ -152,12 +106,8 @@ namespace FarmProduct.WebApi.Endpoints
                 Quantity= model.Quantity,
                 
             };
-
             await orderItemRepo.AddOrUpdate(order);
-
-        
             return Results.Ok(ApiResponse.Success(mapper.Map<OrderItemDTO>(order), model.Id > 0 ? HttpStatusCode.OK : HttpStatusCode.Created));
-
         }
     }
 

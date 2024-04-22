@@ -19,7 +19,7 @@ using static FarmProduce.Core.DTO.ServiceResponses;
 namespace FarmProduce.Services.Manage.Account
 {
     public class AccountRepository(UserManager<ApplicationUser> userManager,
-    RoleManager<IdentityRole> roleManager, IConfiguration config) : IUserAccount
+    RoleManager<IdentityRole> roleManager, IConfiguration config, FarmDbContext dbContext) : IUserAccount
     {
 
         public async Task<GeneralResponse> CreateAccount(RegisterDTO userDTO)
@@ -157,27 +157,75 @@ namespace FarmProduce.Services.Manage.Account
         {
             return await userManager.Users.ToListAsync();
         }
+        //public async Task<IEnumerable<DetailUserDTO>> GetAllUser()
+        //{
+
+        //    var usersWithOrders = await userManager.Users
+        //        .Select(user => new DetailUserDTO
+        //        {
+        //            Id = user.Id,
+        //            Name = user.Name,
+        //            Email = user.Email,
+        //            Address = user.Address,
+        //            PhoneNumber = user.PhoneNumber,
+
+        //            Orders = user.Orders.Select(order => new OrderDTO
+        //            {
+        //                Id = order.Id,
+        //                TotalPrice = order.TotalPrice,
+        //                OrderItems = order.OrderItems,
+        //                PaymentMethodId = order.PaymentMethodId,
+        //                OrderStatusId = order.OrderStatusId,
+        //            }).ToList()
+        //        })
+        //        .ToListAsync();
+
+        //    return usersWithOrders;
+        //}
+
+
         public async Task<IEnumerable<DetailUserDTO>> GetAllUser()
         {
-            var usersWithOrders = await userManager.Users
-                .Select(user => new DetailUserDTO
+            var usersWithRolesAndOrders = new List<DetailUserDTO>();
+
+            // Lấy tất cả người dùng
+            var users = await userManager.Users.ToListAsync();
+
+            foreach (var user in users)
+            {
+                // Lấy vai trò của người dùng
+                var userRoles = await userManager.GetRolesAsync(user);
+
+                // Lấy đơn hàng của người dùng (nếu có)
+                var userOrders = await dbContext.Orders.Where(order => order.ApplicationUserId == user.Id).ToListAsync();
+
+                var userWithRolesAndOrders = new DetailUserDTO
                 {
-                   Id = user.Id,
+                    Id = user.Id,
                     Name = user.Name,
                     Email = user.Email,
-                    Orders = user.Orders.Select(order => new OrderDTO
+                    Address = user.Address,
+                    PhoneNumber = user.PhoneNumber,
+                    Roles = userRoles.ToList(),
+                    Orders = userOrders.Select(order => new OrderDTO
                     {
                         Id = order.Id,
                         TotalPrice = order.TotalPrice,
-                        OrderItems= order.OrderItems,
-                        PaymentMethodId=order.PaymentMethodId,
-                        OrderStatusId= order.OrderStatusId,
+                        OrderItems = order.OrderItems,
+                        PaymentMethodId = order.PaymentMethodId,
+                        OrderStatusId = order.OrderStatusId,
+                        
+                        
                     }).ToList()
-                })
-                .ToListAsync();
+                };
 
-            return usersWithOrders;
+                usersWithRolesAndOrders.Add(userWithRolesAndOrders);
+            }
+
+            return usersWithRolesAndOrders;
         }
+
+
         //public async Task<IEnumerable<Us>> GetAllAccountsWithRoles()
         //{
         //    var usersWithRoles = new List<UserWithRolesDTO>();
@@ -199,23 +247,58 @@ namespace FarmProduce.Services.Manage.Account
         {
             var user = await userManager.Users
                 .Where(u => u.Id == userId)
-                .Select(u => new DetailUserDTO
-                {
-                    Id = u.Id,
-                    Name = u.Name,
-                    Email = u.Email,
-                    Orders = u.Orders.Select(order => new OrderDTO
-                    {
-                        Id = order.Id,
-                        TotalPrice = order.TotalPrice,
-                        OrderItems = order.OrderItems,
-                        PaymentMethodId = order.PaymentMethodId,
-                        OrderStatusId = order.OrderStatusId,
-                    }).ToList()
-                })
                 .FirstOrDefaultAsync();
 
-            return user;
+            if (user == null)
+            {
+                return null; 
+            }
+
+            var userRoles = await userManager.GetRolesAsync(user);
+
+            var userOrders = await dbContext.Orders.Where(order => order.ApplicationUserId == userId).ToListAsync();
+
+            var userWithOrders = new DetailUserDTO
+            {
+                Id = user.Id,
+                Name = user.Name,
+                Email = user.Email,
+                Address = user.Address,
+                PhoneNumber = user.PhoneNumber,
+                Roles = userRoles.ToList(),
+                Orders = userOrders.Select(order => new OrderDTO
+                {
+                    Id = order.Id,
+                    TotalPrice = order.TotalPrice,
+                    OrderItems = order.OrderItems,
+                    PaymentMethodId = order.PaymentMethodId,
+                    OrderStatusId = order.OrderStatusId,
+                }).ToList()
+            };
+
+            return userWithOrders;
         }
+
+        public async Task<GeneralResponse> UpdateAccount(string userId, UserInfo detailUserDTO)
+        {
+            if (detailUserDTO == null)
+                return new GeneralResponse(false, "Model is empty");
+
+            var user = await userManager.FindByIdAsync(userId);
+            if (user == null)
+                return new GeneralResponse(false, "User not found");
+
+            user.Name = detailUserDTO.Name;
+            user.Email = detailUserDTO.Email;
+            user.Address = detailUserDTO.Address;
+            user.PhoneNumber = detailUserDTO.PhoneNumber;
+
+            var result = await userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+                return new GeneralResponse(false, "Error occurred while updating user");
+
+            return new GeneralResponse(true, "Account updated successfully");
+        }
+
     }
 }
