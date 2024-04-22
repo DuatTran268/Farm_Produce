@@ -15,6 +15,8 @@ const ProductDetails = () => {
   const params = useParams();
   const [productDetail, setProductDetail] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  const [showPopup, setShowPopup] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
   const { slug } = params;
   const { addItem, items, updateItemQuantity } = useCart();
   const { enqueueSnackbar } = useSnackbar();
@@ -64,21 +66,36 @@ const ProductDetails = () => {
     });
   };
 
+  // Mở popup và hiển thị hình ảnh
+  const openPopup = (image) => {
+    setSelectedImage(image);
+    setShowPopup(true);
+  };
+
+  // Đóng popup
+  const closePopup = () => {
+    setSelectedImage(null);
+    setShowPopup(false);
+  };
+
   if (productDetail) {
     return (
       <section>
         <div className="product_detail">
           <div className="product_detail_img col-5">
+            
             {productDetail.images.length > 0 ? (
               <Image
                 src={`https://localhost:7047/${productDetail.images[0].urlImage}`}
                 className="image_avt_product"
+                onClick={() => openPopup(`https://localhost:7047/${productDetail.images[0].urlImage}`)}
               />
             ) : (
               <>
                 <Image src={imagenotfound} width={300} />
               </>
             )}
+
           </div>
           <div className="product_detail_content col-7">
             <div className="product_detail_title">{productDetail.name}</div>
@@ -89,6 +106,7 @@ const ProductDetails = () => {
             </div>
             <h5 className="product_price_sell mt-3">
               {formatCurrency(productDetail.price)}
+              {/* <span> / {productDetail.unitId}</span> */}
             </h5>
             <div className="product_detail_desc mt-3">
               {productDetail.description}
@@ -117,14 +135,25 @@ const ProductDetails = () => {
             </div>
           </div>
         </div>
+        {/* Popup */}
+        {showPopup && (
+          <div className="popup">
+            <div className="popup-content">
+              <img src={selectedImage} alt="Popup Image" className="popup-image" />
+            </div>
+          </div>
+        )}
+        {/* Overlay */}
+        {showPopup && <div className="overlay popup-show" onClick={closePopup}></div>}
         {productDetail ? (
           <div className="image_gallery">
             <div className="image_gallery_product">
-              {productDetail.images.map((image, index) => (
+              {productDetail.images.map((image, index) => ( 
                 <Image
                   className="image_product_related"
                   key={index}
                   src={`https://localhost:7047/${image.urlImage}`}
+                  onClick={() => openPopup(`https://localhost:7047/${image.urlImage}`)}
                 />
               ))}
             </div>

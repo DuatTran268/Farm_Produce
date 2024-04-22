@@ -49,6 +49,7 @@ const ProductCategoryList = () => {
                   return (
                     <div className="product_item col-11 col-md-6 col-lg-3 " key={index}>
                       <ProductTemplate
+                        item={product} 
                         urlSlug={product.urlSlug}
                         name={product.name}
                         price={product.price}

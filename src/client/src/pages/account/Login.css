@@ -49,6 +49,13 @@
   box-shadow: 4px 4px 1px 1px var(--color-main);
 }
 
+.form-group > textarea{
+  padding: 10px 20px;
+  border-radius: 25px 0px 25px 0px;
+  border: 2px solid var(--color-main);
+  outline: none;
+  box-shadow: 4px 4px 1px 1px var(--color-main);
+}
 
 .button_action{
   margin-top: 2rem;
@@ -76,4 +83,10 @@
   to {
     transform: rotateY(0deg);
   }
+}
+
+.popup_show{
+  background-color: var(--color-textwhite);
+  padding: 2rem;
+  border-radius: 1rem;
 }

@@ -111,7 +111,7 @@ const AdCommentEdit = () => {
           />
 
           <BoxEdit
-            label={"rating"}
+            label={"Số sao đánh giá"}
             control={
               <Form.Control
                 type="text"
@@ -128,9 +128,10 @@ const AdCommentEdit = () => {
           />
 
           <BoxEdit
-            label={"Created"}
+            label={"Ngày bình luận"}
             control={
               <Form.Control
+              disabled={true}
                 type="date"
                 name="created"
                 title="Created"
@@ -158,9 +159,10 @@ const AdCommentEdit = () => {
           />
 
           <BoxEdit
-            label={"User Id"}
+            label={"Mã người dùng"}
             control={
               <Form.Control
+              disabled={true}
                 type="text"
                 name="applicationUserId"
                 title="applicationUserId"
@@ -173,9 +175,10 @@ const AdCommentEdit = () => {
           />
 
           <BoxEdit
-            label={"product Id"}
+            label={"Sản phẩm"}
             control={
               <Form.Control
+                disabled={true}
                 type="text"
                 name="productId"
                 title="product Id"

@@ -87,6 +87,14 @@ const AdDiscount = () => {
     setPopupVisible(false);
   };
 
+    // Hàm định dạng giá tiền thành VNĐ
+    const formatCurrency = (number) => {
+      return number.toLocaleString("vi-VN", {
+        style: "currency",
+        currency: "VND",
+      });
+    };
+
 
   return(
     <LayoutCommon>
@@ -121,7 +129,7 @@ const AdDiscount = () => {
                     <td>{item.codeName}</td>
                     <td>{format(new Date(item.startDate), "dd/MM/yyyy")}</td>
                     <td>{format(new Date(item.endDate), "dd/MM/yyyy")}</td>
-                    <td>{item.discountPrice} VNĐ</td>
+                    <td>{formatCurrency(item.discountPrice)}</td>
                     <td className="text-center">
                       <Link
                         to={`/admin/discount/edit/${item.id}`}

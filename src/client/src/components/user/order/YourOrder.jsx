@@ -32,6 +32,15 @@ const YourOrder = () => {
     );
   }
 
+
+  const formatCurrency = (number) => {
+    return number.toLocaleString("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    });
+  };
+
+
   return (
     <>
       <div className="checkout_order">
@@ -55,7 +64,7 @@ const YourOrder = () => {
                 </td>
                 <td>
                   {items.map((item, index) => {
-                    return <div key={index}>{item.price} VNĐ</div>;
+                    return <div key={index}>{formatCurrency(item.price)}</div>;
                   })}
                 </td>
                 <td>
@@ -64,20 +73,16 @@ const YourOrder = () => {
                   })}
                 </td>
                 <td>{items.map((item, index) => {
-                    return <div key={index}>{item.price * item.quantity} VNĐ</div>;
+                    return <div key={index}>{formatCurrency(item.price * item.quantity)}</div>;
                   })}</td>
               </tr>
-              <tr>
-                <td colSpan={3}>Tạm tính</td>
-                <td >{cartTotal} VNĐ</td>
-              </tr>
-              <tr>
+              {/* <tr>
                 <td colSpan={3}>Giao hàng</td>
                 <td>Giao tận nơi</td>
-              </tr>
+              </tr> */}
               <tr>
-                <td colSpan={3}>Tổng</td>
-                <td className="name_product_table">{cartTotal} VNĐ</td>
+                <td colSpan={3}>Tổng phải thanh toán</td>
+                <td className="name_product_table">{formatCurrency(cartTotal)}</td>
               </tr>
               <tr>
                 <td colSpan={3}>Phương thức thanh toán</td>

@@ -37,7 +37,7 @@ const ChartColumn = () => {
     legend: {
       position: "bottom",
     },
-    colors: ["#00cc33", "#d41515"],
+    colors: ["#6bd16b", "#ed1c24"],
     plotOptions: {
       bar: {
         horizontal: false,

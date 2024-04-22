@@ -29,3 +29,19 @@
 .text_copyright {
   color: red;
 }
+
+
+.footer_content_text{
+  color: var(--color-textwhite);
+  padding: 4px 0;
+  font-size: 1.2rem;
+  text-decoration: none;
+}
+
+.footer_content{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-left: 20px;
+
+}

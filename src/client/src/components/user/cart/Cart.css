@@ -23,7 +23,7 @@
 }
 
 .cart_bottom{
-  margin-top: 1rem;
+  margin-top: 2rem;
 }
 .cart_table{
   display: flex;
@@ -46,4 +46,28 @@
   border: 2px solid var(--color-main);
   margin-top: 2rem;
   outline: none;
+}
+
+
+.text_total_price{
+  color: var(--color-textred);
+  font-size: 1.6rem;
+}
+
+.btn_count_quantity{
+  background-color: var(--color-main);
+  padding: 6px 10px;
+  color: var(--color-textwhite);
+  border-radius: 10px;
+}
+.td_count_quantity{
+  display: flex;
+  align-items: center;
+}
+.input_value_quantity{
+  width: 50px;
+  border-radius: 10px;
+  border: 2px solid var(--color-main);
+  padding-left: 10px;
+  margin: 0 5px;
 }

@@ -6,6 +6,13 @@ import { useCart } from "react-use-cart";
 
 const CartInfor = () => {
   const { cartTotal } = useCart();
+  const formatCurrency = (number) => {
+    return number.toLocaleString("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    });
+  };
+
 
   return (
     <section>
@@ -23,16 +30,8 @@ const CartInfor = () => {
           <Table className="">
             <div className="cart_bottom_title">Cộng giỏ hàng</div>
             <tr>
-              <td className="cart-lable w-25">Tạm tính</td>
-              <td className="cart-value w-25">{cartTotal} VNĐ</td>
-            </tr>
-            <tr>
-              <td className="cart-lable w-25">Giao hàng</td>
-              <td className="cart-value w-25">Giao hàng tận nhà</td>
-            </tr>
-            <tr>
-              <td className="cart-lable w-25">Tổng</td>
-              <td className="cart-value w-25">{cartTotal} VNĐ</td>
+              <td className="cart-lable w-25">Tổng tiền</td>
+              <td className="cart-value w-25 text_total_price">{formatCurrency(cartTotal)}</td>
             </tr>
             <Link
               className=" btn btn-success cart_update mt-3"
