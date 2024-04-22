@@ -9,6 +9,9 @@ using FarmProduce.Core.Contracts;
 using FarmProduce.Core.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using FarmProduce.Core.Entities;
+using Microsoft.AspNetCore.Identity;
+using static FarmProduce.Core.DTO.ServiceResponses;
 
 namespace FarmProduct.WebApi.Endpoints
 {
@@ -27,6 +30,9 @@ namespace FarmProduct.WebApi.Endpoints
             routeGroupBuilder.MapPost("/create-account", CreateAccountByAdmin)
               .WithName("CreateAccount")
               .Produces<ApiResponse<UserDTO>>();
+            routeGroupBuilder.MapPut("/update-account", UpdateAccount)
+           .WithName("Update Account")
+           .Produces<ApiResponse<UserInfo>>();
             //routeGroupBuilder.MapGet("/", GetAll)
             //  .WithName("getAll")
             //  .Produces<ApiResponse<UserDTO>>();
@@ -91,6 +97,7 @@ namespace FarmProduct.WebApi.Endpoints
        //         return Results.NotFound(ApiResponse.Fail(HttpStatusCode.NotFound, ex.Message));
        //     }
        // }
+
         private static async Task<IResult> GetAllUser(
      [FromServices] IUserAccount userAccount
      )
@@ -121,5 +128,36 @@ namespace FarmProduct.WebApi.Endpoints
                 return Results.NotFound(ApiResponse.Fail(HttpStatusCode.NotFound, ex.Message));
             }
         }
+        private static async Task<IResult> UpdateAccount(
+    [FromServices] UserManager<ApplicationUser> userManager,
+    string userId,
+    [FromBody] UserInfo detailUserDTO)
+        {
+            try
+            {
+                if (detailUserDTO == null)
+                    return Results.Ok(ApiResponse.Fail(HttpStatusCode.BadRequest, "Model is empty"));
+
+                var user = await userManager.FindByIdAsync(userId);
+                if (user == null)
+                    return Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound, "User not found"));
+
+                user.Name = detailUserDTO.Name;
+                user.Email = detailUserDTO.Email;
+                user.Address = detailUserDTO.Address;
+                user.PhoneNumber = detailUserDTO.PhoneNumber;
+
+                var result = await userManager.UpdateAsync(user);
+                if (!result.Succeeded)
+                    return Results.Ok(ApiResponse.Fail(HttpStatusCode.InternalServerError, "Error occurred while updating user"));
+
+                return Results.Ok(ApiResponse.Success(new GeneralResponse(true, "Account updated successfully")));
+            }
+            catch (Exception ex)
+            {
+                return Results.Ok(ApiResponse.Fail(HttpStatusCode.InternalServerError, $"Error occurred: {ex.Message}"));
+            }
+        }
+
     }
 }

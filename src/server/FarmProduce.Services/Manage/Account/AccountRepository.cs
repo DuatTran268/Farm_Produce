@@ -157,27 +157,73 @@ namespace FarmProduce.Services.Manage.Account
         {
             return await userManager.Users.ToListAsync();
         }
+        //public async Task<IEnumerable<DetailUserDTO>> GetAllUser()
+        //{
+
+        //    var usersWithOrders = await userManager.Users
+        //        .Select(user => new DetailUserDTO
+        //        {
+        //            Id = user.Id,
+        //            Name = user.Name,
+        //            Email = user.Email,
+        //            Address = user.Address,
+        //            PhoneNumber = user.PhoneNumber,
+
+        //            Orders = user.Orders.Select(order => new OrderDTO
+        //            {
+        //                Id = order.Id,
+        //                TotalPrice = order.TotalPrice,
+        //                OrderItems = order.OrderItems,
+        //                PaymentMethodId = order.PaymentMethodId,
+        //                OrderStatusId = order.OrderStatusId,
+        //            }).ToList()
+        //        })
+        //        .ToListAsync();
+
+        //    return usersWithOrders;
+        //}
+
+
         public async Task<IEnumerable<DetailUserDTO>> GetAllUser()
         {
-            var usersWithOrders = await userManager.Users
-                .Select(user => new DetailUserDTO
+            var usersWithOrders = new List<DetailUserDTO>();
+            foreach (var user in userManager.Users)
+            {
+                var userRoles = await userManager.GetRolesAsync(user);
+                var userWithOrder = new DetailUserDTO
                 {
-                   Id = user.Id,
+                    Id = user.Id,
                     Name = user.Name,
                     Email = user.Email,
-                    Orders = user.Orders.Select(order => new OrderDTO
+                    Address = user.Address,
+                    PhoneNumber = user.PhoneNumber,
+                    Roles = userRoles.ToList(),
+                };
+
+                // Kiểm tra nếu Orders của user không null
+                if (user.Orders != null)
+                {
+                    userWithOrder.Orders = user.Orders.Select(order => new OrderDTO
                     {
                         Id = order.Id,
                         TotalPrice = order.TotalPrice,
-                        OrderItems= order.OrderItems,
-                        PaymentMethodId=order.PaymentMethodId,
-                        OrderStatusId= order.OrderStatusId,
-                    }).ToList()
-                })
-                .ToListAsync();
+                        OrderItems = order.OrderItems,
+                        PaymentMethodId = order.PaymentMethodId,
+                        OrderStatusId = order.OrderStatusId,
+                    }).ToList();
+                }
+                else
+                {
+                    // Xử lý khi Orders bị null
+                    userWithOrder.Orders = new List<OrderDTO>(); // hoặc null tùy vào yêu cầu của bạn
+                }
 
+                usersWithOrders.Add(userWithOrder);
+            }
             return usersWithOrders;
         }
+
+
         //public async Task<IEnumerable<Us>> GetAllAccountsWithRoles()
         //{
         //    var usersWithRoles = new List<UserWithRolesDTO>();
@@ -204,6 +250,9 @@ namespace FarmProduce.Services.Manage.Account
                     Id = u.Id,
                     Name = u.Name,
                     Email = u.Email,
+                    Address = u.Address,
+                    PhoneNumber = u.PhoneNumber,
+                    
                     Orders = u.Orders.Select(order => new OrderDTO
                     {
                         Id = order.Id,
@@ -217,5 +266,26 @@ namespace FarmProduce.Services.Manage.Account
 
             return user;
         }
+        public async Task<GeneralResponse> UpdateAccount(string userId, UserInfo detailUserDTO)
+        {
+            if (detailUserDTO == null)
+                return new GeneralResponse(false, "Model is empty");
+
+            var user = await userManager.FindByIdAsync(userId);
+            if (user == null)
+                return new GeneralResponse(false, "User not found");
+
+            user.Name = detailUserDTO.Name;
+            user.Email = detailUserDTO.Email;
+            user.Address = detailUserDTO.Address;
+            user.PhoneNumber = detailUserDTO.PhoneNumber;
+
+            var result = await userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+                return new GeneralResponse(false, "Error occurred while updating user");
+
+            return new GeneralResponse(true, "Account updated successfully");
+        }
+
     }
 }
