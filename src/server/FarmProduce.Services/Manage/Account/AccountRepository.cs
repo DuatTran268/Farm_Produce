@@ -19,7 +19,7 @@ using static FarmProduce.Core.DTO.ServiceResponses;
 namespace FarmProduce.Services.Manage.Account
 {
     public class AccountRepository(UserManager<ApplicationUser> userManager,
-    RoleManager<IdentityRole> roleManager, IConfiguration config) : IUserAccount
+    RoleManager<IdentityRole> roleManager, IConfiguration config, FarmDbContext dbContext) : IUserAccount
     {
 
         public async Task<GeneralResponse> CreateAccount(RegisterDTO userDTO)
@@ -186,11 +186,20 @@ namespace FarmProduce.Services.Manage.Account
 
         public async Task<IEnumerable<DetailUserDTO>> GetAllUser()
         {
-            var usersWithOrders = new List<DetailUserDTO>();
-            foreach (var user in userManager.Users)
+            var usersWithRolesAndOrders = new List<DetailUserDTO>();
+
+            // Lấy tất cả người dùng
+            var users = await userManager.Users.ToListAsync();
+
+            foreach (var user in users)
             {
+                // Lấy vai trò của người dùng
                 var userRoles = await userManager.GetRolesAsync(user);
-                var userWithOrder = new DetailUserDTO
+
+                // Lấy đơn hàng của người dùng (nếu có)
+                var userOrders = await dbContext.Orders.Where(order => order.ApplicationUserId == user.Id).ToListAsync();
+
+                var userWithRolesAndOrders = new DetailUserDTO
                 {
                     Id = user.Id,
                     Name = user.Name,
@@ -198,29 +207,22 @@ namespace FarmProduce.Services.Manage.Account
                     Address = user.Address,
                     PhoneNumber = user.PhoneNumber,
                     Roles = userRoles.ToList(),
-                };
-
-                // Kiểm tra nếu Orders của user không null
-                if (user.Orders != null)
-                {
-                    userWithOrder.Orders = user.Orders.Select(order => new OrderDTO
+                    Orders = userOrders.Select(order => new OrderDTO
                     {
                         Id = order.Id,
                         TotalPrice = order.TotalPrice,
                         OrderItems = order.OrderItems,
                         PaymentMethodId = order.PaymentMethodId,
                         OrderStatusId = order.OrderStatusId,
-                    }).ToList();
-                }
-                else
-                {
-                    // Xử lý khi Orders bị null
-                    userWithOrder.Orders = new List<OrderDTO>(); // hoặc null tùy vào yêu cầu của bạn
-                }
+                        
+                        
+                    }).ToList()
+                };
 
-                usersWithOrders.Add(userWithOrder);
+                usersWithRolesAndOrders.Add(userWithRolesAndOrders);
             }
-            return usersWithOrders;
+
+            return usersWithRolesAndOrders;
         }
 
 
@@ -245,27 +247,38 @@ namespace FarmProduce.Services.Manage.Account
         {
             var user = await userManager.Users
                 .Where(u => u.Id == userId)
-                .Select(u => new DetailUserDTO
-                {
-                    Id = u.Id,
-                    Name = u.Name,
-                    Email = u.Email,
-                    Address = u.Address,
-                    PhoneNumber = u.PhoneNumber,
-                    
-                    Orders = u.Orders.Select(order => new OrderDTO
-                    {
-                        Id = order.Id,
-                        TotalPrice = order.TotalPrice,
-                        OrderItems = order.OrderItems,
-                        PaymentMethodId = order.PaymentMethodId,
-                        OrderStatusId = order.OrderStatusId,
-                    }).ToList()
-                })
                 .FirstOrDefaultAsync();
 
-            return user;
+            if (user == null)
+            {
+                return null; 
+            }
+
+            var userRoles = await userManager.GetRolesAsync(user);
+
+            var userOrders = await dbContext.Orders.Where(order => order.ApplicationUserId == userId).ToListAsync();
+
+            var userWithOrders = new DetailUserDTO
+            {
+                Id = user.Id,
+                Name = user.Name,
+                Email = user.Email,
+                Address = user.Address,
+                PhoneNumber = user.PhoneNumber,
+                Roles = userRoles.ToList(),
+                Orders = userOrders.Select(order => new OrderDTO
+                {
+                    Id = order.Id,
+                    TotalPrice = order.TotalPrice,
+                    OrderItems = order.OrderItems,
+                    PaymentMethodId = order.PaymentMethodId,
+                    OrderStatusId = order.OrderStatusId,
+                }).ToList()
+            };
+
+            return userWithOrders;
         }
+
         public async Task<GeneralResponse> UpdateAccount(string userId, UserInfo detailUserDTO)
         {
             if (detailUserDTO == null)
