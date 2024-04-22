@@ -61,6 +61,14 @@ const NewProduct = () => {
       disableOnInteraction: false,
     },
   };
+
+  const formatCurrency = (number) => {
+    return number.toLocaleString("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    });
+  };
+
   return (
     <div className="new_product">
       {/* reuse */}
@@ -132,7 +140,7 @@ const NewProduct = () => {
                       </div>
                       <div className="new_product_buy">
                         <div className="new_product_price">
-                          {product.price} VND
+                          {formatCurrency(product.price)} / {product.unit.name}
                         </div>
                         <div className="new_product_add">
                           <Link

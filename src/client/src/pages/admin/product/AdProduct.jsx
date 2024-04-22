@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import LayoutCommon from "../../../components/admin/common/LayoutCommon";
 import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAdd, faEdit, faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faAdd, faEdit, faEye, faEyeSlash, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Table } from "react-bootstrap";
 import HeaderBtn from "../../../components/common/HeaderBtn";
 import BtnSuccess from "../../../components/common/BtnSuccess";
@@ -116,6 +116,7 @@ const AdProduct = () => {
                 <th>Tồn kho</th>
                 <th>Giá</th>
                 <th>Mô tả</th>
+                <th>Trạng thái</th>
                 <th>Sửa</th>
                 <th>Xoá</th>
               </tr>
@@ -127,8 +128,15 @@ const AdProduct = () => {
                     <td>{item.name}</td>
                     <td>{item.viewCount} <FontAwesomeIcon icon={faEye} color="red"/></td>
                     <td>{item.quantityAvailable}</td>
-                    <td>{formatCurrency(item.price)}</td>
+                    <td>{formatCurrency(item.price)} / {item.unit.name}</td>
                     <td>{item.description}</td>
+                    <td>
+                    {item.status ? (
+                            <span className="text-success">Hiển thị <FontAwesomeIcon icon={faEye}/> </span>
+                          ) : (
+                            <span className="text-danger">Đã Ẩn <FontAwesomeIcon icon={faEyeSlash}/></span>
+                          )}
+                    </td>
                     <td className="text-center">
                       <Link
                         to={`/admin/product/edit/${item.id}`}

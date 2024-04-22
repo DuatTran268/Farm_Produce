@@ -70,6 +70,7 @@ const ProductList = () => {
                           name={item.name}
                           priceVirtual={item.priceVirtual}
                           price={item.price}
+                          unit={item.unit.name}
                           
                         />
                       </div>

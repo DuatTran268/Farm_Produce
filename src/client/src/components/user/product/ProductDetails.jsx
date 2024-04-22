@@ -26,7 +26,7 @@ const ProductDetails = () => {
     getDetailProductByUrlSlug(slug).then((data) => {
       if (data) {
         setProductDetail(data);
-        // console.log("Check data detailsssss... . .", data);
+        console.log("Check data detailsssss... . .", data);
       } else {
         setProductDetail({});
       }
@@ -106,7 +106,7 @@ const ProductDetails = () => {
             </div>
             <h5 className="product_price_sell mt-3">
               {formatCurrency(productDetail.price)}
-              {/* <span> / {productDetail.unitId}</span> */}
+               {/* / {productDetail.unit.name} */}
             </h5>
             <div className="product_detail_desc mt-3">
               {productDetail.description}

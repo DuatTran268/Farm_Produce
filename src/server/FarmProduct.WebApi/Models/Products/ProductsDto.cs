@@ -12,7 +12,7 @@ namespace FarmProduct.WebApi.Models.Products
         public string Description { get; set; }
         public int QuantityAvailable { get; set; }
         public int CategoryId { get; set; }
-		public int UnitId { get; set; }
+        public UnitDto Unit { get; set; }
 		public decimal Price { get; set; }
         public decimal PriceVirtual { get; set; }
         public int ViewCount{ get; set; }

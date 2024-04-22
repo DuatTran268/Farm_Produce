@@ -3,6 +3,7 @@ using FarmProduct.WebApi.Models.Carts;
 using FarmProduct.WebApi.Models.Comments;
 using FarmProduct.WebApi.Models.Discounts;
 using FarmProduct.WebApi.Models.Images;
+using FarmProduct.WebApi.Models.Unit;
 
 namespace FarmProduct.WebApi.Models.Products
 {
@@ -12,7 +13,7 @@ namespace FarmProduct.WebApi.Models.Products
 		public string Name { get; set; }
 		public string UrlSlug { get; set; }
 		public int QuantityAvailable { get; set; }
-		public int UnitId { get; set; }
+		public UnitDto Unit { get; set; }
 		public decimal Price { get; set; } = 0;
         public decimal PriceVirtual { get; set; }
         public string Description { get; set; }

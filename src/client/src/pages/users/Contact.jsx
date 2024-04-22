@@ -83,7 +83,7 @@ const Contact = () => {
                   </div>
                   <br />
                   <div className="justify-content-center d-flex">
-                    <Button type="submit" value="Send" className="btn btn-primary">
+                    <Button type="submit" value="Send" className="btn btn-success">
                       Gửi phản hồi
                     </Button>
                   </div>

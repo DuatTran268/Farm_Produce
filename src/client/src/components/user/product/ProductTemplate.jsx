@@ -60,10 +60,10 @@ const ProductTemplate = (props) => {
                   <div className="product_price_virtual">
                     {/* check value = 0 disable div virtual */}
                     {props.priceVirtual !== 0 && (
-                      <div>{formatCurrency(props.priceVirtual)}</div>
+                      <div>{formatCurrency(props.priceVirtual)} / {props.unit}</div>
                     )}
                   </div>
-                  <div className="product_price_sell">{formatCurrency(props.price)}</div>
+                  <div className="product_price_sell">{formatCurrency(props.price)} / {props.unit}</div>
                 </div>
                 <Link
                   className="btn_addtocart"

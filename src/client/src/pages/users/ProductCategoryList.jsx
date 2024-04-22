@@ -55,6 +55,7 @@ const ProductCategoryList = () => {
                         price={product.price}
                         thumbnailUrl={getThumbnailUrl(product)}
                         priceVirtual={product.priceVirtual}
+                        unit={product.unit.name}
                       />
                     </div>
                   );
