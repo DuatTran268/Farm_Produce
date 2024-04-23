@@ -33,7 +33,7 @@ namespace FarmProduct.WebApi.Endpoints
                 .WithName("GetAllOrder")
                 .Produces<ApiResponse<PaginationResult<DetailOrder>>>();
             routeGroupBuilder.MapGet("/order-item", GetAllOrderItemPageAsync)
-           .WithName("GetAllOrderItem")
+           .WithName("Ge tAll Order Item")
            .Produces<ApiResponse<DetailOrder>>();
             routeGroupBuilder.MapPost("/create-order", AddAsync)
                .WithName("Create Order ")

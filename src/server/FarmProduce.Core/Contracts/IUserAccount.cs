@@ -18,5 +18,7 @@ namespace FarmProduce.Core.Contracts
         Task<GeneralResponse> CreateAccountByAdmin(UserDTO userDTO);
         Task<IEnumerable<DetailUserDTO>> GetAllUser();
         Task<DetailUserDTO> GetUserWithOrdersById(string userId);
+        Task<GeneralResponse> UpdateUserAndOrders(string userId, UserWithOrderDTO detailUserDTO, List<OrderDTO> orderDTOs);
+
     }
 }

@@ -15,8 +15,8 @@ namespace FarmProduce.Core.DTO
         public int OrderStatusId { get; set; }
         public string ApplicationUserId { get; set; }
         public int PaymentMethodId { get; set; }
-        
-        public IList<OrderItem> OrderItems { get; set; }
+        public int DiscountId { get; set; }
+        public IList<OrderItemDTO> OrderItems { get; set; }
     }
 }
 

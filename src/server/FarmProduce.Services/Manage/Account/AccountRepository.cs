@@ -193,11 +193,9 @@ namespace FarmProduce.Services.Manage.Account
 
             foreach (var user in users)
             {
-                // Lấy vai trò của người dùng
                 var userRoles = await userManager.GetRolesAsync(user);
 
-                // Lấy đơn hàng của người dùng (nếu có)
-                var userOrders = await dbContext.Orders.Where(order => order.ApplicationUserId == user.Id).ToListAsync();
+                var userOrders = await dbContext.Orders.Include(x=>x.OrderItems).Where(order => order.ApplicationUserId == user.Id).ToListAsync();
 
                 var userWithRolesAndOrders = new DetailUserDTO
                 {
@@ -211,7 +209,14 @@ namespace FarmProduce.Services.Manage.Account
                     {
                         Id = order.Id,
                         TotalPrice = order.TotalPrice,
-                        OrderItems = order.OrderItems,
+                        DateOrder = order.DateOrder,
+                        DiscountId = order.DiscountId,
+                        OrderItems = order.OrderItems.Select(item => new OrderItemDTO
+                        {
+                            Id = item.Id,
+                            ProductId = item.ProductId,
+                            Quantity = item.Quantity,
+                        }).ToList(),
                         PaymentMethodId = order.PaymentMethodId,
                         OrderStatusId = order.OrderStatusId,
                         
@@ -270,7 +275,14 @@ namespace FarmProduce.Services.Manage.Account
                 {
                     Id = order.Id,
                     TotalPrice = order.TotalPrice,
-                    OrderItems = order.OrderItems,
+                    //OrderItems = order.OrderItems.Select(item => new OrderItemDTO
+                    //{
+                       
+                    //    Id = item.Id,
+                    //    ProductId = item.ProductId,
+                    //    Quantity = item.Quantity,
+                    //    // Price = item.Price
+                    //}).ToList(),
                     PaymentMethodId = order.PaymentMethodId,
                     OrderStatusId = order.OrderStatusId,
                 }).ToList()
@@ -299,6 +311,92 @@ namespace FarmProduce.Services.Manage.Account
 
             return new GeneralResponse(true, "Account updated successfully");
         }
+        public async Task<GeneralResponse> UpdateUserAndOrders(string userId, UserWithOrderDTO detailUserDTO, List<OrderDTO> orderDTOs)
+        {
+            try
+            {
+                if (detailUserDTO == null || orderDTOs == null)
+                {
+                    return new GeneralResponse(false, "User information or order information is empty");
+                }
+
+                var user = await userManager.FindByIdAsync(userId);
+                if (user == null)
+                {
+                    return new GeneralResponse(false, "User not found");
+                }
+
+                user.Name = detailUserDTO.Name;
+                user.Email = detailUserDTO.Email;
+                user.Address = detailUserDTO.Address;
+                user.PhoneNumber = detailUserDTO.PhoneNumber;
+                user.Orders = new List<Order>();
+
+                foreach (var orderDTO in orderDTOs)
+                {
+                    if (orderDTO == null)
+                    {
+                        return new GeneralResponse(false, "Order information is empty");
+                    }
+
+                    Order order;
+                    if (orderDTO.Id == 0)
+                    {
+                        order = new Order
+                        {
+                            TotalPrice = orderDTO.TotalPrice,
+                            PaymentMethodId = orderDTO.PaymentMethodId,
+                            OrderStatusId = orderDTO.OrderStatusId,
+                            ApplicationUserId = userId,
+                            DateOrder = DateTime.Now,
+                            DiscountId = orderDTO.DiscountId,
+                            OrderItems = new List<OrderItem>()
+                        };
+
+                        dbContext.Orders.Add(order);
+                    }
+                    else
+                    {
+                        order = await dbContext.Orders.Include(o => o.OrderItems).FirstOrDefaultAsync(o => o.Id == orderDTO.Id);
+
+                        if (order == null)
+                        {
+                            return new GeneralResponse(false, $"Order with ID {orderDTO.Id} not found");
+                        }
+
+                        order.TotalPrice = orderDTO.TotalPrice;
+                        order.PaymentMethodId = orderDTO.PaymentMethodId;
+                        order.OrderStatusId = orderDTO.OrderStatusId;
+                        order.DiscountId = orderDTO.DiscountId;
+                        order.DateOrder = DateTime.Now;
+                    }
+
+                    order.OrderItems.Clear();
+
+                    foreach (var orderItemDTO in orderDTO.OrderItems)
+                    {
+                        var orderItem = new OrderItem
+                        {
+                            ProductId = orderItemDTO.ProductId,
+                            Quantity = orderItemDTO.Quantity,
+                            OrderId = orderDTO.Id
+                        };
+                        order.OrderItems.Add(orderItem);
+                    }
+                }
+
+                await dbContext.SaveChangesAsync();
+
+                return new GeneralResponse(true, "User information and orders updated successfully");
+            }
+            catch (Exception ex)
+            {
+                return new GeneralResponse(false, $"An error occurred: {ex.Message}");
+            }
+        }
+
+
+
 
     }
 }

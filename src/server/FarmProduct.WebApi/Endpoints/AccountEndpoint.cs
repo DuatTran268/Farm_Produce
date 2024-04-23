@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using FarmProduce.Core.Entities;
 using Microsoft.AspNetCore.Identity;
 using static FarmProduce.Core.DTO.ServiceResponses;
+using System.Globalization;
 
 namespace FarmProduct.WebApi.Endpoints
 {
@@ -33,6 +34,9 @@ namespace FarmProduct.WebApi.Endpoints
             routeGroupBuilder.MapPut("/update-account", UpdateAccount)
            .WithName("Update Account")
            .Produces<ApiResponse<UserInfo>>();
+            routeGroupBuilder.MapPost("/update-account/order", Update)
+        .WithName("Update Account and orders")
+        .Produces<ApiResponse<DetailUserDTO>>();
             //routeGroupBuilder.MapGet("/", GetAll)
             //  .WithName("getAll")
             //  .Produces<ApiResponse<UserDTO>>();
@@ -58,6 +62,7 @@ namespace FarmProduct.WebApi.Endpoints
                 return Results.NotFound(ApiResponse.Fail(HttpStatusCode.BadRequest, ex.Message));
             }
         }
+        [Authorize(Roles ="Admin")]
         private static async Task<IResult> CreateAccountByAdmin(
                [FromServices] IUserAccount userAccount, [FromBody] UserDTO userDTO
                )
@@ -156,6 +161,21 @@ namespace FarmProduct.WebApi.Endpoints
             catch (Exception ex)
             {
                 return Results.Ok(ApiResponse.Fail(HttpStatusCode.InternalServerError, $"Error occurred: {ex.Message}"));
+            }
+        }
+        private static async Task<IResult> Update(
+       [FromServices] IUserAccount userAccount, [FromBody] UserWithOrderDTO data
+       )
+        {
+            try
+            {
+                var response = await userAccount.UpdateUserAndOrders(data.Id,data, data.Orders);
+                return Results.Ok(ApiResponse.Success(response));
+
+            }
+            catch (Exception ex)
+            {
+                return Results.NotFound(ApiResponse.Fail(HttpStatusCode.BadRequest, ex.Message));
             }
         }
 
