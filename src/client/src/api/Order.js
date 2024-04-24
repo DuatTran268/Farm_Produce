@@ -1,4 +1,4 @@
-import { get_api_nocache } from "./AxiosCommon";
+import { get_api_nocache, put_api } from "./AxiosCommon";
 
 export function getOderPagination(
   pageSize = "",
@@ -14,3 +14,12 @@ export function getOderPagination(
 
   return get_api_nocache(url.href);
 }
+
+
+export async function createOrder(id = "", formData) {
+  return put_api(`https://localhost:7047/api/account/update-account/order/${id}`, formData);
+}
+
+
+
+

@@ -16,12 +16,12 @@ const Checkout = () => {
       <div className="checkout_title_heading">Thanh Toán</div>
       <div className="checkout_content">
         <FormOrder />
-        <YourOrder />
-        <div className="button_checkout">
+        {/* <YourOrder /> */}
+        {/* <div className="button_checkout">
           <Link className=" btn btn-success" to={"/checkout/orderinfor"}>
             Đặt hàng ngay
           </Link>
-        </div>
+        </div> */}
       </div>
     </LayoutClient>
   );

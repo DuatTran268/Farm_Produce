@@ -34,7 +34,7 @@ const OrderInfor = () => {
           </div>
         </div>
 
-        <YourOrder />
+        {/* <YourOrder /> */}
       </div>
       <div className="order_infor_done">
         <Link className=" btn btn-success" to={"/"}>

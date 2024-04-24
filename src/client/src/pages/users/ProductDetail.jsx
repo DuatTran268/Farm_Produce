@@ -2,9 +2,9 @@ import React from "react";
 import ProductDetails from "../../components/user/product/ProductDetails";
 import Categoris from "../../components/user/categories/Categoris";
 import LayoutClient from "../../components/user/common/LayoutClient";
-import ProductComment from "../../components/user/commnent/ProductComment";
+import ProductComment from "../../components/user/comment/ProductComment";
 import "../../components/user/product/ProductDetail.css";
-import CommentBox from "../../components/user/commnent/CommentBox";
+import CommentBox from "../../components/user/comment/CommentBox";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
