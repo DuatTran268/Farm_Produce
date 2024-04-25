@@ -67,7 +67,7 @@ namespace FarmProduct.WebApi.Endpoints
 				.WithName("AddProduct")
 				.Accepts<ProductEditModel>("multipart/form-data")
 				.Produces(401)
-				.Produces<ApiResponse<ProductsDto>>();
+				.Produces<ApiResponse<ProductDTONoImage>>();
 
 
 			routeGroupBuilder.MapGet("/combobox", FilterComboboxProduct)
@@ -149,89 +149,80 @@ namespace FarmProduct.WebApi.Endpoints
 
 				: Results.Ok(ApiResponse.Success(paginationResult));
 		}
-		private static async Task<IResult> AddProduct(HttpContext context, [FromServices] IProductRepo productRepo, [FromServices] IImageRepo imageRepo, IMapper mapper, ProductEditModel validator, [FromServices] IMediaManager mediaManager)
-		{
-			var model = await ProductEditModel.BindAsync(context);
+        private static async Task<IResult> AddProduct(HttpContext context, [FromServices] IProductRepo productRepo, [FromServices] IImageRepo imageRepo, IMapper mapper, ProductEditModel validator, [FromServices] IMediaManager mediaManager)
+        {
+            var model = await ProductEditModel.BindAsync(context);
 
-			if (model == null)
-			{
-				return Results.Ok(ApiResponse.Fail(HttpStatusCode.BadRequest, "Invalid product data"));
-			}
+            if (model == null)
+            {
+                return Results.Ok(ApiResponse.Fail(HttpStatusCode.BadRequest, "Invalid product data"));
+            }
 
-			var slug = model.Name.GenerateSlug();
+            var slug = model.Name.GenerateSlug();
 
-			if (string.IsNullOrEmpty(slug))
-			{
-				return Results.Ok(ApiResponse.Fail(HttpStatusCode.BadRequest, "Invalid product name"));
-			}
+            if (string.IsNullOrEmpty(slug))
+            {
+                return Results.Ok(ApiResponse.Fail(HttpStatusCode.BadRequest, "Invalid product name"));
+            }
 
-			var product = await productRepo.GetProductById(model.Id);
+            try
+            {
+                // Thêm sản phẩm vào cơ sở dữ liệu nếu sản phẩm chưa tồn tại
+                if (model.Id == 0)
+                {
+                    var product = mapper.Map<Product>(model);
+                    product.UrlSlug = slug;
+                    product.DateCreate = DateTime.Now;
+                    product.DateUpdate = DateTime.Now;
+					product.Images = null;
+                    await productRepo.AddOrUpdateProduct(product);
+                    model.Id = product.Id;
+                }
+                else
+                {
+                    // Kiểm tra xem sản phẩm có tồn tại không
+                    var existingProduct = await productRepo.GetProductById(model.Id);
+                    if (existingProduct == null)
+                    {
+                        return Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound, $"Product with ID {model.Id} not found"));
+                    }
+                }
+                var validImages = model.Images.Where(image => image != null && image.Length > 0 && !string.IsNullOrEmpty(image.FileName)).ToList();
+                foreach (var imageFile in validImages)
+                {
+                   
 
-			if (product == null)
-			{
-				product = mapper.Map<Product>(model);
-			}
+                    string uploadedPath = await mediaManager.SaveFileAsync(imageFile.OpenReadStream(), imageFile.FileName, imageFile.ContentType);
 
-			if (await productRepo.IsSlugProductExisted(model.Id, slug))
-			{
-				return Results.Ok(ApiResponse.Fail(HttpStatusCode.Conflict, $"Slug '{slug}' đã được sử dụng"));
-			}
+                    if (!string.IsNullOrWhiteSpace(uploadedPath))
+                    {
+                        var image = new Image
+                        {
+                            Name = imageFile.FileName,
+                            UrlImage = uploadedPath,
+                            ProductId = model.Id, // Sử dụng Id của sản phẩm để liên kết với hình ảnh
+                            Caption = "Caption"
+                        };
 
-			product.UrlSlug = slug;
-			product.Name = model.Name;
-			product.Description = model.Description;
-			product.QuantityAvailable = model.QuantityAvailable;
-			product.CategoryId = model.CategoryId;
-			product.Price = model.Price;
-			product.PriceVirtual = model.PriceVirtual;
-			product.Status = model.Status;
-			product.UnitId = model.UnitId;
+                        // Thêm ảnh mới vào bảng Images
+                     
+                            await imageRepo.AddOrUpdateImage(image);
+                        
+                    }
+                }
 
-			//foreach (var imageFile in model.Images)
-			//{
-			//    if (imageFile == null || imageFile.Length == 0)
-			//    {
-			//        continue;
-			//    }
-
-			//    string uploadedPath = await mediaManager.SaveFileAsync(imageFile.OpenReadStream(), imageFile.FileName, imageFile.ContentType);
-
-			//    if (!string.IsNullOrWhiteSpace(uploadedPath))
-			//    {
-			//        var image = new Image
-			//        {
-			//            Name = imageFile.FileName,
-			//            UrlImage = uploadedPath,
-			//            ProductId = product.Id,
-			//            Caption = "Caption"
-			//        };
-			//        product.Images.Add(image);  
-
-			//        // Thêm ảnh mới vào bảng Images
-			//        await imageRepo.AddOrUpdateImage(image);
-			//    }
-			//}
-
-			if (model.Id == 0)
-			{
-				product.DateCreate = DateTime.Now;
-			}
-			product.DateUpdate = DateTime.Now;
-
-			try
-			{
-				await productRepo.AddOrUpdateProduct(product);
-				return Results.Ok(ApiResponse.Success(mapper.Map<ProductsDto>(product), model.Id > 0 ? HttpStatusCode.OK : HttpStatusCode.Created));
-			}
-			catch (Exception ex)
-			{
-				return Results.Ok(ApiResponse.Fail(HttpStatusCode.BadRequest, ex.Message));
-			}
-		}
+                return Results.Ok(ApiResponse.Success(mapper.Map<ProductsDto>(model), model.Id > 0 ? HttpStatusCode.OK : HttpStatusCode.Created));
+            }
+            catch (Exception ex)
+            {
+                return Results.Ok(ApiResponse.Fail(HttpStatusCode.BadRequest, ex.Message));
+            }
+        }
 
 
 
-		private static async Task<IResult> DeleteProduct(int id, IProductRepo productRepo)
+
+        private static async Task<IResult> DeleteProduct(int id, IProductRepo productRepo)
 		{
 			var status = await productRepo.DeleteWithIDAsync(id);
 			return Results.Ok(status ? ApiResponse.Success(HttpStatusCode.NoContent) : ApiResponse.Fail(HttpStatusCode.NotFound, $"không tìm thấy rau với mã {id}"));

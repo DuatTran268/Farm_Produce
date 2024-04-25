@@ -8,7 +8,7 @@ import BoxEdit from "../../admin/edit/BoxEdit";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMessage } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
-import { useCart } from "react-use-cart";
+import { useCart } from "react-use-cart"; // Import useCart
 
 const FormOrder = () => {
   const user = useSelector((state) => state.auth.login.currentUser);
@@ -18,35 +18,33 @@ const FormOrder = () => {
   let { id } = useParams();
   id = id ?? "";
   const [validated, setValidated] = useState(false);
-
-  //Lấy thông tin người dùng từ localStorage và điền vào biểu mẫu
+  const { isEmpty, items, cartTotal, clearCart } = useCart(); // Lấy thông tin giỏ hàng
 
   useEffect(() => {
     if (user.id) {
-      setOrder((prevState) => ({ ...prevState, id: user.id }));
-      setOrder((prevState) => ({ ...prevState, applicationUserId: user.id }));
-      setOrder((prevState) => ({ ...prevState, name: user.username }));
-      setOrder((prevState) => ({ ...prevState, email: user.email }));
+      setOrder((prevState) => ({
+        ...prevState,
+        id: user.id,
+        applicationUserId: user.id,
+        name: user.username,
+        email: user.email,
+      }));
     }
   }, [user]);
 
   useEffect(() => {
-    // Lấy dữ liệu giỏ hàng từ localStorage
     const cartData = JSON.parse(localStorage.getItem("react-use-cart"));
     console.log("Check cart-data: ", cartData);
 
     if (cartData && cartData.items) {
-      // Tạo một mảng orderItems từ các mục hàng trong giỏ hàng
       const orderItems = cartData.items.map((item) => ({
         productId: item.id,
         quantity: item.quantity,
         price: item.price,
-        // Thêm các trường khác tùy thuộc vào cấu trúc của thông tin sản phẩm trong giỏ hàng
       }));
 
       console.log("Check orderitem", orderItems);
 
-      // Cập nhật state của biểu mẫu với thông tin sản phẩm từ giỏ hàng
       setOrder((prevState) => ({
         ...prevState,
         orders: [{ ...prevState.orders[0], orderItems }],
@@ -86,41 +84,38 @@ const FormOrder = () => {
     document.title = "Đặt hàng với chúng tôi";
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (e.currentTarget.checkValidity() === false) {
       e.stopPropagation();
       setValidated(true);
     } else {
-      let data = new FormData(e.target);
+      try {
+        const data = JSON.stringify(order);
+        console.log("Form data:", data);
 
-      console.log("Form data:", data);
-      for (const pair of data.entries()) {
-        console.log("Check form: ", pair[0] + ": " + pair[1]);
-      }
-
-      createOrder(id, data).then((data) => {
-        if (data) {
+        const response = await createOrder(id, data);
+        if (response) {
           enqueueSnackbar("Cảm ơn bạn đặt hàng", {
             variant: "success",
           });
           navigate(`/home`);
+          clearCart(); // Xóa toàn bộ sản phẩm trong giỏ hàng sau khi thanh toán thành công
         } else {
           enqueueSnackbar("Đã xảy ra lỗi khi đặt hàng", {
             variant: "error",
           });
         }
-      });
+      } catch (error) {
+        console.error("Error:", error);
+      }
     }
   };
-
-  const { isEmpty, items, cartTotal } = useCart();
 
   return (
     <section className="checkout_row row">
       <Form
         method="post"
-        encType="multipart/form-data"
         onSubmit={handleSubmit}
         noValidate
         validated={validated}
@@ -180,7 +175,7 @@ const FormOrder = () => {
           control={
             <Form.Control
               className="form_control_order"
-              placeholder="Số điện thoại"
+              placeholder="Email"
               type="email"
               name="email"
               title="Email"
@@ -201,9 +196,14 @@ const FormOrder = () => {
               name="paymentMethodId"
               title="Payment MethodId"
               required
-              value={order.orders.paymentMethodId}
+              value={order.orders[0].paymentMethodId}
               onChange={(e) =>
-                setOrder({ ...order, paymentMethodId: e.target.value })
+                setOrder({
+                  ...order,
+                  orders: [
+                    { ...order.orders[0], paymentMethodId: e.target.value },
+                  ],
+                })
               }
             />
           }
@@ -219,9 +219,12 @@ const FormOrder = () => {
               name="discountId"
               title="discountId"
               required
-              value={order.orders.discountId}
+              value={order.orders[0].discountId}
               onChange={(e) =>
-                setOrder({ ...order, discountId: e.target.value })
+                setOrder({
+                  ...order,
+                  orders: [{ ...order.orders[0], discountId: e.target.value }],
+                })
               }
             />
           }
@@ -232,14 +235,17 @@ const FormOrder = () => {
           control={
             <Form.Control
               className="form_control_order"
-              placeholder="Mã giảm giá"
+              placeholder="Ngày đặt hàng"
               type="date"
               name="dateOrder"
               title="dateOrder"
               required
-              value={order.orders.dateOrder}
+              value={order.orders[0].dateOrder}
               onChange={(e) =>
-                setOrder({ ...order, dateOrder: e.target.value })
+                setOrder({
+                  ...order,
+                  orders: [{ ...order.orders[0], dateOrder: e.target.value }],
+                })
               }
             />
           }
@@ -255,9 +261,14 @@ const FormOrder = () => {
               name="orderStatusId"
               title="orderStatusId"
               required
-              value={order.orders.orderStatusId}
+              value={order.orders[0].orderStatusId}
               onChange={(e) =>
-                setOrder({ ...order, orderStatusId: e.target.value })
+                setOrder({
+                  ...order,
+                  orders: [
+                    { ...order.orders[0], orderStatusId: e.target.value },
+                  ],
+                })
               }
             />
           }
@@ -290,7 +301,7 @@ const FormOrder = () => {
               name={`orderItems[${index}].price`}
               value={item.price}
             />
-            {/* Thêm các trường ẩn khác cho thông tin sản phẩm */}
+           
           </React.Fragment>
         ))}
 

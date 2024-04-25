@@ -1,26 +1,26 @@
-﻿using System.Globalization;
+﻿    using System.Globalization;
 
-namespace FarmProduct.WebApi.Models.Products
-{
-    public class ProductEditModel
+    namespace FarmProduct.WebApi.Models.Products
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public int QuantityAvailable { get; set; }
-        public int CategoryId { get; set; }
-        public decimal Price { get; set; } = 0;
-        public decimal PriceVirtual { get; set; }
-        public string Description { get; set; }
-        public bool Status { get; set; }
-        public int UnitId { get; set; }
-        //public DateTime DateCreate { get; set; } = DateTime.Now;
-        //public DateTime DateUpdate { get; set; } = DateTime.Now;
-        //public List<IFormFile> Images { get; set; } // Thêm trường Images
-
-        public static async ValueTask<ProductEditModel> BindAsync(HttpContext context)
+        public class ProductEditModel
         {
-            var form = await context.Request.ReadFormAsync();
-            //var images = form.Files.GetFiles("Images"); 
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public int QuantityAvailable { get; set; }
+            public int CategoryId { get; set; }
+            public decimal Price { get; set; } = 0;
+            public decimal PriceVirtual { get; set; }
+            public string Description { get; set; }
+            public bool Status { get; set; }
+            public int UnitId { get; set; }
+            //public DateTime DateCreate { get; set; } = DateTime.Now;
+            //public DateTime DateUpdate { get; set; } = DateTime.Now;
+            public List<IFormFile> Images { get; set; } 
+
+            public static async ValueTask<ProductEditModel> BindAsync(HttpContext context)
+            {
+                var form = await context.Request.ReadFormAsync();
+                var images = form.Files.ToList();
             return new ProductEditModel()
             {
                 Id = int.Parse(form["Id"]),
@@ -34,8 +34,9 @@ namespace FarmProduct.WebApi.Models.Products
                 UnitId = int.Parse(form["UnitId"]),
                 //DateCreate = DateTime.Parse(form["DateCreate"]),
                 //DateUpdate = DateTime.Parse(form["DateUpdate"]),
-                //Images = images.ToList() 
-            };
+                Images = images.Any() ? images.ToList() : new List<IFormFile>()
+
+                };
+            }
         }
     }
-}

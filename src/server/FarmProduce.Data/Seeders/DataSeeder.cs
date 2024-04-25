@@ -359,7 +359,6 @@ namespace FarmProduce.Data.Seeders
                     _dbContext.Add(image);
                 }
             }
-            _dbContext.AddRange(images);
             _dbContext.SaveChanges();
             return images;
         }

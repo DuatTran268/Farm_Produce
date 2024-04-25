@@ -38,7 +38,7 @@ namespace FarmProduce.Services.Manage.Products
 
 		private IQueryable<Product> FilterProduct(ProductQuery productQuery)
 		{
-			IQueryable<Product> products = _context.Set<Product>();
+			IQueryable<Product> products = _context.Set<Product>().Include(x=>x.Images);
 			if (!String.IsNullOrWhiteSpace(productQuery.UrlSlug))
 			{
 				products = products.Where(x => x.UrlSlug.Contains(productQuery.UrlSlug));

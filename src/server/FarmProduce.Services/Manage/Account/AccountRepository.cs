@@ -395,8 +395,5 @@ namespace FarmProduce.Services.Manage.Account
             }
         }
 
-
-
-
     }
 }
