@@ -40,21 +40,21 @@ namespace FarmProduce.Services.Manage.Account
             if (!createUser.Succeeded) return new GeneralResponse(false, "Error occured.. please try again");
 
             //Assign Default Role : Admin to first registrar; rest is user
-           
+
             //if (checkAdmin is null)
             //{
             //    await roleManager.CreateAsync(new IdentityRole() { Name = "Admin" });
             //    await userManager.AddToRoleAsync(newUser, "Admin");
             //    return new GeneralResponse(true, "Account Created");
             //}
-        
-                var checkUser = await roleManager.FindByNameAsync("User");
-                if (checkUser is null)
-                    await roleManager.CreateAsync(new IdentityRole() { Name = "User" });
 
-                await userManager.AddToRoleAsync(newUser, "User");
-                return new GeneralResponse(true, "Account Created");
-            
+            var checkUser = await roleManager.FindByNameAsync("User");
+            if (checkUser is null)
+                await roleManager.CreateAsync(new IdentityRole() { Name = "User" });
+
+            await userManager.AddToRoleAsync(newUser, "User");
+            return new GeneralResponse(true, "Account Created");
+
         }
         public async Task<GeneralResponse> CreateAccountByAdmin(UserDTO userDTO)
         {
@@ -195,7 +195,7 @@ namespace FarmProduce.Services.Manage.Account
             {
                 var userRoles = await userManager.GetRolesAsync(user);
 
-                var userOrders = await dbContext.Orders.Include(x=>x.OrderItems).Where(order => order.ApplicationUserId == user.Id).ToListAsync();
+                var userOrders = await dbContext.Orders.Include(x => x.OrderItems).Where(order => order.ApplicationUserId == user.Id).ToListAsync();
 
                 var userWithRolesAndOrders = new DetailUserDTO
                 {
@@ -219,8 +219,8 @@ namespace FarmProduce.Services.Manage.Account
                         }).ToList(),
                         PaymentMethodId = order.PaymentMethodId,
                         OrderStatusId = order.OrderStatusId,
-                        
-                        
+
+
                     }).ToList()
                 };
 
@@ -256,7 +256,7 @@ namespace FarmProduce.Services.Manage.Account
 
             if (user == null)
             {
-                return null; 
+                return null;
             }
 
             var userRoles = await userManager.GetRolesAsync(user);
@@ -277,7 +277,7 @@ namespace FarmProduce.Services.Manage.Account
                     TotalPrice = order.TotalPrice,
                     //OrderItems = order.OrderItems.Select(item => new OrderItemDTO
                     //{
-                       
+
                     //    Id = item.Id,
                     //    ProductId = item.ProductId,
                     //    Quantity = item.Quantity,
@@ -369,6 +369,7 @@ namespace FarmProduce.Services.Manage.Account
                         order.OrderStatusId = orderDTO.OrderStatusId;
                         order.DiscountId = orderDTO.DiscountId;
                         order.DateOrder = DateTime.Now;
+                        //order.OrderItems.Clear();
                     }
 
                     order.OrderItems.Clear();
@@ -382,7 +383,13 @@ namespace FarmProduce.Services.Manage.Account
                             OrderId = orderDTO.Id
                         };
                         order.OrderItems.Add(orderItem);
+                        var product = await dbContext.Products.FindAsync(orderItemDTO.ProductId);
+                        if (product != null)
+                        {
+                            product.QuantityAvailable -= orderItemDTO.Quantity;
+                        }
                     }
+
                 }
 
                 await dbContext.SaveChangesAsync();
