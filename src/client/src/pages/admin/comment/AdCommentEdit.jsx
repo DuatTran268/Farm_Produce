@@ -131,7 +131,7 @@ const AdCommentEdit = () => {
             label={"Ngày bình luận"}
             control={
               <Form.Control
-              disabled={true}
+              // disabled={true}
                 type="date"
                 name="created"
                 title="Created"
@@ -162,7 +162,7 @@ const AdCommentEdit = () => {
             label={"Mã người dùng"}
             control={
               <Form.Control
-              disabled={true}
+              // disabled={true}
                 type="text"
                 name="applicationUserId"
                 title="applicationUserId"
@@ -178,7 +178,7 @@ const AdCommentEdit = () => {
             label={"Sản phẩm"}
             control={
               <Form.Control
-                disabled={true}
+                // disabled={true}
                 type="text"
                 name="productId"
                 title="product Id"
