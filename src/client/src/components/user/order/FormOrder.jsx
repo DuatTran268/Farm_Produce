@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Order.css";
 import { useSnackbar } from "notistack";
 import { useNavigate, useParams } from "react-router-dom";
-import { createOrder } from "../../../api/Order";
+import { createOrder, getComboboxPaymentMethod } from "../../../api/Order";
 import { Button, Form } from "react-bootstrap";
 import BoxEdit from "../../admin/edit/BoxEdit";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,7 +18,7 @@ const FormOrder = () => {
   let { id } = useParams();
   id = id ?? "";
   const [validated, setValidated] = useState(false);
-  const { isEmpty, items, cartTotal, clearCart } = useCart(); // Lấy thông tin giỏ hàng
+  const { isEmpty, items, cartTotal, emptyCart } = useCart(); // Lấy thông tin giỏ hàng
 
   useEffect(() => {
     if (user.id) {
@@ -50,6 +50,20 @@ const FormOrder = () => {
         orders: [{ ...prevState.orders[0], orderItems }],
       }));
     }
+
+    getComboboxPaymentMethod().then((data) => {
+      if (data) {
+        console.log("Check data payment: ", data)
+        setFilterPayment({
+          paymentMethodList: data.paymentMethodList,
+        });
+      } else {
+        setFilterPayment({ paymentMethodList: [] });
+      }
+    });
+
+
+
   }, []);
 
   const initialState = {
@@ -77,7 +91,8 @@ const FormOrder = () => {
         ],
       },
     ],
-  };
+  },
+  [filterPayment, setFilterPayment] = useState({ paymentMethodList: [] });
   const [order, setOrder] = useState(initialState);
 
   useEffect(() => {
@@ -100,7 +115,7 @@ const FormOrder = () => {
             variant: "success",
           });
           navigate(`/home`);
-          clearCart(); // Xóa toàn bộ sản phẩm trong giỏ hàng sau khi thanh toán thành công
+          emptyCart(); // Xóa toàn bộ sản phẩm trong giỏ hàng sau khi thanh toán thành công
         } else {
           enqueueSnackbar("Đã xảy ra lỗi khi đặt hàng", {
             variant: "error",
@@ -187,7 +202,7 @@ const FormOrder = () => {
           notempty={"Không được bỏ trống"}
         />
 
-        <BoxEdit
+        {/* <BoxEdit
           control={
             <Form.Control
               className="form_control_order"
@@ -208,7 +223,31 @@ const FormOrder = () => {
             />
           }
           notempty={"Không được bỏ trống"}
-        />
+        /> */}
+
+<Form.Select
+                name="paymentMethodId"
+                title="payment Method Id"
+                value={order.orders[0].paymentMethodId}
+                required
+                onChange={(e) =>
+                  setOrder({
+                    ...order,
+                    orders: [
+                      { ...order.orders[0], paymentMethodId: e.target.value },
+                    ],
+                  })
+                }
+              >
+                {filterPayment.paymentMethodList.length > 0 &&
+                  filterPayment.paymentMethodList.map((item, index) => (
+                    <option key={index} value={item.value}>
+                      {item.text}
+                    </option>
+                  ))}
+              </Form.Select>
+
+
 
         <BoxEdit
           control={

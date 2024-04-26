@@ -41,8 +41,8 @@ namespace FarmProduce.Data.Contexts
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=XUANHUNG;Database=FarmProducts;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
-            //optionsBuilder.UseSqlServer("Server=DESKTOP-NLUPE1I\\MSSQLSERVER01;Database=FarmProductsV5;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
+            //optionsBuilder.UseSqlServer("Server=XUANHUNG;Database=FarmProducts;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
+            optionsBuilder.UseSqlServer("Server=DESKTOP-NLUPE1I\\MSSQLSERVER01;Database=FarmProductsV3;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
