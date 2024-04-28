@@ -259,8 +259,12 @@ namespace FarmProduce.Data.Seeders
         private IList<PaymentMethod> AddPaymentMethods()
         {
             var paymentMethods = new List<PaymentMethod>() {
+				new(){
+					Name="Lựa chọn hình thức thanh toán",
+					Description="Hình thức thanh toán",
 
-                new(){
+				},
+				new(){
                     Name="QR Pay",
                     Description="QR",
                   
@@ -286,7 +290,13 @@ namespace FarmProduce.Data.Seeders
         private IList<OrderStatus> AddOrderStatuses()
         {
             var orderStatuses = new List<OrderStatus>() {
-                new(){
+				new(){
+				   StatusCode="Trạng thái đơn hàng",
+				   Description="",
+				   StatusDate=new DateTime(2024,2, 27),
+
+				},
+				new(){
                    StatusCode="Chờ xác nhận",
                    Description="",
                    StatusDate=new DateTime(2024,2, 27),

@@ -25,3 +25,7 @@ export async function getComboboxPaymentMethod() {
   return get_api(`https://localhost:7047/api/paymentMethods/combobox`);
 }
 
+export async function getComboboxStatusOrder() {
+  return get_api_nocache(`https://localhost:7047/api/oderstatus/combobox`);
+}
+
