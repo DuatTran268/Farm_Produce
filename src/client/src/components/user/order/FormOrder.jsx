@@ -321,7 +321,6 @@ const FormOrder = () => {
                     <option
                       key={index}
                       value={item.value}
-                      selected={item.value ==="2"}
                     >
                       {item.text}
                     </option>

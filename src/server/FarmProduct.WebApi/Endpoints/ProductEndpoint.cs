@@ -58,10 +58,11 @@ namespace FarmProduct.WebApi.Endpoints
 			routeGroupBuilder.MapGet("/cmt/slugProduct/{slug:regex(^[a-z0-9_-]+$)}", GetCommentBySlugProduct)
 		   .WithName("GetCommentBySlugProduct")
 			.Produces<ApiResponse<PaginationResult<CommentDto>>>();
+
 			routeGroupBuilder.MapDelete("/{id:int}", DeleteProduct)
-						  .WithName("DeleteProduct")
-						  .Produces(204)
-						  .Produces(404);
+			.WithName("DeleteProduct")
+			.Produces(401)
+			.Produces<ApiResponse<string>>();
 
 			routeGroupBuilder.MapPost("/", AddProduct)
 				.WithName("AddProduct")
@@ -220,12 +221,12 @@ namespace FarmProduct.WebApi.Endpoints
         }
 
 
-
-
-        private static async Task<IResult> DeleteProduct(int id, IProductRepo productRepo)
+		private static async Task<IResult> DeleteProduct(
+	int id, IProductRepo productRepo)
 		{
-			var status = await productRepo.DeleteWithIDAsync(id);
-			return Results.Ok(status ? ApiResponse.Success(HttpStatusCode.NoContent) : ApiResponse.Fail(HttpStatusCode.NotFound, $"không tìm thấy rau với mã {id}"));
+			return await productRepo.DeleteWithIDAsync(id)
+			? Results.Ok(ApiResponse.Success("Deleted ", HttpStatusCode.NoContent))
+			: Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound, $"Not find category id = {id}"));
 		}
 
 		private static async Task<IResult> FilterComboboxProduct(
