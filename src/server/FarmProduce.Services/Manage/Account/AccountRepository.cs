@@ -195,7 +195,7 @@ namespace FarmProduce.Services.Manage.Account
             {
                 var userRoles = await userManager.GetRolesAsync(user);
 
-                var userOrders = await dbContext.Orders.Include(x => x.OrderItems).Where(order => order.ApplicationUserId == user.Id).ToListAsync();
+                var userOrders = await dbContext.Orders.Include(x => x.OrderItems).Include(x=>x.Discount).Where(order => order.ApplicationUserId == user.Id).ToListAsync();
 
                 var userWithRolesAndOrders = new DetailUserDTO
                 {
@@ -210,7 +210,7 @@ namespace FarmProduce.Services.Manage.Account
                         Id = order.Id,
                         TotalPrice = order.TotalPrice,
                         DateOrder = order.DateOrder,
-                        DiscountId = order.DiscountId,
+                        CodeNameDiscount =order.Discount.CodeName,
                         OrderItems = order.OrderItems.Select(item => new OrderItemDTO
                         {
                             Id = item.Id,
@@ -218,9 +218,7 @@ namespace FarmProduce.Services.Manage.Account
                             Quantity = item.Quantity,
                         }).ToList(),
                         PaymentMethodId = order.PaymentMethodId,
-                        OrderStatusId = order.OrderStatusId,
-
-
+                        OrderStatusId = order.OrderStatusId
                     }).ToList()
                 };
 
@@ -229,6 +227,7 @@ namespace FarmProduce.Services.Manage.Account
 
             return usersWithRolesAndOrders;
         }
+
 
 
         //public async Task<IEnumerable<Us>> GetAllAccountsWithRoles()
@@ -349,7 +348,6 @@ namespace FarmProduce.Services.Manage.Account
                             OrderStatusId = orderDTO.OrderStatusId,
                             ApplicationUserId = userId,
                             DateOrder = DateTime.Now,
-                            DiscountId = orderDTO.DiscountId,
                             OrderItems = new List<OrderItem>()
                         };
 
@@ -367,9 +365,7 @@ namespace FarmProduce.Services.Manage.Account
                         order.TotalPrice = orderDTO.TotalPrice;
                         order.PaymentMethodId = orderDTO.PaymentMethodId;
                         order.OrderStatusId = orderDTO.OrderStatusId;
-                        order.DiscountId = orderDTO.DiscountId;
                         order.DateOrder = DateTime.Now;
-                        //order.OrderItems.Clear();
                     }
 
                     order.OrderItems.Clear();
@@ -383,6 +379,7 @@ namespace FarmProduce.Services.Manage.Account
                             OrderId = orderDTO.Id
                         };
                         order.OrderItems.Add(orderItem);
+
                         var product = await dbContext.Products.FindAsync(orderItemDTO.ProductId);
                         if (product != null)
                         {
@@ -390,6 +387,24 @@ namespace FarmProduce.Services.Manage.Account
                         }
                     }
 
+                    if (!string.IsNullOrEmpty(orderDTO.CodeNameDiscount) && orderDTO.CodeNameDiscount != "string")
+                    {
+                        var discount = await dbContext.Discounts.FirstOrDefaultAsync(d => d.CodeName == orderDTO.CodeNameDiscount);
+                        if (discount != null)
+                        {
+                            order.Discount = discount;
+                        }
+                    }
+                  
+                        else
+                        {
+                            var discount = await dbContext.Discounts.FirstOrDefaultAsync(d => d.CodeName == "Discount0");
+                            if (discount != null)
+                            {
+                                order.Discount = discount;
+                            }
+                        
+                    }
                 }
 
                 await dbContext.SaveChangesAsync();
@@ -401,6 +416,7 @@ namespace FarmProduce.Services.Manage.Account
                 return new GeneralResponse(false, $"An error occurred: {ex.Message}");
             }
         }
+
 
     }
 }

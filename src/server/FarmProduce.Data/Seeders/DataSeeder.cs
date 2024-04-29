@@ -367,16 +367,22 @@ namespace FarmProduce.Data.Seeders
         {
             var discounts = new List<Discount>() {
             new(){
-                    DiscountPrice=50000,
+                    DiscountPrice=50,
                     StartDate= DateTime.Now,
                     EndDate=(DateTime.Now).AddDays(7),
                     CodeName="Discount50",
                 },
              new(){
-                    DiscountPrice=20000,
+                    DiscountPrice=80,
                     StartDate= DateTime.Now,
                     EndDate=(DateTime.Now).AddDays(10),
                     CodeName="Discount20",
+                },
+              new(){
+                    DiscountPrice=100,
+                    StartDate= DateTime.Now,
+                    EndDate=(DateTime.Now).AddDays(10),
+                    CodeName="Discount0",
                 }
             };
             foreach (var discount in discounts)

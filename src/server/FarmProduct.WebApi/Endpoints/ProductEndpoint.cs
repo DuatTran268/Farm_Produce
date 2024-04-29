@@ -203,9 +203,6 @@ namespace FarmProduct.WebApi.Endpoints
                             ProductId = model.Id, // Sử dụng Id của sản phẩm để liên kết với hình ảnh
                             Caption = "Caption"
                         };
-
-                        // Thêm ảnh mới vào bảng Images
-                     
                             await imageRepo.AddOrUpdateImage(image);
                         
                     }
