@@ -344,8 +344,8 @@ namespace FarmProduce.Services.Manage.Account
                         order = new Order
                         {
                             TotalPrice = orderDTO.TotalPrice,
-                            PaymentMethodId = orderDTO.PaymentMethodId,
-                            OrderStatusId = orderDTO.OrderStatusId,
+                            PaymentMethodId = orderDTO.PaymentMethodId==0 ? 2 :orderDTO.PaymentMethodId,
+                            OrderStatusId = orderDTO.OrderStatusId==0 ? 1: orderDTO.OrderStatusId,
                             ApplicationUserId = userId,
                             DateOrder = DateTime.Now,
                             OrderItems = new List<OrderItem>()
