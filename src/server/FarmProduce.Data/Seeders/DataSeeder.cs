@@ -260,20 +260,12 @@ namespace FarmProduce.Data.Seeders
         {
             var paymentMethods = new List<PaymentMethod>() {
 				new(){
-					Name="Lựa chọn hình thức thanh toán",
-					Description="Hình thức thanh toán",
-
+					Name="Thanh toán trực tiếp",
+					Description="Thanh toán trực tiếp khi nhận hàng",
 				},
 				new(){
                     Name="QR Pay",
                     Description="QR",
-                  
-                },
-                 new(){
-                    Name="Thanh toán trực tiếp",
-                    Description="Thanh toán trực tiếp khi nhận hàng",
-
-
                 }
             };
             foreach (var paymentMethod in paymentMethods)
@@ -290,12 +282,6 @@ namespace FarmProduce.Data.Seeders
         private IList<OrderStatus> AddOrderStatuses()
         {
             var orderStatuses = new List<OrderStatus>() {
-				new(){
-				   StatusCode="Trạng thái đơn hàng",
-				   Description="",
-				   StatusDate=new DateTime(2024,2, 27),
-
-				},
 				new(){
                    StatusCode="Chờ xác nhận",
                    Description="",
@@ -377,16 +363,22 @@ namespace FarmProduce.Data.Seeders
         {
             var discounts = new List<Discount>() {
             new(){
-                    DiscountPrice=50000,
+                    DiscountPrice=50,
                     StartDate= DateTime.Now,
                     EndDate=(DateTime.Now).AddDays(7),
                     CodeName="Discount50",
                 },
              new(){
-                    DiscountPrice=20000,
+                    DiscountPrice=80,
                     StartDate= DateTime.Now,
                     EndDate=(DateTime.Now).AddDays(10),
                     CodeName="Discount20",
+                },
+              new(){
+                    DiscountPrice=100,
+                    StartDate= DateTime.Now,
+                    EndDate=(DateTime.Now).AddDays(10),
+                    CodeName="Discount0",
                 }
             };
             foreach (var discount in discounts)

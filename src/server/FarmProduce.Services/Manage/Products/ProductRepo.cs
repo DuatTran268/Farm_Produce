@@ -28,7 +28,7 @@ namespace FarmProduce.Services.Manage.Products
 			_memoryCache = memoryCache;
 		}
 
-		public async Task<IPagedList<T>> GetAllProducts<T>(Func<IQueryable<Product>, IQueryable<T>> mapper, ProductQuery productQuery, IPagingParams pagingParams, CancellationToken cancellationToken = default)
+		public async Task<IPagedList<T>> GetAllProducts<T>(Func<IQueryable<Product>, IQueryable<T>> mapper, ProductQuery productQuery ,IPagingParams pagingParams, CancellationToken cancellationToken = default)
 		{
 			IQueryable<Product> products = FilterProduct(productQuery);
 			return await mapper(products).ToPagedListAsync(pagingParams, cancellationToken);
@@ -36,28 +36,32 @@ namespace FarmProduce.Services.Manage.Products
 		}
 
 
-		private IQueryable<Product> FilterProduct(ProductQuery productQuery)
-		{
-			IQueryable<Product> products = _context.Set<Product>().Include(x=>x.Images);
-			if (!String.IsNullOrWhiteSpace(productQuery.UrlSlug))
-			{
-				products = products.Where(x => x.UrlSlug.Contains(productQuery.UrlSlug));
-			}
-			if (!String.IsNullOrWhiteSpace(productQuery.Name))
-			{
-				products = products.Where(x => x.Name.Contains(productQuery.Name));
-			}
-			if (productQuery.Status == true)
-			{
-				products = products.Where(p => p.Status);
-			}
-			if (productQuery.Status == false)
-			{
-				products = products.Where(p => !p.Status);
-			}
-			return products;
-		}
-		public async Task<bool> DeleteWithSlugAsync(string slug, CancellationToken cancellationToken)
+        private IQueryable<Product> FilterProduct(ProductQuery productQuery)
+        {
+            IQueryable<Product> products = _context.Set<Product>().Include(x => x.Images);
+
+            if (!String.IsNullOrWhiteSpace(productQuery.UrlSlug))
+            {
+                products = products.Where(x => x.UrlSlug.Contains(productQuery.UrlSlug));
+            }
+
+            if (!String.IsNullOrWhiteSpace(productQuery.Name))
+            {
+                products = products.Where(x => x.Name.Contains(productQuery.Name));
+            }
+
+            if (productQuery.Status.HasValue)
+            {
+                products = products.Where(p => p.Status == productQuery.Status.Value);
+            }
+
+            
+
+            return products;
+        }
+
+
+        public async Task<bool> DeleteWithSlugAsync(string slug, CancellationToken cancellationToken)
 		{
 			var result = await _context.Set<Product>().Where(x => x.UrlSlug == slug).FirstOrDefaultAsync();
 			if (result is null)

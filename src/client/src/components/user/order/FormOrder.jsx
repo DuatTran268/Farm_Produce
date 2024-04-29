@@ -25,7 +25,6 @@ const FormOrder = () => {
   const [validated, setValidated] = useState(false);
   const { isEmpty, items, cartTotal, emptyCart } = useCart(); // Lấy thông tin giỏ hàng
 
-
   useEffect(() => {
     if (user.id) {
       setOrder((prevState) => ({
@@ -109,6 +108,7 @@ const FormOrder = () => {
     });
 
   const [order, setOrder] = useState(initialState);
+  const [selectedPaymentMethodId, setSelectedPaymentMethodId] = useState(0); // Thêm trạng thái tạm thời cho paymentMethodId
 
   useEffect(() => {
     document.title = "Đặt hàng với chúng tôi";
@@ -121,11 +121,12 @@ const FormOrder = () => {
       setValidated(true);
     } else {
       try {
-      const totalPrice = cartTotal;
+        const totalPrice = cartTotal;
 
-      const updatedOrder = { ...order };
+        const updatedOrder = { ...order };
 
-      updatedOrder.orders[0].totalPrice = totalPrice;
+        updatedOrder.orders[0].totalPrice = totalPrice;
+        updatedOrder.orders[0].paymentMethodId = selectedPaymentMethodId; // Cập nhật paymentMethodId từ trạng thái tạm thời
 
         const data = JSON.stringify(order);
         console.log("Form data:", data);
@@ -234,15 +235,10 @@ const FormOrder = () => {
               <Form.Select
                 name="paymentMethodId"
                 title="payment Method Id"
-                value={order.orders[0].paymentMethodId}
+                value={selectedPaymentMethodId}
                 required
                 onChange={(e) =>
-                  setOrder({
-                    ...order,
-                    orders: [
-                      { ...order.orders[0], paymentMethodId: e.target.value },
-                    ],
-                  })
+                  setSelectedPaymentMethodId(parseInt(e.target.value))
                 }
               >
                 {filterPayment.paymentMethodList.length > 0 &&
@@ -286,7 +282,6 @@ const FormOrder = () => {
                 type="date"
                 name="dateOrder"
                 title="dateOrder"
-                required
                 value={order.orders[0].dateOrder}
                 onChange={(e) =>
                   setOrder({
@@ -306,7 +301,7 @@ const FormOrder = () => {
                 title="order Status Id"
                 value={order.orders[0].orderStatusId}
                 required
-                // disabled={true}
+                disabled={true}
                 onChange={(e) =>
                   setOrder({
                     ...order,
@@ -318,10 +313,7 @@ const FormOrder = () => {
               >
                 {filterStatusOrder.orderStatusList.length > 0 &&
                   filterStatusOrder.orderStatusList.map((item, index) => (
-                    <option
-                      key={index}
-                      value={item.value}
-                    >
+                    <option key={index} value={item.value}>
                       {item.text}
                     </option>
                   ))}
@@ -334,7 +326,6 @@ const FormOrder = () => {
             name="applicationUserId"
             value={order.applicationUserId}
           />
-
 
           {/* Các trường thông tin sản phẩm (ẩn) */}
           {order.orders[0].orderItems.map((item, index) => (

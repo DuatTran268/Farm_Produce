@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Cart.css";
 import { Table } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "react-use-cart";
+import { useSelector } from "react-redux";
+import Popup from "../../common/Popup";
 
 const CartInfor = () => {
   const { cartTotal } = useCart();
@@ -13,35 +15,54 @@ const CartInfor = () => {
     });
   };
 
+  const currentUser = useSelector((state) => state.auth.login.currentUser);
+  const [popupMessage, setPopupMessage] = useState("");
+  const [popupVisible, setPopupVisible] = useState(false);
+  const navigate = useNavigate();
+
+  // kiem tra trang thai da dang nhap chua
+  const isLoggedIn = !!currentUser;
+  const handleCheckout = () => {
+    if (!isLoggedIn) {
+      setPopupMessage("Bạn cần phải thực hiện đăng nhập để thanh toán");
+      setPopupVisible(true);
+    } else {
+      navigate(`/checkout`); // Chuyển hướng đến trang thanh toán
+    }
+  };
+
+  const handleCancel = () => {
+    setPopupVisible(false);
+  };
+  const handleConfirm = async () => {
+    navigate(`/login`);
+    setPopupVisible(false);
+  };
 
   return (
-    <section>
-      {/* <div className=" btn btn-success cart_update">Cập nhật giỏ hàng</div> */}
+    <section className="d-flex justify-content-end">
       <div className="cart_bottom">
-        <div className="cart_table">
-          <div className="cart_coupon col-7">
-            <div className="cart_coupon_title">Áp dụng mã giảm giá</div>
-            <input
-              className="cart_coupon_text"
-              placeholder="Mã giảm giá"
-            ></input>
-            <div className="btn btn-success mx-3">Áp dụng</div>
-          </div>
-          <Table className="">
-            <div className="cart_bottom_title">Cộng giỏ hàng</div>
-            <tr>
-              <td className="cart-lable w-25">Tổng tiền</td>
-              <td className="cart-value w-25 text_total_price">{formatCurrency(cartTotal)}</td>
-            </tr>
-            <Link
-              className=" btn btn-success cart_update mt-3"
-              to={"/checkout"}
-            >
-              Tiến hành thanh toán
-            </Link>
-          </Table>
-        </div>
+        <div className="cart_bottom_title">Cộng giỏ hàng</div>
+        <tr>
+          <td className="cart-lable w-100">Tổng tiền</td>
+          <td className="cart-value w-100 text_total_price">
+            {formatCurrency(cartTotal)}
+          </td>
+        </tr>
+        <button
+          className="btn btn-success cart_update mt-3"
+          onClick={handleCheckout}
+        >
+          Tiến hành thanh toán
+        </button>
       </div>
+      {popupVisible && (
+        <Popup
+          message={popupMessage}
+          onCancel={handleCancel}
+          onConfirm={handleConfirm}
+        />
+      )}
     </section>
   );
 };
