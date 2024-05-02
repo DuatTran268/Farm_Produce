@@ -168,7 +168,6 @@ namespace FarmProduct.WebApi.Endpoints
 
             try
             {
-                // Thêm sản phẩm vào cơ sở dữ liệu nếu sản phẩm chưa tồn tại
                 if (model.Id == 0)
                 {
                     var product = mapper.Map<Product>(model);
@@ -181,12 +180,15 @@ namespace FarmProduct.WebApi.Endpoints
                 }
                 else
                 {
-                    // Kiểm tra xem sản phẩm có tồn tại không
                     var existingProduct = await productRepo.GetProductById(model.Id);
                     if (existingProduct == null)
                     {
                         return Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound, $"Product with ID {model.Id} not found"));
                     }
+                    mapper.Map(model, existingProduct);
+                    existingProduct.UrlSlug = slug;
+                    existingProduct.DateUpdate = DateTime.Now;
+
                 }
                 var validImages = model.Images.Where(image => image != null && image.Length > 0 && !string.IsNullOrEmpty(image.FileName)).ToList();
                 foreach (var imageFile in validImages)

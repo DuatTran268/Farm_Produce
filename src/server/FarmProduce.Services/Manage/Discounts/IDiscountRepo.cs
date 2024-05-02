@@ -20,6 +20,8 @@ namespace FarmProduce.Services.Manage.Discounts
 		int discountId, string codename, CancellationToken cancellationToken = default);
 		Task<bool> AddOrUpdateDiscountAsync(Discount discount, CancellationToken cancellationToken = default);
 		Task<bool> DeleteDiscount(int id, CancellationToken cancellationToken = default);
+		Task<Discount> GetDiscountByName(string name, CancellationToken cancellationToken = default);
 
-	}
+
+    }
 }
