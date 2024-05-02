@@ -34,6 +34,10 @@ namespace FarmProduce.Services.Manage.Discounts
 			return await _context.Set<Discount>().FirstOrDefaultAsync(d => d.Id == id, cancellationToken); ;
 
 		}
+        public async Task<Discount> GetDiscountByName (string name, CancellationToken cancellationToken = default)
+        {
+            return await _context.Discounts.FirstOrDefaultAsync(d => d.CodeName == name);
+        }
         public async Task<bool> DeleteWithIdsync(int id, CancellationToken cancellationToken)
         {
             var result = await _context.Set<Discount>().Where(x => x.Id == id).FirstOrDefaultAsync();

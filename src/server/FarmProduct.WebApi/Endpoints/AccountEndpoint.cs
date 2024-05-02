@@ -62,7 +62,7 @@ namespace FarmProduct.WebApi.Endpoints
                 return Results.NotFound(ApiResponse.Fail(HttpStatusCode.BadRequest, ex.Message));
             }
         }
-        [Authorize(Roles ="Admin")]
+        //[Authorize(Roles ="Admin")]
         private static async Task<IResult> CreateAccountByAdmin(
                [FromServices] IUserAccount userAccount, [FromBody] UserDTO userDTO
                )
