@@ -190,7 +190,7 @@ const AdCommentEdit = () => {
             }
           />
 
-          <div className="row mb-3">
+          {/* <div className="row mb-3">
             <div className="col-sm-10 offset-sm-2">
               <div className="form-check">
                 <input
@@ -207,7 +207,7 @@ const AdCommentEdit = () => {
                 <Form.Label className="form-check-label">Công khai</Form.Label>
               </div>
             </div>
-          </div>
+          </div> */}
 
           <div className="text-center">
             <Button variant="success" type="submit">

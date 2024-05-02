@@ -19,6 +19,7 @@ using MapsterMapper;
 using System.Net;
 using FarmProduct.WebApi.Models.Products;
 using FarmProduce.Services.Manage.OrderItems;
+using FarmProduce.Services.Manage.Discounts;
 
 namespace FarmProduct.WebApi.Endpoints
 {
@@ -45,7 +46,12 @@ namespace FarmProduct.WebApi.Endpoints
              .Accepts<OrderItemEditModel>("multipart/form-data")
               .Produces(401)
              .Produces<ApiResponse<OrderItemDTO>>();
-        }
+
+			routeGroupBuilder.MapDelete("/{id:int}", DeleteOrder)
+	            .WithName("DeleteOrder")
+	            .Produces(401)
+	            .Produces<ApiResponse<string>>();
+		}
         private static async Task<IResult> GetAllPageAsync([FromServices] IOrderRepo orderRepo, [AsParameters] PagingModel pagingModel, CancellationToken cancellation = default)
         {
             var orders = await orderRepo.GetAllPageAsync(
@@ -109,7 +115,16 @@ namespace FarmProduct.WebApi.Endpoints
             await orderItemRepo.AddOrUpdate(order);
             return Results.Ok(ApiResponse.Success(mapper.Map<OrderItemDTO>(order), model.Id > 0 ? HttpStatusCode.OK : HttpStatusCode.Created));
         }
-    }
+
+		private static async Task<IResult> DeleteOrder(
+			int id, IOrderRepo orderRepo)
+		{
+			return await orderRepo.DeleteOrder(id)
+			? Results.Ok(ApiResponse.Success(" Deleted success ", HttpStatusCode.NoContent))
+			: Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound, $"Not find id = {id}"));
+		}
+
+	}
 
 
 }

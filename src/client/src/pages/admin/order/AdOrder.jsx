@@ -9,8 +9,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import BtnNextPage from "../../../components/common/BtnNextPage";
 import { Table } from "react-bootstrap";
 import { useSnackbar } from "notistack";
-import { getOderPagination } from "../../../api/Order";
+import { deleteOrder, getOderPagination } from "../../../api/Order";
 import { format } from "date-fns";
+import Popup from "../../../components/common/Popup";
 
 const AdOrder = () => {
   const [getOrder, setgetOrder] = useState([]);
@@ -50,25 +51,42 @@ const AdOrder = () => {
     }
   }, [ps, p, reRender, pageNumber]);
 
-  // const hanldeDeleteOrder = (e, id) => {
-  //   e.preventDefault();
-  //   removeOrder(id);
-  //   async function removeOrder(id) {
-  //     if (window.confirm("Bạn có muốn đơn hàng này")) {
-  //       const response = await deletCategory(id);
-  //       if (response) {
-  //         enqueueSnackbar("Đã xoá thành công", {
-  //           variant: "success",
-  //         });
-  //         setRender(true);
-  //       } else {
-  //         enqueueSnackbar("Đã xoá thành công", {
-  //           variant: "error",
-  //         });
-  //       }
-  //     }
-  //   }
-  // };
+  const formatCurrency = (number) => {
+    return number.toLocaleString("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    });
+  };
+
+  const [popupMessage, setPopupMessage] = useState("");
+  const [popupVisible, setPopupVisible] = useState(false);
+  const [IdToDelete, setIdToDelete] = useState(null);
+
+  const handleDelete = (id) => {
+    setIdToDelete(id);
+    setPopupMessage("Bạn có muốn xoá đơn hàng này?");
+    setPopupVisible(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    const response = await deleteOrder(IdToDelete);
+    if (response) {
+      enqueueSnackbar("Đã xoá thành công", {
+        variant: "success",
+      });
+      setRender(true);
+    } else {
+      enqueueSnackbar("Xoá thất bại", {
+        variant: "error",
+      });
+    }
+    setPopupVisible(false);
+  };
+
+  const handleCancelDelete = () => {
+    setPopupVisible(false);
+  };
+
 
   return (
     <LayoutCommon>
@@ -78,7 +96,6 @@ const AdOrder = () => {
 
       <HeaderBtn>
         <BtnSuccess icon={faAdd} slug={"/admin/order/edit"} name="Thêm mới" />
-        {/* <UnitFilter /> */}
       </HeaderBtn>
 
       <div className="layout_ad_content">
@@ -89,8 +106,8 @@ const AdOrder = () => {
             <thead>
               <tr>
                 <th>ID đơn</th>
-                <th>Date Order</th>
-                <th>Total Price</th>
+                <th>Ngày đặt đơn hàng</th>
+                <th>Tổng tiền đơn hàng</th>
                 <th>Sửa</th>
                 <th>Xoá</th>
               </tr>
@@ -101,7 +118,8 @@ const AdOrder = () => {
                   <tr key={index}>
                     <td>{item.id}</td>
                     <td>{format(new Date(item.dateOrder), "dd/MM/yyyy")}</td>
-                    <td>{item.totalPrice}</td>
+                    <td>
+                    {formatCurrency(item.totalPrice)}</td>
                     <td className="text-center">
                       <Link
                         to={`/admin/order/edit/${item.id}`}
@@ -111,9 +129,9 @@ const AdOrder = () => {
                       </Link>
                     </td>
                     <td className="text-center">
-                      {/* <div onClick={(e) => hanldeDeleteOrder(e, item.id)}>
+                      <div onClick={() => handleDelete(item.id)}>
                         <FontAwesomeIcon icon={faTrash} color="red" />
-                      </div> */}
+                      </div>
                     </td>
                   </tr>
                 ))
@@ -129,6 +147,14 @@ const AdOrder = () => {
         )}
         <BtnNextPage metadata={metadata} onPageChange={updatePageNumber} />
       </div>
+      {popupVisible && (
+        <Popup
+          message={popupMessage}
+          onCancel={handleCancelDelete}
+          onConfirm={handleConfirmDelete}
+        />
+      )}
+
     </LayoutCommon>
   );
 };

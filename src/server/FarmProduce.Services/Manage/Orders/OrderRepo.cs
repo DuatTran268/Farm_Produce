@@ -33,37 +33,12 @@ namespace FarmProduce.Services.Manage.Orders
             IQueryable<Order> orders = _context.Set<Order>().Include(x=>x.OrderItems);
             return await mapper(orders).ToPagedListAsync(pagingParams, cancellationToken);
         }
-        public async Task<bool> DeleteWithIdsync(int id, CancellationToken cancellationToken)
-        {
-            var result = await _context.Set<Order>().Where(x => x.Id == id).FirstOrDefaultAsync();
-            if (result is null)
-            {
-                return false;
-            }
-            else
-            {
-                _context.Set<Order>().Remove(result);
-                return true;
-            }
-        }
         public async Task<bool> IsIdExisted(int id,CancellationToken cancellationToken = default)
         {
             return await _context.Set<Order>().AnyAsync(x => x.Id != id);
         }
-        public async Task<bool> DeleteWithIDAsync(int id, CancellationToken cancellationToken)
-        {
-            var result = await _context.Set<Order>().Where(x => x.Id == id).FirstOrDefaultAsync();
-            if (result is null)
-            {
-                return false;
-            }
-            else
-            {
-                _context.Set<Order>().Remove(result);
-                return true;
-            }
-        }
-        public async Task<Order> GetOrderById(int id, CancellationToken cancellationToken = default)
+
+		public async Task<Order> GetOrderById(int id, CancellationToken cancellationToken = default)
         {
             return await _context.Set<Order>().FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
         }
@@ -107,5 +82,10 @@ namespace FarmProduce.Services.Manage.Orders
 
         }
 
-    }
+		public async Task<bool> DeleteOrder(int id, CancellationToken cancellationToken = default)
+		{
+			return await _context.Orders.Where(t => t.Id == id).ExecuteDeleteAsync(cancellationToken) > 0;
+		}
+
+	}
 }

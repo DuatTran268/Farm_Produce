@@ -7,7 +7,7 @@ import {
   getComboboxPaymentMethod,
   getComboboxStatusOrder,
 } from "../../../api/Order";
-import { Button, Form, FormControl } from "react-bootstrap";
+import { Button, Form, FormControl, Table } from "react-bootstrap";
 import BoxEdit from "../../admin/edit/BoxEdit";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMessage, faMoneyBill } from "@fortawesome/free-solid-svg-icons";
@@ -90,7 +90,7 @@ const FormOrder = () => {
           orderStatusId: 0,
           applicationUserId: "",
           paymentMethodId: 0,
-          discountId: 0,
+          discountId: "",
           orderItems: [
             {
               id: 0,
@@ -136,7 +136,7 @@ const FormOrder = () => {
           enqueueSnackbar("Cảm ơn bạn đặt hàng", {
             variant: "success",
           });
-          navigate(`/home`);
+          navigate(`/checkout/orderinfor`);
           emptyCart(); // Xóa toàn bộ sản phẩm trong giỏ hàng sau khi thanh toán thành công
         } else {
           enqueueSnackbar("Đã xảy ra lỗi khi đặt hàng", {
@@ -149,10 +149,74 @@ const FormOrder = () => {
     }
   };
 
+  const formatCurrency = (number) => {
+    return number.toLocaleString("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    });
+  };
+
   return (
     <section className="infor_order row col-12">
       <div className="infor_order_left col-6">
-        <YourOrder />
+        {/* <YourOrder /> */}
+          <div className="checkout_title">Đơn hàng của bạn</div>
+          <div className="checkout_order_content">
+            <Table>
+              <thead>
+                <tr>
+                  <th>Sản phẩm</th>
+                  <th>Đơn giá</th>
+                  <th>Số lượng</th>
+                  <th>Thành tiền</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    {items.map((item, index) => {
+                      return (
+                        <div className="name_product_table" key={index}>
+                          {item.name}
+                        </div>
+                      );
+                    })}
+                  </td>
+                  <td>
+                    {items.map((item, index) => {
+                      return (
+                        <div key={index}>{formatCurrency(item.price)}</div>
+                      );
+                    })}
+                  </td>
+                  <td>
+                    {items.map((item, index) => {
+                      return <div key={index}>{item.quantity}</div>;
+                    })}
+                  </td>
+                  <td>
+                    {items.map((item, index) => {
+                      return (
+                        <div key={index}>
+                          {formatCurrency(item.price * item.quantity)}
+                        </div>
+                      );
+                    })}
+                  </td>
+                </tr>
+                {/* <tr>
+                <td colSpan={3}>Giao hàng</td>
+                <td>Giao tận nơi</td>
+              </tr> */}
+                <tr>
+                  <td colSpan={3}>Tổng phải thanh toán</td>
+                  <td className="name_product_table">
+                    {formatCurrency(cartTotal)}
+                  </td>
+                </tr>
+              </tbody>
+            </Table>
+          </div>
       </div>
       <div className="infor_order_left col-6">
         <Form
@@ -233,6 +297,7 @@ const FormOrder = () => {
           <BoxEdit
             control={
               <Form.Select
+              className="form_control_order"
                 name="paymentMethodId"
                 title="payment Method Id"
                 value={selectedPaymentMethodId}
@@ -259,7 +324,6 @@ const FormOrder = () => {
                 type="text"
                 name="discountId"
                 title="discountId"
-                required
                 value={order.orders[0].discountId}
                 onChange={(e) =>
                   setOrder({
@@ -297,6 +361,7 @@ const FormOrder = () => {
           <BoxEdit
             control={
               <Form.Select
+              className="form_control_order"
                 name="orderStatusId"
                 title="order Status Id"
                 value={order.orders[0].orderStatusId}
