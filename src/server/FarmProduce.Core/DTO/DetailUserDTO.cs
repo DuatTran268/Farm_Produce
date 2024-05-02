@@ -15,6 +15,6 @@ namespace FarmProduce.Core.DTO
         public string Address { get; set; }
         public string PhoneNumber { get; set; }
         public List<string> Roles { get; set; }
-        public List<OrderDTO> Orders { get; set; }
+        public List<OrderDetailDTO> Orders { get; set; }
     }
 }
