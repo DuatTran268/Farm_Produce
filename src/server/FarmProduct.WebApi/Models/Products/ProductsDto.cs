@@ -1,5 +1,6 @@
 ﻿using FarmProduce.Core.Entities;
 using FarmProduct.WebApi.Models.Categories;
+using FarmProduct.WebApi.Models.Images;
 using FarmProduct.WebApi.Models.Unit;
 
 namespace FarmProduct.WebApi.Models.Products
@@ -19,6 +20,6 @@ namespace FarmProduct.WebApi.Models.Products
         public DateTime DateCreate { get; set; }
         public DateTime DateUpdate { get; set; }
         public bool Status { get; set; }
-        public IList<Image> Images { get; set; }
+        public IList<ImageDto> Images { get; set; }
     }
 }

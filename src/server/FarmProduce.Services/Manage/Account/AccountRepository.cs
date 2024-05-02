@@ -365,7 +365,7 @@ namespace FarmProduce.Services.Manage.Account
                         order = new Order
                         {
                             TotalPrice = orderDTO.TotalPrice,
-                            PaymentMethodId = orderDTO.PaymentMethodId==0 ? 2 :orderDTO.PaymentMethodId,
+                            PaymentMethodId = orderDTO.PaymentMethodId==0 ? 1 :orderDTO.PaymentMethodId,
                             OrderStatusId = orderDTO.OrderStatusId==0 ? 1: orderDTO.OrderStatusId,
                             ApplicationUserId = userId,
                             DateOrder = DateTime.Now,

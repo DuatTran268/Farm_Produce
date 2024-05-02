@@ -10,7 +10,7 @@ namespace FarmProduce.Core.DTO
     public class OrderDTO
     {
         public int Id { get; set; }
-        public DateTime DateOrder { get; set; }
+        public DateTime? DateOrder { get; set; }
         public decimal TotalPrice { get; set; }
         public int OrderStatusId { get; set; }
         public string ApplicationUserId { get; set; }

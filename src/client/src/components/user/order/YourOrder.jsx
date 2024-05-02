@@ -84,10 +84,6 @@ const YourOrder = () => {
                 <td colSpan={3}>Tổng phải thanh toán</td>
                 <td className="name_product_table">{formatCurrency(cartTotal)}</td>
               </tr>
-              <tr>
-                <td colSpan={3}>Phương thức thanh toán</td>
-                <td>Tiền mặt</td>
-              </tr>
             </tbody>
           </Table>
           

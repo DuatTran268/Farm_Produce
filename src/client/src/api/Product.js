@@ -33,7 +33,7 @@ export async function getProductNewestLimit(){
 }
 
 export async function getDetailProductByUrlSlug(urlSlug = ''){
-  return get_api (`https://localhost:7047/api/products/slugProduct/${urlSlug}`)
+  return get_api_nocache (`https://localhost:7047/api/products/slugProduct/${urlSlug}`)
 }
 
 export async function getIdAndSlugOfProductForComment(urlSlug = ''){

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import LayoutCommon from "../../../components/admin/common/LayoutCommon";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, FormControl } from "react-bootstrap";
 import {
   getFilterComboboxOfCategory,
   getFilterComboboxOfUnit,
@@ -14,6 +14,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRightToBracket, faSave } from "@fortawesome/free-solid-svg-icons";
 import BtnError from "../../../components/common/BtnError";
 import { format } from "date-fns";
+import { isEmptyOrSpaces } from "../../../api/Utils";
 
 const AdProductEdit = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -30,7 +31,8 @@ const AdProductEdit = () => {
       priceVirtual: 0,
       dateCreate: "",
       dateUpdate: "",
-      status: false,
+      status: true,
+      images: [],
     },
     [filterCategory, setFilterCategory] = useState({ categoryList: [] }),
     [filterUnit, setFilterUnit] = useState({ unitList: [] });
@@ -118,6 +120,8 @@ const AdProductEdit = () => {
     }
   };
 
+  const [image, setImage] = useState(initialState);
+
   return (
     <LayoutCommon>
       <div className="wrapper">
@@ -202,6 +206,8 @@ const AdProductEdit = () => {
                 type="number"
                 name="priceVirtual"
                 title="priceVirtual"
+                defaultValue={0}
+                min={0}
                 value={product.priceVirtual || ""}
                 onChange={(e) =>
                   setProduct({ ...product, priceVirtual: e.target.value })
@@ -310,6 +316,45 @@ const AdProductEdit = () => {
             notempty={"Không được bỏ trống"}
           />
 
+          <BoxEdit
+            label={"Chọn hình ảnh"}
+            control={
+              <Form.Control
+                type="file"
+                name="imageFile"
+                accept="image/*"
+                title="Image file"
+                onChange={(e) =>
+                  setImage({
+                    ...Image,
+                    imageFile: e.target.files[0],
+                  })
+                }
+              />
+            }
+          />
+
+          {!isEmptyOrSpaces(Image.urlImage) && (
+            <div className="wrapper">
+              <Form.Label className="col-sm-2 col-form-label">
+                Hình hiện tại
+              </Form.Label>
+              <div className="row">
+                {product.images.map((image, index) => (
+                    <img
+                      src={`https://localhost:7047/${image.urlImage}`}
+                      alt={image.name}
+                      key={index}
+                      width={200}
+                      height={200}
+                      className="mb-2 col-2"
+                    />
+                ))}
+
+              </div>
+            </div>
+          )}
+
           <div className="row mb-3">
             <div className="col-sm-10 offset-sm-2">
               <div className="form-check">
@@ -323,7 +368,7 @@ const AdProductEdit = () => {
                     setProduct({ ...product, status: e.target.checked })
                   }
                 />
-                <Form.Label className="form-check-label">Hiển thị</Form.Label>
+                <Form.Label className="form-check-label">Hiển thị ra giao diện người dùng</Form.Label>
               </div>
             </div>
           </div>

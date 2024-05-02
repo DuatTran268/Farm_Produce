@@ -27,9 +27,6 @@ const OrderInfor = () => {
               <li className="order_detail_li">
                 Tổng tiền đơn hàng: <span className="order_detail_span">200.000đ</span>
               </li>
-              <li className="order_detail_li">
-                Phương thức thanh toán <span className="order_detail_span">Đưa tiền mặt khi giao hàng</span>
-              </li>
             </ul>
           </div>
         </div>

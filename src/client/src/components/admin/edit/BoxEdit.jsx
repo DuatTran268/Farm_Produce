@@ -8,7 +8,7 @@ const BoxEdit = ({label, control, notempty}) => {
         <Form.Label className="col-sm-2 col-form-label">
           {label}
         </Form.Label>
-        <div className="col-sm-10">
+        <div className="col-sm-10 form_input">
           {control}
           <Form.Control.Feedback type="invalid">
             {notempty}

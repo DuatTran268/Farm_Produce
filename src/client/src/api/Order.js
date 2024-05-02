@@ -1,4 +1,4 @@
-import { get_api, get_api_nocache, post_api, post_api_json, put_api } from "./AxiosCommon";
+import { delete_api, get_api, get_api_nocache, post_api, post_api_json, put_api } from "./AxiosCommon";
 
 export function getOderPagination(
   pageSize = "",
@@ -24,4 +24,13 @@ export async function createOrder(id = "", formData) {
 export async function getComboboxPaymentMethod() {
   return get_api(`https://localhost:7047/api/paymentMethods/combobox`);
 }
+
+export async function getComboboxStatusOrder() {
+  return get_api_nocache(`https://localhost:7047/api/oderstatus/combobox`);
+}
+
+export async function deleteOrder(id = 0) {
+  return delete_api(`https://localhost:7047/api/orders/${id}`);
+}
+
 

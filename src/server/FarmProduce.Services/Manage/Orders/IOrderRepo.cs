@@ -16,9 +16,10 @@ namespace FarmProduce.Services.Manage.Orders
         Task<IList<T>> GetAllAsync<T>(Func<IQueryable<Order>, IQueryable<T>> mapper, CancellationToken cancellationToken = default);
         Task<IPagedList<T>> GetAllPageAsync<T>(Func<IQueryable<Order>, IQueryable<T>> mapper, IPagingParams pagingParams, CancellationToken cancellationToken = default);
         Task<bool> IsIdExisted(int id, CancellationToken cancellationToken = default);
-        Task<bool> DeleteWithIDAsync(int id, CancellationToken cancellationToken);
-        Task<bool> AddOrUpdate(Order order, CancellationToken cancellationToken = default);
+		Task<bool> DeleteOrder(int id, CancellationToken cancellationToken = default);
+
+		Task<bool> AddOrUpdate(Order order, CancellationToken cancellationToken = default);
         Task<GeneralResponse> CreateOrder(DetailOrder orderDTO);
         Task<Order> GetOrderById(int id, CancellationToken cancellationToken = default);
-    }
+	}
 }

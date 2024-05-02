@@ -122,7 +122,7 @@ const AdComments = () => {
                 <th>Tên Người Bình Luận</th>
                 <th>Số  sao đánh giá</th>
                 <th>Ngày đánh giá</th>
-                <th>Trạng thái</th>
+                {/* <th>Trạng thái</th> */}
                 <th>Sửa</th>
                 <th>Xoá</th>
               </tr>
@@ -136,7 +136,7 @@ const AdComments = () => {
                     {renderRatingStars(item.rating)}
                       </td>
                     <td>{format(new Date(item.created), "dd/MM/yyyy")}</td>
-                    <td>{item.status}</td>
+                    {/* <td>{item.status}</td> */}
 
                     <td className="text-center">
                       <Link

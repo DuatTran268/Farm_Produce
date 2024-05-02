@@ -80,16 +80,18 @@ namespace FarmProduce.Services.Manage.Products
 		}
 		public async Task<bool> DeleteWithIDAsync(int id, CancellationToken cancellationToken)
 		{
-			var result = await _context.Set<Product>().Where(x => x.Id == id).FirstOrDefaultAsync();
-			if (result is null)
-			{
-				return false;
-			}
-			else
-			{
-				_context.Set<Product>().Remove(result);
-				return true;
-			}
+			return await _context.Products.Where(t => t.Id == id).ExecuteDeleteAsync(cancellationToken) > 0;
+
+			//var result = await _context.Set<Product>().Where(x => x.Id == id).FirstOrDefaultAsync();
+			//if (result is null)
+			//{
+			//	return false;
+			//}
+			//else
+			//{
+			//	_context.Set<Product>().Remove(result);
+			//	return true;
+			//}
 		}
 		public async Task<bool> AddOrUpdateProduct(Product product, CancellationToken cancellationToken = default)
 		{
@@ -109,7 +111,7 @@ namespace FarmProduce.Services.Manage.Products
 
 		public async Task<Product> GetProductById(int id, CancellationToken cancellationToken = default)
 		{
-			return await _context.Set<Product>().Include(p => p.Category).Include(p => p.Unit).FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
+			return await _context.Set<Product>().Include(p => p.Images).Include(p => p.Unit).FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
 		}
 
 		public async Task<Product> GetDetailProductBySlug(string slug, CancellationToken cancellationToken = default)

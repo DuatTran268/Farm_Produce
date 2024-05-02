@@ -103,7 +103,7 @@ const Profile = () => {
           </div>
 
 
-          {/* <h3 className="text-center mt-5 mb-3">Đơn hàng của bạn</h3>
+          <h3 className="text-center mt-5 mb-3">Đơn hàng của bạn</h3>
           {user.orders.length === 0 ? (
             <h6>Không có đơn hàng nào của bạn</h6>
           ) : (
@@ -111,20 +111,12 @@ const Profile = () => {
               {user.orders.map((order, index) => (
                 <div key={index}>
                   <p>Đơn hàng số {order.id}</p>
-                  <p>Ngày đặt hàng: {order.dateOrder}</p>
-                  <p>Tổng giá: {order.totalPrice}</p>
-                  <p>Chi tiết đơn hàng:</p>
-                  <ul>
-                    {order.orderItems.map((item, itemIndex) => (
-                      <li key={itemIndex}>
-                        {item.quantity} x {item.productName} - {item.price} VNĐ
-                      </li>
-                    ))}
-                  </ul>
+                  <p>Tổng tiền {order.totalPrice}</p>
+
                 </div>
               ))}
             </div>
-          )} */}
+          )}
 
 
         </div>

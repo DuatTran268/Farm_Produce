@@ -259,17 +259,13 @@ namespace FarmProduce.Data.Seeders
         private IList<PaymentMethod> AddPaymentMethods()
         {
             var paymentMethods = new List<PaymentMethod>() {
-
-                new(){
+				new(){
+					Name="Thanh toán trực tiếp",
+					Description="Thanh toán trực tiếp khi nhận hàng",
+				},
+				new(){
                     Name="QR Pay",
                     Description="QR",
-                  
-                },
-                 new(){
-                    Name="Thanh toán trực tiếp",
-                    Description="Thanh toán trực tiếp khi nhận hàng",
-
-
                 }
             };
             foreach (var paymentMethod in paymentMethods)
@@ -286,7 +282,7 @@ namespace FarmProduce.Data.Seeders
         private IList<OrderStatus> AddOrderStatuses()
         {
             var orderStatuses = new List<OrderStatus>() {
-                new(){
+				new(){
                    StatusCode="Chờ xác nhận",
                    Description="",
                    StatusDate=new DateTime(2024,2, 27),
