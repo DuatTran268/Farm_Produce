@@ -34,3 +34,9 @@ export async function deleteOrder(id = 0) {
 }
 
 
+export async function getInforOfVoucherDiscount(codeName = "") {
+  return get_api_nocache(`https://localhost:7047/api/discount/${codeName}`);
+}
+
+
+
