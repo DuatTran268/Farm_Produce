@@ -262,6 +262,7 @@ namespace FarmProduce.Services.Manage.Account
             var user = await userManager.Users
                 .Include(u=>u.Orders)
                 .ThenInclude(x=>x.OrderItems)
+                .ThenInclude(x=>x.Product)
                 .Include(x=>x.Orders)
                 .ThenInclude(x=>x.Discount)
                 .Include(x=>x.Orders)
