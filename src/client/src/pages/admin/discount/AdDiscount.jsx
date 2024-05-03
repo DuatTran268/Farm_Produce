@@ -74,7 +74,7 @@ const AdDiscount = () => {
       enqueueSnackbar("Đã xoá thành công", {
         variant: "success",
       });
-      setRender(true);
+      setRender((prev) => !prev);
     } else {
       enqueueSnackbar("Xoá thất bại", {
         variant: "error",
@@ -87,13 +87,7 @@ const AdDiscount = () => {
     setPopupVisible(false);
   };
 
-    // Hàm định dạng giá tiền thành VNĐ
-    const formatCurrency = (number) => {
-      return number.toLocaleString("vi-VN", {
-        style: "currency",
-        currency: "VND",
-      });
-    };
+  
 
 
   return(
@@ -117,7 +111,7 @@ const AdDiscount = () => {
                 <th>Tên Mã Discount</th>
                 <th>Ngày bắt đầu</th>
                 <th>Ngày kết thúc</th>
-                <th>Số tiền giảm</th>
+                <th>Số % giảm</th>
                 <th>Sửa</th>
                 <th>Xoá</th>
               </tr>
@@ -129,7 +123,7 @@ const AdDiscount = () => {
                     <td>{item.codeName}</td>
                     <td>{format(new Date(item.startDate), "dd/MM/yyyy")}</td>
                     <td>{format(new Date(item.endDate), "dd/MM/yyyy")}</td>
-                    <td>{formatCurrency(item.discountPrice)}</td>
+                    <td>{item.discountPrice} %</td>
                     <td className="text-center">
                       <Link
                         to={`/admin/discount/edit/${item.id}`}

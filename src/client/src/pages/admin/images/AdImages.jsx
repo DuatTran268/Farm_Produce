@@ -18,7 +18,7 @@ import {
 
 const AdImages = () => {
   const [getImage, setgetImage] = useState([]);
-  const [reRender, setRender] = useState(false);
+  const [refreshData, setRefreshData] = useState(false);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [metadata, setMetadata] = useState({});
   const [pageNumber, setPageNumber] = useState(1);
@@ -68,7 +68,7 @@ const AdImages = () => {
         setfilterProduct({ productList: [] });
       }
     });
-  }, [ps, p, reRender, pageNumber]);
+  }, [ps, p, refreshData, pageNumber]);
 
   const handleDelete = (id) => {
     setIdToDelete(id);
@@ -82,7 +82,7 @@ const AdImages = () => {
       enqueueSnackbar("Đã xoá thành công", {
         variant: "success",
       });
-      setRender(true);
+      setRefreshData((prev) => !prev);
     } else {
       enqueueSnackbar("Xoá thất bại", {
         variant: "error",

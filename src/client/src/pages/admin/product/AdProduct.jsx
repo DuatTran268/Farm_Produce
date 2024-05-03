@@ -16,7 +16,7 @@ import Popup from "../../../components/common/Popup";
 
 const AdProduct = () => {
   const [getProduct, setgetProduct] = useState([]);
-  const [reRender, setRender] = useState(false);
+  const [refreshData, setRefreshData] = useState(false);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [metadata, setMetadata] = useState({});
   const [pageNumber, setPageNumber] = useState(1);
@@ -55,7 +55,7 @@ const AdProduct = () => {
         setIsVisibleLoading(false);
       });
     }
-  }, [productFilter, ps, p, reRender, pageNumber]);
+  }, [productFilter, ps, p, refreshData, pageNumber]);
 
 
   
@@ -71,7 +71,7 @@ const AdProduct = () => {
       enqueueSnackbar("Đã xoá thành công", {
         variant: "success",
       });
-      setRender(true);
+      setRefreshData((prev) => !prev);
     } else {
       enqueueSnackbar("Xoá thất bại", {
         variant: "error",
@@ -154,7 +154,7 @@ const AdProduct = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan={3}>
+                  <td colSpan={8}>
                     <h4 className="text-danger text-center">Không tìm thấy</h4>
                   </td>
                 </tr>

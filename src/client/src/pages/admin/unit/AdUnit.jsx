@@ -17,7 +17,7 @@ import Popup from "../../../components/common/Popup";
 
 const AdUnit = () => {
   const [getUnit, setgetUnit] = useState([]);
-  const [reRender, setRender] = useState(false);
+  const [refreshData, setRefreshData] = useState(false);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [metadata, setMetadata] = useState({});
   const [pageNumber, setPageNumber] = useState(1);
@@ -54,7 +54,7 @@ const AdUnit = () => {
         setIsVisibleLoading(false);
       });
     }
-  }, [unitFilter, ps, p, reRender, pageNumber]);
+  }, [unitFilter, ps, p, refreshData, pageNumber]);
 
   const handleDeleteUnit = (id) => {
     setUnitIdToDelete(id);
@@ -68,7 +68,7 @@ const AdUnit = () => {
       enqueueSnackbar("Đã xoá thành công", {
         variant: "success",
       });
-      setRender(true);
+      setRefreshData((prev) => !prev);
     } else {
       enqueueSnackbar("Xoá thất bại", {
         variant: "error",

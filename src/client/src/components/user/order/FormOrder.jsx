@@ -263,9 +263,9 @@ const FormOrder = () => {
             />
             <button onClick={handleSubmitDiscount}>Áp dụng</button>
             {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-            <div>
-              Số tiền phải thanh toán sau khi giảm giá: {discountedTotal}
-            </div>
+            <p className="text-danger">
+              Số tiền phải thanh toán sau khi giảm giá: {formatCurrency(discountedTotal)}
+            </p>
           </div>
         </div>
       </div>
