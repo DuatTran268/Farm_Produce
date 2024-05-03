@@ -188,10 +188,12 @@ namespace FarmProduct.WebApi.Endpoints
                     mapper.Map(model, existingProduct);
                     existingProduct.UrlSlug = slug;
                     existingProduct.DateUpdate = DateTime.Now;
+                    await productRepo.AddOrUpdateProduct(existingProduct);
+
 
                 }
-                var validImages = model.Images.Where(image => image != null && image.Length > 0 && !string.IsNullOrEmpty(image.FileName)).ToList();
-                foreach (var imageFile in validImages)
+                //var validImages = model.Images.Where(image => image != null && image.Length > 0 && !string.IsNullOrEmpty(image.FileName)).ToList();
+                foreach (var imageFile in  model.Images)
                 {
                    
 
