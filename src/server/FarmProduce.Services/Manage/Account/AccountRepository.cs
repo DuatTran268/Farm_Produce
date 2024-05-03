@@ -189,7 +189,17 @@ namespace FarmProduce.Services.Manage.Account
             var usersWithRolesAndOrders = new List<DetailUserDTO>();
 
             // Lấy tất cả người dùng
-            var users = await userManager.Users.ToListAsync();
+            var users = await userManager.Users
+                 .Include(u => u.Orders)
+                .ThenInclude(x => x.OrderItems)
+                .ThenInclude(x=>x.Product)
+                .Include(x => x.Orders)
+                .ThenInclude(x => x.Discount)
+                .Include(x => x.Orders)
+                .ThenInclude(x => x.PaymentMethod)
+                .Include(x=>x.Orders)
+                .ThenInclude(x=>x.OrderStatus)
+                .ToListAsync();
 
             foreach (var user in users)
             {
@@ -205,20 +215,20 @@ namespace FarmProduce.Services.Manage.Account
                     Address = user.Address,
                     PhoneNumber = user.PhoneNumber,
                     Roles = userRoles.ToList(),
-                    Orders = userOrders.Select(order => new OrderDTO
+                    Orders = userOrders.Select(order => new OrderDetailDTO
                     {
                         Id = order.Id,
                         TotalPrice = order.TotalPrice,
                         DateOrder = order.DateOrder,
                         CodeNameDiscount =order.Discount.CodeName,
-                        OrderItems = order.OrderItems.Select(item => new OrderItemDTO
+                        OrderItems = order.OrderItems.Select(item => new OrderItemDetailDTO
                         {
                             Id = item.Id,
-                            ProductId = item.ProductId,
+                            ProductName = item.Product.Name,
                             Quantity = item.Quantity,
                         }).ToList(),
-                        PaymentMethodId = order.PaymentMethodId,
-                        OrderStatusId = order.OrderStatusId
+                        PaymentMethodName = order.PaymentMethod.Name,
+                        OrderStatusName = order.OrderStatus.StatusCode
                     }).ToList()
                 };
 
@@ -250,6 +260,14 @@ namespace FarmProduce.Services.Manage.Account
         public async Task<DetailUserDTO> GetUserWithOrdersById(string userId)
         {
             var user = await userManager.Users
+                .Include(u=>u.Orders)
+                .ThenInclude(x=>x.OrderItems)
+                .Include(x=>x.Orders)
+                .ThenInclude(x=>x.Discount)
+                .Include(x=>x.Orders)
+                .ThenInclude(x=>x.PaymentMethod)
+                .Include(x => x.Orders)
+                .ThenInclude(x => x.OrderStatus)
                 .Where(u => u.Id == userId)
                 .FirstOrDefaultAsync();
 
@@ -270,20 +288,23 @@ namespace FarmProduce.Services.Manage.Account
                 Address = user.Address,
                 PhoneNumber = user.PhoneNumber,
                 Roles = userRoles.ToList(),
-                Orders = userOrders.Select(order => new OrderDTO
+                Orders = userOrders.Select(order => new OrderDetailDTO
                 {
                     Id = order.Id,
                     TotalPrice = order.TotalPrice,
-                    //OrderItems = order.OrderItems.Select(item => new OrderItemDTO
-                    //{
+                    DateOrder = order.DateOrder,
+                    PaymentMethodName = order.PaymentMethod.Name,
+                    CodeNameDiscount= order.Discount.CodeName,
+                    OrderItems = order.OrderItems.Select(item => new OrderItemDetailDTO
+                    {
 
-                    //    Id = item.Id,
-                    //    ProductId = item.ProductId,
-                    //    Quantity = item.Quantity,
-                    //    // Price = item.Price
-                    //}).ToList(),
-                    PaymentMethodId = order.PaymentMethodId,
-                    OrderStatusId = order.OrderStatusId,
+                        Id = item.Id,
+                        ProductName = item.Product.Name,
+                        Quantity = item.Quantity,
+                        // Price = item.Price
+                    }).ToList(),
+                   
+                    OrderStatusName = order.OrderStatus.StatusCode,
                 }).ToList()
             };
 
