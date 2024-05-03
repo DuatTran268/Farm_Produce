@@ -33,3 +33,8 @@ export async function deleteVoucherDiscount(id = 0) {
   return delete_api(`https://localhost:7047/api/discount/${id}`);
 }
 
+export async function getDiscountByName(name  = "") {
+  if (name !== null) {
+    return get_api_nocache(`https://localhost:7047/api/discount/${name}`);
+  }
+}

@@ -6,6 +6,7 @@ import {
   createOrder,
   getComboboxPaymentMethod,
   getComboboxStatusOrder,
+  getInforOfVoucherDiscount,
 } from "../../../api/Order";
 import { Button, Form, FormControl, Table } from "react-bootstrap";
 import BoxEdit from "../../admin/edit/BoxEdit";
@@ -14,6 +15,7 @@ import { faMessage, faMoneyBill } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
 import { useCart } from "react-use-cart"; // Import useCart
 import YourOrder from "./YourOrder";
+import { getDiscountByName } from "../../../api/Discount";
 
 const FormOrder = () => {
   const user = useSelector((state) => state.auth.login.currentUser);
@@ -114,6 +116,37 @@ const FormOrder = () => {
     document.title = "Đặt hàng với chúng tôi";
   });
 
+  const [codeName, setCodeName] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [discountedTotal, setDiscountedTotal] = useState(0); // State để lưu giá trị tổng tiền sau khi giảm giá
+  const handleSubmitDiscount = async () => {
+    try {
+      const voucherInfo = await getInforOfVoucherDiscount(codeName);
+
+      // Kiểm tra xem có dữ liệu trả về từ API không
+      if (voucherInfo) {
+        const discountPrice = voucherInfo.discountPrice;
+        console.log("Check discount price", discountPrice);
+
+        // Kiểm tra nếu mã giảm giá hợp lệ
+        if (discountPrice > 0) {
+          const totalPriceAfterDiscount = cartTotal * (1 - discountPrice / 100);
+          setDiscountedTotal(totalPriceAfterDiscount);
+          setErrorMessage("");
+        } else {
+          // Nếu mã giảm giá không áp dụng, sử dụng giá trị tổng giỏ hàng ban đầu
+          setDiscountedTotal(cartTotal);
+          setErrorMessage("");
+        }
+      } else {
+        setErrorMessage("Mã giảm giá không hợp lệ");
+      }
+    } catch (error) {
+      console.error("Lỗi khi gửi yêu cầu đến API: ", error);
+      setErrorMessage("Đã xảy ra lỗi khi xử lý yêu cầu");
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (e.currentTarget.checkValidity() === false) {
@@ -121,7 +154,16 @@ const FormOrder = () => {
       setValidated(true);
     } else {
       try {
-        const totalPrice = cartTotal;
+        // const totalPrice = discountedTotal;
+        let totalPrice; // Khởi tạo biến totalPrice để lưu giá trị tổng giá tiền
+
+        // ktra nhap vao ma giảm gia, neu nhap roi thi sử dụng discountedTotal
+        if (discountedTotal !== 0) {
+          totalPrice = discountedTotal;
+        } else {
+          // chưa nhập thì sử dụng cartTotal
+          totalPrice = cartTotal;
+        }
 
         const updatedOrder = { ...order };
 
@@ -160,63 +202,72 @@ const FormOrder = () => {
     <section className="infor_order row col-12">
       <div className="infor_order_left col-6">
         {/* <YourOrder /> */}
-          <div className="checkout_title">Đơn hàng của bạn</div>
-          <div className="checkout_order_content">
-            <Table>
-              <thead>
-                <tr>
-                  <th>Sản phẩm</th>
-                  <th>Đơn giá</th>
-                  <th>Số lượng</th>
-                  <th>Thành tiền</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    {items.map((item, index) => {
-                      return (
-                        <div className="name_product_table" key={index}>
-                          {item.name}
-                        </div>
-                      );
-                    })}
-                  </td>
-                  <td>
-                    {items.map((item, index) => {
-                      return (
-                        <div key={index}>{formatCurrency(item.price)}</div>
-                      );
-                    })}
-                  </td>
-                  <td>
-                    {items.map((item, index) => {
-                      return <div key={index}>{item.quantity}</div>;
-                    })}
-                  </td>
-                  <td>
-                    {items.map((item, index) => {
-                      return (
-                        <div key={index}>
-                          {formatCurrency(item.price * item.quantity)}
-                        </div>
-                      );
-                    })}
-                  </td>
-                </tr>
-                {/* <tr>
-                <td colSpan={3}>Giao hàng</td>
-                <td>Giao tận nơi</td>
-              </tr> */}
-                <tr>
-                  <td colSpan={3}>Tổng phải thanh toán</td>
-                  <td className="name_product_table">
-                    {formatCurrency(cartTotal)}
-                  </td>
-                </tr>
-              </tbody>
-            </Table>
+        <div className="checkout_title">Đơn hàng của bạn</div>
+        <div className="checkout_order_content">
+          <Table>
+            <thead>
+              <tr>
+                <th>Sản phẩm</th>
+                <th>Đơn giá</th>
+                <th>Số lượng</th>
+                <th>Thành tiền</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  {items.map((item, index) => {
+                    return (
+                      <div className="name_product_table" key={index}>
+                        {item.name}
+                      </div>
+                    );
+                  })}
+                </td>
+                <td>
+                  {items.map((item, index) => {
+                    return <div key={index}>{formatCurrency(item.price)}</div>;
+                  })}
+                </td>
+                <td>
+                  {items.map((item, index) => {
+                    return <div key={index}>{item.quantity}</div>;
+                  })}
+                </td>
+                <td>
+                  {items.map((item, index) => {
+                    return (
+                      <div key={index}>
+                        {formatCurrency(item.price * item.quantity)}
+                      </div>
+                    );
+                  })}
+                </td>
+              </tr>
+              <tr>
+                <td colSpan={3}>Tổng phải thanh toán</td>
+                <td className="name_product_table">
+                  {formatCurrency(cartTotal)}
+                </td>
+              </tr>
+            </tbody>
+          </Table>
+
+          {/* discount cart input */}
+          <div>
+            <input
+              type="text"
+              value={codeName}
+              onChange={(e) => setCodeName(e.target.value)}
+              placeholder="Nhập mã giảm giá"
+            />
+            <button onClick={handleSubmitDiscount}>Áp dụng</button>
+            {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+            <div>
+              Số tiền phải thanh toán sau khi giảm giá: {discountedTotal}
+            </div>
           </div>
+        </div>
       </div>
       <div className="infor_order_left col-6">
         <Form
@@ -297,7 +348,7 @@ const FormOrder = () => {
           <BoxEdit
             control={
               <Form.Select
-              className="form_control_order"
+                className="form_control_order"
                 name="paymentMethodId"
                 title="payment Method Id"
                 value={selectedPaymentMethodId}
@@ -324,7 +375,8 @@ const FormOrder = () => {
                 type="text"
                 name="discountId"
                 title="discountId"
-                value={order.orders[0].discountId}
+                value={codeName}
+                readOnly={true}
                 onChange={(e) =>
                   setOrder({
                     ...order,
@@ -361,7 +413,7 @@ const FormOrder = () => {
           <BoxEdit
             control={
               <Form.Select
-              className="form_control_order"
+                className="form_control_order"
                 name="orderStatusId"
                 title="order Status Id"
                 value={order.orders[0].orderStatusId}
