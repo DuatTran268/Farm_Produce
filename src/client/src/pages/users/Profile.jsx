@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import LayoutClient from "../../components/user/common/LayoutClient";
-import { Form } from "react-bootstrap";
+import { Form, Table } from "react-bootstrap";
 import { getUserById } from "../../api/Account";
 import { useParams } from "react-router-dom";
+import "../../styles/user/Profile.css";
+import { format } from "date-fns";
 
 const Profile = () => {
   const initialState = {
@@ -31,10 +33,17 @@ const Profile = () => {
     });
   }, []);
 
+  const formatCurrency = (number) => {
+    return number.toLocaleString("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    });
+  };
+
   return (
     <LayoutClient>
       <div className="profile">
-        <h3 className="profile_title text-center py-3">
+        <h3 className="profile_title py-3 text-title">
           Thông tin tài khoản của bạn
         </h3>
         <div className="profile_content">
@@ -45,7 +54,7 @@ const Profile = () => {
               </Form.Label>
               <Form.Control
                 type="text"
-                disabled
+                readOnly
                 name="id"
                 title="Mã số"
                 required
@@ -61,7 +70,7 @@ const Profile = () => {
               </Form.Label>
               <Form.Control
                 type="text"
-                disabled
+                readOnly
                 name="name"
                 title="Name"
                 required
@@ -77,7 +86,7 @@ const Profile = () => {
               </Form.Label>
               <Form.Control
                 type="Email"
-                disabled
+                readOnly
                 name="email"
                 title="Email"
                 required
@@ -93,7 +102,7 @@ const Profile = () => {
               </Form.Label>
               <Form.Control
                 type="text"
-                disabled
+                readOnly
                 name="email"
                 title="Email"
                 required
@@ -102,23 +111,76 @@ const Profile = () => {
             </div>
           </div>
 
-
-          <h3 className="text-center mt-5 mb-3">Đơn hàng của bạn</h3>
+          <h3 className=" text-title">Đơn hàng đã đặt mua của bạn</h3>
           {user.orders.length === 0 ? (
-            <h6>Không có đơn hàng nào của bạn</h6>
+            <h6 className="text-title">Không có đơn hàng nào của bạn</h6>
           ) : (
-            <div>
+            <div className="row">
               {user.orders.map((order, index) => (
-                <div key={index}>
-                  <p>Đơn hàng số {order.id}</p>
-                  <p>Tổng tiền {order.totalPrice}</p>
+                <div key={index} className="col-6 card_order">
+                  <div className="card_order_infor">
+                    <h5 className="text-title">Mã đơn hàng: {order.id}</h5>
+                    <Table>
+                      <thead>
+                        <tr>
+                          <th>Ngày đặt</th>
+                          <th>Trạng thái</th>
+                          <th>Thanh toán</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            {format(new Date(order.dateOrder), "dd/MM/yyyy")}
+                          </td>
+                          <td>{order.orderStatusName}</td>
+                          <td>{order.paymentMethodName}</td>
+                        </tr>
+                      </tbody>
+                    </Table>
 
+                    <Table>
+                      <thead>
+                        <tr>
+                          <th>Sản phẩm</th>
+                          <th>Đơn giá</th>
+                          <th>Số lượng</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            {order.orderItems.map((productItem, i) => (
+                              <div key={i}>
+                                <p>{productItem.productName}</p>
+                              </div>
+                            ))}
+                          </td>
+                          <td>
+                            {order.orderItems.map((productItem, i) => (
+                              <div key={i}>
+                                <p>{productItem.price}</p>
+                              </div>
+                            ))}
+                          </td>
+                          <td>
+                            {order.orderItems.map((productItem, i) => (
+                              <div key={i}>
+                                <p>{productItem.quantity}</p>
+                              </div>
+                            ))}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </Table>
+                    <p className="text_total_price">
+                      Tổng thanh toán: {formatCurrency(order.totalPrice)}
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>
           )}
-
-
         </div>
       </div>
     </LayoutClient>
