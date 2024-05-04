@@ -218,7 +218,7 @@ const AdProductEdit = () => {
           />
 
           <BoxEdit
-            label={"Giá tiền"}
+            label={"Giá tiền bán thực tế"}
             control={
               <Form.Control
                 type="number"
