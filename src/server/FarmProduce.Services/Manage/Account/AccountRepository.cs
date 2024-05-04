@@ -226,7 +226,8 @@ namespace FarmProduce.Services.Manage.Account
                             Id = item.Id,
                             ProductName = item.Product.Name,
                             Quantity = item.Quantity,
-                        }).ToList(),
+							Price = item.Product.Price,
+						}).ToList(),
                         PaymentMethodName = order.PaymentMethod.Name,
                         OrderStatusName = order.OrderStatus.StatusCode
                     }).ToList()
@@ -302,7 +303,7 @@ namespace FarmProduce.Services.Manage.Account
                         Id = item.Id,
                         ProductName = item.Product.Name,
                         Quantity = item.Quantity,
-                        // Price = item.Price
+                        Price = item.Product.Price,
                     }).ToList(),
                    
                     OrderStatusName = order.OrderStatus.StatusCode,

@@ -159,7 +159,8 @@ const Profile = () => {
                           <td>
                             {order.orderItems.map((productItem, i) => (
                               <div key={i}>
-                                <p>{productItem.price}</p>
+                                <p>
+                                {formatCurrency(productItem.price)}</p>
                               </div>
                             ))}
                           </td>

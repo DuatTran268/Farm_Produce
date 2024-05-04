@@ -33,6 +33,7 @@ import AdImages from "../pages/admin/images/AdImages";
 import AdImagesEdit from "../pages/admin/images/AdImagesEdit";
 
 import NotFound from "../pages/NotFound";
+import AdOrderEdit from "../pages/admin/order/AdOrderEdit";
 
 const Router = () => {
   return (
@@ -63,6 +64,9 @@ const Router = () => {
         <Route path="/admin/user" element={<AdUser />} />
 
         <Route path="/admin/order" element={<AdOrder />} />
+        <Route path="/admin/order/edit" element={<AdOrderEdit />} />
+        <Route path="/admin/order/edit:/id" element={<AdOrderEdit />} />
+
 
         <Route path="/admin/category" element={<AdCategory />} />
 

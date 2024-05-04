@@ -1,14 +1,15 @@
 import React from "react";
+import LayoutCommon from "../../../components/admin/common/LayoutCommon";
 
 
 
 const AdOrderEdit = () => {
   return(
-    <section>
-      <div className="AdOrderEdit">
-        
+    <LayoutCommon>
+      <div className="wrapper">
+        <h3 className="text-success py-3">Quản lý Đơn hàng</h3>
       </div>
-    </section>
+    </LayoutCommon>
   )
 }
 export default AdOrderEdit;
