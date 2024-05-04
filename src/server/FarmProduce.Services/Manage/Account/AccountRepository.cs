@@ -440,6 +440,9 @@ namespace FarmProduce.Services.Manage.Account
             }
         }
 
-
-    }
+		public async Task<int> CountTotalUserAccount(CancellationToken cancellationToken = default)
+		{
+			return await dbContext.Set<ApplicationUser>().CountAsync(cancellationToken);
+		}
+	}
 }

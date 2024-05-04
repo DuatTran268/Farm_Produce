@@ -21,5 +21,7 @@ namespace FarmProduce.Services.Manage.Orders
 		Task<bool> AddOrUpdate(Order order, CancellationToken cancellationToken = default);
         Task<GeneralResponse> CreateOrder(DetailOrder orderDTO);
         Task<Order> GetOrderById(int id, CancellationToken cancellationToken = default);
+		Task<int> CountTotalOrder(CancellationToken cancellationToken = default);
+
 	}
 }

@@ -50,5 +50,8 @@ namespace FarmProduce.Services.Manage.Categories
 
 		Task<IList<CategoryItem>> GetCategoryCombobox(CancellationToken cancellationToken = default);
 
+
+		Task<int> CountTotalCategoryOfProduct(CancellationToken cancellationToken = default);
+
 	}
 }

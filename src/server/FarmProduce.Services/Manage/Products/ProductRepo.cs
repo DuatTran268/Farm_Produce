@@ -223,5 +223,10 @@ namespace FarmProduce.Services.Manage.Products
 			_context.Update(productView);
 			return await _context.SaveChangesAsync(cancellationToken) > 0;
 		}
+
+		public async Task<int> CountTotalProduct(CancellationToken cancellationToken = default)
+		{
+			return await _context.Set<Product>().CountAsync(cancellationToken);
+		}
 	}
 }
