@@ -2,6 +2,7 @@
 using FarmProduce.Core.DTO;
 using FarmProduce.Core.Entities;
 using FarmProduce.Data.Contexts;
+using FarmProduce.Services.Extentions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -443,6 +444,23 @@ namespace FarmProduce.Services.Manage.Account
 		public async Task<int> CountTotalUserAccount(CancellationToken cancellationToken = default)
 		{
 			return await dbContext.Set<ApplicationUser>().CountAsync(cancellationToken);
+		}
+
+		public async Task<IPagedList<DetailUserDTO>> GetAllAccountPagination(IPagingParams pagingParams, string name = null, CancellationToken cancellationToken = default)
+		{
+			return await dbContext.Set<ApplicationUser>()
+				.AsNoTracking()
+				.WhereIf(!string.IsNullOrWhiteSpace(name),
+				x => x.Name.Contains(name))
+				.Select(c => new DetailUserDTO()
+				{
+                    Id = c.Id,
+					Name = c.Name,
+					PhoneNumber = c.PhoneNumber,
+					Email = c.Email,
+					Address = c.Address,
+
+				}).ToPagedListAsync(pagingParams, cancellationToken);
 		}
 	}
 }

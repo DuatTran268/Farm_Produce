@@ -20,6 +20,6 @@ namespace FarmProduce.Core.Contracts
         Task<DetailUserDTO> GetUserWithOrdersById(string userId);
         Task<GeneralResponse> UpdateUserAndOrders(string userId, UserWithOrderDTO detailUserDTO, List<OrderDTO> orderDTOs);
 		Task<int> CountTotalUserAccount(CancellationToken cancellationToken = default);
-
+		Task<IPagedList<DetailUserDTO>> GetAllAccountPagination(IPagingParams pagingParams, string name = null, CancellationToken cancellationToken = default);
 	}
 }
