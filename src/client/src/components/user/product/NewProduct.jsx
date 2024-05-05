@@ -22,6 +22,8 @@ import { EffectCoverflow, Pagination } from "swiper/modules";
 
 import imagenotfound from "../../../assets/imagenotfound.jpg";
 import { Image } from "react-bootstrap";
+import iconSale from "../../../assets/sale-big.gif";
+import iconSoldOut from "../../../assets/soldout.gif";
 
 const NewProduct = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -32,8 +34,7 @@ const NewProduct = () => {
     getProductNewestLimit().then((data) => {
       if (data) {
         setProduct(data);
-
-        // console.log("Checkdata item", data[0].images[0].urlImage);
+        console.log("Check product newest: ", data);
       } else {
         setProduct([]);
       }
@@ -42,10 +43,10 @@ const NewProduct = () => {
 
   const { addItem } = useCart();
   const handleAddToCart = (product) => {
-    addItem(product);
     enqueueSnackbar("Bạn đã thêm sản phẩm vào giỏ hàng", {
       variant: "success",
     });
+    addItem(product);
   };
 
   const settings = {
@@ -72,14 +73,12 @@ const NewProduct = () => {
   return (
     <div className="new_product">
       {/* reuse */}
-      <ProductHeader name="Sản phẩm mới" slug={'/product/viewmore'}/>
+      <ProductHeader name="Sản phẩm mới" slug={"/product/viewmore"} />
       {/* new product body */}
       <div className="product_body">
         <div className="product_note">
           Các sản phẩm mới nhất của công ty Nông sản Đà Lạt
         </div>
-
-        {/* <Slider {...settings}> */}
 
         <Swiper
           effect={"coverflow"}
@@ -101,6 +100,21 @@ const NewProduct = () => {
             return (
               <SwiperSlide>
                 <div className="new_product_wrapper" key={index}>
+                  {product.priceVirtual !== 0 && (
+                    <Image
+                      className="product_icon_sale"
+                      src={iconSale}
+                      width={80}
+                    />
+                  )}
+
+                  {product.quantityAvailable === 0 && (
+                    <Image
+                      className="product_icon_soldout"
+                      src={iconSoldOut}
+                      width={80}
+                    />
+                  )}
                   <Link
                     className="product_item"
                     to={`/detail/${product.urlSlug}`}
@@ -145,8 +159,15 @@ const NewProduct = () => {
                         <div className="new_product_add">
                           <Link
                             className="new_product_addcart"
-                            to={"/cart"}
-                            onClick={() => handleAddToCart(product)}
+                            onClick={() => {
+                              if (product.quantityAvailable !== 0) {
+                                handleAddToCart(product);
+                              } else {
+                                enqueueSnackbar("Sản phẩm đã hết hàng", {
+                                  variant: "error",
+                                });
+                              }
+                            }}
                           >
                             Mua ngay
                             <FontAwesomeIcon
@@ -163,8 +184,6 @@ const NewProduct = () => {
             );
           })}
         </Swiper>
-
-        {/* </Slider> */}
       </div>
     </div>
   );

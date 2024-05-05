@@ -82,7 +82,19 @@
 }
 
 
+.product_icon_sale{
+  position: absolute;
+  z-index: 100;
+  top: 1rem;
+  transform: rotate(330deg);
+}
 
+.product_icon_soldout{
+  position: absolute;
+  z-index: 130;
+  top: 0;
+  right: 0;
+}
 
 
 /* comment */

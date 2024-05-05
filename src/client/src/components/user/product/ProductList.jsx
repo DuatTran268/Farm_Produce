@@ -28,7 +28,7 @@ const ProductList = () => {
     getFilterProduct(productFilter.name, true, ps, pageNumber).then((data) => {
       if (data) {
         setGetProduct(data.items);
-        // console.log("Check data item product list: ", data.items)
+        console.log("Check data item product list: ", data.items)
       } else {
         setGetProduct([]);
       }
@@ -71,6 +71,7 @@ const ProductList = () => {
                           urlSlug={item.urlSlug}
                           name={item.name}
                           priceVirtual={item.priceVirtual}
+                          quantityAvailable={item.quantityAvailable}
                           price={item.price}
                           unit={item.unit.name}
                         />

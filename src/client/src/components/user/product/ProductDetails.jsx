@@ -10,6 +10,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartArrowDown } from "@fortawesome/free-solid-svg-icons";
 import imagenotfound from "../../../assets/imagenotfound.jpg";
 import iconSale from "../../../assets/sale-big.gif";
+import iconSoldOut from "../../../assets/soldout.gif";
+
 
 const ProductDetails = () => {
   const params = useParams();
@@ -92,9 +94,9 @@ const ProductDetails = () => {
                 onClick={() => openPopup(`https://localhost:7047/${productDetail.images[0].urlImage}`)}
               />
             ) : (
-              <>
+              <div>
                 <Image src={imagenotfound} width={300} />
-              </>
+              </div>
             )}
 
           </div>
@@ -127,8 +129,15 @@ const ProductDetails = () => {
               </div>
               <Link
                 className="product_detail_addcart"
-                to={"/cart"}
-                onClick={handleAddToCart}
+                onClick={() => {
+                  if (productDetail.quantityAvailable !== 0) {
+                    handleAddToCart();
+                  } else {
+                    enqueueSnackbar("Sản phẩm đã hết hàng", {
+                      variant: "error",
+                    });
+                  }
+                }}
               >
                 Thêm vào giỏ hàng
                 <FontAwesomeIcon icon={faCartArrowDown} className="px-2" />

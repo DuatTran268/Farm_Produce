@@ -49,13 +49,14 @@ const ProductInCategory = () => {
                   return (
                     <div className="product_item col-11 col-md-6 col-lg-3 " key={index}>
                       <ProductTemplate
-                          item={product} 
+                        item={product} 
                         urlSlug={product.urlSlug}
                         name={product.name}
                         priceVirtual={product.priceVirtual}
                         price={product.price}
                         thumbnailUrl={getThumbnailUrl(product)}
                         unit={product.unit.name}
+                        quantityAvailable={product.quantityAvailable}
                       />
                     </div>
                   );

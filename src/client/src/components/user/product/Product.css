@@ -34,6 +34,13 @@
   transform: rotate(330deg);
 }
 
+.product_icon_soldout{
+  position: absolute;
+  z-index: 13;
+  top: 0;
+  right: 0;
+}
+
 .product_price_sell{
   color: var(--color-main);
 }
