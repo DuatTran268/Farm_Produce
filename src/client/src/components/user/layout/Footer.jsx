@@ -40,7 +40,7 @@ const Footer = () => {
             </li>
             <li className="menu_item">
               <Link className="menu_link " to={"tel:0868658353"}>
-                <FontAwesomeIcon icon={faPhone} color="green" /> 09666888
+                <FontAwesomeIcon icon={faPhone} color="green" /> 0966668888
               </Link>
             </li>
             <li className="menu_item">

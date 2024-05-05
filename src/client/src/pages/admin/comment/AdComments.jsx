@@ -20,6 +20,8 @@ import { faStar as faStarRegular } from "@fortawesome/free-regular-svg-icons";
 const AdComments = () => {
   const [getCommnent, setgetCommnent] = useState([]);
   const [reRender, setRender] = useState(false);
+  const [refreshData, setRefreshData] = useState(false);
+
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [metadata, setMetadata] = useState({});
   const [pageNumber, setPageNumber] = useState(1);
@@ -51,14 +53,13 @@ const AdComments = () => {
       getFilterComment(commentFilter.name, ps, pageNumber).then((data) => {
         if (data) {
           setData(data);
-          console.log("Checkdata", data)
         } else {
           setData([]);
         }
         setIsVisibleLoading(false);
       });
     }
-  }, [commentFilter, ps, p, reRender, pageNumber]);
+  }, [commentFilter, ps, p, refreshData, pageNumber]);
 
 
   const handleDelete = (id) => {
@@ -73,7 +74,7 @@ const AdComments = () => {
       enqueueSnackbar("Đã xoá thành công", {
         variant: "success",
       });
-      setRender(true);
+      setRender((prev) => !prev);
     } else {
       enqueueSnackbar("Xoá thất bại", {
         variant: "error",

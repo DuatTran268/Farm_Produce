@@ -10,7 +10,7 @@ import Loading from "../../common/Loading";
 import { useSelector } from "react-redux";
 
 import imagenotfound from "../../../assets/imagenotfound.jpg";
-
+import ProductFilter from "../../admin/filter/ProductFilter";
 
 const ProductList = () => {
   const [getProduct, setGetProduct] = useState([]);
@@ -41,22 +41,24 @@ const ProductList = () => {
     if (item.images && item.images.length > 0) {
       return item.images[0].urlImage; // Trả về URL của ảnh đầu tiên trong mảng images của sản phẩm
     } else {
-      return  // Trả về URL của ảnh mặc định nếu không có ảnh trong mảng images
+      return; // Trả về URL của ảnh mặc định nếu không có ảnh trong mảng images
     }
   };
-
-
 
   return (
     <>
       <div className="product_body">
+        <div className="box_filter_allproduct">
+          <ProductFilter />
+        </div>
         <div className="product_body_flex">
           <div className="product_list">
             {isVisibleLoading ? (
-                <Loading />
+              <Loading />
             ) : (
               <>
-                {getProduct.map((item, index) => {
+              {getProduct.length > 0 ? (
+                getProduct.map((item, index) => {
                   return (
                     <>
                       <div
@@ -64,19 +66,24 @@ const ProductList = () => {
                         key={item.id}
                       >
                         <ProductTemplate
-                          item={item} 
+                          item={item}
                           thumbnailUrl={getThumbnailUrl(item)}
                           urlSlug={item.urlSlug}
                           name={item.name}
                           priceVirtual={item.priceVirtual}
                           price={item.price}
                           unit={item.unit.name}
-                          
                         />
                       </div>
                     </>
                   );
-                })}
+                })
+
+              ) : (
+                 <div className="text-danger">
+                  <h4>Không tìm thấy sản phẩm nào</h4>
+                 </div>
+              )}
               </>
             )}
           </div>

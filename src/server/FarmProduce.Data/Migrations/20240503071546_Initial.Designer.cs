@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FarmProduce.Data.Migrations
 {
     [DbContext(typeof(FarmDbContext))]
-    [Migration("20240429091910_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240503071546_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

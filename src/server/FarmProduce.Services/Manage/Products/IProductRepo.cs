@@ -40,5 +40,8 @@ namespace FarmProduce.Services.Manage.Products
 
 		Task<bool> IncreaseViewCountAsync(string slug, CancellationToken cancellationToken = default);
 
+
+		Task<int> CountTotalProduct(CancellationToken cancellationToken = default);
+
 	}
 }

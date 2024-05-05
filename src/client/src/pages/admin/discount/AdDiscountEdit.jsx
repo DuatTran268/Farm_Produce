@@ -117,10 +117,12 @@
             />
 
             <BoxEdit
-              label={"Số tiền giảm (VNĐ)"}
+              label={"Số % giảm"}
               control={
                 <Form.Control
                   type="number"
+                  min={0}
+                  max={100}
                   name="discountPrice"
                   title="discount Price"
                   required

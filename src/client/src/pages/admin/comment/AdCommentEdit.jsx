@@ -34,6 +34,8 @@ const AdCommentEdit = () => {
 
   let { id } = useParams();
   id = id ?? 0;
+  
+  const [refreshData, setRefreshData] = useState(false);
 
   useEffect(() => {
     document.title = "Thêm, cập nhật comment";
@@ -70,6 +72,7 @@ const AdCommentEdit = () => {
           enqueueSnackbar("Đã lưu thành công", {
             variant: "success",
           });
+          setRefreshData((prev) => !prev);
           navigate(`/admin/comment`);
         } else {
           enqueueSnackbar("Đã xảy ra lỗi khi lưu", {

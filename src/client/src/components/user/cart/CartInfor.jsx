@@ -42,7 +42,7 @@ const CartInfor = () => {
   return (
     <section className="d-flex justify-content-end">
       <div className="cart_bottom">
-        <div className="cart_bottom_title">Cộng giỏ hàng</div>
+        <div className="cart_bottom_title">Tổng cộng tiền giỏ hàng</div>
         <tr>
           <td className="cart-lable w-100">Tổng tiền</td>
           <td className="cart-value w-100 text_total_price">

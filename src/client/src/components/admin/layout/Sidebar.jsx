@@ -39,7 +39,7 @@ const Sidebar = () => {
             <SidebarCommon slug="product" icon={faTicket} title="Sản phẩm" />
             <SidebarCommon slug="category" icon={faList} title="Danh mục" />
             <SidebarCommon slug="order" icon={faArrowCircleUp} title="Đơn hàng"/>
-            <SidebarCommon slug="deliver" icon={faCar} title="Vận chuyển" />
+            {/* <SidebarCommon slug="deliver" icon={faCar} title="Vận chuyển" /> */}
             <SidebarCommon slug="comment" icon={faMessage} title="Bình luận" />
             <SidebarCommon slug="user" icon={faUser} title="Người dùng" />
             <SidebarCommon slug="image" icon={faImage} title="Ảnh sản phẩm" />

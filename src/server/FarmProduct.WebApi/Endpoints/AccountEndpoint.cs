@@ -1,22 +1,19 @@
-﻿using FarmProduce.Core.Collections;
-using FarmProduct.WebApi.Models.Admin;
-using FarmProduct.WebApi.Models;
-using FarmProduct.WebApi.Utilities;
-using MapsterMapper;
-using System.Net;
-using Carter;
+﻿using Carter;
+using FarmProduce.Core.Collections;
 using FarmProduce.Core.Contracts;
 using FarmProduce.Core.DTO;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
 using FarmProduce.Core.Entities;
+using FarmProduct.WebApi.Models;
+using FarmProduct.WebApi.Models.Account;
+using FarmProduct.WebApi.Utilities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using static FarmProduce.Core.DTO.ServiceResponses;
-using System.Globalization;
 
 namespace FarmProduct.WebApi.Endpoints
 {
-    public class AccountEndpoint:ICarterModule
+	public class AccountEndpoint:ICarterModule
     {
         public void AddRoutes(IEndpointRouteBuilder app)
         {
@@ -46,7 +43,11 @@ namespace FarmProduct.WebApi.Endpoints
             routeGroupBuilder.MapGet("/{id}", GetUserByEmail)
              .WithName("GetDetail")
              .Produces<ApiResponse<DetailUserDTO>>();
-        }
+	
+			routeGroupBuilder.MapGet("/getall", GetAllAccountPagination)
+	        .WithName("GetAllAccountPagination")
+	        .Produces<ApiResponse<IList<DetailUserDTO>>>();
+		}
      
         private static async Task<IResult> Register(
         [FromServices]IUserAccount userAccount,[FromBody] RegisterDTO userDTO
@@ -179,5 +180,14 @@ namespace FarmProduct.WebApi.Endpoints
             }
         }
 
-    }
+		private static async Task<IResult> GetAllAccountPagination([AsParameters] AccountFilterModel model, IUserAccount userAccount)
+		{
+			var accountList = await userAccount.GetAllAccountPagination(model, model.Name);
+
+			var pagingnationResult = new PaginationResult<DetailUserDTO>(accountList);
+			return Results.Ok(ApiResponse.Success(pagingnationResult));
+
+		}
+
+	}
 }

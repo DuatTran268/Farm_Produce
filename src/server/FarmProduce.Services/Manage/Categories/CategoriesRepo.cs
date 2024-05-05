@@ -177,5 +177,10 @@ namespace FarmProduce.Services.Manage.Categories
 					Name = t.Name,
 				}).ToListAsync(cancellationToken);
 		}
+
+		public async Task<int> CountTotalCategoryOfProduct(CancellationToken cancellationToken = default)
+		{
+			return await _context.Set<Category>().CountAsync(cancellationToken);
+		}
 	}
 }

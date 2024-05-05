@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import LayoutCommon from "../../../components/admin/common/LayoutCommon";
 import HeaderBtn from "../../../components/common/HeaderBtn";
 import BtnSuccess from "../../../components/common/BtnSuccess";
-import { faAdd, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faAdd, faEdit, faInfoCircle, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Loading from "../../../components/common/Loading";
 import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -74,7 +74,7 @@ const AdOrder = () => {
       enqueueSnackbar("Đã xoá thành công", {
         variant: "success",
       });
-      setRender(true);
+      setRender((prev) => !prev);
     } else {
       enqueueSnackbar("Xoá thất bại", {
         variant: "error",
@@ -108,7 +108,7 @@ const AdOrder = () => {
                 <th>ID đơn</th>
                 <th>Ngày đặt đơn hàng</th>
                 <th>Tổng tiền đơn hàng</th>
-                <th>Sửa</th>
+                <th>Thông tin</th>
                 <th>Xoá</th>
               </tr>
             </thead>
@@ -125,7 +125,7 @@ const AdOrder = () => {
                         to={`/admin/order/edit/${item.id}`}
                         className="text-warning"
                       >
-                        <FontAwesomeIcon icon={faEdit} />
+                        <FontAwesomeIcon icon={faInfoCircle} />
                       </Link>
                     </td>
                     <td className="text-center">

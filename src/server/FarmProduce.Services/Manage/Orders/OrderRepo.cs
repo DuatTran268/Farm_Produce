@@ -111,5 +111,9 @@ namespace FarmProduce.Services.Manage.Orders
 			return await _context.Orders.Where(t => t.Id == id).ExecuteDeleteAsync(cancellationToken) > 0;
 		}
 
+		public async Task<int> CountTotalOrder(CancellationToken cancellationToken = default)
+		{
+			return await _context.Set<Order>().CountAsync(cancellationToken);
+		}
 	}
 }
