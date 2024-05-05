@@ -42,6 +42,7 @@ namespace FarmProduce.Services.Manage.Orders
 		public async Task<OrderDetailDTO> GetOrderById(int id, CancellationToken cancellationToken = default)
         {
             var result = await _context.Orders
+                                .Include(x=>x.ApplicationUser)
                                 .Include(x=>x.PaymentMethod)
                                 .Include(x=>x.OrderStatus)
                                 .Include(x=>x.Discount)
@@ -56,6 +57,9 @@ namespace FarmProduce.Services.Manage.Orders
                 CodeNameDiscount = result.Discount.CodeName,
                 DateOrder = result.DateOrder,
                 PaymentMethodName = result.PaymentMethod.Name,
+                UserName = result.ApplicationUser.Name,
+                Address = result.ApplicationUser.Address,
+                PhoneNumber = result.ApplicationUser.PhoneNumber,
                 OrderItems = result.OrderItems.Select(x => new OrderItemDetailDTO
                 {
                     Id = x.Id,

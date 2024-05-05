@@ -12,6 +12,9 @@ namespace FarmProduce.Core.DTO
         public DateTime DateOrder { get; set; }
         public decimal TotalPrice { get; set; }
         public string OrderStatusName { get; set; }
+        public string UserName { get; set; }
+        public string Address { get; set; }
+        public string PhoneNumber { get; set; }
         public string PaymentMethodName { get; set; }
         // public int DiscountId { get; set; }
         public string CodeNameDiscount { get; set; }
