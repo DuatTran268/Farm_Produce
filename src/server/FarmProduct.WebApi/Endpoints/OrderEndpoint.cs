@@ -20,6 +20,7 @@ using System.Net;
 using FarmProduct.WebApi.Models.Products;
 using FarmProduce.Services.Manage.OrderItems;
 using FarmProduce.Services.Manage.Discounts;
+using System.Reflection.Metadata.Ecma335;
 
 namespace FarmProduct.WebApi.Endpoints
 {
@@ -33,6 +34,9 @@ namespace FarmProduct.WebApi.Endpoints
             routeGroupBuilder.MapGet("/", GetAllPageAsync)
                 .WithName("GetAllOrder")
                 .Produces<ApiResponse<PaginationResult<DetailOrder>>>();
+            routeGroupBuilder.MapGet("/{id:int}", GetByIdAsync)
+                .WithName("GetById")
+                .Produces<ApiResponse<OrderDetailDTO>>();
             routeGroupBuilder.MapGet("/order-item", GetAllOrderItemPageAsync)
            .WithName("Ge tAll Order Item")
            .Produces<ApiResponse<DetailOrder>>();
@@ -59,6 +63,12 @@ namespace FarmProduct.WebApi.Endpoints
             var pagination = new PaginationResult<DetailOrder>(orders);
 
             return Results.Ok(ApiResponse.Success(pagination));
+        }
+        private static async Task<IResult> GetByIdAsync(int id,IOrderRepo orderRepo, CancellationToken cancellation)
+        {
+            var order = await orderRepo.GetOrderById(id, cancellation);
+            return order == null ? Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound, $"Khong ton tai id {id}"))
+                 : Results.Ok(ApiResponse.Success(order));
         }
         private static async Task<IResult> GetAllOrderItemPageAsync([FromServices] IOrderItemRepo orderRepo, CancellationToken cancellation = default)
         {

@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Text;
 using System.Threading.Tasks;
 using static FarmProduce.Core.DTO.ServiceResponses;
@@ -38,9 +39,32 @@ namespace FarmProduce.Services.Manage.Orders
             return await _context.Set<Order>().AnyAsync(x => x.Id != id);
         }
 
-		public async Task<Order> GetOrderById(int id, CancellationToken cancellationToken = default)
+		public async Task<OrderDetailDTO> GetOrderById(int id, CancellationToken cancellationToken = default)
         {
-            return await _context.Set<Order>().FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
+            var result = await _context.Orders
+                                .Include(x=>x.PaymentMethod)
+                                .Include(x=>x.OrderStatus)
+                                .Include(x=>x.Discount)
+                                .Include(x=>x.OrderItems)
+                                .ThenInclude(o=>o.Product)
+                                .Where(x=>x.Id == id).FirstOrDefaultAsync();
+            var order = new OrderDetailDTO()
+            {
+                Id = result.Id,
+                OrderStatusName = result.OrderStatus.StatusCode,
+                CodeNameDiscount = result.Discount.CodeName,
+                DateOrder = result.DateOrder,
+                PaymentMethodName = result.PaymentMethod.Name,
+                OrderItems = result.OrderItems.Select(x => new OrderItemDetailDTO
+                {
+                    Id = x.Id,
+                    Price = x.Product.Price,
+                    Quantity = x.Quantity,
+                    ProductName = x.Product.Name,
+                }).ToList()
+            };
+            return order;
+                              
         }
         public async Task<bool> AddOrUpdate(Order order, CancellationToken cancellationToken = default)
         {
