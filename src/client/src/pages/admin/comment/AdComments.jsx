@@ -105,7 +105,7 @@ const AdComments = () => {
   return (
     <LayoutCommon>
       <div className="title py-3 text-danger">
-        <h3>Quản lý Comment</h3>
+        <h3>Bình luận đánh giá người dùng</h3>
       </div>
 
       <HeaderBtn>

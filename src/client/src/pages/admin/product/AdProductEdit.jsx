@@ -125,7 +125,7 @@ const AdProductEdit = () => {
   return (
     <LayoutCommon>
       <div className="wrapper">
-        <h3 className="text-success py-3">Thêm/cập Product</h3>
+        <h3 className="text-success py-3">Thêm/cập nhật sản phẩm</h3>
         <Form
           method="post"
           encType=""
@@ -160,6 +160,7 @@ const AdProductEdit = () => {
                 name="quantityAvailable"
                 title="quanlity Available"
                 required
+                min="0"
                 value={product.quantityAvailable || ""}
                 onChange={(e) =>
                   setProduct({ ...product, quantityAvailable: e.target.value })

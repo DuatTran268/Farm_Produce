@@ -14,6 +14,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import SidebarCommon from "../common/SidebarCommon";
 import { faImage } from "@fortawesome/free-regular-svg-icons";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Sidebar = () => {
   const [activeMenu, setActiveMenu] = useState();
@@ -51,7 +53,14 @@ const Sidebar = () => {
           <div className="sidebar-main">
             <span className="sidebar-tile">Cài đặt</span>
             <SidebarCommon slug="setting" icon={faEdit} title="Cài đặt" />
-            <SidebarCommon slug="home" icon={faSignOut} title="Đăng xuất" />
+            <div className="sidebar-wrapper">
+      <Link className="sidebar-link" to={`/login`}>
+        <li >
+          <FontAwesomeIcon icon={faSignOut} />
+          <span className="px-3">Đăng xuất</span>
+        </li>
+      </Link>
+    </div>
           </div>
         </ul>
       </div>

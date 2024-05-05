@@ -43,7 +43,7 @@
     // }, []);
 
     useEffect(() => {
-      document.title = "Thêm, cập nhật Discount";
+      document.title = "Thêm, cập nhật mã giảm giá";
       getDiscountById(id).then((data) => {
         if (data) {
           // Chuyển đổi định dạng ngày tháng
@@ -89,7 +89,7 @@
     return (
       <LayoutCommon>
         <div className="wrapper">
-          <h3 className="text-success py-3">Thêm/cập nhật Voucher Discount</h3>
+          <h3 className="text-success py-3">Thêm/cập nhật mã giảm giá</h3>
           <Form
             method="post"
             encType="multipart/form-data"

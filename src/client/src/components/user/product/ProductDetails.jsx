@@ -26,7 +26,8 @@ const ProductDetails = () => {
     getDetailProductByUrlSlug(slug).then((data) => {
       if (data) {
         setProductDetail(data);
-        console.log("Check data detailsssss... . .", data);
+        document.title = `Chi tiết sản phẩm ${data.name || ''}`;
+        // console.log("Check data detailsssss... . .", data);
       } else {
         setProductDetail({});
       }

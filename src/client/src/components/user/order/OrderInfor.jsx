@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import YourOrder from "./YourOrder";
 import { Link } from "react-router-dom";
 import "./Order.css";
 
 const OrderInfor = () => {
+  useEffect(() => {
+    document.title = "Thông tin chi tiết đơn hàng"
+  })
   return (
     <section>
       <div className="order_infor_wrapper">

@@ -51,6 +51,7 @@ namespace FarmProduce.Services.Manage.Orders
             var order = new OrderDetailDTO()
             {
                 Id = result.Id,
+                TotalPrice = result.TotalPrice,
                 OrderStatusName = result.OrderStatus.StatusCode,
                 CodeNameDiscount = result.Discount.CodeName,
                 DateOrder = result.DateOrder,

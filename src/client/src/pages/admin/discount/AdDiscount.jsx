@@ -36,7 +36,7 @@ const AdDiscount = () => {
   }
 
   useEffect(() => {
-    document.title = "Quản lý Voucher Discount";
+    document.title = "Quản lý mã giảm giá";
 
     loadDepartment();
     async function loadDepartment() {
@@ -64,7 +64,7 @@ const AdDiscount = () => {
   
   const handleDelete = (id) => {
     setUnitIdToDelete(id);
-    setPopupMessage("Bạn có muốn xoá unit này?");
+    setPopupMessage("Bạn có muốn xoá mã giảm giá này?");
     setPopupVisible(true);
   };
 
@@ -93,7 +93,7 @@ const AdDiscount = () => {
   return(
     <LayoutCommon>
       <div className="title py-3 text-danger">
-        <h3>Quản lý Voucher Discount</h3>
+        <h3>Quản lý Mã giảm giá</h3>
       </div>
 
       <HeaderBtn>

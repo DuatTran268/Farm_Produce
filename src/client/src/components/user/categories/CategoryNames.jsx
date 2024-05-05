@@ -17,6 +17,9 @@ const CategoryName = () => {
     });
   }, [slug]);
 
+  useEffect(() => {
+    document.title = `Danh mục sản phẩm ${productUrlName.name || ''}`;
+  }, [productUrlName.name]);
   return (
     <>
       <h3 className="text-success text-center py-3">Danh mục sản phẩm: {productUrlName.name}</h3>

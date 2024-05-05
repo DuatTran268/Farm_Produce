@@ -72,7 +72,7 @@ const NewProduct = () => {
   return (
     <div className="new_product">
       {/* reuse */}
-      <ProductHeader name="Sản phẩm mới" />
+      <ProductHeader name="Sản phẩm mới" slug={'/product/viewmore'}/>
       {/* new product body */}
       <div className="product_body">
         <div className="product_note">

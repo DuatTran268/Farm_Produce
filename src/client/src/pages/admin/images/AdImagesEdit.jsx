@@ -34,7 +34,7 @@ const AdImagesEdit = () => {
   id = id ?? 0;
 
   useEffect(() => {
-    document.title = "Thêm, cập nhật Image";
+    document.title = "Thêm, cập nhật Hình ảnh sản phẩm";
     getImageById(id).then((data) => {
       console.log("Checkddd dataa image", data);
       if (data)

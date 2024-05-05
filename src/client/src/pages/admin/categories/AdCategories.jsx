@@ -38,7 +38,7 @@ const AdCategory = () => {
   }
 
   useEffect(() => {
-    document.title = "Quản lý Category";
+    document.title = "Quản lý Danh mục sản phẩm";
 
     loadDepartment();
     async function loadDepartment() {
@@ -90,7 +90,7 @@ const AdCategory = () => {
   return (
     <LayoutCommon>
       <div className="title py-3 text-danger">
-        <h3>Quản lý Category</h3>
+        <h3>Quản lý Danh mục sản phẩm</h3>
       </div>
 
       <HeaderBtn>

@@ -38,7 +38,7 @@ const AdCommentEdit = () => {
   const [refreshData, setRefreshData] = useState(false);
 
   useEffect(() => {
-    document.title = "Thêm, cập nhật comment";
+    document.title = "Chi tiết bình luận, đánh giá";
     
     getCommnetById(id).then((data) => {
       if (data) {
@@ -86,7 +86,7 @@ const AdCommentEdit = () => {
   return (
     <LayoutCommon>
       <div className="wrapper">
-        <h3 className="text-success py-3">Thêm/cập comment</h3>
+        <h3 className="text-success py-3">Chi tiết bình luận, đánh giá</h3>
         <Form
           method="post"
           encType="multipart/form-data"

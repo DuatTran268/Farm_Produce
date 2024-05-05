@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import LayoutClient from "../../components/user/common/LayoutClient";
 
 const Recruitment = () => {
+  useEffect(() => {
+    document.title = "Thông báo tuyển dụng"
+  })
+
   return (
     <LayoutClient>
       <section className="condition">

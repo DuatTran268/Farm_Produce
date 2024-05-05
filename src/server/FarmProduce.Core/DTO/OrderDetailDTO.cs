@@ -15,6 +15,7 @@ namespace FarmProduce.Core.DTO
         public string PaymentMethodName { get; set; }
         // public int DiscountId { get; set; }
         public string CodeNameDiscount { get; set; }
+        public string NameUser { get; set; }
         public IList<OrderItemDetailDTO> OrderItems { get; set; }
     }
 }

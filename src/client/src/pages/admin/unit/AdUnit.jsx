@@ -37,7 +37,7 @@ const AdUnit = () => {
   }
 
   useEffect(() => {
-    document.title = "Quản lý Unit";
+    document.title = "Quản lý Đơn vị tính";
 
     loadDepartment();
     async function loadDepartment() {
@@ -84,7 +84,7 @@ const AdUnit = () => {
   return (
     <LayoutCommon>
       <div className="title py-3 text-danger">
-        <h3>Quản lý Unit</h3>
+        <h3>Quản lý Đơn vị tính</h3>
       </div>
 
       <HeaderBtn>

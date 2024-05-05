@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import LayoutClient from "../../components/user/common/LayoutClient";
 
 const Policy = () => {
+  useEffect(() => {
+    document.title = "Chính sách thanh toán"
+  })
+
   return (
     <LayoutClient>
       <section className="policy">

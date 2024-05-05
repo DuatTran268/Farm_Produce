@@ -31,7 +31,7 @@ const AdCategoryEdit = () => {
   id = id ?? 0;
 
   useEffect(() => {
-    document.title = "Thêm, cập nhật category";
+    document.title = "Thêm/cập nhật danh mục sản phẩm";
     getCategoryById(id).then((data) => {
       if (data)
         setCategory({
@@ -69,7 +69,7 @@ const AdCategoryEdit = () => {
   return (
     <LayoutCommon>
       <div className="wrapper">
-        <h3 className="text-success py-3">Thêm/cập Category</h3>
+        <h3 className="text-success py-3">Thêm/cập nhật Danh mục sản phẩm</h3>
         <Form
           method="post"
           encType="multipart/form-data"

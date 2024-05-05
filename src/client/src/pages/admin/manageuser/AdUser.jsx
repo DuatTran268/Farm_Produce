@@ -35,7 +35,7 @@ const AdUser = () => {
   }
 
   useEffect(() => {
-    document.title = "Quản lý Người dùng";
+    document.title = "Quản lý Người dùng hệ thống";
 
     loadDepartment();
     async function loadDepartment() {
@@ -82,7 +82,7 @@ const AdUser = () => {
   return (
     <LayoutCommon>
       <div className="title py-3 text-danger">
-        <h3>Quản lý User</h3>
+        <h3>Quản lý Người dùng hệ thống</h3>
       </div>
 
       <HeaderBtn>

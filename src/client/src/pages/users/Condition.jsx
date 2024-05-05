@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import LayoutClient from "../../components/user/common/LayoutClient";
 
 const Condition = () => {
+  useEffect(() => {
+    document.title = "Điều khoản và điều kiện"
+  })
+
   return (
     <LayoutClient>
       <section className="condition">

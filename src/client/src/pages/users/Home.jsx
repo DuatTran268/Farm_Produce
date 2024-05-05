@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Categoris from "../../components/user/categories/Categoris";
 import SlideBanner from "../../components/user/slide/SlideBanner";
 import NewProduct from "../../components/user/product/NewProduct";
@@ -9,6 +9,9 @@ import LayoutClient from "../../components/user/common/LayoutClient";
 import ProductCategory from "../../components/user/product/ProductCategory";
 import UserProfile from "../account/UserProfile";
 const Home = () => {
+  useEffect(() => {
+    document.title = "Nông sản - Đặc sản Đà Lạt"
+  })
   return (
     <LayoutClient>
       <div className="d-flex pt-3 category_slide justify-content-between row">

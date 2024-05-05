@@ -25,7 +25,7 @@ const AdUnitEdit = () => {
   id = id ?? 0;
 
   useEffect(() => {
-    document.title = "Thêm, cập nhật Unit";
+    document.title = "Thêm, cập nhật đơn vị tính";
     getUnitById(id).then((data) => {
       if (data) {
         setUnit(data);
@@ -61,7 +61,7 @@ const AdUnitEdit = () => {
   return (
     <LayoutCommon>
       <div className="wrapper">
-        <h3 className="text-success py-3">Thêm/cập Unit</h3>
+        <h3 className="text-success py-3">Thêm/cập nhật đơn vị tính</h3>
         <Form
           method="post"
           encType="multipart/form-data"

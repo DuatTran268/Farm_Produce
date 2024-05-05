@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ProductList from "../../components/user/product/ProductList";
 import LayoutClient from "../../components/user/common/LayoutClient";
 
 
 
 const MoreAllProduct = () => {
+  useEffect(() => {
+    document.title = "Xem tất cả sản phẩm"
+  })
   return (
     <LayoutClient>
       <div className="more_title">
