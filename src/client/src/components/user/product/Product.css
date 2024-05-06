@@ -58,7 +58,7 @@
 }
 
 .product_img{
-  width: 100%;
+  max-width: 100%;
   text-align: center;
   object-fit: cover;
   background: #fff;

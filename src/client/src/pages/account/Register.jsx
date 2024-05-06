@@ -34,7 +34,7 @@ const Register = () => {
   return (
     <section className="login">
       <div className="login_title">
-        Chào mừng bạn đến với hệ thống Bán Hàng nông sản Đà Lạt
+        Chào mừng bạn đến với Nông sản - Đặc sản Đà Lạt
       </div>
       <div className="login_row">
         <div className="login_col col-6">
