@@ -21,6 +21,8 @@ using FarmProduct.WebApi.Models.Products;
 using FarmProduce.Services.Manage.OrderItems;
 using FarmProduce.Services.Manage.Discounts;
 using System.Reflection.Metadata.Ecma335;
+using FarmProduce.Core.Contracts;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FarmProduct.WebApi.Endpoints
 {
@@ -40,11 +42,9 @@ namespace FarmProduct.WebApi.Endpoints
             routeGroupBuilder.MapGet("/order-item", GetAllOrderItemPageAsync)
            .WithName("Ge tAll Order Item")
            .Produces<ApiResponse<DetailOrder>>();
-            routeGroupBuilder.MapPost("/create-order", AddAsync)
-               .WithName("Create Order ")
-               .Accepts<OrderEditModel>("multipart/form-data")
+            routeGroupBuilder.MapPut("/update-order", UpdateAsync)
                 .Produces(401)
-               .Produces<ApiResponse<DetailOrder>>();
+               .Produces<ApiResponse<OrderUpdateDTO>>();
             routeGroupBuilder.MapPost("/create-order-item", AddOrderItemAsync)
              .WithName("Create Order Item")
              .Accepts<OrderItemEditModel>("multipart/form-data")
@@ -79,32 +79,19 @@ namespace FarmProduct.WebApi.Endpoints
             return Results.Ok(ApiResponse.Success(orders));
         }
 
-
-        private static async Task<IResult> AddAsync(HttpContext context, [FromServices] IOrderRepo orderRepo, IOrderItemRepo orderItemRepo, IMapper mapper)
+      
+        private static async Task<IResult> UpdateAsync([FromServices] IOrderRepo orderRepo,OrderUpdateDTO orderDetailDTO,IMapper mapper)
         {
-            var model = await OrderEditModel.BindAsync(context);
-
-            if (model == null)
+            try
             {
-                return Results.Ok(ApiResponse.Fail(HttpStatusCode.BadRequest, "Invalid order data"));
+                var response = await orderRepo.UpdateOrder(orderDetailDTO);
+                return Results.Ok(ApiResponse.Success(response));
+
             }
-            var order = new Order
+            catch (Exception ex)
             {
-
-                TotalPrice = model.TotalPrice,
-                OrderStatusId = model.OrderStatusId,
-                ApplicationUserId = model.ApplicationUserId,
-                DiscountId = model.DiscountId,
-                PaymentMethodId = model.PaymentMethodId,
-                DateOrder = DateTime.Now
-            };
-            if (model.Id == 0)
-            {
-                order.DateOrder = DateTime.Now;
+                return Results.NotFound(ApiResponse.Fail(HttpStatusCode.BadRequest, ex.Message));
             }
-            await orderRepo.AddOrUpdate(order);
-
-            return Results.Ok(ApiResponse.Success(mapper.Map<DetailOrder>(order), model.Id > 0 ? HttpStatusCode.OK : HttpStatusCode.Created));
         }
         private static async Task<IResult> AddOrderItemAsync(HttpContext context, [FromServices] IOrderItemRepo orderItemRepo, IMapper mapper)
         {

@@ -39,7 +39,7 @@ namespace FarmProduce.Services.Manage.Orders
             return await _context.Set<Order>().AnyAsync(x => x.Id != id);
         }
 
-		public async Task<OrderDetailDTO> GetOrderById(int id, CancellationToken cancellationToken = default)
+		public async Task<OrderUpdateDTO> GetOrderById(int id, CancellationToken cancellationToken = default)
         {
             var result = await _context.Orders
                                 .Include(x=>x.ApplicationUser)
@@ -49,12 +49,12 @@ namespace FarmProduce.Services.Manage.Orders
                                 .Include(x=>x.OrderItems)
                                 .ThenInclude(o=>o.Product)
                                 .Where(x=>x.Id == id).FirstOrDefaultAsync();
-            var order = new OrderDetailDTO()
+            var order = new OrderUpdateDTO()
             {
                 Id = result.Id,
                 TotalPrice = result.TotalPrice,
-                OrderStatusName = result.OrderStatus.StatusCode,
-                CodeNameDiscount = result.Discount.CodeName,
+				OrderStatusId = result.OrderStatusId,
+				CodeNameDiscount = result.Discount.CodeName,
                 DateOrder = result.DateOrder,
                 PaymentMethodName = result.PaymentMethod.Name,
                 UserName = result.ApplicationUser.Name,
@@ -83,6 +83,42 @@ namespace FarmProduce.Services.Manage.Orders
             }
             return await _context.SaveChangesAsync() > 0;
         }
+        
+        public async Task<GeneralResponse> UpdateOrder(OrderUpdateDTO orderDetailDTO)
+        {
+            if(orderDetailDTO ==null)
+            {
+                return new GeneralResponse(false, "Model is empty");
+            }
+            var order  = await _context.Orders
+                .Include(x=>x.ApplicationUser)
+                .Include(x=>x.PaymentMethod)
+                .Include(x=>x.OrderStatus)
+                .Include(x=>x.Discount)
+                .Include(x=>x.OrderItems)
+                .ThenInclude(x=>x.Product)
+                .Where(x=>x.Id == orderDetailDTO.Id).FirstOrDefaultAsync();
+            if(order == null)
+            {
+                return new GeneralResponse(false, "Order not found");
+            }
+            order.Id = orderDetailDTO.Id;
+            order.ApplicationUser.Address = orderDetailDTO.Address;
+            order.ApplicationUser.PhoneNumber = orderDetailDTO.PhoneNumber;
+            order.OrderStatusId = orderDetailDTO.OrderStatusId;
+            order.PaymentMethod.Name = orderDetailDTO.PaymentMethodName;
+            order.Discount.CodeName = orderDetailDTO.CodeNameDiscount;
+            //order.OrderItems = orderDetailDTO.OrderItems.Select(x=> new OrderItem
+            //{
+            //    Id = x.Id,
+            //    Quantity = x.Quantity,
+            //    OrderId= order.Id
+            //}).ToList();
+            _context.Orders.Update(order);
+            await _context.SaveChangesAsync();
+            return new GeneralResponse(true, "orders updated successfully");
+
+        }
         public async Task<GeneralResponse> CreateOrder(DetailOrder orderDTO)
         {
             if (orderDTO is null)
@@ -106,6 +142,7 @@ namespace FarmProduce.Services.Manage.Orders
                 }).ToList()
 
             };
+           
             await _context.SaveChangesAsync();
             return new GeneralResponse(true, "Order created successfully");
 
