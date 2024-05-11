@@ -28,6 +28,14 @@ const AdProduct = () => {
   const [popupMessage, setPopupMessage] = useState("");
   const [popupVisible, setPopupVisible] = useState(false);
   const [IdToDelete, setIdToDelete] = useState(null);
+ // Thêm useState để lưu trạng thái sắp xếp
+ const [sortOrder, setSortOrder] = useState();
+ const [sortColumn, setSortColumn] = useState("Price");
+
+ const handleSortChange = (selectedSortOrder) => {
+   // Cập nhật giá trị của sortOrder
+   setSortOrder(selectedSortOrder);
+ };
 
   let { id } = useParams,
     p = 1,
@@ -45,7 +53,7 @@ const AdProduct = () => {
         setgetProduct(props.items);
         setMetadata(props.metadata);
       }
-      getFilterProduct(productFilter.name, "", ps, pageNumber).then((data) => {
+      getFilterProduct(productFilter.name, "", ps, pageNumber, sortColumn, sortOrder).then((data) => {
         if (data) {
           console.log("Check data of manage product: ", data)
           setData(data);
@@ -55,7 +63,7 @@ const AdProduct = () => {
         setIsVisibleLoading(false);
       });
     }
-  }, [productFilter, ps, p, refreshData, pageNumber]);
+  }, [productFilter, ps, p, refreshData, pageNumber, sortColumn, sortOrder]);
 
 
   
@@ -101,7 +109,14 @@ const AdProduct = () => {
 
       <HeaderBtn>
         <BtnSuccess icon={faAdd} slug={"/admin/product/edit"} name="Thêm mới" />
+
+          
         <ProductFilter/>
+        <select onChange={(e) => handleSortChange(e.target.value)} className="option_sort">
+          <option >---Sắp xếp theo giá---</option>
+            <option value="ASC">Giá tăng dần</option>
+            <option value="DESC">Giá giảm dần</option>
+          </select>
       </HeaderBtn>
 
       <div className="layout_ad_content">

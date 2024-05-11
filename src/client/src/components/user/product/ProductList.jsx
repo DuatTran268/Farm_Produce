@@ -73,8 +73,8 @@ const ProductList = () => {
           <button onClick={() => handleSortChange("DESC")}>
             Sắp xếp giá giảm dần
           </button> */}
-          <select onChange={(e) => handleSortChange(e.target.value)}>
-          <option>---Sắp xếp theo giá---</option>
+          <select onChange={(e) => handleSortChange(e.target.value)}  className="option_sort">
+          <option className="option_sort_value">---Sắp xếp theo giá---</option>
             <option value="ASC">Giá tăng dần</option>
             <option value="DESC">Giá giảm dần</option>
           </select>

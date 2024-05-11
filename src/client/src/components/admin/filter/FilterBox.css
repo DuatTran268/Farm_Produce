@@ -1,0 +1,5 @@
+.filter_box{
+  border: 1px solid var(--color-main);
+  border-radius: 25px 0px 25px 0px;
+  padding: 10px 20px;
+}
