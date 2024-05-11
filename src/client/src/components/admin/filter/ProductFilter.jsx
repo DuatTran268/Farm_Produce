@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { reset, updateName } from "../../../redux/ProductRedux";
+import { reset, updateName, updateOrder, updatePrice } from "../../../redux/ProductRedux";
 import { Form } from "react-bootstrap";
 
 const ProductFilter = () => {

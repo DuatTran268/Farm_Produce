@@ -18,7 +18,7 @@ export function getFilterProduct(
   name !== '' && url.searchParams.append('Name', name);
   status !== '' && url.searchParams.append('Status', status);
   sortColumn !== "" && url.searchParams.append("SortColumn", sortColumn);
-  sortOrder !== "" && url.searchParams.append("SortOrder", sortColumn);
+  sortOrder !== "" && url.searchParams.append("SortOrder", sortOrder);
   url.searchParams.append("PageSize", pageSize);
   url.searchParams.append("PageNumber", pageNumber);
 

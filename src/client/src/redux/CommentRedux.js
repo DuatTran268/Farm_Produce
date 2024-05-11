@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   name: "",
+
 };
 
 
@@ -19,6 +20,8 @@ const commentFilerReducer = createSlice({
         name: action.payload,
       };
     },
+
+    
 
 
   },

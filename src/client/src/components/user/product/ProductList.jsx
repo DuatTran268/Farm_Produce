@@ -17,24 +17,42 @@ const ProductList = () => {
   const [isVisibleLoading, setIsVisibleLoading] = useState(true);
   const [pageNumber, setPageNumber] = useState(1);
   const productFilter = useSelector((state) => state.productFilter);
+  // Thêm useState để lưu trạng thái sắp xếp
+  const [sortOrder, setSortOrder] = useState();
+  const [sortColumn, setSortColumn] = useState("Price");
+
+  const handleSortChange = (selectedSortOrder) => {
+    // Cập nhật giá trị của sortOrder
+    setSortOrder(selectedSortOrder);
+  };
+
+
   let { id } = useParams,
     p = 1,
     ps = 8;
+
   function updatePageNumber(inc) {
     setPageNumber((currentVal) => currentVal + inc);
   }
 
   useEffect(() => {
-    getFilterProduct(productFilter.name, true, ps, pageNumber).then((data) => {
+    getFilterProduct(
+      productFilter.name,
+      true,
+      ps,
+      pageNumber,
+      sortColumn,
+      sortOrder
+    ).then((data) => {
       if (data) {
         setGetProduct(data.items);
-        console.log("Check data item product list: ", data.items)
+        console.log("Check data item product list: ", data.items);
       } else {
         setGetProduct([]);
       }
       setIsVisibleLoading(false);
     });
-  }, [productFilter, ps, p, pageNumber]);
+  }, [productFilter, ps, p, pageNumber, sortColumn, sortOrder]);
 
   // Hàm lấy URL của ảnh thumbnail
   const getThumbnailUrl = (item) => {
@@ -49,6 +67,17 @@ const ProductList = () => {
     <>
       <div className="product_body">
         <div className="box_filter_allproduct">
+          {/* <button onClick={() => handleSortChange("ASC")}>
+            Sắp xếp giá tăng dần
+          </button>
+          <button onClick={() => handleSortChange("DESC")}>
+            Sắp xếp giá giảm dần
+          </button> */}
+          <select onChange={(e) => handleSortChange(e.target.value)}>
+          <option>---Sắp xếp theo giá---</option>
+            <option value="ASC">Giá tăng dần</option>
+            <option value="DESC">Giá giảm dần</option>
+          </select>
           <ProductFilter />
         </div>
         <div className="product_body_flex">
@@ -57,34 +86,33 @@ const ProductList = () => {
               <Loading />
             ) : (
               <>
-              {getProduct.length > 0 ? (
-                getProduct.map((item, index) => {
-                  return (
-                    <>
-                      <div
-                        className="product_item col-11 col-md-6 col-lg-3 "
-                        key={item.id}
-                      >
-                        <ProductTemplate
-                          item={item}
-                          thumbnailUrl={getThumbnailUrl(item)}
-                          urlSlug={item.urlSlug}
-                          name={item.name}
-                          priceVirtual={item.priceVirtual}
-                          quantityAvailable={item.quantityAvailable}
-                          price={item.price}
-                          unit={item.unit.name}
-                        />
-                      </div>
-                    </>
-                  );
-                })
-
-              ) : (
-                 <div className="text-danger">
-                  <h4>Không tìm thấy sản phẩm nào</h4>
-                 </div>
-              )}
+                {getProduct.length > 0 ? (
+                  getProduct.map((item, index) => {
+                    return (
+                      <>
+                        <div
+                          className="product_item col-11 col-md-6 col-lg-3 "
+                          key={item.id}
+                        >
+                          <ProductTemplate
+                            item={item}
+                            thumbnailUrl={getThumbnailUrl(item)}
+                            urlSlug={item.urlSlug}
+                            name={item.name}
+                            priceVirtual={item.priceVirtual}
+                            quantityAvailable={item.quantityAvailable}
+                            price={item.price}
+                            unit={item.unit.name}
+                          />
+                        </div>
+                      </>
+                    );
+                  })
+                ) : (
+                  <div className="text-danger">
+                    <h4>Không tìm thấy sản phẩm nào</h4>
+                  </div>
+                )}
               </>
             )}
           </div>
