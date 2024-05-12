@@ -1,4 +1,4 @@
-import { delete_api, get_api, get_api_nocache, post_api, post_api_json, put_api } from "./AxiosCommon";
+import { delete_api, get_api, get_api_nocache, post_api_json, put_api, put_api_json } from "./AxiosCommon";
 
 export function getOderPagination(
   pageSize = "",
@@ -40,3 +40,13 @@ export async function getInforOfVoucherDiscount(codeName = "") {
 
 
 
+export async function getOrderById(id = 0) {
+  if (id > 0) {
+    return get_api_nocache(`https://localhost:7047/api/orders/${id}`);
+  }
+}
+
+
+export async function UpdateInforOrder(formData) {
+  return put_api_json('https://localhost:7047/api/orders/update-order', formData);
+}

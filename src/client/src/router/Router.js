@@ -19,6 +19,7 @@ import Profile from "../pages/users/Profile";
 import Dashboard from "../pages/admin/dashboard/Dashboard";
 import AdUser from "../pages/admin/manageuser/AdUser";
 import AdOrder from "../pages/admin/order/AdOrder";
+import AdOrderEdit from "../pages/admin/order/AdOrderEdit";
 import AdCategory from "../pages/admin/categories/AdCategories";
 import AdProduct from "../pages/admin/product/AdProduct";
 import AdUnit from "../pages/admin/unit/AdUnit";
@@ -33,7 +34,6 @@ import AdImages from "../pages/admin/images/AdImages";
 import AdImagesEdit from "../pages/admin/images/AdImagesEdit";
 
 import NotFound from "../pages/NotFound";
-import AdOrderEdit from "../pages/admin/order/AdOrderEdit";
 
 const Router = () => {
   return (
@@ -65,7 +65,7 @@ const Router = () => {
 
         <Route path="/admin/order" element={<AdOrder />} />
         <Route path="/admin/order/edit" element={<AdOrderEdit />} />
-        <Route path="/admin/order/edit:/id" element={<AdOrderEdit />} />
+        <Route path="/admin/order/edit/:id" element={<AdOrderEdit />} />
 
 
         <Route path="/admin/category" element={<AdCategory />} />

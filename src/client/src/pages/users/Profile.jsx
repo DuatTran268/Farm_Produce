@@ -133,7 +133,7 @@ const Profile = () => {
                           <td>
                             {format(new Date(order.dateOrder), "dd/MM/yyyy")}
                           </td>
-                          <td>{order.orderStatusName}</td>
+                          <td className="text-danger">{order.orderStatusName}</td>
                           <td>{order.paymentMethodName}</td>
                         </tr>
                       </tbody>

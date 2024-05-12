@@ -71,6 +71,27 @@ export async function post_api_json(your_api, data) {
     return null;
   }
 }
+
+export async function put_api_json(your_api, data) {
+  try {
+    const response = await axios.put(your_api, data, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    const responseData = response.data;
+    console.log("postdata", responseData);
+    if (responseData.isSuccess)
+      return responseData.result;
+    else
+      return null;
+  } catch (error) {
+    console.log('Error', error.message);
+    return null;
+  }
+}
+
+
 export async function put_api(your_api, formData){
  
   try {

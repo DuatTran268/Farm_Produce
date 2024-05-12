@@ -1,0 +1,10 @@
+.infor_product{
+  border: 1px dashed var(--color-main);
+  margin-bottom: 1rem;
+  padding: 1rem;
+}
+
+.infor_user_order{
+  border: 1px dashed var(--color-main);
+  padding: 1rem;
+}
