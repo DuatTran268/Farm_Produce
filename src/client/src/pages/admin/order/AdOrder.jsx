@@ -2,7 +2,12 @@ import React, { useEffect, useState } from "react";
 import LayoutCommon from "../../../components/admin/common/LayoutCommon";
 import HeaderBtn from "../../../components/common/HeaderBtn";
 import BtnSuccess from "../../../components/common/BtnSuccess";
-import { faAdd, faEdit, faInfoCircle, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAdd,
+  faEdit,
+  faInfoCircle,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 import Loading from "../../../components/common/Loading";
 import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -87,16 +92,18 @@ const AdOrder = () => {
     setPopupVisible(false);
   };
 
+  const statusMap = {
+    1: "Chờ xác nhận",
+    2: "Đã xác nhận",
+    3: "Đang giao",
+    4: "Đã giao",
+  };
 
   return (
     <LayoutCommon>
       <div className="title py-3 text-danger">
         <h3>Quản lý Đơn hàng</h3>
       </div>
-
-      <HeaderBtn>
-        <BtnSuccess icon={faAdd} slug={"/admin/order/edit"} name="Thêm mới" />
-      </HeaderBtn>
 
       <div className="layout_ad_content">
         {isVisibleLoading ? (
@@ -108,6 +115,7 @@ const AdOrder = () => {
                 <th>ID đơn</th>
                 <th>Ngày đặt đơn hàng</th>
                 <th>Tổng tiền đơn hàng</th>
+                <th>Trạng thái</th>
                 <th>Thông tin</th>
                 <th>Xoá</th>
               </tr>
@@ -118,8 +126,14 @@ const AdOrder = () => {
                   <tr key={index}>
                     <td>{item.id}</td>
                     <td>{format(new Date(item.dateOrder), "dd/MM/yyyy")}</td>
+                    <td>{formatCurrency(item.totalPrice)}</td>
+
                     <td>
-                    {formatCurrency(item.totalPrice)}</td>
+                      <div className="text-danger">
+                        {statusMap[item.orderStatusId]}
+                      </div>
+                    </td>
+
                     <td className="text-center">
                       <Link
                         to={`/admin/order/edit/${item.id}`}
@@ -154,7 +168,6 @@ const AdOrder = () => {
           onConfirm={handleConfirmDelete}
         />
       )}
-
     </LayoutCommon>
   );
 };

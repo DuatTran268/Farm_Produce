@@ -14,6 +14,8 @@ import { faRightFromBracket, faSave } from "@fortawesome/free-solid-svg-icons";
 import BtnError from "../../../components/common/BtnError";
 import "./AdOrder.css";
 import { format } from "date-fns";
+import { PDFViewer } from "@react-pdf/renderer";
+import Invoice from "./Invoice";
 
 const AdOrderEdit = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -35,14 +37,14 @@ const AdOrderEdit = () => {
 
   const formatCurrency = (number) => {
     if (number) {
-        return number.toLocaleString("vi-VN", {
-            style: "currency",
-            currency: "VND",
-        });
+      return number.toLocaleString("vi-VN", {
+        style: "currency",
+        currency: "VND",
+      });
     } else {
-        return ""; // hoặc giá trị mặc định khác tùy thuộc vào yêu cầu của bạn
+      return ""; // hoặc giá trị mặc định khác tùy thuộc vào yêu cầu của bạn
     }
-};
+  };
   useEffect(() => {
     document.title = "Chi tiết đơn hàng";
     getOrderById(id).then((data) => {
@@ -183,37 +185,35 @@ const AdOrderEdit = () => {
         </div>
       </Form>
 
-      <h5 className="text-success py-3">Thông tin đơn hàng và sản phẩm</h5>
+      {/* <h5 className="text-success py-3">Thông tin đơn hàng và sản phẩm</h5>
       <div className="detail_infor_order">
         <div className="row">
           <div className="col-6">
             <Table>
-                <tr>
-                  <td className="">Họ tên</td>
-                  <td className="">{orderInfor.userName}</td>
-                </tr>
-                <tr>
-                  <td className="">Số điện thoại</td>
-                  <td className="">{orderInfor.phoneNumber}</td>
-                </tr>
-                <tr>
-                  <td className="">Địa chỉ</td>
-                  <td className="">{orderInfor.address}</td>
-                </tr>
-                <tr>
-                  <td className="">Ngày đặt hàng</td>
-                  {/* <td>{format(new Date(orderInfor.dateOrder), "dd/MM/yyyy")}</td> */}
-                </tr>
-                <tr>
-                  <td className="">Phương thức thanh toán</td>
-                  <td className="">{orderInfor.paymentMethodName}</td>
-
-                </tr>
-                <tr>
-                  <td className="">Tổng tiền</td>
-                  {/* <td className="">{formatCurrency(orderInfor.totalPrice)}</td> */}
-                  <td className="">{orderInfor.totalPrice ? formatCurrency(orderInfor.totalPrice) : ""}</td>
-                </tr>
+              <tr>
+                <td className="">Họ tên</td>
+                <td className="">{orderInfor.userName}</td>
+              </tr>
+              <tr>
+                <td className="">Số điện thoại</td>
+                <td className="">{orderInfor.phoneNumber}</td>
+              </tr>
+              <tr>
+                <td className="">Địa chỉ</td>
+                <td className="">{orderInfor.address}</td>
+              </tr>
+              <tr>
+                <td className="">Ngày đặt hàng</td>
+                <td>{orderInfor.dateOrder}</td>
+              </tr>
+              <tr>
+                <td className="">Phương thức thanh toán</td>
+                <td className="">{orderInfor.paymentMethodName}</td>
+              </tr>
+              <tr>
+                <td className="">Tổng tiền</td>
+                <td className="">{orderInfor.totalPrice}</td>
+              </tr>
             </Table>
           </div>
           <div className=" col-6">
@@ -247,6 +247,12 @@ const AdOrderEdit = () => {
             )}
           </div>
         </div>
+      </div> */}
+
+      <div className="pdf_center">
+        <PDFViewer width="570" height="870" className="app">
+          <Invoice orderData={orderInfor} />
+        </PDFViewer>
       </div>
     </LayoutCommon>
   );
