@@ -178,8 +178,9 @@ const FormOrder = () => {
           enqueueSnackbar("Cảm ơn bạn đặt hàng", {
             variant: "success",
           });
-          navigate(`/checkout/orderinfor`);
           emptyCart(); // Xóa toàn bộ sản phẩm trong giỏ hàng sau khi thanh toán thành công
+          navigate(`/home`);
+
         } else {
           enqueueSnackbar("Đã xảy ra lỗi khi đặt hàng", {
             variant: "error",

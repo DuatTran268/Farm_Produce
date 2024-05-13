@@ -5,6 +5,12 @@ import { getUserById } from "../../api/Account";
 import { useParams } from "react-router-dom";
 import "../../styles/user/Profile.css";
 import { format } from "date-fns";
+import { deleteOrder } from "../../api/Order";
+import { enqueueSnackbar } from "notistack";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCancel, faTrash } from "@fortawesome/free-solid-svg-icons";
+import Popup from "../../components/common/Popup";
+import { Button } from "react-bootstrap";
 
 const Profile = () => {
   const initialState = {
@@ -23,7 +29,6 @@ const Profile = () => {
     document.title = "Trang cá nhân";
     getUserById(id).then((data) => {
       if (data) {
-        console.log("Check data infor: ", data);
         setUser({
           ...data,
         });
@@ -38,6 +43,50 @@ const Profile = () => {
       style: "currency",
       currency: "VND",
     });
+  };
+
+  const [IdToDelete, setIdToDelete] = useState(null);
+  const [popupMessage, setPopupMessage] = useState("");
+  const [popupVisible, setPopupVisible] = useState(false);
+  const [reRender, setRender] = useState(false);
+
+  const handleDelete = (order) => {
+    const { id, orderStatusName } = order;
+    console.log("Check order status name", orderStatusName);
+    if (orderStatusName === "Chờ xác nhận") {
+      setIdToDelete(id);
+      setPopupMessage("Bạn có muốn huỷ đơn hàng này?");
+      setPopupVisible(true);
+    } else {
+      enqueueSnackbar("Không thể huỷ vì " + orderStatusName + " đơn hàng.", {
+        variant: "warning",
+      });
+    }
+  };
+
+  const handleConfirmDelete = async () => {
+    const response = await deleteOrder(IdToDelete);
+    if (response) {
+      enqueueSnackbar("Đã xoá thành công", {
+        variant: "success",
+      });
+      // Cập nhật danh sách đơn hàng sau khi xoá thành công
+      setUser((prevUser) => ({
+        ...prevUser,
+        orders: prevUser.orders.filter((order) => order.id !== IdToDelete),
+      }));
+      // Kích hoạt render lại component
+      setRender((prev) => !prev);
+    } else {
+      enqueueSnackbar("Xoá thất bại", {
+        variant: "error",
+      });
+    }
+    setPopupVisible(false);
+  };
+
+  const handleCancelDelete = () => {
+    setPopupVisible(false);
   };
 
   return (
@@ -120,6 +169,10 @@ const Profile = () => {
                 <div key={index} className="col-6 card_order">
                   <div className="card_order_infor">
                     <h5 className="text-title">Mã đơn hàng: {order.id}</h5>
+                    <Button className="btn-danger" onClick={() => handleDelete(order)}>
+                      Huỷ đơn hàng
+                      <FontAwesomeIcon className="px-2" icon={faCancel} color="white " />
+                    </Button>
                     <Table>
                       <thead>
                         <tr>
@@ -133,7 +186,9 @@ const Profile = () => {
                           <td>
                             {format(new Date(order.dateOrder), "dd/MM/yyyy")}
                           </td>
-                          <td className="text-danger">{order.orderStatusName}</td>
+                          <td className="text-danger">
+                            {order.orderStatusName}
+                          </td>
                           <td>{order.paymentMethodName}</td>
                         </tr>
                       </tbody>
@@ -159,8 +214,7 @@ const Profile = () => {
                           <td>
                             {order.orderItems.map((productItem, i) => (
                               <div key={i}>
-                                <p>
-                                {formatCurrency(productItem.price)}</p>
+                                <p>{formatCurrency(productItem.price)}</p>
                               </div>
                             ))}
                           </td>
@@ -184,6 +238,13 @@ const Profile = () => {
           )}
         </div>
       </div>
+      {popupVisible && (
+        <Popup
+          message={popupMessage}
+          onCancel={handleCancelDelete}
+          onConfirm={handleConfirmDelete}
+        />
+      )}
     </LayoutClient>
   );
 };
