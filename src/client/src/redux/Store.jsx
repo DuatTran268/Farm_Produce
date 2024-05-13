@@ -4,6 +4,7 @@ import { commentReduce } from "./CommentRedux";
 import { productReduce } from "./ProductRedux";
 
 import authReducer from "./Account"
+import { userReducer } from "./UserRedux";
 
 const store = configureStore({
   reducer : {
@@ -11,7 +12,7 @@ const store = configureStore({
     commentFilter: commentReduce,
     productFilter: productReduce,
     auth: authReducer,
-  
+    userFilter: userReducer,
     
   },
 });

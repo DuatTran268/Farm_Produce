@@ -1,12 +1,11 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { reset, updateName} from "../../../redux/ProductRedux";
+
 import { Form } from "react-bootstrap";
-import "./FilterBox.css"
+import { useDispatch, useSelector } from "react-redux";
+import { reset, updateName } from "../../../redux/UserRedux";
 
-
-const ProductFilter = () => {
-  const productFilter = useSelector((state) => state.productFilter),
+const UserFilter = () => {
+  const userFilter = useSelector((state) => state.userFilter),
     dispatch = useDispatch();
 
   const handleReset = (e) => {
@@ -18,15 +17,14 @@ const ProductFilter = () => {
       <Form.Group className="col-auto">
         <Form.Label className="visually-hidden">Tên</Form.Label>
         <Form.Control
-        className="filter_box"
           type="text"
           placeholder="Tìm kiếm theo tên"
           name="name"
-          value={productFilter.name}
+          value={userFilter.name}
           onChange={(e) => dispatch(updateName(e.target.value))}
         />
       </Form.Group>
     </Form>
   );
 };
-export default ProductFilter;
+export default UserFilter;

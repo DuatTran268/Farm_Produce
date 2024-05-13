@@ -9,7 +9,7 @@ namespace FarmProduce.Core.DTO
 {
 	public class CommentQuery
 	{
-		public string CommentText { get; set; } = "";
+		public string Name { get; set; } = "";
         public string UrlSlug { get; set; } = "";
 
 

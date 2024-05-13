@@ -40,7 +40,11 @@ const Sidebar = () => {
             <span className="sidebar-tile">Quản lý</span>
             <SidebarCommon slug="product" icon={faTicket} title="Sản phẩm" />
             <SidebarCommon slug="category" icon={faList} title="Danh mục" />
-            <SidebarCommon slug="order" icon={faArrowCircleUp} title="Đơn hàng"/>
+            <SidebarCommon
+              slug="order"
+              icon={faCar}
+              title="Đơn hàng"
+            />
             {/* <SidebarCommon slug="deliver" icon={faCar} title="Vận chuyển" /> */}
             <SidebarCommon slug="comment" icon={faMessage} title="Bình luận" />
             <SidebarCommon slug="user" icon={faUser} title="Người dùng" />
@@ -51,16 +55,16 @@ const Sidebar = () => {
           </div>
 
           <div className="sidebar-main">
-            <span className="sidebar-tile">Cài đặt</span>
-            <SidebarCommon slug="setting" icon={faEdit} title="Cài đặt" />
+            {/* <span className="sidebar-tile">Cài đặt</span>
+            <SidebarCommon slug="setting" icon={faEdit} title="Cài đặt" /> */}
             <div className="sidebar-wrapper">
-      <Link className="sidebar-link" to={`/login`}>
-        <li >
-          <FontAwesomeIcon icon={faSignOut} />
-          <span className="px-3">Đăng xuất</span>
-        </li>
-      </Link>
-    </div>
+              <Link className="sidebar-link" to={`/login`}>
+                <li>
+                  <FontAwesomeIcon icon={faSignOut} />
+                  <span className="px-3">Đăng xuất</span>
+                </li>
+              </Link>
+            </div>
           </div>
         </ul>
       </div>

@@ -87,7 +87,7 @@ const FormOrder = () => {
       orders: [
         {
           id: 0,
-          dateOrder: "",
+          // dateOrder: "",
           totalPrice: 0,
           orderStatusId: 0,
           applicationUserId: "",
@@ -245,7 +245,7 @@ const FormOrder = () => {
                 </td>
               </tr>
               <tr>
-                <td colSpan={3}>Tổng phải thanh toán</td>
+                <td colSpan={3}>Tổng tiền</td>
                 <td className="name_product_table">
                   {formatCurrency(cartTotal)}
                 </td>
@@ -390,7 +390,7 @@ const FormOrder = () => {
             notempty={"Không được bỏ trống"}
           />
 
-          <BoxEdit
+          {/* <BoxEdit
             control={
               <Form.Control
                 className="form_control_order"
@@ -408,7 +408,7 @@ const FormOrder = () => {
               />
             }
             notempty={"Không được bỏ trống"}
-          />
+          /> */}
 
           <BoxEdit
             control={

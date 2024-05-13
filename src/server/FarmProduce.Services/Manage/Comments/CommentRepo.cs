@@ -53,9 +53,9 @@ namespace FarmProduce.Services.Manage.Comments
         private IQueryable<Comment> FilterComment(CommentQuery commentQuery)
         {
             IQueryable<Comment> comments = _context.Set<Comment>();
-            if (!String.IsNullOrWhiteSpace(commentQuery.CommentText))
+            if (!String.IsNullOrWhiteSpace(commentQuery.Name))
             {
-                comments = comments.Where(x => x.CommentText.Contains(commentQuery.CommentText));
+                comments = comments.Where(x => x.Name.Contains(commentQuery.Name));
             }
 
             return comments;

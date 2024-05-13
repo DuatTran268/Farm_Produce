@@ -6,12 +6,13 @@ import { Link, useParams } from "react-router-dom";
 import { getFilterUser } from "../../../api/User";
 import HeaderBtn from "../../../components/common/HeaderBtn";
 import BtnSuccess from "../../../components/common/BtnSuccess";
-import { faAdd, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faAdd, faEdit, faInfoCircle, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Loading from "../../../components/common/Loading";
 import { Table } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import BtnNextPage from "../../../components/common/BtnNextPage";
 import Popup from "../../../components/common/Popup";
+import UserFilter from "../../../components/admin/filter/UserFilter";
 
 const AdUser = () => {
   const [getUser, setgetUser] = useState([]);
@@ -43,7 +44,7 @@ const AdUser = () => {
         setgetUser(props.items);
         setMetadata(props.metadata);
       }
-      getFilterUser(ps, pageNumber).then((data) => {
+      getFilterUser(userFilter.name, ps, pageNumber).then((data) => {
         if (data) {
           setData(data);
         } else {
@@ -52,7 +53,7 @@ const AdUser = () => {
         setIsVisibleLoading(false);
       });
     }
-  }, [ps, p, refreshData, pageNumber]);
+  }, [userFilter, ps, p, refreshData, pageNumber]);
 
   const handleDeleteUser = (id) => {
     setUserIdToDelete(id);
@@ -87,7 +88,7 @@ const AdUser = () => {
 
       <HeaderBtn>
         <BtnSuccess icon={faAdd} slug={"/admin/user/edit"} name="Thêm mới" />
-        {/* <UserFilter /> */}
+        <UserFilter/>
       </HeaderBtn>
 
       <div className="layout_ad_content">
@@ -101,7 +102,7 @@ const AdUser = () => {
                 <th>Họ tên</th>
                 <th>Số điện thoại</th>
                 <th>Email</th>
-                <th>Sửa</th>
+                <th>Thông tin</th>
                 <th>Xoá</th>
               </tr>
             </thead>
@@ -152,7 +153,7 @@ const AdUser = () => {
                         to={`/admin/user/edit/${item.id}`}
                         className="text-warning"
                       >
-                        <FontAwesomeIcon icon={faEdit} />
+                        <FontAwesomeIcon icon={faInfoCircle} />
                       </Link>
                     </td>
                     <td className="text-center">

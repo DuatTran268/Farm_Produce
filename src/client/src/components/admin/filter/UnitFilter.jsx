@@ -6,7 +6,6 @@ import { Form } from "react-bootstrap";
 const UnitFilter = () => {
   const unitFilter = useSelector((state) => state.unitFilter),
     dispatch = useDispatch();
-
   const handleReset = (e) => {
     dispatch(reset());
   };
