@@ -23,6 +23,7 @@ using FarmProduce.Services.Manage.Discounts;
 using System.Reflection.Metadata.Ecma335;
 using FarmProduce.Core.Contracts;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using FarmProduct.WebApi.Models.Comments;
 
 namespace FarmProduct.WebApi.Endpoints
 {
@@ -56,14 +57,19 @@ namespace FarmProduct.WebApi.Endpoints
 	            .Produces(401)
 	            .Produces<ApiResponse<string>>();
 		}
-        private static async Task<IResult> GetAllPageAsync([FromServices] IOrderRepo orderRepo, [AsParameters] PagingModel pagingModel, CancellationToken cancellation = default)
+        private static async Task<IResult> GetAllPageAsync([FromServices] IOrderRepo orderRepo, [AsParameters] OrderQuery orderQuery, [AsParameters] PagingModel pagingModel)
         {
-            var orders = await orderRepo.GetAllPageAsync(
-                orders => orders.ProjectToType<DetailOrder>(), pagingModel, cancellation);
-            var pagination = new PaginationResult<DetailOrder>(orders);
+			//var orders = await orderRepo.GetAllPageAsync(
+			//    orders => orders.ProjectToType<DetailOrder>(), pagingModel, cancellation);
+			//var pagination = new PaginationResult<DetailOrder>(orders);
 
-            return Results.Ok(ApiResponse.Success(pagination));
-        }
+			//return Results.Ok(ApiResponse.Success(pagination));
+
+			var orders = await orderRepo.GetAllPageAsync(
+				orders => orders.ProjectToType<OrderDto>(), orderQuery, pagingModel);
+			var pagination = new PaginationResult<OrderDto>(orders);
+			return Results.Ok(ApiResponse.Success(pagination));
+		}
         private static async Task<IResult> GetByIdAsync(int id,IOrderRepo orderRepo, CancellationToken cancellation)
         {
             var order = await orderRepo.GetOrderById(id, cancellation);

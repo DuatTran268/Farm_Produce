@@ -14,7 +14,7 @@ namespace FarmProduce.Services.Manage.Orders
     public interface IOrderRepo
     {
         Task<IList<T>> GetAllAsync<T>(Func<IQueryable<Order>, IQueryable<T>> mapper, CancellationToken cancellationToken = default);
-        Task<IPagedList<T>> GetAllPageAsync<T>(Func<IQueryable<Order>, IQueryable<T>> mapper, IPagingParams pagingParams, CancellationToken cancellationToken = default);
+        Task<IPagedList<T>> GetAllPageAsync<T>(Func<IQueryable<Order>, IQueryable<T>> mapper, OrderQuery orderQuery, IPagingParams pagingParams, CancellationToken cancellationToken = default);
         Task<bool> IsIdExisted(int id, CancellationToken cancellationToken = default);
 		Task<bool> DeleteOrder(int id, CancellationToken cancellationToken = default);
 

@@ -17,6 +17,8 @@ import { useSnackbar } from "notistack";
 import { deleteOrder, getOderPagination } from "../../../api/Order";
 import { format } from "date-fns";
 import Popup from "../../../components/common/Popup";
+import OrderFilter from "../../../components/admin/filter/OrderFilter";
+import { useSelector } from "react-redux";
 
 const AdOrder = () => {
   const [getOrder, setgetOrder] = useState([]);
@@ -25,7 +27,9 @@ const AdOrder = () => {
   const [metadata, setMetadata] = useState({});
   const [pageNumber, setPageNumber] = useState(1);
 
-  const [isVisibleLoading, setIsVisibleLoading] = useState(true);
+  const [isVisibleLoading, setIsVisibleLoading] = useState(true),
+  orderFilter = useSelector((state) => state.orderFilter);
+
 
   let { id } = useParams,
     p = 1,
@@ -44,7 +48,7 @@ const AdOrder = () => {
         setgetOrder(props.items);
         setMetadata(props.metadata);
       }
-      getOderPagination(ps, pageNumber).then((data) => {
+      getOderPagination(orderFilter.id ,orderFilter.name, ps, pageNumber).then((data) => {
         if (data) {
           setData(data);
           console.log("Check data order", data);
@@ -54,7 +58,7 @@ const AdOrder = () => {
         setIsVisibleLoading(false);
       });
     }
-  }, [ps, p, reRender, pageNumber]);
+  }, [orderFilter, ps, p, reRender, pageNumber]);
 
   const formatCurrency = (number) => {
     return number.toLocaleString("vi-VN", {
@@ -104,6 +108,8 @@ const AdOrder = () => {
       <div className="title py-3 text-danger">
         <h3>Quản lý Đơn hàng</h3>
       </div>
+
+      <OrderFilter/>
 
       <div className="layout_ad_content">
         {isVisibleLoading ? (

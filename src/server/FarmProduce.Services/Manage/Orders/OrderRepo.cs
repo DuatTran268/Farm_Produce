@@ -11,6 +11,7 @@ using System.Linq.Dynamic.Core;
 using System.Text;
 using System.Threading.Tasks;
 using static FarmProduce.Core.DTO.ServiceResponses;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace FarmProduce.Services.Manage.Orders
 {
@@ -29,12 +30,29 @@ namespace FarmProduce.Services.Manage.Orders
             return await mapper(orders).ToListAsync(cancellationToken);
         }
 
-        public async Task<IPagedList<T>> GetAllPageAsync<T>(Func<IQueryable<Order>, IQueryable<T>> mapper, IPagingParams pagingParams, CancellationToken cancellationToken = default)
+        public async Task<IPagedList<T>> GetAllPageAsync<T>(Func<IQueryable<Order>, IQueryable<T>> mapper, OrderQuery orderQuery, IPagingParams pagingParams, CancellationToken cancellationToken = default)
         {
-            IQueryable<Order> orders = _context.Set<Order>().Include(x=>x.OrderItems);
-            return await mapper(orders).ToPagedListAsync(pagingParams, cancellationToken);
+			//IQueryable<Order> orders = _context.Set<Order>().Include(x=>x.OrderItems);
+			IQueryable<Order> orders = FilterOrder(orderQuery);
+			return await mapper(orders).ToPagedListAsync(pagingParams, cancellationToken);
         }
-        public async Task<bool> IsIdExisted(int id,CancellationToken cancellationToken = default)
+		private IQueryable<Order> FilterOrder(OrderQuery orderQuery)
+		{
+			IQueryable<Order> orders = _context.Set<Order>();
+			if (!String.IsNullOrWhiteSpace(orderQuery.Name))
+			{
+				orders = orders.Where(x => x.ApplicationUser.Name.Contains(orderQuery.Name));
+			}
+
+			if (orderQuery.Id > 0)
+			{
+				orders = orders.Where(o => o.Id == orderQuery.Id);
+			}
+
+			return orders;
+		}
+
+		public async Task<bool> IsIdExisted(int id,CancellationToken cancellationToken = default)
         {
             return await _context.Set<Order>().AnyAsync(x => x.Id != id);
         }

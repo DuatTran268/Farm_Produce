@@ -1,12 +1,16 @@
 import { delete_api, get_api, get_api_nocache, post_api_json, put_api, put_api_json } from "./AxiosCommon";
 
 export function getOderPagination(
+  id = "",
+  name = "",
   pageSize = "",
   pageNumber = 1,
   sortColumn = "",
   sortOrder = ""
 ) {
   let url = new URL(`https://localhost:7047/api/orders`);
+  id !== '' && url.searchParams.append('Id', id);
+  name !== '' && url.searchParams.append('Name', name);
   sortColumn !== "" && url.searchParams.append("SortColumn", sortColumn);
   sortOrder !== "" && url.searchParams.append("SortOrder", sortColumn);
   url.searchParams.append("PageSize", pageSize);
