@@ -24,7 +24,7 @@ namespace FarmProduce.Data.Seeders
             _roleManager = roleManager;
             _userRoles = userRoles;
         }
-       
+
         public void Initialize()
         {
             _dbContext.Database.EnsureCreated();
@@ -39,7 +39,7 @@ namespace FarmProduce.Data.Seeders
             var paymentMethods = AddPaymentMethods();
             var orderStatuses = AddOrderStatuses();
             var discounts = AddDiscounts();
-            var orders = AddOrders(users, paymentMethods,orderStatuses, discounts );
+            var orders = AddOrders(users, paymentMethods, orderStatuses, discounts);
             var userRole = AddUserRoles(users, roles);
             var products = AddProducts(caterories, units);
             var comments = AddComments(products, users);
@@ -139,10 +139,10 @@ namespace FarmProduce.Data.Seeders
                     UrlSlug="rau-cai-bap",
                    QuantityAvailable=38,
                    Price=45000,
-				   PriceVirtual=50000,
-				   Description="Rau cải bắp sạch",
-				   ViewCount=5,
-				   DateCreate= new DateTime(2023,08,12),
+                   PriceVirtual=50000,
+                   Description="Rau cải bắp sạch",
+                   ViewCount=5,
+                   DateCreate= new DateTime(2023,08,12),
                    DateUpdate=DateTime.Now,
                    Unit=units[0],
                    Category= caterories[0],
@@ -154,8 +154,8 @@ namespace FarmProduce.Data.Seeders
                     UrlSlug="cu-cai",
                    QuantityAvailable=8,
                    Price=20000,
-				   PriceVirtual=25000,
-				   Description="Củ cải",
+                   PriceVirtual=25000,
+                   Description="Củ cải",
                    ViewCount=3,
                    DateCreate= new DateTime(2023,03,12),
                    DateUpdate=DateTime.Now,
@@ -163,6 +163,174 @@ namespace FarmProduce.Data.Seeders
                    Unit=units[0],
 
                 },
+                    new(){
+                    Name="Xà lách lô lô tím",
+                    UrlSlug="xa-lach-lo-lo-tim",
+                   QuantityAvailable=100,
+                   Price=55000,
+                   PriceVirtual=60000,
+                   Description="Xà lách lô lô tím hay còn gọi là xà lách lola rossa, có thân mềm, lá xếp rời rạc, kết cấu lá giòn, tán lá rộng và xoăn, được nhiều gia đình yêu thích vì độ ngon và giòn. DaLaVi cung cấp rau sạch với phương pháp thủy canh đảm bảo chất lượng sản phẩm và an toàn cho người sử dụng.",
+                   ViewCount=5,
+                   DateCreate= new DateTime(2023,08,12),
+                   DateUpdate=DateTime.Now,
+                   Unit=units[0],
+                   Category= caterories[4],
+
+
+                }, new(){
+                    Name="XÀ LÁCH MỸ",
+                    UrlSlug="cu-cai",
+                   QuantityAvailable=10,
+                   Price=80000,
+                   PriceVirtual=80000,
+                   Description="Xà lách mỹ là món ăn thường nhật trong bữa cơm mỗi gia đình Việt bởi tính phổ dụng, dễ ăn và đem lại nhiều dưỡng chất thiết yếu cho cơ thể. Món rau trộn từ xà lách cũng tạo cảm giác ngon miệng không chỉ cho người lớn mà còn cả trẻ em.",
+                   ViewCount=3,
+                   DateCreate= new DateTime(2023,03,12),
+                   DateUpdate=DateTime.Now,
+                   Category= caterories[4],
+                   Unit=units[0],
+
+                },
+                     new(){
+                    Name="Xà lách Romaine",
+                    UrlSlug="xa-lach-romaine",
+                   QuantityAvailable=10,
+                   Price=80000,
+                   PriceVirtual=80000,
+                   Description="Xà lách Romaine có tác dụng hỗ trợ tiêu hóa và tốt cho gan, giảm nguy cơ mắc bệnh tim mạch, các cơn nhồi máu cơ tim, ung thư, nứt cột sống, thiếu máu, chứng mất ngủ do căng thẳng, hỗ trợ tiêu hóa và tốt cho gan, giảm nguy cơ mắc bệnh tim mạch, các cơn nhồi máu cơ tim, ung thư, nứt cột sống, thiếu máu, chứng mất ngủ do căng thẳng. Ngoài ra Vitamin C và Beta Carotene kết hợp với nhau để phòng chống sự oxy hóa cholesterol. ",
+                   ViewCount=3,
+                   DateCreate= new DateTime(2023,03,12),
+                   DateUpdate=DateTime.Now,
+                   Category= caterories[4],
+                   Unit=units[0],
+
+                },
+                      new(){
+                    Name="Xà lách mỡ",
+                    UrlSlug="xa-lach-mo",
+                   QuantityAvailable=10,
+                   Price=45000,
+                   PriceVirtual=50000,
+                   Description="Xà lách mỡ Đà Lạt được trồng theo phương pháp thủy canh nên có vị ngọt mát, có tác dụng giải nhiệt, lọc máu, khai vị (vào đầu bữa ăn, nó kích thích các tuyến tiêu hóa), cung cấp chất khoáng, giảm đau, gây ngủ, chống ho…",
+                   ViewCount=3,
+                   DateCreate= new DateTime(2023,03,12),
+                   DateUpdate=DateTime.Now,
+                   Category= caterories[4],
+                   Unit=units[0],
+
+                },
+                 new(){
+                    Name="Rau xà lách thuỷ tinh ",
+                    UrlSlug="xa-lach-mo",
+                   QuantityAvailable=10,
+                   Price=45000,
+                   PriceVirtual=50000,
+                   Description="Xà lách mỡ Đà Lạt được trồng theo phương pháp thủy canh nên có vị ngọt mát, có tác dụng giải nhiệt, lọc máu, khai vị (vào đầu bữa ăn, nó kích thích các tuyến tiêu hóa), cung cấp chất khoáng, giảm đau, gây ngủ, chống ho…",
+                   ViewCount=3,
+                   DateCreate= new DateTime(2023,03,12),
+                   DateUpdate=DateTime.Now,
+                   Category= caterories[4],
+                   Unit=units[0],
+
+                },
+                  new(){
+                    Name="Vú sữa hoàng kim",
+                    UrlSlug="vu-sua-hoang-kim",
+                   QuantityAvailable=10,
+                   Price=240000,
+                   PriceVirtual=250000,
+                   Description="Vú sữa hoàng kim – “nữ hoàng” trái cây nhiệt đới với hương vị thơm ngon, độc đáo cùng giá trị dinh dưỡng cao, vú sữa hoàng kim đang dần trở thành “nữ hoàng” trong các loại trái cây cao cấp.…",
+                   ViewCount=3,
+                   DateCreate= new DateTime(2023,03,12),
+                   DateUpdate=DateTime.Now,
+                   Category= caterories[5],
+                   Unit=units[1],
+
+                },
+                   new(){
+                    Name="Quả dưa Pepino",
+                    UrlSlug="qua-dua-penino",
+                   QuantityAvailable=10,
+                   Price=160000,
+                   PriceVirtual=160000,
+                   Description="Quả dưa Pepino là giống quả lai giữa dưa hấu và quả lê. Chúng được mệnh danh là một trong những loại dưa hấu ngon nhất thế giới với vị ngọt dịu. Dưa pepino thường được sử dụng để ăn tráng miệng, làm salad hay sinh tố. Một trái Pepino cung cấp rất nhiều vitamin, chất chống lão hóa và ung thư.",
+                   ViewCount=3,
+                   DateCreate= new DateTime(2023,03,12),
+                   DateUpdate=DateTime.Now,
+                   Category= caterories[5],
+                   Unit=units[1],
+
+                },new(){
+                    Name="Dưa pepino tím",
+                    UrlSlug="dua-pepino-tim",
+                   QuantityAvailable=10,
+                   Price=130000,
+                   PriceVirtual=140000,
+                   Description="Dưa pepino tím không chỉ có ngoại hình đẹp mà còn ngọt hơn, vị đậm hơn, mùi thơm dễ chịu hơn dưa pepino màu vàng. Hơn nữa, sắc tố tím còn mang đến hàm lượng chất chống oxy hóa vượt trội nhờ chứa lượng flavonoid và phenol dồi dào.",
+                   ViewCount=3,
+                   DateCreate= new DateTime(2023,03,12),
+                   DateUpdate=DateTime.Now,
+                   Category= caterories[5],
+                   Unit=units[1],
+
+                },new(){
+                    Name="Phúc bồn tử đỏ",
+                    UrlSlug="phuc-bon-tu-do",
+                   QuantityAvailable=10,
+                   Price=380000,
+                   PriceVirtual=400000,
+                   Description="Phúc bồn tử hay còn gọi là quả mâm xôi, là một loại trái cây giàu chất dinh dưỡng, vitamin có lợi cho sức khỏe và điều trị bệnh lý,.. Được trẻ em và người lớn yêu thích bởi vị ngọt và chua nhẹ.",
+                   ViewCount=3,
+                   DateCreate= new DateTime(2023,03,12),
+                   DateUpdate=DateTime.Now,
+                   Category= caterories[5],
+                   Unit=units[1],
+
+                }
+                   ,new(){
+                    Name="Phúc bồn tử đen",
+                    UrlSlug="phuc-bon-tu-den",
+                   QuantityAvailable=10,
+                   Price=380000,
+                   PriceVirtual=400000,
+                   Description="Phúc bồn tử đen là một loại trái cây nhỏ, ngọt và có vị chua. Chúng là một nguồn cung cấp vitamin C tuyệt vời để hỗ trợ hệ thống miễn dịch và giúp chống lại nhiễm trùng.",
+                   ViewCount=3,
+                   DateCreate= new DateTime(2023,03,12),
+                   DateUpdate=DateTime.Now,
+                   Category= caterories[5],
+                   Unit=units[1],
+
+                }
+                    ,new(){
+                    Name="Ớt trái cây Sweet Palermo",
+                    UrlSlug="palermo",
+                   QuantityAvailable=10,
+                   Price=180000,
+                   PriceVirtual=180000,
+                   Description="Ớt trái cây Sweet Palermo được mệnh danh là vua của các loại ớt có hình dáng thuôn dài không cay, không hăng, có vị giòn, ngọt và mọng nước, có thể ăn trực tiếp như một loại trái cây.",
+                   ViewCount=3,
+                   DateCreate= new DateTime(2023,03,12),
+                   DateUpdate=DateTime.Now,
+                   Category= caterories[5],
+                   Unit=units[1],
+
+                }, new(){
+                    Name="Trái tầm bóp",
+                    UrlSlug="carolina-reaper",
+                   QuantityAvailable=10,
+                   Price=1300000,
+                   PriceVirtual=1500000,
+                   Description="Tầm bóp (thù lù) Nam Mỹ có tên khoa học là Physalis Peruviana có nguồn gốc từ dài núi Andes ở Nam Mỹ, có cùng họ hàng với cà chua bi và có đặc điểm là có vỏ bảo vệ tự nhiên trùm ở ngoài.",
+                   ViewCount=3,
+                   DateCreate= new DateTime(2023,03,12),
+                   DateUpdate=DateTime.Now,
+                   Category= caterories[5],
+                   Unit=units[1],
+
+                },
+
+
+
             };
             foreach (var product in products)
             {
@@ -237,33 +405,33 @@ namespace FarmProduce.Data.Seeders
         {
             var orders = new List<Order>();
 
-           
-                var order = new Order
-                {
-                    ApplicationUser = users[1],
-                    TotalPrice = 400000,
-                    DateOrder = DateTime.Now,
-                    OrderStatus = orderStatuses[1],
-                    PaymentMethod = paymentMethods[1],
-                    Discount = discounts[1],
 
-                };
+            var order = new Order
+            {
+                ApplicationUser = users[1],
+                TotalPrice = 0,
+                DateOrder = DateTime.Now,
+                OrderStatus = orderStatuses[1],
+                PaymentMethod = paymentMethods[1],
+                Discount = discounts[1],
 
-                _dbContext.Orders.Add(order);
-                _dbContext.SaveChanges();
-                orders.Add(order);
-            
+            };
+
+            _dbContext.Orders.Add(order);
+            _dbContext.SaveChanges();
+            orders.Add(order);
+
 
             return orders;
         }
         private IList<PaymentMethod> AddPaymentMethods()
         {
             var paymentMethods = new List<PaymentMethod>() {
-				new(){
-					Name="Thanh toán trực tiếp",
-					Description="Thanh toán trực tiếp khi nhận hàng",
-				},
-				new(){
+                new(){
+                    Name="Thanh toán trực tiếp",
+                    Description="Thanh toán trực tiếp khi nhận hàng",
+                },
+                new(){
                     Name="QR Pay",
                     Description="QR",
                 }
@@ -282,7 +450,7 @@ namespace FarmProduce.Data.Seeders
         private IList<OrderStatus> AddOrderStatuses()
         {
             var orderStatuses = new List<OrderStatus>() {
-				new(){
+                new(){
                    StatusCode="Chờ xác nhận",
                    Description="",
                    StatusDate=new DateTime(2024,2, 27),
@@ -425,7 +593,23 @@ namespace FarmProduce.Data.Seeders
                 Name = "Gia vị",
                 UrlSlug= "gia-vi",
 
-                }
+                },
+
+                      new()
+{
+
+                        Name = "Xà lách",
+                        UrlSlug= "xa-lach",
+
+                        },
+                        new()
+                {
+
+                Name = "Trái cây",
+                UrlSlug= "trai-cay",
+
+                },
+
             };
             foreach (var cate in categories)
             {
@@ -443,22 +627,22 @@ namespace FarmProduce.Data.Seeders
         {
             var comments = new List<Comment>();
 
-            
-                var comment = new Comment()
-                {
-                    Name = "comment1",
-                    CommentText = "Hay qua",
-                    Created = DateTime.Now,
-                    Status = false,
-                    Rating = 5,
-                    ApplicationUser = users[1],
-                    Product = products[0]
-                };
 
-                _dbContext.Add(comment);
-                _dbContext.SaveChanges();
-                comments.Add(comment);
-            
+            var comment = new Comment()
+            {
+                Name = "comment1",
+                CommentText = "Hay qua",
+                Created = DateTime.Now,
+                Status = false,
+                Rating = 5,
+                ApplicationUser = users[1],
+                Product = products[0]
+            };
+
+            _dbContext.Add(comment);
+            _dbContext.SaveChanges();
+            comments.Add(comment);
+
 
             return comments;
         }
@@ -470,7 +654,7 @@ namespace FarmProduce.Data.Seeders
 
             var orderItem = new OrderItem()
             {
-                Order= orders[0],
+                Order = orders[0],
                 Product = products[0],
                 Quantity = 1000,
             };
