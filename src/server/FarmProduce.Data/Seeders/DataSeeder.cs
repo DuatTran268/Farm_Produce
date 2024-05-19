@@ -537,7 +537,7 @@ namespace FarmProduce.Data.Seeders
                     CodeName="Discount50",
                 },
              new(){
-                    DiscountPrice=80,
+                    DiscountPrice=20,
                     StartDate= DateTime.Now,
                     EndDate=(DateTime.Now).AddDays(10),
                     CodeName="Discount20",
