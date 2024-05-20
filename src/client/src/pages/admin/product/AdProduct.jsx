@@ -13,7 +13,7 @@ import { useSelector } from "react-redux";
 import { deletProduct, getFilterProduct } from "../../../api/Product";
 import ProductFilter from "../../../components/admin/filter/ProductFilter";
 import Popup from "../../../components/common/Popup";
-
+import "./AdProduct.css"
 const AdProduct = () => {
   const [getProduct, setgetProduct] = useState([]);
   const [refreshData, setRefreshData] = useState(false);
@@ -69,7 +69,7 @@ const AdProduct = () => {
   
   const handleDelete = (id) => {
     setIdToDelete(id);
-    setPopupMessage("Bạn có muốn xoá category này?");
+    setPopupMessage("Bạn có muốn xoá sản phẩm này?");
     setPopupVisible(true);
   };
 
@@ -144,7 +144,11 @@ const AdProduct = () => {
                     <td>{item.viewCount} <FontAwesomeIcon icon={faEye} color="red"/></td>
                     <td>{item.quantityAvailable}</td>
                     <td>{formatCurrency(item.price)} / {item.unit.name}</td>
-                    <td>{item.description}</td>
+                    <td>
+                      <div className="table_description">
+                      {item.description}
+                      </div>
+                      </td>
                     <td>
                     {item.status ? (
                             <span className="text-success">Hiển thị <FontAwesomeIcon icon={faEye}/> </span>

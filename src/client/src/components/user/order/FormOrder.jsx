@@ -8,14 +8,13 @@ import {
   getComboboxStatusOrder,
   getInforOfVoucherDiscount,
 } from "../../../api/Order";
-import { Button, Form, FormControl, Table } from "react-bootstrap";
+import { Button, Form, FormControl, Image, Table } from "react-bootstrap";
 import BoxEdit from "../../admin/edit/BoxEdit";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMessage, faMoneyBill } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
 import { useCart } from "react-use-cart"; // Import useCart
-import YourOrder from "./YourOrder";
-import { getDiscountByName } from "../../../api/Discount";
+import QRCode from "../../../assets/qr.jpg"
 
 const FormOrder = () => {
   const user = useSelector((state) => state.auth.login.currentUser);
@@ -58,6 +57,7 @@ const FormOrder = () => {
 
     getComboboxPaymentMethod().then((data) => {
       if (data) {
+        console.log("Check payment: ", data)
         setFilterPayment({
           paymentMethodList: data.paymentMethodList,
         });
@@ -110,7 +110,7 @@ const FormOrder = () => {
     });
 
   const [order, setOrder] = useState(initialState);
-  const [selectedPaymentMethodId, setSelectedPaymentMethodId] = useState(0); // Thêm trạng thái tạm thời cho paymentMethodId
+  const [selectedPaymentMethodId, setSelectedPaymentMethodId] = useState(0);
 
   useEffect(() => {
     document.title = "Đặt hàng với chúng tôi";
@@ -267,6 +267,19 @@ const FormOrder = () => {
             <p className="text-danger">
               Số tiền phải thanh toán sau khi giảm giá: {formatCurrency(discountedTotal)}
             </p>
+            {/* <div className="payment_qr">
+              <p>Nội dung chuyển khoản: Mã số đơn hàng:_Số điện thoại:_Họ tên:</p>
+              <p >Ví dụ: 2_0922223333_Nguyễn Xuân Hưng chuyen khoan</p>
+              <Image src={QRCode} className="image_qrcode"/>
+            </div> */}
+            {/* Hiển thị QR Code khi phương thức thanh toán là QR Pay */}
+            {selectedPaymentMethodId === 2 && (
+              <div className="payment_qr">
+                <p>Nội dung chuyển khoản: Mã số đơn hàng:_Số điện thoại:_Họ tên:</p>
+                <p>Ví dụ: 2_0922223333_Nguyễn Xuân Hưng chuyen khoan</p>
+                <Image src={QRCode} className="image_qrcode" />
+              </div>
+            )}
           </div>
         </div>
       </div>

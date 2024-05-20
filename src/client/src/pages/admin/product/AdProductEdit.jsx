@@ -239,7 +239,7 @@ const AdProductEdit = () => {
             label={"Mô tả"}
             control={
               <Form.Control
-                type="text"
+                type="textarea"
                 name="description"
                 title="description"
                 required

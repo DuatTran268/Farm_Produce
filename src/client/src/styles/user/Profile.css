@@ -9,9 +9,14 @@
 .text-title{
   color: var(--color-main);
   text-align: center;
-  padding: 1rem 0;
+  font-size: 1.3rem;
 }
-
+.title_order{
+  color: var(--color-main);
+  text-align: center;
+  font-size: 2rem;
+  margin: 2rem 0;
+}
 .text_total_price{
   font-size: 1.3rem;
   font-weight: 500;
@@ -20,4 +25,11 @@
 
 .col-form-label{
   color: var(--color-textred);
+}
+
+.header_order{
+  display: flex;
+  align-items: center;
+
+  justify-content: space-around;
 }

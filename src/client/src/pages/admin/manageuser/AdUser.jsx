@@ -87,7 +87,7 @@ const AdUser = () => {
       </div>
 
       <HeaderBtn>
-        <BtnSuccess icon={faAdd} slug={"/admin/user/edit"} name="Thêm mới" />
+        {/* <BtnSuccess icon={faAdd} slug={"/admin/user/edit"} name="Thêm mới" /> */}
         <UserFilter/>
       </HeaderBtn>
 

@@ -12,9 +12,10 @@ const UnitFilter = () => {
 
   return (
     <Form method="get" onReset={handleReset} className="col-2">
-      <Form.Group className="col-auto">
+      <Form.Group className="col-auto box_search">
         <Form.Label className="visually-hidden">Tên</Form.Label>
         <Form.Control
+          className="filter_box"
           type="text"
           placeholder="Tìm kiếm theo tên"
           name="name"

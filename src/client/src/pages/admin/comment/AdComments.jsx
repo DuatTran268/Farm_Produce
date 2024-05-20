@@ -64,7 +64,7 @@ const AdComments = () => {
 
   const handleDelete = (id) => {
     setUnitIdToDelete(id);
-    setPopupMessage("Bạn có muốn xoá category này?");
+    setPopupMessage("Bạn có muốn xoá comment này?");
     setPopupVisible(true);
   };
 

@@ -15,9 +15,10 @@ const OrderFilter = () => {
   return (
     <div className="row mb-3">
       <Form method="get" onReset={handleReset} className="col-3">
-        <Form.Group className="col-auto">
+        <Form.Group className="col-auto box_search">
           <Form.Label className="visually-hidden">Tên người dùng</Form.Label>
           <Form.Control
+            className="filter_box"
             type="text"
             placeholder="Tên người đặt đơn"
             name="name"
@@ -27,7 +28,7 @@ const OrderFilter = () => {
         </Form.Group>
       </Form>
       <Form method="get" onReset={handleReset} className="col-3">
-        <Form.Group className="col-auto">
+        <Form.Group className="col-auto box_search">
           <Form.Label className="visually-hidden">ID đơn hàng</Form.Label>
           <Form.Control
             className="filter_box"

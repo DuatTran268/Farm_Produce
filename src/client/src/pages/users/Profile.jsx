@@ -58,7 +58,7 @@ const Profile = () => {
       setPopupMessage("Bạn có muốn huỷ đơn hàng này?");
       setPopupVisible(true);
     } else {
-      enqueueSnackbar("Không thể huỷ vì " + orderStatusName + " đơn hàng.", {
+      enqueueSnackbar("Không thể huỷ vì " + orderStatusName + " đơn hàng. Liên hệ với chúng tôi để huỷ", {
         variant: "warning",
       });
     }
@@ -67,7 +67,7 @@ const Profile = () => {
   const handleConfirmDelete = async () => {
     const response = await deleteOrder(IdToDelete);
     if (response) {
-      enqueueSnackbar("Đã xoá thành công", {
+      enqueueSnackbar("Đã huỷ thành công đơn hàng", {
         variant: "success",
       });
       // Cập nhật danh sách đơn hàng sau khi xoá thành công
@@ -160,7 +160,7 @@ const Profile = () => {
             </div>
           </div>
 
-          <h3 className=" text-title">Đơn hàng đã đặt mua của bạn</h3>
+          <h3 className="title_order">Đơn hàng đã đặt mua của bạn</h3>
           {user.orders.length === 0 ? (
             <h6 className="text-title">Không có đơn hàng nào của bạn</h6>
           ) : (
@@ -168,11 +168,21 @@ const Profile = () => {
               {user.orders.map((order, index) => (
                 <div key={index} className="col-6 card_order">
                   <div className="card_order_infor">
-                    <h5 className="text-title">Mã đơn hàng: {order.id}</h5>
-                    <Button className="btn-danger" onClick={() => handleDelete(order)}>
-                      Huỷ đơn hàng
-                      <FontAwesomeIcon className="px-2" icon={faCancel} color="white " />
-                    </Button>
+                    <div className="header_order">
+                      <div className="text-title">Mã đơn hàng: {order.id}</div>
+                      {/* <Button className="btn-danger" onClick={() => handleDelete(order)}>
+                        Huỷ đơn hàng
+                        <FontAwesomeIcon className="px-2" icon={faCancel} color="white " />
+                      </Button> */}
+                      <div>
+                        {order.orderStatusName !== "Đang giao" && order.orderStatusName !== "Đã giao" && (
+                          <Button className="btn-danger" onClick={() => handleDelete(order)}>
+                            Huỷ đơn hàng
+                            <FontAwesomeIcon className="px-2" icon={faCancel} color="white " />
+                          </Button>
+                        )}
+                      </div>
+                    </div>
                     <Table>
                       <thead>
                         <tr>
