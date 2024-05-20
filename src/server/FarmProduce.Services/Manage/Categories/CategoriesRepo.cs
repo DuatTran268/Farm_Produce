@@ -36,7 +36,9 @@ namespace FarmProduce.Services.Manage.Categories
 					Id = c.Id,
 					Name = c.Name,
 					UrlSlug = c.UrlSlug,
-					ImageUrl = c.ImageUrl
+					ImageUrl = c.ImageUrl,
+					CountProduct = c.Products.Count(),
+					
 				}).ToPagedListAsync(pagingParams, cancellationToken);
 		}
 

@@ -12,6 +12,7 @@ namespace FarmProduce.Core.DTO
 		public string Name { get; set; }
         public string UrlSlug { get; set; }
         public string ImageUrl { get; set; }
+		public int CountProduct { get; set; }
 
 	}
 }

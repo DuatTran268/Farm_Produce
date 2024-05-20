@@ -112,7 +112,7 @@ const AdUser = () => {
                   <tr key={index}>
                     <td>
                       <Link
-                        to={`/admin/user/edit/${item.id}`}
+                        // to={`/admin/user/edit/${item.id}`}
                         className="text-decoration-none text-success"
                       >
                         {item.id}

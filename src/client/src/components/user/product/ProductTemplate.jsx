@@ -34,8 +34,6 @@ const ProductTemplate = (props) => {
       <div>
         <Link to={`/detail/${props.urlSlug}`} className="product_link">
           <div className="card p-0 overflow-hidden shadow">
-            
-
             <div className="product_image">
               {props.thumbnailUrl ? (
                 <Image
@@ -55,17 +53,21 @@ const ProductTemplate = (props) => {
               )}
             </div>
             <div className="product_content">
-            {/* {props.priceVirtual !== 0 && (
-            )} */}
-            <Image className="product_icon_sale" src={iconSale} width={80} />
+              {props.priceVirtual !== 0 && (
+                <Image
+                  className="product_icon_sale"
+                  src={iconSale}
+                  width={80}
+                />
+              )}
 
-            {props.quantityAvailable === 0 && (
-              <Image
-                className="product_icon_soldout"
-                src={iconSoldOut}
-                width={80}
-              />
-            )}
+              {props.quantityAvailable === 0 && (
+                <Image
+                  className="product_icon_soldout"
+                  src={iconSoldOut}
+                  width={80}
+                />
+              )}
               <p className="product_title">{props.name}</p>
               <div className="product_bottom">
                 <div className="product_price">

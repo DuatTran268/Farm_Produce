@@ -49,7 +49,7 @@ const AdCategory = () => {
       getFilterCategory(unitFilter.name, ps, pageNumber).then((data) => {
         if (data) {
           setData(data);
-          // console.log("Check data catgego",data)
+          console.log("Check data catgego",data)
         } else {
           setData([]);
         }
@@ -106,6 +106,7 @@ const AdCategory = () => {
             <thead>
               <tr>
                 <th>Tên Category</th>
+                <th>Số sản phẩm</th>
                 <th>Sửa</th>
                 <th>Xoá</th>
               </tr>
@@ -115,6 +116,7 @@ const AdCategory = () => {
                 getCategory.map((item, index) => (
                   <tr key={index}>
                     <td>{item.name}</td>
+                    <td>Có: {item.countProduct} sản phẩm</td>
                     <td className="text-center">
                       <Link
                         to={`/admin/category/edit/${item.id}`}
