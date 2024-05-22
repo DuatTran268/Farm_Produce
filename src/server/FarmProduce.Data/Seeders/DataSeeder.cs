@@ -86,6 +86,12 @@ namespace FarmProduce.Data.Seeders
 					Name ="gam",
 					UrlSlug="gam",
 				}
+				,
+				new()
+				{
+					Name ="cây",
+					UrlSlug="cay",
+				}
 			};
 			foreach (var unit in units)
 			{
@@ -131,7 +137,7 @@ namespace FarmProduce.Data.Seeders
 					UrlSlug="cai-bo-xoi-da-lat",
 				   QuantityAvailable=66,
 				   Price=50000,
-				   PriceVirtual=50000,
+				   PriceVirtual=60000,
 				   Description="Cải bó xôi hay còn gọi là rau chân vịt, được trồng nhiều ở Đà Lạt, khí hậu ôn đới nơi đây giúp những cây rau bó xôi phát triển mạnh mẽ và nó mang trong mình nhiều dưỡng chất nên được mệnh danh là siêu thực phẩm. DaLaVi cam kết rau bó xôi do chúng tôi cung cấp là sản phẩm sạch và chắc chắn không sử dụng các loại thuốc hóa học có hại.",
 				   ViewCount=1,
 				   DateCreate= new DateTime(2023,12,12),
@@ -184,8 +190,8 @@ namespace FarmProduce.Data.Seeders
 
 
 				}, new(){
-					Name="XÀ LÁCH MỸ",
-					UrlSlug="cu-cai",
+					Name="Xà lách Mỹ",
+					UrlSlug="xa-lach-my",
 				   QuantityAvailable=0,
 				   Price=70000,
 				   PriceVirtual=0,
@@ -249,7 +255,7 @@ namespace FarmProduce.Data.Seeders
 				   ViewCount=8,
 				   DateCreate= new DateTime(2023,03,12),
 				   DateUpdate=DateTime.Now,
-				   Category= caterories[3],
+				   Category= caterories[0],
 				   Unit=units[0],
 
 				},
@@ -334,7 +340,164 @@ namespace FarmProduce.Data.Seeders
 				   Unit=units[2],
 
 				},
+				   new(){
+					Name="Tinh chất phúc bồn tử đen",
+					UrlSlug="tinh-chat-phuc-bon-tu-den",
+				   QuantityAvailable=10,
+				   Price= 600000,
+				   PriceVirtual=0,
+				   Description="Nước tinh chất Phúc bồn tử đen DaLaVi được chế biến từ 100% trái phúc bồn tử đen hữu cơ với đường phèn, sản phẩm được đánh giá cao dành cho sức khỏe với rất nhiều công dụng đi kèm.",
+				   ViewCount=3,
+				   DateCreate= new DateTime(2023,03,12),
+				   DateUpdate=DateTime.Now,
+				   Category= caterories[1],
+				   Unit=units[0],
 
+				},
+					  new(){
+					Name="Hồng treo gió thượng hạng",
+					UrlSlug="hong-treo-gio-thuong-hang",
+				   QuantityAvailable=100,
+				   Price=170000,
+				   PriceVirtual=180000,
+				   Description="Hồng treo gió Đà Lạt là sản phẩm thượng hạng do DaLaVi cung cấp với công nghệ treo gió hoshigaki được chuyển giao trực tiếp từ Nhật Bản. Trải qua 30 ngày công phu với cái nắng và gió tự nhiên mới cho ra những mẻ hồng treo đạt chất lượng tuyệt hảo.",
+				   ViewCount=3,
+				   DateCreate= new DateTime(2023,03,12),
+				   DateUpdate=DateTime.Now,
+				   Category= caterories[1],
+				   Unit=units[1], // hop
+
+				},
+						 new(){
+					Name="Xoài sấy dẻo",
+					UrlSlug="xoai-say-deo",
+				   QuantityAvailable=10,
+				   Price=75000,
+				   PriceVirtual=0,
+				   Description="Xoài sấy dẻo Đà Lạt từ lâu đã trở thành món “ăn vặt” được phần lớn chị em ưa chuộng và không khó để lựa chọn món quà biếu mỗi lần tết đến – xuân về, đặc biệt là mỗi lần ghé du lịch đến thành phố ngàn hoa.",
+				   ViewCount=3,
+				   DateCreate= new DateTime(2023,03,12),
+				   DateUpdate=DateTime.Now,
+				   Category= caterories[1],
+				   Unit=units[1],
+
+				},
+
+							new(){
+					Name="Cafe đông trùng hạ thảo",
+					UrlSlug="cafe-dong-trung",
+				   QuantityAvailable=10,
+				   Price=180000,
+				   PriceVirtual=0,
+				   Description="Cà phê Đông trùng Hạ Thảo DaLaVi dạng hòa tan (5 in 1), là sản phẩm dinh dưỡng được nhiều khách hàng/đối tác tin dùng. Với những ai ít hoặc không uống được cà phê truyền thống thì đến với Cà phê Đông trùng Hạ Thảo chắc chắn sẽ làm thay đổi thói quen bởi tính tiện dụng, phù hợp với mọi lứa tuổi.",
+				   ViewCount=3,
+				   DateCreate= new DateTime(2023,03,12),
+				   DateUpdate=DateTime.Now,
+				   Category= caterories[1],
+				   Unit=units[1],
+							},
+
+				   new(){
+					Name="Đông trùng Hạ Thảo sấy thăng hoa",
+					UrlSlug="dong-trung-ha-thao",
+				   QuantityAvailable=10,
+				   Price=490000,
+				   PriceVirtual=500000,
+				   Description="Đông trùng Hạ Thảo sấy thăng hoa là sản phẩm từ Đông trùng Hạ Thảo được nhân giống và nuôi trồng trong điều kiện tự nhiên tại Đà Lạt, kết hợp với công nghệ sản xuất môi trường giá thể nhân tạo giúp giá thành sản xuất loại nấm đắt đỏ này giảm đáng kể nhưng vẫn đảm bảo chất lượng của nấm.\r\n\r\nTrọng lư",
+				   ViewCount=3,
+				   DateCreate= new DateTime(2023,03,12),
+				   DateUpdate=DateTime.Now,
+				   Category= caterories[1],
+				   Unit=units[1],
+
+				},
+
+				   new(){
+					Name="Bột cần tây",
+					UrlSlug="bot-can-tay",
+				   QuantityAvailable=10,
+				   Price=140000,
+				   PriceVirtual=0,
+				   Description="Bột cần tây có công dụng loại bỏ độc tố, chất thải và các chất gây ô nhiễm khỏi cơ thể bạn. Bên cạnh việc hỗ trợ duy trì vóc dáng và đẹp da, sử dụng bột cần tây lâu ngày còn giúp ổn định huyết áp, phòng ngừa tim mạch, detox cơ thể và giúp tiêu hóa tốt.",
+				   ViewCount=3,
+				   DateCreate= new DateTime(2023,03,12),
+				   DateUpdate=DateTime.Now,
+				   Category= caterories[3],
+				   Unit=units[1],
+			},
+
+					new(){
+					Name="Bột rau bó xôi",
+					UrlSlug="bot-rau-bo-xoi",
+				   QuantityAvailable=10,
+				   Price=150000,
+				   PriceVirtual=0,
+				   Description="Hộp Bột Rau Bó Xôi Dalahouse là sản phẩm được làm từ 100% rau bó xôi tươi nguyên chất, được sấy lạnh theo công nghệ hiện đại giúp giữ nguyên hương vị và hàm lượng dinh dưỡng. Sản phẩm được đóng gói tiện lợi, dễ dàng sử dụng và bảo quản.",
+				   DateCreate= new DateTime(2023,03,12),
+				   DateUpdate=DateTime.Now,
+				   Category= caterories[3],
+				   Unit=units[1],
+			},
+					new(){
+					Name="Bột rau má đậu xanh cốt dừa",
+					UrlSlug="bot-rau-ma-xanh-cot-dua",
+				   QuantityAvailable=10,
+				   Price=180000,
+				   PriceVirtual=200000,
+				   Description="Bột rau má đậu xanh cốt dừa là sự kết hợp hoàn hảo các hương vị thuần tự nhiên của rau má hữu cơ giàu vitamin và khoáng chất, đậu xanh giàu protein, nước cốt dừa giàu dầu béo lành mạnh và đường hoa dừa giàu chất điện giải.",
+				   DateCreate= new DateTime(2023,03,12),
+				   DateUpdate=DateTime.Now,
+				   Category= caterories[3],
+				   Unit=units[1],
+			},
+					new(){
+					Name="Bột diếp cá",
+					UrlSlug="bot-diep-ca",
+				   QuantityAvailable=10,
+				   Price=130000,
+				   PriceVirtual=0,
+				   Description="Bột diếp cá sử dụng công nghệ sấy lạnh hiện đại tiêu chuẩn Châu Âu và công nghệ nghiền thực phẩm ở nhiệt độ thấp giúp bảo toàn các enzym và chất dinh dưỡng của rau củ, đảm bảo uy tín về chất lượng cũng như nguồn gốc với quy trình khép kín đạt chứng nhận FDA. Sản phẩm phù hợp bổ sung rau củ cho cả gia đình ngay cả khi bận rộn.",
+				   DateCreate= new DateTime(2023,03,12),
+				   DateUpdate=DateTime.Now,
+				   Category= caterories[3],
+				   Unit=units[1],
+			},
+					new(){
+					Name="Bột rau má đậu xanh cốt dừa",
+					UrlSlug="bot-rau-ma-dau-xanh",
+				   QuantityAvailable=10,
+				   Price=180000,
+				   PriceVirtual=0,
+				   Description="Bột rau má đậu xanh cốt dừa là sự kết hợp hoàn hảo các hương vị thuần tự nhiên của rau má hữu cơ giàu vitamin và khoáng chất, đậu xanh giàu protein, nước cốt dừa giàu dầu béo lành mạnh và đường hoa dừa giàu chất điện giải.",
+				   DateCreate= new DateTime(2023,03,12),
+				   DateUpdate=DateTime.Now,
+				   Category= caterories[3],
+				   Unit=units[1],
+			},
+					new(){
+					Name="Cây giống chanh dây ngọt Colombia",
+					UrlSlug="cay-giong-chanh-day-ngot",
+				   QuantityAvailable=10,
+				   Price=250000,
+				   PriceVirtual=0,
+				   Description="cây giống chanh dây ngọt Comlombia tại vùng khí hậu mát mẻ Đà Lạt, Lâm Đồng. Cây con khoẻ mạnh, cam kết chất lượng, đóng gói và giao hàng tận nơi trên toàn quốc.",
+				   DateCreate= new DateTime(2023,03,12),
+				   DateUpdate=DateTime.Now,
+				   Category= caterories[4],
+				   Unit=units[3],
+				},
+					new(){
+					Name="Cây giống phúc bồn tử đỏ",
+					UrlSlug="cay-giong-phuc-bon-tu",
+				   QuantityAvailable=10,
+				   Price=250000,
+				   PriceVirtual=270000,
+				   Description="cây giống Phúc Bồn Tử đỏ với chất lượng cao, giá sỉ cạnh tranh. Cây giống được tuyển chọn kỹ lưỡng, khỏe mạnh, phát triển tốt, cho trái to, mọng nước, chất lượng cao.",
+				   DateCreate= new DateTime(2023,03,12),
+				   DateUpdate=DateTime.Now,
+				   Category= caterories[4],
+				   Unit=units[3],
+				},
 
 
 			};
@@ -598,6 +761,13 @@ namespace FarmProduce.Data.Seeders
 
 				Name = "Bột Rau, Củ, Quả",
 				UrlSlug= "bot-rau-cu-qua",
+
+				},
+						new()
+				{
+
+				Name = "Hoa tươi cây giống",
+				UrlSlug= "hoa-tuoi-cay-giong",
 
 				},
 

@@ -12,7 +12,7 @@ const ProductCategoryList = () => {
   const { slug } = params;
 
   useEffect(() => {
-    getProductByCategorySlug('rau').then((data) => {
+    getProductByCategorySlug('dac-san-da-lat').then((data) => {
       if (data) {
         setProductCategory(data.items);
       } else {

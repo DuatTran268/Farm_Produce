@@ -7,7 +7,7 @@ import ProductCategoryList from "../../../pages/users/ProductCategoryList";
 const ProductCategory = () => {
   return (
     <div className="fruit_product">
-      <ProductHeader name="Nhóm sản phẩm rau xanh" slug={'/category/rau'}/>
+      <ProductHeader name="Nhóm đặc sản Đà Lạt" slug={'/category/dac-san-da-lat'}/>
       <ProductCategoryList/>
     </div>
   )

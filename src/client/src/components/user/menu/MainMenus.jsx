@@ -22,7 +22,7 @@ const MainMenu = () => {
           </Link>
         </li>
         <li className="menu_item">
-          <Link className="menu_link" to={"/checkout/orderinfor"}>
+          <Link className="menu_link" to={"/cart"}>
             Đơn hàng
           </Link>
         </li>
