@@ -6,7 +6,7 @@ import LayoutClient from "../../components/user/common/LayoutClient";
 
 const MoreAllProduct = () => {
   useEffect(() => {
-    document.title = "Xem tất cả sản phẩm"
+    document.title = "Xem thêm"
   })
   return (
     <LayoutClient>

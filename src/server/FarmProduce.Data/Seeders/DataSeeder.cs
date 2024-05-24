@@ -143,7 +143,7 @@ namespace FarmProduce.Data.Seeders
 				   DateCreate= new DateTime(2023,12,12),
 				   Unit=units[0],
 				   DateUpdate=DateTime.Now,
-				   Category= caterories[0],
+				   Category= caterories[1],
 
 				},
 				new(){
@@ -157,7 +157,7 @@ namespace FarmProduce.Data.Seeders
 				   DateCreate= new DateTime(2023,08,12),
 				   DateUpdate=DateTime.Now,
 				   Unit=units[0],
-				   Category= caterories[0],
+				   Category= caterories[1],
 
 
 				},
@@ -171,7 +171,7 @@ namespace FarmProduce.Data.Seeders
 				   ViewCount=3,
 				   DateCreate= new DateTime(2023,03,12),
 				   DateUpdate=DateTime.Now,
-				   Category= caterories[0],
+				  Category= caterories[1],
 				   Unit=units[0],
 
 				},
@@ -186,7 +186,7 @@ namespace FarmProduce.Data.Seeders
 				   DateCreate= new DateTime(2023,08,12),
 				   DateUpdate=DateTime.Now,
 				   Unit=units[0],
-				   Category= caterories[0],
+				   Category= caterories[1],
 
 
 				}, new(){
@@ -199,7 +199,7 @@ namespace FarmProduce.Data.Seeders
 				   ViewCount=3,
 				   DateCreate= new DateTime(2023,03,12),
 				   DateUpdate=DateTime.Now,
-				   Category= caterories[0],
+					Category= caterories[1],
 				   Unit=units[0],
 
 				},
